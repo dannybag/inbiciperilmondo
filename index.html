@@ -491,6 +491,48 @@
     letter-spacing: 0.04em;
   }
 
+  /* ---- CONTATORI VIAGGIO ---- */
+  .trip-counters {
+    background: var(--dark);
+    padding: 2rem 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+  .trip-counter {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+  }
+  .trip-counter-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--orange);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .trip-counter-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,248,244,0.35);
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+  .trip-counter-divider {
+    width: 1px;
+    height: 3rem;
+    background: rgba(240,90,40,0.2);
+    flex-shrink: 0;
+  }
+  @media (max-width: 500px) {
+    .trip-counters { gap: 0; }
+    .trip-counter-val { font-size: 1.8rem; }
+  }
+
   /* ---- TAPPA DEL GIORNO ---- */
   .tappa-section {
     background: #111;
@@ -653,8 +695,8 @@
     <div class="stat-label">km in sella</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">~25</div>
-    <div class="stat-label">numero di tappe</div>
+    <div class="stat-num">~30</div>
+    <div class="stat-label">giorni di viaggio</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">1€<span style="font-size:0.5em;vertical-align:middle;position:relative;top:0.1em">*</span>km</div>
@@ -663,6 +705,24 @@
   <div class="stat-item">
     <div class="stat-num">100%</div>
     <div class="stat-label">fondi devoluti</div>
+  </div>
+</div>
+
+<!-- CONTATORI VIAGGIO -->
+<div class="trip-counters" id="trip-counters" style="display:none;">
+  <div class="trip-counter">
+    <div class="trip-counter-val" id="cnt-tappe">0</div>
+    <div class="trip-counter-label">Tappe<br>completate</div>
+  </div>
+  <div class="trip-counter-divider"></div>
+  <div class="trip-counter">
+    <div class="trip-counter-val" id="cnt-km">0 km</div>
+    <div class="trip-counter-label">Km<br>percorsi</div>
+  </div>
+  <div class="trip-counter-divider"></div>
+  <div class="trip-counter">
+    <div class="trip-counter-val" id="cnt-dis">↑0 m</div>
+    <div class="trip-counter-label">Dislivello<br>totale</div>
   </div>
 </div>
 
@@ -945,8 +1005,8 @@
 
 <script>
   // ---- GITHUB CONFIG ----
-  const GH_OWNER = 'dannybag';
-  const GH_REPO  = 'inbiciperilmondo';
+  const GH_OWNER = 'sdsacco-droid';
+  const GH_REPO  = 'dannybag';
   const GH_FILE  = 'data.json';
   const GH_RAW   = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/${GH_FILE}`;
   const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
@@ -1009,6 +1069,7 @@
 
   function updateTappa(t) {
     if (!t || t.day === 0) return;
+    // Tappa del giorno
     document.getElementById('tappa-section').style.display = 'block';
     document.getElementById('tappa-day-num').textContent = 'GIORNO ' + String(t.day).padStart(2,'0');
     document.getElementById('tappa-route').textContent = t.from && t.to ? t.from + ' \u2192 ' + t.to : '';
@@ -1016,6 +1077,11 @@
     document.getElementById('tappa-dis').textContent = '\u2191' + t.dislivello + 'm';
     document.getElementById('tappa-totkm').textContent = t.totKm + ' km';
     document.getElementById('tappa-totdis').textContent = '\u2191' + t.totDis + 'm';
+    // Contatori viaggio
+    document.getElementById('trip-counters').style.display = 'flex';
+    document.getElementById('cnt-tappe').textContent = t.tappe;
+    document.getElementById('cnt-km').textContent = t.totKm + ' km';
+    document.getElementById('cnt-dis').textContent = '\u2191' + t.totDis + ' m';
   }
 
   function openAdmin() {
