@@ -494,7 +494,7 @@
   /* ---- CONTATORI VIAGGIO ---- */
   .trip-counters {
     background: var(--dark);
-    padding: 0.3rem 5vw;
+    padding: 2rem 5vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1002,11 +1002,14 @@
       const res = await fetch(GH_RAW + '?t=' + Date.now());
       if (!res.ok) throw new Error();
       const data = await res.json();
-      if (data.fundraising) updateBar(data.fundraising.raised||0, data.fundraising.goal||1700);
-      if (data.tappa && data.tappa.day > 0) updateTappa(data.tappa);
+      if (data.fundraising) updateBar(data.fundraising.raised || 0, data.fundraising.goal || 1700);
+      if (data.tappa && data.tappa.day > 0) {
+        _prevTotals = { totKm: data.tappa.totKm || 0, totDis: data.tappa.totDis || 0, tappe: data.tappa.tappe || 0 };
+        updateTappa(data.tappa);
+      }
     } catch(e) {
       const raw = localStorage.getItem('wbr-fundraising');
-      if (raw) { const d = JSON.parse(raw); updateBar(d.raised||0, d.goal||1700); }
+      if (raw) { const d = JSON.parse(raw); updateBar(d.raised || 0, d.goal || 1700); }
     }
   }
 
@@ -1080,57 +1083,73 @@
     if (ok) { updateBar(raised,goal); localStorage.setItem('wbr-fundraising',JSON.stringify({raised,goal})); setTimeout(()=>closeAdmin(),1200); }
   }
 
+  // Totali precedenti letti da GitHub (non localStorage)
+  let _prevTotals = { totKm: 0, totDis: 0, tappe: 0 };
+
   function openAdm1() {
-    const saved = JSON.parse(localStorage.getItem('wbr-insta')||'{}');
-    const day = parseInt(localStorage.getItem('wbr-current-day')||saved.day||1);
-    const dayData = JSON.parse(localStorage.getItem('wbr-day-data')||'{}');
-    const kmData = JSON.parse(localStorage.getItem('wbr-daily-km')||'{}');
-    const disData = JSON.parse(localStorage.getItem('wbr-daily-dis')||'{}');
-    document.getElementById('tap-day').value = day;
-    document.getElementById('tap-km').value = kmData[day]||saved.km||0;
-    document.getElementById('tap-dis').value = disData[day]||saved.dis||0;
-    document.getElementById('tap-from').value = dayData.from||saved.from||'Milano';
-    document.getElementById('tap-to').value = dayData.to||saved.to||'';
+    // Precompila con i dati correnti da GitHub
+    document.getElementById('tap-day').value = (_prevTotals.tappe || 0) + 1;
+    document.getElementById('tap-km').value = 0;
+    document.getElementById('tap-dis').value = 0;
+    document.getElementById('tap-from').value = localStorage.getItem('tap-last-to') || 'Milano';
+    document.getElementById('tap-to').value = '';
     document.getElementById('tap-msg').textContent = '';
     document.getElementById('tap-token').value = localStorage.getItem('gh-token') || '';
-    tapRefresh();
+    // Mostra i totali precedenti nel pannello
+    document.getElementById('tap-totals').textContent =
+      'Totali attuali: ' + _prevTotals.tappe + ' tappe · ' +
+      _prevTotals.totKm + ' km · ↑' + _prevTotals.totDis + 'm';
     document.getElementById('tap-overlay').style.display = 'flex';
   }
   function tapClose() { document.getElementById('tap-overlay').style.display = 'none'; }
 
   function tapRefresh() {
-    const day=parseInt(document.getElementById('tap-day').value)||1;
-    const km=parseInt(document.getElementById('tap-km').value)||0;
-    const dis=parseInt(document.getElementById('tap-dis').value)||0;
-    saveKmDay(day,km); saveDisDay(day,dis);
-    document.getElementById('tap-totals').textContent = 'Tappe: '+calcTappe(day)+' \u00b7 '+calcKmTot(day)+' km \u00b7 \u2191'+calcDisTot(day)+'m';
+    const km  = parseInt(document.getElementById('tap-km').value)  || 0;
+    const dis = parseInt(document.getElementById('tap-dis').value) || 0;
+    const newTotKm  = _prevTotals.totKm  + km;
+    const newTotDis = _prevTotals.totDis + dis;
+    const newTappe  = _prevTotals.tappe  + (km > 0 ? 1 : 0);
+    document.getElementById('tap-totals').textContent =
+      'Dopo salvataggio: ' + newTappe + ' tappe · ' + newTotKm + ' km · ↑' + newTotDis + 'm';
   }
 
   async function tapSave() {
-    const day=parseInt(document.getElementById('tap-day').value)||1;
-    const km=parseInt(document.getElementById('tap-km').value)||0;
-    const dis=parseInt(document.getElementById('tap-dis').value)||0;
-    const from=document.getElementById('tap-from').value||'Milano';
-    const to=document.getElementById('tap-to').value||'';
-    const msg=document.getElementById('tap-msg');
-    saveKmDay(day,km); saveDisDay(day,dis);
-    localStorage.setItem('wbr-current-day',day);
-    localStorage.setItem('wbr-day-data',JSON.stringify({from,to}));
-    localStorage.setItem('wbr-insta',JSON.stringify({day,km,dis,from,to}));
-    const totKm=calcKmTot(day); const totDis=calcDisTot(day); const tappe=calcTappe(day);
-    const tappa = {day,from,to,km,dislivello:dis,totKm,totDis,tappe,updated:new Date().toISOString()};
+    const day  = parseInt(document.getElementById('tap-day').value)  || 1;
+    const km   = parseInt(document.getElementById('tap-km').value)   || 0;
+    const dis  = parseInt(document.getElementById('tap-dis').value)  || 0;
+    const from = document.getElementById('tap-from').value || 'Milano';
+    const to   = document.getElementById('tap-to').value   || '';
+    const msg  = document.getElementById('tap-msg');
+
+    // Calcola nuovi totali sommando al totale precedente (da GitHub)
+    const totKm  = _prevTotals.totKm  + km;
+    const totDis = _prevTotals.totDis + dis;
+    const tappe  = _prevTotals.tappe  + (km > 0 ? 1 : 0);
+
+    const tappa = { day, from, to, km, dislivello: dis, totKm, totDis, tappe, updated: new Date().toISOString() };
+
+    // Salva ultima città in localStorage per pre-compilare "Da" la prossima volta
+    if (to) localStorage.setItem('tap-last-to', to);
+
     const token = (document.getElementById('tap-token').value.trim()) || localStorage.getItem('gh-token') || '';
     if (token) localStorage.setItem('gh-token', token);
+
     if (!token) {
-      msg.textContent = '\u2713 Salvato in locale. Inserisci token in FND per sync.';
-      updateTappa(tappa); setTimeout(()=>tapClose(),1500); return;
+      msg.textContent = '✓ Inserisci il token GitHub per salvare.';
+      return;
     }
+
     msg.textContent = 'Salvataggio...';
-    let data = {fundraising:{raised:0,goal:1700},tappa:{}};
-    try { const r=await fetch(GH_RAW+'?t='+Date.now()); if(r.ok) { const d=await r.json(); data=d; } } catch(e) {}
+    let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {} };
+    try { const r = await fetch(GH_RAW + '?t=' + Date.now()); if (r.ok) { const d = await r.json(); data = d; } } catch(e) {}
     data.tappa = tappa;
+
     const ok = await saveToGitHub(data, token, msg);
-    if (ok) { updateTappa(tappa); setTimeout(()=>tapClose(),1200); }
+    if (ok) {
+      _prevTotals = { totKm, totDis, tappe };
+      updateTappa(tappa);
+      setTimeout(() => tapClose(), 1200);
+    }
   }
 
   let seq='';
