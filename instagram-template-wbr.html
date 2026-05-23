@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Template · Una Bici per il Mondo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,600;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --orange: #F05A28;
+    --dark:   #1A1A1A;
+    --cream:  #FFF8F4;
+    --mono:   'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0D0D0D;
+    font-family: 'Barlow', sans-serif;
+    color: var(--cream);
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    text-align: center;
+    margin-bottom: 0.3rem;
+  }
+  .subtitle {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,248,244,0.3);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  /* CONTROLS */
+  .controls {
+    background: #1A1A1A;
+    border: 1px solid rgba(240,90,40,0.3);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .control-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .control-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,248,244,0.4);
+  }
+  .control-group input[type="number"] {
+    background: #2A2A2A;
+    border: 1px solid rgba(240,90,40,0.4);
+    color: var(--cream);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    width: 90px;
+    text-align: center;
+    padding: 0.3rem;
+    border-radius: 4px;
+    outline: none;
+  }
+  .control-group input[type="text"],
+  .control-group input[type="number"].wide {
+    background: #2A2A2A;
+    border: 1px solid rgba(240,90,40,0.4);
+    color: var(--cream);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    outline: none;
+    width: 200px;
+  }
+  .control-group input[type="number"].wide { width: 120px; font-size: 0.9rem; font-family: 'Barlow', sans-serif; }
+  .btn-preview {
+    background: var(--orange);
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1.2rem;
+  }
+
+  /* FORMAT TABS */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .tab {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid rgba(240,90,40,0.4);
+    border-radius: 3px;
+    cursor: pointer;
+    color: rgba(255,248,244,0.5);
+    background: transparent;
+    transition: all 0.2s;
+  }
+  .tab.active {
+    background: var(--orange);
+    color: var(--cream);
+    border-color: var(--orange);
+  }
+
+  /* FRAMES CONTAINER */
+  .frames {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .frame-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .frame-name {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,248,244,0.3);
+  }
+
+  /* ===== STORY / REEL 9:16 ===== */
+  .frame-story {
+    width: 270px;
+    height: 480px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  /* ===== POST 1:1 ===== */
+  .frame-post {
+    width: 360px;
+    height: 360px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  /* ===========================
+     SLIDE 1: APERTURA
+  =========================== */
+  .slide-open {
+    width: 100%; height: 100%;
+    background: var(--dark);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem;
+    overflow: hidden;
+  }
+  .slide-open::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(240,90,40,0.15) 0%, transparent 60%);
+  }
+  .open-tag {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    position: relative;
+    margin-bottom: 0.8rem;
+  }
+  .open-day-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,248,244,0.4);
+    position: relative;
+  }
+  .open-day-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 7rem;
+    line-height: 0.85;
+    color: var(--orange);
+    position: relative;
+    letter-spacing: -0.02em;
+  }
+  .frame-story .open-day-num { font-size: 6rem; }
+  .open-route {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,248,244,0.5);
+    position: relative;
+    margin-top: 0.5rem;
+  }
+  .open-from-to {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--cream);
+    position: relative;
+    margin-top: 0.3rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .frame-story .open-from-to { font-size: 0.9rem; }
+  .open-km {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: rgba(255,248,244,0.35);
+    position: relative;
+    margin-top: 0.2rem;
+  }
+  .open-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--orange);
+  }
+  .open-hashtag {
+    position: absolute;
+    bottom: 1rem; right: 1.2rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgba(255,248,244,0.25);
+    text-transform: uppercase;
+  }
+
+  /* ===========================
+     SLIDE 2: FOTO/VIDEO
+  =========================== */
+  .slide-media {
+    width: 100%; height: 100%;
+    background: #111;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .media-placeholder {
+    flex: 1;
+    background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: 2px dashed rgba(240,90,40,0.3);
+    margin: 0.8rem;
+    border-radius: 6px;
+  }
+  .media-icon { font-size: 2rem; opacity: 0.3; }
+  .media-hint {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,248,244,0.25);
+    text-align: center;
+  }
+  .media-overlay-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 0.8rem 1rem 0.5rem;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .media-day-badge {
+    background: var(--orange);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+    color: var(--cream);
+  }
+  .media-tag {
+    font-family: var(--mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.15em;
+    color: rgba(255,248,244,0.6);
+    text-transform: uppercase;
+  }
+  .media-overlay-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 0.5rem 1rem 0.8rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+  }
+  .media-caption {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.65rem;
+    font-style: italic;
+    color: var(--cream);
+    opacity: 0.85;
+    line-height: 1.4;
+  }
+  .media-progress {
+    margin-top: 0.4rem;
+    height: 2px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .media-progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 1px;
+  }
+
+  /* ===========================
+     SLIDE 3: CHIUSURA
+  =========================== */
+  .slide-close {
+    width: 100%; height: 100%;
+    background: var(--orange);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem;
+    overflow: hidden;
+  }
+  .slide-close::before {
+    content: 'BUFFALO';
+    position: absolute;
+    bottom: -0.15em;
+    right: -0.05em;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 6rem;
+    color: rgba(0,0,0,0.1);
+    line-height: 1;
+    pointer-events: none;
+    letter-spacing: -0.02em;
+  }
+  .close-emoji {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+  .close-msg {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--dark);
+    line-height: 1;
+    position: relative;
+    letter-spacing: 0.02em;
+  }
+  .frame-story .close-msg { font-size: 1.8rem; }
+  .close-sub {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(26,26,26,0.7);
+    position: relative;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+  .frame-story .close-sub { font-size: 0.6rem; }
+  .close-cta {
+    position: relative;
+    margin-top: 1rem;
+    display: inline-block;
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    width: fit-content;
+  }
+  .close-hashtags {
+    position: absolute;
+    bottom: 1rem; left: 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.45rem;
+    letter-spacing: 0.08em;
+    color: rgba(26,26,26,0.45);
+  }
+  .close-day {
+    position: absolute;
+    top: 1rem; right: 1.2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    color: rgba(26,26,26,0.2);
+    position: absolute;
+  }
+
+  /* FORMAT VISIBILITY */
+  .format-story .frame-post { display: none; }
+  .format-post .frame-story { display: none; }
+  .format-reel .frame-post { display: none; }
+
+  .tip {
+    max-width: 700px;
+    margin: 2.5rem auto 0;
+    background: #1A1A1A;
+    border-left: 3px solid var(--orange);
+    padding: 1rem 1.5rem;
+    font-size: 0.8rem;
+    color: rgba(255,248,244,0.5);
+    line-height: 1.7;
+  }
+  .tip strong { color: var(--orange); }
+</style>
+</head>
+<body>
+
+<h1>Una Bici per il Mondo · Instagram Kit</h1>
+<div class="subtitle">Milano → Palermo · World Bicycle Relief · Template giornaliero</div>
+
+<!-- CONTROLS nascosti nel pannello ADM -->
+<div style="text-align:center; margin-bottom:2rem;">
+  <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.25);">Per inserire i dati della tappa: tieni SHIFT e digita ADM</div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="setFormat('story', this)">Story 9:16</button>
+  <button class="tab" onclick="setFormat('post', this)">Post 1:1</button>
+  <button class="tab" onclick="setFormat('reel', this)">Reel 9:16</button>
+</div>
+
+<!-- DOWNLOAD BUTTON -->
+<div style="display:flex; justify-content:center; margin-bottom:2rem;">
+  <button id="downloadBtn" onclick="downloadSlides()"
+    style="background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 2rem; border:none; border-radius:3px; cursor:pointer;">
+    ⬇ Scarica 3 slides
+  </button>
+</div>
+
+<!-- FRAMES -->
+<div class="frames format-story" id="framesContainer">
+
+  <!-- STORY / REEL -->
+  <div class="frame-wrap" id="wrapStory">
+    <div class="frame-name">Apertura · Story/Reel</div>
+    <div class="frame-story">
+      <div class="slide-open">
+        <div class="open-tag">🚴 Una Bici per il Mondo · Day</div>
+        <div class="open-day-label">Giorno</div>
+        <div class="open-day-num" id="s-day-num">01</div>
+        <div class="open-route">Tappa di oggi</div>
+        <div class="open-from-to" id="s-from-to">Milano → Bologna</div>
+        <div class="open-km" id="s-km">85 km · ↑500m</div>
+        <div class="open-bar"></div>
+        <div class="open-hashtag">#InBiciPerIlMondo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-wrap">
+    <div class="frame-name">Foto/Video · Story/Reel</div>
+    <div class="frame-story">
+      <div class="slide-media">
+        <div class="media-overlay-top">
+          <div class="media-day-badge" id="s-badge">GIORNO 01</div>
+          <div class="media-tag">Una Bici per il Mondo</div>
+        </div>
+        <div class="media-placeholder">
+          <div class="media-icon">📷</div>
+          <div class="media-hint">Inserisci qui<br>foto o video</div>
+        </div>
+        <div class="media-overlay-bottom">
+          <div class="media-caption" id="s-caption">Milano → Bologna · 85 km</div>
+          <div class="media-progress">
+            <div class="media-progress-fill" id="s-prog" style="width:5%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-wrap">
+    <div class="frame-name">Chiusura · Story/Reel</div>
+    <div class="frame-story">
+      <div class="slide-close">
+        <div class="close-day" id="s-close-day">01</div>
+        <div class="close-emoji">🚵</div>
+        <div class="close-msg">Ancora<br>in sella!</div>
+        <div class="close-sub" id="s-close-sub">Km percorsi oggi: 85<br>Totale: 85 / 1.700 km</div>
+        <div class="close-cta">Dona una Buffalo → worldbicyclerelief.org</div>
+        <div class="close-hashtags">#InBiciPerIlMondo · #UnaBiciPerIlMondo · #WorldBicycleRelief</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POST 1:1 -->
+  <div class="frame-wrap" id="wrapPost" style="display:none">
+    <div class="frame-name">Apertura · Post</div>
+    <div class="frame-post">
+      <div class="slide-open">
+        <div class="open-tag">🚴 Una Bici per il Mondo · Day</div>
+        <div class="open-day-label">Giorno</div>
+        <div class="open-day-num" id="p-day-num">01</div>
+        <div class="open-route">Tappa di oggi</div>
+        <div class="open-from-to" id="p-from-to">Milano → Bologna</div>
+        <div class="open-km" id="p-km">85 km · ↑500m</div>
+        <div class="open-bar"></div>
+        <div class="open-hashtag">#InBiciPerIlMondo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-wrap" id="wrapPost2" style="display:none">
+    <div class="frame-name">Foto/Video · Post</div>
+    <div class="frame-post">
+      <div class="slide-media">
+        <div class="media-overlay-top">
+          <div class="media-day-badge" id="p-badge">GIORNO 01</div>
+          <div class="media-tag">Una Bici per il Mondo</div>
+        </div>
+        <div class="media-placeholder">
+          <div class="media-icon">📷</div>
+          <div class="media-hint">Inserisci qui<br>foto o video</div>
+        </div>
+        <div class="media-overlay-bottom">
+          <div class="media-caption" id="p-caption">Milano → Bologna · 85 km</div>
+          <div class="media-progress">
+            <div class="media-progress-fill" id="p-prog" style="width:5%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-wrap" id="wrapPost3" style="display:none">
+    <div class="frame-name">Chiusura · Post</div>
+    <div class="frame-post">
+      <div class="slide-close">
+        <div class="close-day" id="p-close-day">01</div>
+        <div class="close-emoji">🚵</div>
+        <div class="close-msg">Ancora<br>in sella!</div>
+        <div class="close-sub" id="p-close-sub">Km oggi: 85 · Totale: 85 / 1.700</div>
+        <div class="close-cta">Dona una Buffalo → worldbicyclerelief.org</div>
+        <div class="close-hashtags">#InBiciPerIlMondo · #UnaBiciPerIlMondo</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TIP -->
+<div class="tip">
+  <strong>Come funziona — passo per passo:</strong><br><br>
+
+  <strong>1. Ogni mattina, prima di partire:</strong><br>
+  Apri questo file nel browser. Inserisci il numero del giorno (es. 3), la città da cui parti, la città di arrivo e i km della tappa. Il numero di km totali percorsi si aggiorna man mano che procedi.<br><br>
+
+  <strong>2. Scegli il formato:</strong><br>
+  Clicca su "Story 9:16" per le storie Instagram, "Post 1:1" per il feed, "Reel 9:16" per i reel. Le anteprime cambiano di conseguenza.<br><br>
+
+  <strong>3. Fai uno screenshot di ogni slide:</strong><br>
+  Hai 3 slide — apertura, foto/video, chiusura. Fai uno screenshot di ognuna.<br><br>
+
+  <strong>4. Aggiungi la tua foto:</strong><br>
+  Apri Canva (gratuito), CapCut o qualsiasi app di editing. Importa lo screenshot della slide "Foto/Video" e sostituisci l'area tratteggiata con la tua foto o video del giorno.<br><br>
+
+  <strong>5. Pubblica:</strong><br>
+  Carica le 3 slide in sequenza su Instagram come storia o post multiplo.<br><br>
+
+  <strong>Hashtag consigliati:</strong><br>
+  #InBiciPerIlMondo #UnaBiciPerIlMondo #WorldBicycleRelief #BuffaloBicycle #MilanoPalermoBici #Ciclismo
+</div>
+
+<!-- Hidden inputs (usati dagli script) -->
+<div style="display:none">
+  <input type="number" id="dayNum" value="1">
+  <input type="text" id="fromCity" value="Milano">
+  <input type="text" id="toCity" value="Bologna">
+  <input type="number" id="kmDay" value="85">
+  <input type="number" id="kmTot" value="85">
+  <input type="number" id="dislivello" value="500">
+  <input type="number" id="dislivelloTot" value="500">
+</div>
+
+<!-- ADM PANEL -->
+<div id="adm-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:9999; align-items:center; justify-content:center; overflow-y:auto; padding:2rem 0;">
+  <div style="background:#1A1A1A; border:2px solid #F05A28; border-radius:8px; padding:2.5rem; width:420px; max-width:92vw;">
+    <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#F05A28; margin-bottom:2rem;">⚙️ Dati tappa del giorno</div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Giorno</label>
+        <input id="adm-day" type="number" min="1" max="30" value="1"
+          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.5); color:#F05A28; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
+      </div>
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Km tappa</label>
+        <input id="adm-km" type="number" min="0" value="85"
+          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Da</label>
+        <input id="adm-from" type="text" value="Milano"
+          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.95rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
+      </div>
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">A</label>
+        <input id="adm-to" type="text" value="Bologna"
+          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.95rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:0.5rem;">
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Dislivello tappa (m)</label>
+        <input id="adm-dis" type="number" min="0" value="500"
+          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
+      </div>
+      <div style="display:flex; flex-direction:column; justify-content:flex-end; gap:0.3rem; padding-bottom:0.2rem;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase;">Km tot. calcolati</div>
+        <div id="adm-kmtot-display" style="font-family:'Barlow Condensed',sans-serif; font-size:1.5rem; font-weight:700; color:rgba(240,90,40,0.7);">85 km</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase;">Dis. tot. calcolato</div>
+        <div id="adm-distot-display" style="font-family:'Barlow Condensed',sans-serif; font-size:1.5rem; font-weight:700; color:rgba(240,90,40,0.7);">500 m</div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+      <button onclick="admSave()" style="flex:1; background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:none; border-radius:4px; cursor:pointer;">Salva e aggiorna</button>
+      <button onclick="admClose()" style="flex:1; background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Annulla</button>
+    </div>
+    <div id="adm-msg" style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:#F05A28; margin-top:1rem; text-align:center; min-height:1rem;"></div>
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:rgba(255,248,244,0.15); margin-top:1.5rem; text-align:center;">SHIFT + ADM per aprire</div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function saveKmForDay(day, km) {
+  const data = JSON.parse(localStorage.getItem('wbr-daily-km') || '{}');
+  data[day] = km; localStorage.setItem('wbr-daily-km', JSON.stringify(data));
+}
+function saveDisForDay(day, dis) {
+  const data = JSON.parse(localStorage.getItem('wbr-daily-dis') || '{}');
+  data[day] = dis; localStorage.setItem('wbr-daily-dis', JSON.stringify(data));
+}
+function calcKmTot(day) {
+  const data = JSON.parse(localStorage.getItem('wbr-daily-km') || '{}');
+  let t = 0; for (let d = 1; d <= day; d++) t += parseInt(data[d] || 0); return t;
+}
+function calcDisTot(day) {
+  const data = JSON.parse(localStorage.getItem('wbr-daily-dis') || '{}');
+  let t = 0; for (let d = 1; d <= day; d++) t += parseInt(data[d] || 0); return t;
+}
+function calcTappe(day) {
+  const data = JSON.parse(localStorage.getItem('wbr-daily-km') || '{}');
+  let t = 0; for (let d = 1; d <= day; d++) { if (parseInt(data[d] || 0) > 0) t++; } return t;
+}
+
+function update() {
+  const day = parseInt(document.getElementById('dayNum').value) || 1;
+  const from = document.getElementById('fromCity').value || '—';
+  const to = document.getElementById('toCity').value || '—';
+  const km = parseInt(document.getElementById('kmDay').value) || 0;
+  const dislivello = parseInt(document.getElementById('dislivello').value) || 0;
+  const tot = calcKmTot(day);
+  const disTot = calcDisTot(day);
+  const pct = Math.min(100, Math.round(tot / 1700 * 100));
+  const dayStr = pad(day);
+  const route = `${from} → ${to}`;
+  const kmStr = `${km} km`;
+  const msgs = ["Ancora\nin sella!", "Le gambe\ngirano!", "Una Buffalo\nin più!", "Non mi\nfermo!", "Palermo\nsi avvicina!"];
+  const msg = msgs[(day - 1) % msgs.length];
+
+  // Story
+  document.getElementById('s-day-num').textContent = dayStr;
+  document.getElementById('s-from-to').textContent = route;
+  document.getElementById('s-km').textContent = `${kmStr} · ↑${dislivello}m`;
+  document.getElementById('s-badge').textContent = `GIORNO ${dayStr}`;
+  document.getElementById('s-caption').textContent = `${route} · ${kmStr} · ↑${dislivello}m`;
+  document.getElementById('s-prog').style.width = `${pct}%`;
+  document.getElementById('s-close-day').textContent = dayStr;
+  const tappe = calcTappe(day);
+  document.getElementById('s-close-sub').innerHTML = `Tappe: ${tappe} · ${tot} km · ↑${disTot}m`;
+  document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = msg.replace('\n', '<br>');
+
+  // Post
+  document.getElementById('p-day-num').textContent = dayStr;
+  document.getElementById('p-from-to').textContent = route;
+  document.getElementById('p-km').textContent = `${kmStr} · ↑${dislivello}m`;
+  document.getElementById('p-badge').textContent = `GIORNO ${dayStr}`;
+  document.getElementById('p-caption').textContent = `${route} · ${kmStr} · ↑${dislivello}m`;
+  document.getElementById('p-prog').style.width = `${pct}%`;
+  document.getElementById('p-close-day').textContent = dayStr;
+  document.getElementById('p-close-sub').innerHTML = `Tappe: ${tappe} · ${tot} km · ↑${disTot}m`;
+  document.querySelectorAll('.slide-close .close-msg')[1].innerHTML = msg.replace('\n', '<br>');
+}
+
+function admOpen() {
+  const day = parseInt(localStorage.getItem('wbr-current-day') || '1');
+  const data = JSON.parse(localStorage.getItem('wbr-day-data') || '{}');
+  document.getElementById('adm-day').value = day;
+  document.getElementById('adm-from').value = data.from || 'Milano';
+  document.getElementById('adm-to').value = data.to || '';
+  document.getElementById('adm-km').value = JSON.parse(localStorage.getItem('wbr-daily-km') || '{}')[day] || '';
+  document.getElementById('adm-dis').value = JSON.parse(localStorage.getItem('wbr-daily-dis') || '{}')[day] || '';
+  admRefreshTotals();
+  document.getElementById('adm-msg').textContent = '';
+  document.getElementById('adm-overlay').style.display = 'flex';
+}
+
+function admRefreshTotals() {
+  const day = parseInt(document.getElementById('adm-day').value) || 1;
+  const km = parseInt(document.getElementById('adm-km').value) || 0;
+  const dis = parseInt(document.getElementById('adm-dis').value) || 0;
+  // Temporarily save to calc totals
+  saveKmForDay(day, km);
+  saveDisForDay(day, dis);
+  document.getElementById('adm-kmtot-display').textContent = calcKmTot(day) + ' km';
+  document.getElementById('adm-distot-display').textContent = calcDisTot(day) + ' m';
+}
+
+document.addEventListener('input', e => {
+  if (['adm-day','adm-km','adm-dis'].includes(e.target.id)) admRefreshTotals();
+});
+
+function admSave() {
+  const day = parseInt(document.getElementById('adm-day').value) || 1;
+  const km = parseInt(document.getElementById('adm-km').value) || 0;
+  const dis = parseInt(document.getElementById('adm-dis').value) || 0;
+  const from = document.getElementById('adm-from').value || 'Milano';
+  const to = document.getElementById('adm-to').value || '';
+  saveKmForDay(day, km);
+  saveDisForDay(day, dis);
+  localStorage.setItem('wbr-current-day', day);
+  localStorage.setItem('wbr-day-data', JSON.stringify({ from, to }));
+  // Update hidden inputs
+  document.getElementById('dayNum').value = day;
+  document.getElementById('fromCity').value = from;
+  document.getElementById('toCity').value = to;
+  document.getElementById('kmDay').value = km;
+  document.getElementById('dislivello').value = dis;
+  update();
+  document.getElementById('adm-msg').textContent = '✓ Salvato!';
+  setTimeout(() => admClose(), 800);
+}
+
+function admClose() {
+  document.getElementById('adm-overlay').style.display = 'none';
+}
+
+// Shortcut SHIFT + ADM
+let seq = '';
+document.addEventListener('keydown', e => {
+  if (e.shiftKey) { seq += e.key.toLowerCase(); if (seq.includes('adm')) { seq=''; admOpen(); } if (seq.length>10) seq=seq.slice(-10); } else seq='';
+});
+document.getElementById('adm-overlay').addEventListener('click', e => { if (e.target===document.getElementById('adm-overlay')) admClose(); });
+
+// Download slides
+async function downloadSlides() {
+  const btn = document.getElementById('downloadBtn');
+  btn.textContent = 'Generando...';
+  btn.disabled = true;
+  const day = document.getElementById('dayNum').value || '01';
+  const isPost = document.querySelector('.tab.active').textContent.includes('Post');
+  const allWraps = document.querySelectorAll('.frame-wrap');
+  const slides = isPost
+    ? [ { el: document.querySelector('#wrapPost .frame-post'), name: `giorno${pad(day)}_apertura` },
+        { el: document.querySelector('#wrapPost2 .frame-post'), name: `giorno${pad(day)}_foto` },
+        { el: document.querySelector('#wrapPost3 .frame-post'), name: `giorno${pad(day)}_chiusura` } ]
+    : [ { el: allWraps[0]?.querySelector('.frame-story'), name: `giorno${pad(day)}_apertura` },
+        { el: allWraps[1]?.querySelector('.frame-story'), name: `giorno${pad(day)}_foto` },
+        { el: allWraps[2]?.querySelector('.frame-story'), name: `giorno${pad(day)}_chiusura` } ];
+  for (const slide of slides) {
+    if (!slide.el) continue;
+    try {
+      const canvas = await html2canvas(slide.el, { scale: 4, useCORS: true, backgroundColor: null, logging: false });
+      const link = document.createElement('a');
+      link.download = `WBR_${slide.name}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      await new Promise(r => setTimeout(r, 400));
+    } catch(e) { console.error(e); }
+  }
+  btn.textContent = '⬇ Scarica 3 slides';
+  btn.disabled = false;
+}
+
+// Load saved data on startup
+const savedDay = parseInt(localStorage.getItem('wbr-current-day') || '1');
+const savedData = JSON.parse(localStorage.getItem('wbr-day-data') || '{}');
+document.getElementById('dayNum').value = savedDay;
+document.getElementById('fromCity').value = savedData.from || 'Milano';
+document.getElementById('toCity').value = savedData.to || '';
+document.getElementById('kmDay').value = JSON.parse(localStorage.getItem('wbr-daily-km') || '{}')[savedDay] || 0;
+document.getElementById('dislivello').value = JSON.parse(localStorage.getItem('wbr-daily-dis') || '{}')[savedDay] || 0;
+update();
+</script>
+</body>
+</html>
