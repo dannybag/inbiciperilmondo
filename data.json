@@ -1,0 +1,17 @@
+{
+  "fundraising": {
+    "raised": 0,
+    "goal": 1700
+  },
+  "tappa": {
+    "day": 0,
+    "from": "",
+    "to": "",
+    "km": 0,
+    "dislivello": 0,
+    "totKm": 0,
+    "totDis": 0,
+    "tappe": 0,
+    "updated": ""
+  }
+}
