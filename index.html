@@ -994,7 +994,13 @@
       </div>
     </div>
 
-    <div style="display:flex; gap:1rem; margin-top:0.5rem;">
+    <div style="margin-top:0.8rem;">
+      <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">GitHub Token <span style="color:rgba(255,248,244,0.2); text-transform:none; letter-spacing:0">(salvato solo qui)</span></label>
+      <input id="tap-token" type="password" placeholder="ghp_..."
+        style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; padding:0.5rem 0.8rem; border-radius:4px; outline:none;">
+    </div>
+
+    <div style="display:flex; gap:1rem; margin-top:1rem;">
       <button onclick="tapSave()" style="flex:1; background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:none; border-radius:4px; cursor:pointer;">Salva</button>
       <button onclick="tapClose()" style="flex:1; background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Annulla</button>
     </div>
@@ -1120,6 +1126,7 @@
     document.getElementById('tap-from').value = dayData.from||saved.from||'Milano';
     document.getElementById('tap-to').value = dayData.to||saved.to||'';
     document.getElementById('tap-msg').textContent = '';
+    document.getElementById('tap-token').value = localStorage.getItem('gh-token') || '';
     tapRefresh();
     document.getElementById('tap-overlay').style.display = 'flex';
   }
@@ -1146,7 +1153,8 @@
     localStorage.setItem('wbr-insta',JSON.stringify({day,km,dis,from,to}));
     const totKm=calcKmTot(day); const totDis=calcDisTot(day); const tappe=calcTappe(day);
     const tappa = {day,from,to,km,dislivello:dis,totKm,totDis,tappe,updated:new Date().toISOString()};
-    const token = localStorage.getItem('gh-token')||'';
+    const token = (document.getElementById('tap-token').value.trim()) || localStorage.getItem('gh-token') || '';
+    if (token) localStorage.setItem('gh-token', token);
     if (!token) {
       msg.textContent = '\u2713 Salvato in locale. Inserisci token in FND per sync.';
       updateTappa(tappa); setTimeout(()=>tapClose(),1500); return;
