@@ -424,7 +424,7 @@
   /* ---- PROGRESS BAR ---- */
   .progress-section {
     background: #111;
-    padding: 1.2rem 5vw;
+    padding: 2.5rem 5vw;
     border-top: 1px solid rgba(240,90,40,0.2);
   }
   .progress-header {
@@ -489,51 +489,6 @@
     font-weight: 600;
     color: var(--orange);
     letter-spacing: 0.04em;
-  }
-
-  /* ---- CONTATORI VIAGGIO ---- */
-  .trip-counters {
-    background: var(--dark);
-    padding: 2rem 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-  }
-  .trip-counter {
-    flex: 1;
-    text-align: center;
-    padding: 0.8rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .trip-counter-val {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-    font-weight: 900;
-    color: var(--orange);
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-  .trip-counter-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.58rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,248,244,0.45);
-    line-height: 1.5;
-  }
-  .trip-counter-divider {
-    width: 1px;
-    height: 3rem;
-    background: rgba(240,90,40,0.2);
-    flex-shrink: 0;
-  }
-  @media (max-width: 500px) {
-    .trip-counters { gap: 0; }
-    .trip-counter-val { font-size: 1.8rem; }
   }
 
   /* ---- TAPPA DEL GIORNO ---- */
@@ -698,8 +653,8 @@
     <div class="stat-label">km in sella</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">~30</div>
-    <div class="stat-label">giorni di viaggio</div>
+    <div class="stat-num">~25</div>
+    <div class="stat-label">numero di tappe</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">1€<span style="font-size:0.5em;vertical-align:middle;position:relative;top:0.1em">*</span>km</div>
@@ -708,24 +663,6 @@
   <div class="stat-item">
     <div class="stat-num">100%</div>
     <div class="stat-label">fondi devoluti</div>
-  </div>
-</div>
-
-<!-- CONTATORI VIAGGIO -->
-<div class="trip-counters" id="trip-counters" style="display:none;">
-  <div class="trip-counter">
-    <div class="trip-counter-label">Tappe Percorse</div>
-    <div class="trip-counter-val" id="cnt-tappe">—</div>
-  </div>
-  <div class="trip-counter-divider"></div>
-  <div class="trip-counter">
-    <div class="trip-counter-label">KM Percorsi</div>
-    <div class="trip-counter-val" id="cnt-km">—</div>
-  </div>
-  <div class="trip-counter-divider"></div>
-  <div class="trip-counter">
-    <div class="trip-counter-label">Dislivello Effettuato</div>
-    <div class="trip-counter-val" id="cnt-dis">—</div>
   </div>
 </div>
 
@@ -742,6 +679,35 @@
   <div class="progress-footer">
     <span class="progress-pct">0% raggiunto</span>
     <span class="progress-bikes">= 0 bici <strong>Buffalo</strong> donate</span>
+  </div>
+</div>
+
+<!-- TAPPA DEL GIORNO -->
+<div class="tappa-section" id="tappa-section" style="display:none;">
+  <div class="tappa-inner">
+    <div class="tappa-left">
+      <div class="tappa-label">In viaggio · Tappa del giorno</div>
+      <div class="tappa-day" id="tappa-day-num">—</div>
+      <div class="tappa-route" id="tappa-route">—</div>
+    </div>
+    <div class="tappa-stats">
+      <div class="tappa-stat">
+        <div class="tappa-stat-val" id="tappa-km">—</div>
+        <div class="tappa-stat-label">km oggi</div>
+      </div>
+      <div class="tappa-stat">
+        <div class="tappa-stat-val" id="tappa-dis">—</div>
+        <div class="tappa-stat-label">dislivello</div>
+      </div>
+      <div class="tappa-stat">
+        <div class="tappa-stat-val" id="tappa-totkm">—</div>
+        <div class="tappa-stat-label">km totali</div>
+      </div>
+      <div class="tappa-stat">
+        <div class="tappa-stat-val" id="tappa-totdis">—</div>
+        <div class="tappa-stat-label">dis. totale</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -968,13 +934,7 @@
       </div>
     </div>
 
-    <div style="margin-top:0.8rem;">
-      <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">GitHub Token <span style="color:rgba(255,248,244,0.2); text-transform:none; letter-spacing:0">(salvato solo qui)</span></label>
-      <input id="tap-token" type="password" placeholder="ghp_..."
-        style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; padding:0.5rem 0.8rem; border-radius:4px; outline:none;">
-    </div>
-
-    <div style="display:flex; gap:1rem; margin-top:1rem;">
+    <div style="display:flex; gap:1rem; margin-top:0.5rem;">
       <button onclick="tapSave()" style="flex:1; background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:none; border-radius:4px; cursor:pointer;">Salva</button>
       <button onclick="tapClose()" style="flex:1; background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Annulla</button>
     </div>
@@ -1002,14 +962,11 @@
       const res = await fetch(GH_RAW + '?t=' + Date.now());
       if (!res.ok) throw new Error();
       const data = await res.json();
-      if (data.fundraising) updateBar(data.fundraising.raised || 0, data.fundraising.goal || 1700);
-      if (data.tappa && data.tappa.day > 0) {
-        _prevTotals = { totKm: data.tappa.totKm || 0, totDis: data.tappa.totDis || 0, tappe: data.tappa.tappe || 0 };
-        updateTappa(data.tappa);
-      }
+      if (data.fundraising) updateBar(data.fundraising.raised||0, data.fundraising.goal||1700);
+      if (data.tappa && data.tappa.day > 0) updateTappa(data.tappa);
     } catch(e) {
       const raw = localStorage.getItem('wbr-fundraising');
-      if (raw) { const d = JSON.parse(raw); updateBar(d.raised || 0, d.goal || 1700); }
+      if (raw) { const d = JSON.parse(raw); updateBar(d.raised||0, d.goal||1700); }
     }
   }
 
@@ -1052,11 +1009,13 @@
 
   function updateTappa(t) {
     if (!t || t.day === 0) return;
-    // Contatori viaggio
-    document.getElementById('trip-counters').style.display = 'flex';
-    document.getElementById('cnt-tappe').textContent = t.tappe;
-    document.getElementById('cnt-km').textContent = t.totKm + ' km';
-    document.getElementById('cnt-dis').textContent = '\u2191' + t.totDis + ' m';
+    document.getElementById('tappa-section').style.display = 'block';
+    document.getElementById('tappa-day-num').textContent = 'GIORNO ' + String(t.day).padStart(2,'0');
+    document.getElementById('tappa-route').textContent = t.from && t.to ? t.from + ' \u2192 ' + t.to : '';
+    document.getElementById('tappa-km').textContent = t.km + ' km';
+    document.getElementById('tappa-dis').textContent = '\u2191' + t.dislivello + 'm';
+    document.getElementById('tappa-totkm').textContent = t.totKm + ' km';
+    document.getElementById('tappa-totdis').textContent = '\u2191' + t.totDis + 'm';
   }
 
   function openAdmin() {
@@ -1083,73 +1042,55 @@
     if (ok) { updateBar(raised,goal); localStorage.setItem('wbr-fundraising',JSON.stringify({raised,goal})); setTimeout(()=>closeAdmin(),1200); }
   }
 
-  // Totali precedenti letti da GitHub (non localStorage)
-  let _prevTotals = { totKm: 0, totDis: 0, tappe: 0 };
-
   function openAdm1() {
-    // Precompila con i dati correnti da GitHub
-    document.getElementById('tap-day').value = (_prevTotals.tappe || 0) + 1;
-    document.getElementById('tap-km').value = 0;
-    document.getElementById('tap-dis').value = 0;
-    document.getElementById('tap-from').value = localStorage.getItem('tap-last-to') || 'Milano';
-    document.getElementById('tap-to').value = '';
+    const saved = JSON.parse(localStorage.getItem('wbr-insta')||'{}');
+    const day = parseInt(localStorage.getItem('wbr-current-day')||saved.day||1);
+    const dayData = JSON.parse(localStorage.getItem('wbr-day-data')||'{}');
+    const kmData = JSON.parse(localStorage.getItem('wbr-daily-km')||'{}');
+    const disData = JSON.parse(localStorage.getItem('wbr-daily-dis')||'{}');
+    document.getElementById('tap-day').value = day;
+    document.getElementById('tap-km').value = kmData[day]||saved.km||0;
+    document.getElementById('tap-dis').value = disData[day]||saved.dis||0;
+    document.getElementById('tap-from').value = dayData.from||saved.from||'Milano';
+    document.getElementById('tap-to').value = dayData.to||saved.to||'';
     document.getElementById('tap-msg').textContent = '';
-    document.getElementById('tap-token').value = localStorage.getItem('gh-token') || '';
-    // Mostra i totali precedenti nel pannello
-    document.getElementById('tap-totals').textContent =
-      'Totali attuali: ' + _prevTotals.tappe + ' tappe · ' +
-      _prevTotals.totKm + ' km · ↑' + _prevTotals.totDis + 'm';
+    tapRefresh();
     document.getElementById('tap-overlay').style.display = 'flex';
   }
   function tapClose() { document.getElementById('tap-overlay').style.display = 'none'; }
 
   function tapRefresh() {
-    const km  = parseInt(document.getElementById('tap-km').value)  || 0;
-    const dis = parseInt(document.getElementById('tap-dis').value) || 0;
-    const newTotKm  = _prevTotals.totKm  + km;
-    const newTotDis = _prevTotals.totDis + dis;
-    const newTappe  = _prevTotals.tappe  + (km > 0 ? 1 : 0);
-    document.getElementById('tap-totals').textContent =
-      'Dopo salvataggio: ' + newTappe + ' tappe · ' + newTotKm + ' km · ↑' + newTotDis + 'm';
+    const day=parseInt(document.getElementById('tap-day').value)||1;
+    const km=parseInt(document.getElementById('tap-km').value)||0;
+    const dis=parseInt(document.getElementById('tap-dis').value)||0;
+    saveKmDay(day,km); saveDisDay(day,dis);
+    document.getElementById('tap-totals').textContent = 'Tappe: '+calcTappe(day)+' \u00b7 '+calcKmTot(day)+' km \u00b7 \u2191'+calcDisTot(day)+'m';
   }
 
   async function tapSave() {
-    const day  = parseInt(document.getElementById('tap-day').value)  || 1;
-    const km   = parseInt(document.getElementById('tap-km').value)   || 0;
-    const dis  = parseInt(document.getElementById('tap-dis').value)  || 0;
-    const from = document.getElementById('tap-from').value || 'Milano';
-    const to   = document.getElementById('tap-to').value   || '';
-    const msg  = document.getElementById('tap-msg');
-
-    // Calcola nuovi totali sommando al totale precedente (da GitHub)
-    const totKm  = _prevTotals.totKm  + km;
-    const totDis = _prevTotals.totDis + dis;
-    const tappe  = _prevTotals.tappe  + (km > 0 ? 1 : 0);
-
-    const tappa = { day, from, to, km, dislivello: dis, totKm, totDis, tappe, updated: new Date().toISOString() };
-
-    // Salva ultima città in localStorage per pre-compilare "Da" la prossima volta
-    if (to) localStorage.setItem('tap-last-to', to);
-
-    const token = (document.getElementById('tap-token').value.trim()) || localStorage.getItem('gh-token') || '';
-    if (token) localStorage.setItem('gh-token', token);
-
+    const day=parseInt(document.getElementById('tap-day').value)||1;
+    const km=parseInt(document.getElementById('tap-km').value)||0;
+    const dis=parseInt(document.getElementById('tap-dis').value)||0;
+    const from=document.getElementById('tap-from').value||'Milano';
+    const to=document.getElementById('tap-to').value||'';
+    const msg=document.getElementById('tap-msg');
+    saveKmDay(day,km); saveDisDay(day,dis);
+    localStorage.setItem('wbr-current-day',day);
+    localStorage.setItem('wbr-day-data',JSON.stringify({from,to}));
+    localStorage.setItem('wbr-insta',JSON.stringify({day,km,dis,from,to}));
+    const totKm=calcKmTot(day); const totDis=calcDisTot(day); const tappe=calcTappe(day);
+    const tappa = {day,from,to,km,dislivello:dis,totKm,totDis,tappe,updated:new Date().toISOString()};
+    const token = localStorage.getItem('gh-token')||'';
     if (!token) {
-      msg.textContent = '✓ Inserisci il token GitHub per salvare.';
-      return;
+      msg.textContent = '\u2713 Salvato in locale. Inserisci token in FND per sync.';
+      updateTappa(tappa); setTimeout(()=>tapClose(),1500); return;
     }
-
     msg.textContent = 'Salvataggio...';
-    let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {} };
-    try { const r = await fetch(GH_RAW + '?t=' + Date.now()); if (r.ok) { const d = await r.json(); data = d; } } catch(e) {}
+    let data = {fundraising:{raised:0,goal:1700},tappa:{}};
+    try { const r=await fetch(GH_RAW+'?t='+Date.now()); if(r.ok) { const d=await r.json(); data=d; } } catch(e) {}
     data.tappa = tappa;
-
     const ok = await saveToGitHub(data, token, msg);
-    if (ok) {
-      _prevTotals = { totKm, totDis, tappe };
-      updateTappa(tappa);
-      setTimeout(() => tapClose(), 1200);
-    }
+    if (ok) { updateTappa(tappa); setTimeout(()=>tapClose(),1200); }
   }
 
   let seq='';
