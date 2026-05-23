@@ -503,7 +503,11 @@
   .trip-counter {
     flex: 1;
     text-align: center;
-    padding: 1rem;
+    padding: 1.2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
   }
   .trip-counter-val {
     font-family: 'Barlow Condensed', sans-serif;
@@ -518,8 +522,7 @@
     font-size: 0.6rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(255,248,244,0.35);
-    margin-top: 0.5rem;
+    color: rgba(255,248,244,0.45);
     line-height: 1.5;
   }
   .trip-counter-divider {
@@ -711,18 +714,18 @@
 <!-- CONTATORI VIAGGIO -->
 <div class="trip-counters" id="trip-counters" style="display:none;">
   <div class="trip-counter">
-    <div class="trip-counter-val" id="cnt-tappe">0</div>
-    <div class="trip-counter-label">Tappe<br>completate</div>
+    <div class="trip-counter-label">Tappe Percorse</div>
+    <div class="trip-counter-val" id="cnt-tappe">—</div>
   </div>
   <div class="trip-counter-divider"></div>
   <div class="trip-counter">
-    <div class="trip-counter-val" id="cnt-km">0 km</div>
-    <div class="trip-counter-label">Km<br>percorsi</div>
+    <div class="trip-counter-label">KM Totali</div>
+    <div class="trip-counter-val" id="cnt-km">—</div>
   </div>
   <div class="trip-counter-divider"></div>
   <div class="trip-counter">
-    <div class="trip-counter-val" id="cnt-dis">↑0 m</div>
-    <div class="trip-counter-label">Dislivello<br>totale</div>
+    <div class="trip-counter-label">Dislivello Totale</div>
+    <div class="trip-counter-val" id="cnt-dis">—</div>
   </div>
 </div>
 
@@ -739,35 +742,6 @@
   <div class="progress-footer">
     <span class="progress-pct">0% raggiunto</span>
     <span class="progress-bikes">= 0 bici <strong>Buffalo</strong> donate</span>
-  </div>
-</div>
-
-<!-- TAPPA DEL GIORNO -->
-<div class="tappa-section" id="tappa-section" style="display:none;">
-  <div class="tappa-inner">
-    <div class="tappa-left">
-      <div class="tappa-label">In viaggio · Tappa del giorno</div>
-      <div class="tappa-day" id="tappa-day-num">—</div>
-      <div class="tappa-route" id="tappa-route">—</div>
-    </div>
-    <div class="tappa-stats">
-      <div class="tappa-stat">
-        <div class="tappa-stat-val" id="tappa-km">—</div>
-        <div class="tappa-stat-label">km oggi</div>
-      </div>
-      <div class="tappa-stat">
-        <div class="tappa-stat-val" id="tappa-dis">—</div>
-        <div class="tappa-stat-label">dislivello</div>
-      </div>
-      <div class="tappa-stat">
-        <div class="tappa-stat-val" id="tappa-totkm">—</div>
-        <div class="tappa-stat-label">km totali</div>
-      </div>
-      <div class="tappa-stat">
-        <div class="tappa-stat-val" id="tappa-totdis">—</div>
-        <div class="tappa-stat-label">dis. totale</div>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -1075,14 +1049,6 @@
 
   function updateTappa(t) {
     if (!t || t.day === 0) return;
-    // Tappa del giorno
-    document.getElementById('tappa-section').style.display = 'block';
-    document.getElementById('tappa-day-num').textContent = 'GIORNO ' + String(t.day).padStart(2,'0');
-    document.getElementById('tappa-route').textContent = t.from && t.to ? t.from + ' \u2192 ' + t.to : '';
-    document.getElementById('tappa-km').textContent = t.km + ' km';
-    document.getElementById('tappa-dis').textContent = '\u2191' + t.dislivello + 'm';
-    document.getElementById('tappa-totkm').textContent = t.totKm + ' km';
-    document.getElementById('tappa-totdis').textContent = '\u2191' + t.totDis + 'm';
     // Contatori viaggio
     document.getElementById('trip-counters').style.display = 'flex';
     document.getElementById('cnt-tappe').textContent = t.tappe;
