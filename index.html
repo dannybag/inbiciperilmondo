@@ -691,7 +691,7 @@
 <!-- STATS -->
 <div class="stats">
   <div class="stat-item">
-    <div class="stat-num">1.700</div>
+    <div class="stat-num">~1.700</div>
     <div class="stat-label">km in sella</div>
   </div>
   <div class="stat-item">
@@ -1008,163 +1008,185 @@
   const GH_OWNER = 'dannybag';
   const GH_REPO  = 'inbiciperilmondo';
   const GH_FILE  = 'data.json';
-  const GH_RAW   = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/${GH_FILE}`;
   const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
 
-  function saveKmDay(day, km) { const d = JSON.parse(localStorage.getItem('wbr-daily-km')||'{}'); d[day]=km; localStorage.setItem('wbr-daily-km', JSON.stringify(d)); }
-  function saveDisDay(day, dis) { const d = JSON.parse(localStorage.getItem('wbr-daily-dis')||'{}'); d[day]=dis; localStorage.setItem('wbr-daily-dis', JSON.stringify(d)); }
-  function calcKmTot(day) { const d = JSON.parse(localStorage.getItem('wbr-daily-km')||'{}'); let t=0; for(let i=1;i<=day;i++) t+=parseInt(d[i]||0); return t; }
-  function calcDisTot(day) { const d = JSON.parse(localStorage.getItem('wbr-daily-dis')||'{}'); let t=0; for(let i=1;i<=day;i++) t+=parseInt(d[i]||0); return t; }
-  function calcTappe(day) { const d = JSON.parse(localStorage.getItem('wbr-daily-km')||'{}'); let t=0; for(let i=1;i<=day;i++) { if(parseInt(d[i]||0)>0) t++; } return t; }
+  // Totali precedenti caricati da GitHub al load
+  let _prev = { totKm: 0, totDis: 0, tappe: 0 };
 
+  // ---- LEGGI DA GITHUB (via API, nessuna cache CDN) ----
   async function loadFromGitHub() {
     try {
-      const res = await fetch(GH_RAW + '?t=' + Date.now());
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      if (data.fundraising) updateBar(data.fundraising.raised||0, data.fundraising.goal||1700);
-      if (data.tappa && data.tappa.day > 0) updateTappa(data.tappa);
+      const token = localStorage.getItem('gh-token') || '';
+      const headers = { 'Accept': 'application/vnd.github.v3+json' };
+      if (token) headers['Authorization'] = `token ${token}`;
+      const res = await fetch(GH_API + '?t=' + Date.now(), { headers, cache: 'no-store' });
+      if (!res.ok) throw new Error('fetch ' + res.status);
+      const meta = await res.json();
+      const data = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g,'')))));
+      if (data.fundraising) updateBar(data.fundraising.raised || 0, data.fundraising.goal || 1700);
+      if (data.tappa && data.tappa.day > 0) {
+        _prev = { totKm: data.tappa.totKm || 0, totDis: data.tappa.totDis || 0, tappe: data.tappa.tappe || 0 };
+        updateTappa(data.tappa);
+      }
     } catch(e) {
-      const raw = localStorage.getItem('wbr-fundraising');
-      if (raw) { const d = JSON.parse(raw); updateBar(d.raised||0, d.goal||1700); }
+      // fallback localStorage
+      try {
+        const raw = localStorage.getItem('wbr-fundraising');
+        if (raw) { const d = JSON.parse(raw); updateBar(d.raised || 0, d.goal || 1700); }
+      } catch(e2) {}
     }
   }
 
+  // ---- SCRIVI SU GITHUB ----
   async function saveToGitHub(newData, token, statusEl) {
     try {
-      const metaRes = await fetch(GH_API, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' } });
+      const headers = { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' };
+      // leggi SHA corrente
+      const metaRes = await fetch(GH_API, { headers, cache: 'no-store' });
       if (!metaRes.ok) throw new Error('Auth fallita. Controlla il token.');
       const meta = await metaRes.json();
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
       const putRes = await fetch(GH_API, {
         method: 'PUT',
-        headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: 'Aggiornamento dati ' + new Date().toISOString().slice(0,10), content, sha: meta.sha })
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Update ' + new Date().toISOString().slice(0,10), content, sha: meta.sha })
       });
       if (!putRes.ok) throw new Error('Errore scrittura GitHub.');
-      if (statusEl) statusEl.textContent = '\u2713 Salvato su GitHub!';
+      if (statusEl) statusEl.textContent = '✓ Salvato su GitHub!';
       return true;
     } catch(e) {
-      if (statusEl) statusEl.textContent = '\u2717 ' + e.message;
+      if (statusEl) statusEl.textContent = '✗ ' + e.message;
       return false;
     }
   }
 
+  // ---- AGGIORNA BARRA RACCOLTA ----
   function updateBar(raised, goal) {
-    const pct = Math.min(100, Math.round(raised/goal*100));
-    const bikes = Math.floor(raised/147);
+    const pct = Math.min(100, Math.round(raised / goal * 100));
+    const bikes = Math.floor(raised / 147);
     const fill = document.querySelector('.progress-fill');
     const bike = document.querySelector('.progress-bike');
     const raisedEl = document.querySelector('.progress-raised');
-    const goalEl = document.querySelector('.progress-goal');
-    const pctEl = document.querySelector('.progress-pct');
-    const bikesEl = document.querySelector('.progress-bikes');
-    if (fill) fill.style.width = pct + '%';
-    if (bike) bike.style.left = pct + '%';
-    if (raisedEl) raisedEl.textContent = '\u20ac' + raised;
-    if (goalEl) goalEl.textContent = '\u20ac' + goal;
-    if (pctEl) pctEl.textContent = pct + '% raggiunto';
-    if (bikesEl) bikesEl.innerHTML = '= ' + bikes + ' bici <strong>Buffalo</strong> donate';
+    const goalEl   = document.querySelector('.progress-goal');
+    const pctEl    = document.querySelector('.progress-pct');
+    const bikesEl  = document.querySelector('.progress-bikes');
+    if (fill)    fill.style.width = pct + '%';
+    if (bike)    bike.style.left  = pct + '%';
+    if (raisedEl) raisedEl.textContent = '€' + raised;
+    if (goalEl)   goalEl.textContent   = '€' + goal;
+    if (pctEl)    pctEl.textContent    = pct + '% raggiunto';
+    if (bikesEl)  bikesEl.innerHTML    = '= ' + bikes + ' bici <strong>Buffalo</strong> donate';
   }
 
+  // ---- AGGIORNA CONTATORI TAPPA ----
   function updateTappa(t) {
     if (!t || t.day === 0) return;
-    // Tappa del giorno
-    document.getElementById('tappa-section').style.display = 'block';
-    document.getElementById('tappa-day-num').textContent = 'GIORNO ' + String(t.day).padStart(2,'0');
-    document.getElementById('tappa-route').textContent = t.from && t.to ? t.from + ' \u2192 ' + t.to : '';
-    document.getElementById('tappa-km').textContent = t.km + ' km';
-    document.getElementById('tappa-dis').textContent = '\u2191' + t.dislivello + 'm';
-    document.getElementById('tappa-totkm').textContent = t.totKm + ' km';
-    document.getElementById('tappa-totdis').textContent = '\u2191' + t.totDis + 'm';
-    // Contatori viaggio
-    document.getElementById('trip-counters').style.display = 'flex';
-    document.getElementById('cnt-tappe').textContent = t.tappe;
-    document.getElementById('cnt-km').textContent = t.totKm + ' km';
-    document.getElementById('cnt-dis').textContent = '\u2191' + t.totDis + ' m';
+    const sec = document.getElementById('tappa-section');
+    const cnt = document.getElementById('trip-counters');
+    if (sec) {
+      sec.style.display = 'block';
+      const el = (id) => document.getElementById(id);
+      if (el('tappa-day-num')) el('tappa-day-num').textContent = 'GIORNO ' + String(t.day).padStart(2,'0');
+      if (el('tappa-route'))   el('tappa-route').textContent   = t.from && t.to ? t.from + ' → ' + t.to : '';
+      if (el('tappa-km'))      el('tappa-km').textContent      = t.km + ' km';
+      if (el('tappa-dis'))     el('tappa-dis').textContent     = '↑' + t.dislivello + 'm';
+      if (el('tappa-totkm'))   el('tappa-totkm').textContent   = t.totKm + ' km';
+      if (el('tappa-totdis'))  el('tappa-totdis').textContent  = '↑' + t.totDis + 'm';
+    }
+    if (cnt) {
+      cnt.style.display = 'flex';
+      const el = (id) => document.getElementById(id);
+      if (el('cnt-tappe')) el('cnt-tappe').textContent = t.tappe;
+      if (el('cnt-km'))    el('cnt-km').textContent    = t.totKm + ' km';
+      if (el('cnt-dis'))   el('cnt-dis').textContent   = '↑' + t.totDis + ' m';
+    }
   }
 
+  // ---- FND PANEL ----
   function openAdmin() {
-    document.getElementById('fndin-token').value = localStorage.getItem('gh-token') || '';
-    document.getElementById('fndin-raised').value = document.querySelector('.progress-raised')?.textContent.replace('\u20ac','') || '';
-    document.getElementById('fndin-goal').value = document.querySelector('.progress-goal')?.textContent.replace('\u20ac','') || '1700';
+    document.getElementById('fndin-token').value  = localStorage.getItem('gh-token') || '';
+    document.getElementById('fndin-raised').value = document.querySelector('.progress-raised')?.textContent.replace('€','') || '';
+    document.getElementById('fndin-goal').value   = document.querySelector('.progress-goal')?.textContent.replace('€','') || '1700';
     document.getElementById('fndin-msg').textContent = '';
     document.getElementById('fndin-overlay').style.display = 'flex';
   }
   function closeAdmin() { document.getElementById('fndin-overlay').style.display = 'none'; }
 
   async function saveAdmin() {
-    const raised = parseInt(document.getElementById('fndin-raised').value)||0;
-    const goal   = parseInt(document.getElementById('fndin-goal').value)||1700;
+    const raised = parseInt(document.getElementById('fndin-raised').value) || 0;
+    const goal   = parseInt(document.getElementById('fndin-goal').value)   || 1700;
     const token  = document.getElementById('fndin-token').value.trim();
     const msg    = document.getElementById('fndin-msg');
-    if (!token) { msg.textContent = '\u2717 Inserisci il GitHub Token'; return; }
+    if (!token) { msg.textContent = '✗ Inserisci il GitHub Token'; return; }
     localStorage.setItem('gh-token', token);
+    localStorage.setItem('wbr-fundraising', JSON.stringify({ raised, goal }));
     msg.textContent = 'Salvataggio...';
-    let data = { fundraising:{raised,goal}, tappa:{day:0,from:'',to:'',km:0,dislivello:0,totKm:0,totDis:0,tappe:0,updated:''} };
-    try { const r = await fetch(GH_RAW+'?t='+Date.now()); if(r.ok) { const d=await r.json(); data=d; } } catch(e) {}
-    data.fundraising = {raised,goal};
+    // Leggi data corrente per preservare tappa
+    let data = { fundraising: { raised, goal }, tappa: { day:0,from:'',to:'',km:0,dislivello:0,totKm:0,totDis:0,tappe:0,updated:'' } };
+    try {
+      const r = await fetch(GH_API, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, cache: 'no-store' });
+      if (r.ok) { const m = await r.json(); const d = JSON.parse(decodeURIComponent(escape(atob(m.content.replace(/\n/g,''))))); data = d; }
+    } catch(e) {}
+    data.fundraising = { raised, goal };
     const ok = await saveToGitHub(data, token, msg);
-    if (ok) { updateBar(raised,goal); localStorage.setItem('wbr-fundraising',JSON.stringify({raised,goal})); setTimeout(()=>closeAdmin(),1200); }
+    if (ok) { updateBar(raised, goal); setTimeout(() => closeAdmin(), 1200); }
   }
 
+  // ---- TAP PANEL ----
   function openAdm1() {
-    const saved = JSON.parse(localStorage.getItem('wbr-insta')||'{}');
-    const day = parseInt(localStorage.getItem('wbr-current-day')||saved.day||1);
-    const dayData = JSON.parse(localStorage.getItem('wbr-day-data')||'{}');
-    const kmData = JSON.parse(localStorage.getItem('wbr-daily-km')||'{}');
-    const disData = JSON.parse(localStorage.getItem('wbr-daily-dis')||'{}');
-    document.getElementById('tap-day').value = day;
-    document.getElementById('tap-km').value = kmData[day]||saved.km||0;
-    document.getElementById('tap-dis').value = disData[day]||saved.dis||0;
-    document.getElementById('tap-from').value = dayData.from||saved.from||'Milano';
-    document.getElementById('tap-to').value = dayData.to||saved.to||'';
+    document.getElementById('tap-day').value   = _prev.tappe + 1;
+    document.getElementById('tap-km').value    = 0;
+    document.getElementById('tap-dis').value   = 0;
+    document.getElementById('tap-from').value  = localStorage.getItem('tap-last-to') || 'Milano';
+    document.getElementById('tap-to').value    = '';
+    document.getElementById('tap-token') && (document.getElementById('tap-token').value = localStorage.getItem('gh-token') || '');
     document.getElementById('tap-msg').textContent = '';
-    tapRefresh();
+    document.getElementById('tap-totals').textContent = 'Totali attuali: ' + _prev.tappe + ' tappe · ' + _prev.totKm + ' km · ↑' + _prev.totDis + 'm';
     document.getElementById('tap-overlay').style.display = 'flex';
   }
   function tapClose() { document.getElementById('tap-overlay').style.display = 'none'; }
 
   function tapRefresh() {
-    const day=parseInt(document.getElementById('tap-day').value)||1;
-    const km=parseInt(document.getElementById('tap-km').value)||0;
-    const dis=parseInt(document.getElementById('tap-dis').value)||0;
-    saveKmDay(day,km); saveDisDay(day,dis);
-    document.getElementById('tap-totals').textContent = 'Tappe: '+calcTappe(day)+' \u00b7 '+calcKmTot(day)+' km \u00b7 \u2191'+calcDisTot(day)+'m';
+    const km  = parseInt(document.getElementById('tap-km').value)  || 0;
+    const dis = parseInt(document.getElementById('tap-dis').value) || 0;
+    document.getElementById('tap-totals').textContent =
+      'Dopo salvataggio: ' + (_prev.tappe + (km>0?1:0)) + ' tappe · ' +
+      (_prev.totKm + km) + ' km · ↑' + (_prev.totDis + dis) + 'm';
   }
 
   async function tapSave() {
-    const day=parseInt(document.getElementById('tap-day').value)||1;
-    const km=parseInt(document.getElementById('tap-km').value)||0;
-    const dis=parseInt(document.getElementById('tap-dis').value)||0;
-    const from=document.getElementById('tap-from').value||'Milano';
-    const to=document.getElementById('tap-to').value||'';
-    const msg=document.getElementById('tap-msg');
-    saveKmDay(day,km); saveDisDay(day,dis);
-    localStorage.setItem('wbr-current-day',day);
-    localStorage.setItem('wbr-day-data',JSON.stringify({from,to}));
-    localStorage.setItem('wbr-insta',JSON.stringify({day,km,dis,from,to}));
-    const totKm=calcKmTot(day); const totDis=calcDisTot(day); const tappe=calcTappe(day);
-    const tappa = {day,from,to,km,dislivello:dis,totKm,totDis,tappe,updated:new Date().toISOString()};
-    const token = localStorage.getItem('gh-token')||'';
-    if (!token) {
-      msg.textContent = '\u2713 Salvato in locale. Inserisci token in FND per sync.';
-      updateTappa(tappa); setTimeout(()=>tapClose(),1500); return;
-    }
+    const day  = parseInt(document.getElementById('tap-day').value)  || 1;
+    const km   = parseInt(document.getElementById('tap-km').value)   || 0;
+    const dis  = parseInt(document.getElementById('tap-dis').value)  || 0;
+    const from = document.getElementById('tap-from').value || 'Milano';
+    const to   = document.getElementById('tap-to').value   || '';
+    const msg  = document.getElementById('tap-msg');
+    const tokenEl = document.getElementById('tap-token');
+    const token = (tokenEl ? tokenEl.value.trim() : '') || localStorage.getItem('gh-token') || '';
+    if (token) localStorage.setItem('gh-token', token);
+    if (!token) { msg.textContent = '✗ Inserisci il token GitHub'; return; }
+    if (to) localStorage.setItem('tap-last-to', to);
+    const totKm  = _prev.totKm  + km;
+    const totDis = _prev.totDis + dis;
+    const tappe  = _prev.tappe  + (km > 0 ? 1 : 0);
+    const tappa  = { day, from, to, km, dislivello: dis, totKm, totDis, tappe, updated: new Date().toISOString() };
     msg.textContent = 'Salvataggio...';
-    let data = {fundraising:{raised:0,goal:1700},tappa:{}};
-    try { const r=await fetch(GH_RAW+'?t='+Date.now()); if(r.ok) { const d=await r.json(); data=d; } } catch(e) {}
+    let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {} };
+    try {
+      const r = await fetch(GH_API, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, cache: 'no-store' });
+      if (r.ok) { const m = await r.json(); const d = JSON.parse(decodeURIComponent(escape(atob(m.content.replace(/\n/g,''))))); data = d; }
+    } catch(e) {}
     data.tappa = tappa;
     const ok = await saveToGitHub(data, token, msg);
-    if (ok) { updateTappa(tappa); setTimeout(()=>tapClose(),1200); }
+    if (ok) { _prev = { totKm, totDis, tappe }; updateTappa(tappa); setTimeout(() => tapClose(), 1200); }
   }
 
-  let seq='';
-  document.addEventListener('keydown',(e)=>{
-    if(e.shiftKey){ seq+=e.key.toLowerCase(); if(seq.endsWith('fnd')){seq='';openAdmin();} if(seq.endsWith('tap')){seq='';openAdm1();} if(seq.length>12)seq=seq.slice(-12); } else seq='';
+  let seq = '';
+  document.addEventListener('keydown', (e) => {
+    if (e.shiftKey) { seq += e.key.toLowerCase(); if (seq.endsWith('fnd')) { seq=''; openAdmin(); } if (seq.endsWith('tap')) { seq=''; openAdm1(); } if (seq.length > 12) seq = seq.slice(-12); } else seq = '';
   });
-  document.getElementById('fndin-overlay').addEventListener('click',(e)=>{ if(e.target===document.getElementById('fndin-overlay'))closeAdmin(); });
-  document.getElementById('tap-overlay').addEventListener('click',(e)=>{ if(e.target===document.getElementById('tap-overlay'))tapClose(); });
+  document.getElementById('fndin-overlay').addEventListener('click', (e) => { if (e.target === document.getElementById('fndin-overlay')) closeAdmin(); });
+  document.getElementById('tap-overlay').addEventListener('click', (e) => { if (e.target === document.getElementById('tap-overlay')) tapClose(); });
   loadFromGitHub();
 </script>
 
