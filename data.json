@@ -4,14 +4,14 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 0,
-    "from": "",
-    "to": "",
-    "km": 0,
-    "dislivello": 0,
-    "totKm": 0,
-    "totDis": 0,
-    "tappe": 0,
-    "updated": ""
+    "day": 1,
+    "from": "Milano",
+    "to": "Parma",
+    "km": 142,
+    "dislivello": 220,
+    "totKm": 142,
+    "totDis": 220,
+    "tappe": 1,
+    "updated": "2026-05-28T19:53:39.012Z"
   }
 }
