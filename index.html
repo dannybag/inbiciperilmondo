@@ -1,535 +1,211 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Una Bici per il Mondo · Milano → Palermo</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,600;0,700;0,800;1,700&family=Barlow+Condensed:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap');
+<!-- TAPPA DEL GIORNO -->
+<div class="tappa-section" id="tappa-section" style="display:none;">
+  <div class="tappa-inner">
+    <div class="tappa-left">
+      <div class="tappa-label">In viaggio · Tappa del giorno</div>
 
-  :root {
-    --dark:    #1A1A1A;
-    --orange:  #F05A28;
-    --orange-d:#C44418;
-    --orange-l:#FF8C5A;
-    --offwhite:#FFF8F4;
-    --light:   #FFF0E8;
-    --muted:   rgba(255,248,244,0.65);
-    --rule:    rgba(240,90,40,0.25);
-  }
+      <!-- GIORNO + TAPPA AFFIANCATI -->
+      <div style="display:flex; align-items:flex-end; gap:1rem; flex-wrap:wrap;">
+        <div class="tappa-day" id="tappa-day-num">GIORNO 03</div>
+        <div class="tappa-route" id="tappa-route" style="margin-top:0; padding-bottom:0.6rem;">
+          Bologna → Firenze
+        </div>
+      </div>
+    </div>
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    <!-- STATS -->
+    <div class="tappa-stats">
+      <div class="tappa-stat">
+        <div class="tappa-stat-val">
+          <span id="tappa-km">98 km</span>
+          <span class="tappa-inline-info">
+            · Tappe Percorse <strong id="cnt-tappe">3</strong>
+            · Km Percorsi <strong id="cnt-km">312 km</strong>
+          </span>
+        </div>
+        <div class="tappa-stat-label">km oggi</div>
+      </div>
 
-  body {
-    background: var(--offwhite);
-    font-family: 'Barlow', sans-serif;
-    color: var(--dark);
-    overflow-x: hidden;
-    -webkit-text-size-adjust: 100%;
-  }
+      <div class="tappa-stat">
+        <div class="tappa-stat-val">
+          <span id="tappa-dis">↑1850m</span>
+          <span class="tappa-inline-info">
+            · Dislivello effettuato <strong id="cnt-dis">↑4.920 m</strong>
+          </span>
+        </div>
+        <div class="tappa-stat-label">dislivello</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  /* ---- STICKY BAR ---- */
-  .sticky-bar {
-    position: sticky;
-    top: 0;
-    z-index: 999;
-    background: var(--dark);
-    border-bottom: 3px solid var(--orange);
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0.65rem 2rem;
-    gap: 0.75rem;
-  }
-  .btn-sticky-orange {
-    background: var(--orange);
-    color: var(--offwhite);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.45rem 1.2rem;
-    border-radius: 2px;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .btn-sticky-ghost {
-    border: 1px solid rgba(255,248,244,0.4);
-    color: var(--offwhite);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 0.45rem 1.1rem;
-    border-radius: 2px;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  @media (max-width: 500px) {
-    .sticky-bar { padding: 0.5rem 1rem; justify-content: center; }
-    .btn-sticky-orange, .btn-sticky-ghost { font-size: 0.75rem; padding: 0.4rem 0.7rem; }
-  }
+<!-- CONTATORI VIAGGIO -->
+<!-- NASCOSTI perché ora integrati nelle statistiche -->
+<div class="trip-counters" id="trip-counters" style="display:none;"></div>
 
-  /* ---- HERO ---- */
-  .hero {
-    background: var(--dark);
-    padding-top: 1.2rem;
-    padding-bottom: 5rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-bg-text {
-    position: absolute;
-    top: -0.08em;
-    right: -0.03em;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(10rem, 28vw, 22rem);
-    font-weight: 900;
-    color: rgba(240,90,40,0.07);
-    line-height: 1;
-    pointer-events: none;
-    user-select: none;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-  }
-  .hero-inner {
-    display: flex;
+/* ---- TAPPA DEL GIORNO ---- */
+.tappa-section {
+  background: #111;
+  border-top: 2px solid var(--orange);
+  border-bottom: 2px solid var(--orange);
+  padding: 2rem 5vw;
+}
+
+.tappa-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  max-width: 1200px;
+}
+
+.tappa-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 0.5rem;
+}
+
+/* GIORNO PIÙ PICCOLO */
+.tappa-day {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 900;
+  color: var(--offwhite);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.tappa-route {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 700;
+  color: rgba(255,248,244,0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tappa-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tappa-stat {
+  text-align: right;
+}
+
+.tappa-stat-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 900;
+  color: var(--orange);
+  line-height: 1.1;
+}
+
+.tappa-inline-info {
+  display: inline-block;
+  margin-left: 0.7rem;
+  font-size: 0.45em;
+  color: rgba(255,248,244,0.45);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.tappa-inline-info strong {
+  color: rgba(255,248,244,0.82);
+  font-weight: 700;
+}
+
+.tappa-stat-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,248,244,0.35);
+  margin-top: 0.3rem;
+}
+
+@media (max-width: 760px) {
+
+  .tappa-inner {
     flex-direction: column;
     align-items: flex-start;
-    padding: 1rem 5vw 2rem;
-    position: relative;
-    z-index: 1;
-  }
-  .hero-tag {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 2.5rem;
-  }
-  .hero-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(4rem, 13vw, 11rem);
-    font-weight: 900;
-    color: var(--offwhite);
-    line-height: 0.9;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-  }
-  .hero-title .accent { color: var(--orange); }
-  .hero-route {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    margin-top: 2rem;
-    margin-bottom: 2.5rem;
-  }
-  .hero-route .arrow { color: var(--orange); margin: 0 0.5rem; }
-  .hero-desc {
-    max-width: 680px;
-    font-size: clamp(1rem, 1.8vw, 1.15rem);
-    color: rgba(255,248,244,0.75);
-    line-height: 1.85;
-    font-weight: 300;
-  }
-  .hero-desc strong { color: var(--offwhite); font-weight: 700; }
-  .hero-desc .wbr { color: var(--orange); font-weight: 700; }
-
-  /* ---- ORANGE STRIP ---- */
-  .strip {
-    background: var(--orange);
-    padding: 1.8rem 5vw;
-  }
-  .strip-text {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1.1rem, 2.8vw, 1.6rem);
-    font-weight: 800;
-    color: var(--offwhite);
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
   }
 
-  hr.div { border: none; border-top: 1px solid var(--rule); margin: 0; }
-
-  /* ---- SECTION ---- */
-  .section {
-    padding: 5rem 5vw;
-    max-width: 900px;
-  }
-  .section-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 1.5rem;
-  }
-  .section-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(2rem, 4.5vw, 3.2rem);
-    font-weight: 900;
-    color: var(--dark);
-    line-height: 1.1;
-    margin-bottom: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.01em;
-  }
-  .section-text {
-    font-size: 1.05rem;
-    line-height: 1.85;
-    color: #2A2A2A;
-    margin-bottom: 1.2rem;
-    font-weight: 400;
-  }
-  .section-text strong { color: var(--dark); font-weight: 700; }
-  .section-text .wbr { color: var(--orange-d); font-weight: 700; }
-
-  /* ---- DATA BOXES ---- */
-  .data-boxes {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    padding: 0 5vw 5rem;
-  }
-  .data-box {
-    background: var(--dark);
-    padding: 2rem 1.5rem;
-    border-top: 4px solid var(--orange);
-  }
-  .data-num {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 900;
-    color: var(--orange);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-  }
-  .data-text {
-    font-size: 0.9rem;
-    line-height: 1.65;
-    color: rgba(255,248,244,0.7);
-  }
-  @media (max-width: 700px) {
-    .data-boxes { grid-template-columns: 1fr; }
+  .tappa-stats {
+    width: 100%;
   }
 
-  /* ---- QUOTE ---- */
-  .quote-block {
-    background: var(--orange);
-    padding: 4rem 5vw;
-    position: relative;
-    overflow: hidden;
-  }
-  .quote-block::before {
-    content: '"';
-    position: absolute;
-    top: -0.25em;
-    left: 3vw;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 18rem;
-    color: rgba(0,0,0,0.1);
-    line-height: 1;
-    pointer-events: none;
-    font-weight: 900;
-  }
-  .q-art {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(255,248,244,0.7);
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-  .q-text {
-    font-family: 'Barlow', sans-serif;
-    font-size: clamp(1.2rem, 3vw, 1.9rem);
-    font-style: italic;
-    font-weight: 700;
-    color: var(--offwhite);
-    line-height: 1.6;
-    max-width: 780px;
-    position: relative;
-  }
-  .q-source {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: rgba(255,248,244,0.6);
-    margin-top: 2rem;
-    position: relative;
+  .tappa-stat {
+    text-align: left;
   }
 
-  /* ---- WBR SECTION ---- */
-  .wbr-section {
-    padding: 5rem 5vw;
-    background: var(--light);
-  }
-  .wbr-facts {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .wbr-fact {
-    background: white;
-    padding: 1.8rem;
-    border-left: 4px solid var(--orange);
-  }
-  .af-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--orange-d);
-    margin-bottom: 0.5rem;
-  }
-  .af-text {
-    font-size: 0.9rem;
-    line-height: 1.65;
-    color: #2A2A2A;
-  }
-  @media (max-width: 600px) {
-    .wbr-facts { grid-template-columns: 1fr; }
+  .tappa-inline-info {
+    display: block;
+    margin-left: 0;
+    margin-top: 0.4rem;
+    line-height: 1.7;
   }
 
-  /* ---- DONA ---- */
-  .dona-section {
-    background: var(--dark);
-    padding: 4rem 5vw;
+  .tappa-route {
+    padding-bottom: 0;
   }
-  .dona-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(2rem, 4.5vw, 3rem);
-    font-weight: 900;
-    color: var(--offwhite);
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    margin-bottom: 0.5rem;
-  }
-  .dona-sub {
-    font-size: 0.95rem;
-    color: rgba(255,248,244,0.55);
-    margin-bottom: 2rem;
-  }
-  .dona-steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-top: 2.5rem;
-  }
-  .d-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    color: var(--orange);
-    margin-bottom: 0.5rem;
-  }
-  .d-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--offwhite);
-    margin-bottom: 0.5rem;
-  }
-  .d-text {
-    font-size: 0.9rem;
-    line-height: 1.65;
-    color: rgba(255,248,244,0.6);
-    margin-bottom: 1rem;
-  }
-  .btn-orange-sm {
-    display: inline-block;
-    background: var(--orange);
-    color: var(--offwhite);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 0.82rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.5rem 1.3rem;
-    border-radius: 2px;
-    text-decoration: none;
-  }
-  @media (max-width: 700px) {
-    .dona-steps { grid-template-columns: 1fr; }
-  }
+}
 
-  /* ---- FOOTER ---- */
-  .footer {
-    background: #0A0A0A;
-    padding: 3rem 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    flex-wrap: wrap;
-    border-top: 2px solid var(--orange);
-  }
-  .footer-logo {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--offwhite);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .footer-logo span { color: var(--orange); }
-  .footer-copy {
-    font-size: 0.8rem;
-    color: rgba(255,248,244,0.4);
-    line-height: 1.6;
-    text-align: right;
-  }
-  .footer-copy a { color: var(--orange); text-decoration: none; }
-  
-  /* ---- PROGRESS BAR ---- */
-  .progress-section {
-    background: #111;
-    padding: 2.5rem 5vw;
-    border-top: 1px solid rgba(240,90,40,0.2);
-  }
-  .progress-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 1rem;
-  }
-  .progress-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--orange);
-  }
-  .progress-amounts {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--offwhite);
-  }
-  .progress-raised { color: var(--orange); font-size: 1.4rem; }
-  .progress-sep { color: rgba(255,248,244,0.3); margin: 0 0.4rem; font-size: 0.9rem; }
-  .progress-track {
-    background: #2A2A2A;
-    height: 12px;
-    border-radius: 6px;
-    overflow: visible;
-    position: relative;
-  }
-  .progress-fill {
-    background: var(--orange);
-    height: 100%;
-    border-radius: 6px;
-    transition: width 1s ease;
-    min-width: 0%;
-    position: relative;
-  }
-  .progress-bike {
-    position: absolute;
-    top: 50%;
-    left: 0%;
-    transform: translate(-50%, -50%);
-    font-size: 1.4rem;
-    line-height: 1;
-    filter: drop-shadow(0 0 4px rgba(240,90,40,0.6));
-  }
-  .progress-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0.8rem;
-  }
-  .progress-pct {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    color: rgba(255,248,244,0.4);
-  }
-  .progress-bikes {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--orange);
-    letter-spacing: 0.04em;
-  }
+// ---- AGGIORNA CONTATORI TAPPA ----
+function updateTappa(t) {
+  if (!t || t.day === 0) return;
 
-  /* ---- CONTATORI VIAGGIO ---- */
-  .trip-counters {
-    background: var(--dark);
-    padding: 2rem 5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-  }
-  .trip-counter {
-    flex: 1;
-    text-align: center;
-    padding: 1rem;
-  }
-  .trip-counter-val {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 900;
-    color: var(--orange);
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-  .trip-counter-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,248,244,0.35);
-    margin-top: 0.5rem;
-    line-height: 1.5;
-  }
-  .trip-counter-divider {
-    width: 1px;
-    height: 3rem;
-    background: rgba(240,90,40,0.2);
-    flex-shrink: 0;
-  }
-  @media (max-width: 500px) {
-    .trip-counters { gap: 0; }
-    .trip-counter-val { font-size: 1.8rem; }
-  }
+  const sec = document.getElementById('tappa-section');
 
-  /* ---- TAPPA DEL GIORNO ---- */
-  .tappa-section {
-    background: #111;
-    border-top: 2px solid var(--orange);
-    border-bottom: 2px solid var(--orange);
-    padding: 2rem 5vw;
+  if (sec) {
+    sec.style.display = 'block';
+
+    const el = (id) => document.getElementById(id);
+
+    // Giorno
+    if (el('tappa-day-num')) {
+      el('tappa-day-num').textContent =
+        'GIORNO ' + String(t.day).padStart(2,'0');
+    }
+
+    // Route
+    if (el('tappa-route')) {
+      el('tappa-route').textContent =
+        t.from && t.to ? t.from + ' → ' + t.to : '';
+    }
+
+    // KM oggi
+    if (el('tappa-km')) {
+      el('tappa-km').textContent = t.km + ' km';
+    }
+
+    // Dislivello oggi
+    if (el('tappa-dis')) {
+      el('tappa-dis').textContent = '↑' + t.dislivello + 'm';
+    }
+
+    // Totali integrati
+    if (el('cnt-tappe')) {
+      el('cnt-tappe').textContent = t.tappe;
+    }
+
+    if (el('cnt-km')) {
+      el('cnt-km').textContent = t.totKm + ' km';
+    }
+
+    if (el('cnt-dis')) {
+      el('cnt-dis').textContent = '↑' + t.totDis + ' m';
+    }
   }
-  .tappa-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    flex-wrap: wrap;
-    max-width: 900px;
-  }
-  .tappa-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 0.5rem;
-  }
-  .tappa-day {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(3rem, 8vw, 5rem);
-    font-weight: 900;
-    color: var(--offwhite);
-    line-height: 1;
-    letter-spacing: -0.
+}
+
+
+
+
