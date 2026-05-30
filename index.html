@@ -534,39 +534,18 @@
   }
 
   /* ---- TAPPA DEL GIORNO ---- */
-  .tappa-section {
-    background: #111;
+  /* ---- LIVE SECTIONS ---- */
+  .live-section {
+    background: #0D0D0D;
     border-top: 2px solid var(--orange);
-    border-bottom: 2px solid var(--orange);
-    padding: 2rem 5vw;
+    padding: 1.2rem 5vw;
+    text-align: center;
   }
-  .tappa-section {
-    background: #111;
-    border-top: 2px solid var(--orange);
-    border-bottom: 2px solid var(--orange);
-    padding: 1.8rem 5vw;
+  .live-section-alt {
+    background: #0D0D0D;
+    border-top: 1px solid rgba(240,90,40,0.2);
   }
-  .tappa-wrapper {
-    display: flex;
-    align-items: stretch;
-    gap: 0;
-    max-width: 900px;
-  }
-  .tappa-half {
-    flex: 0 0 calc(50% - 1px);
-    width: calc(50% - 1px);
-    padding: 0 2rem;
-    box-sizing: border-box;
-  }
-  .tappa-half:first-child { padding-left: 0; }
-  .tappa-half:last-child  { padding-right: 0; }
-  .tappa-vdivider {
-    width: 1px;
-    background: rgba(240,90,40,0.25);
-    flex-shrink: 0;
-    align-self: stretch;
-  }
-  .tappa-label {
+  .live-label {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.6rem;
     letter-spacing: 0.25em;
@@ -574,73 +553,49 @@
     color: var(--orange);
     margin-bottom: 0.6rem;
   }
-  .tappa-inline-stat {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1rem, 2.2vw, 1.4rem);
-    font-weight: 700;
-    color: var(--orange);
-    letter-spacing: 0.03em;
-    white-space: nowrap;
-  }
-  .tappa-inline-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(255,248,244,0.35);
-    vertical-align: middle;
-  }
-  .tappa-day-row {
+  .live-row {
     display: flex;
     align-items: baseline;
-    gap: 0.8rem;
+    justify-content: center;
+    gap: 0.6rem;
     flex-wrap: wrap;
-    margin-bottom: 0.4rem;
   }
-  .tappa-day {
+  .live-big {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
     font-weight: 900;
     color: var(--offwhite);
     line-height: 1;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
   }
-  .tappa-route {
+  .live-route {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
     font-weight: 700;
     color: rgba(255,248,244,0.6);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
   }
-  .tappa-stats {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
+  .live-sep {
+    color: rgba(240,90,40,0.4);
+    font-size: 1rem;
   }
-  .tappa-stat { text-align: center; }
-  .tappa-stat-val {
+  .live-stat {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    font-weight: 900;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: 700;
     color: var(--orange);
-    line-height: 1;
+    white-space: nowrap;
   }
-  .tappa-stat-label {
+  .live-sublabel {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.5rem;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(255,248,244,0.35);
-    margin-top: 0.3rem;
-  }
-  @media (max-width: 600px) {
-    .tappa-wrapper { flex-direction: column; gap: 1.5rem; }
-    .tappa-half { padding: 0; }
-    .tappa-vdivider { width: 100%; height: 1px; align-self: auto; }
-    .tappa-stats { gap: 1rem; }
+    color: rgba(255,248,244,0.3);
+    vertical-align: middle;
+    margin-left: 0.2rem;
   }
 
 
@@ -752,44 +707,34 @@
   </div>
 </div>
 
-<!-- TAPPA DEL GIORNO + CONTATORI -->
-<div class="tappa-section" id="tappa-section" style="display:none;">
-  <div class="tappa-wrapper">
+<!-- TAPPA DEL GIORNO + TOTALI: due sezioni separate -->
+<div id="tappa-section" style="display:none;">
 
-    <!-- SINISTRA: tappa del giorno -->
-    <div class="tappa-half">
-      <div class="tappa-label">In viaggio · Tappa del giorno</div>
-      <div class="tappa-day-row">
-        <span class="tappa-day" id="tappa-day-num">—</span>
-        <span class="tappa-route" id="tappa-route">—</span>
-        <span class="tappa-inline-stat"><span id="tappa-km">—</span> <span class="tappa-inline-label">km oggi</span></span>
-        <span class="tappa-inline-stat"><span id="tappa-dis">—</span></span>
-      </div>
+  <!-- SEZIONE 1: Tappa del giorno -->
+  <div class="live-section">
+    <div class="live-label">In viaggio · Tappa del giorno</div>
+    <div class="live-row">
+      <span class="live-big" id="tappa-day-num">—</span>
+      <span class="live-sep">·</span>
+      <span class="live-route" id="tappa-route">—</span>
+      <span class="live-sep">·</span>
+      <span class="live-stat"><span id="tappa-km">—</span> <span class="live-sublabel">km oggi</span></span>
+      <span class="live-stat"><span id="tappa-dis">—</span></span>
     </div>
-
-    <!-- DIVISORE VERTICALE -->
-    <div class="tappa-vdivider"></div>
-
-    <!-- DESTRA: totali -->
-    <div class="tappa-half">
-      <div class="tappa-label">Il viaggio · Fin qui</div>
-      <div class="tappa-stats">
-        <div class="tappa-stat">
-          <div class="tappa-stat-val" id="cnt-tappe">—</div>
-          <div class="tappa-stat-label">tappe percorse</div>
-        </div>
-        <div class="tappa-stat">
-          <div class="tappa-stat-val" id="cnt-km">—</div>
-          <div class="tappa-stat-label">km percorsi</div>
-        </div>
-        <div class="tappa-stat">
-          <div class="tappa-stat-val" id="cnt-dis">—</div>
-          <div class="tappa-stat-label">dislivello effettuato</div>
-        </div>
-      </div>
-    </div>
-
   </div>
+
+  <!-- SEZIONE 2: Fin qui -->
+  <div class="live-section live-section-alt">
+    <div class="live-label">Il viaggio · Fin qui</div>
+    <div class="live-row">
+      <span class="live-big">TAPPE <span id="cnt-tappe">—</span></span>
+      <span class="live-sep">·</span>
+      <span class="live-stat"><span id="cnt-km">—</span> <span class="live-sublabel">km percorsi</span></span>
+      <span class="live-sep">·</span>
+      <span class="live-stat"><span id="cnt-dis">—</span> <span class="live-sublabel">dislivello effettuato</span></span>
+    </div>
+  </div>
+
 </div>
 
 <!-- PROGRESS BAR -->
@@ -1120,7 +1065,7 @@
     if (!t || t.day === 0) return;
     const el = (id) => document.getElementById(id);
     if (el('tappa-section')) el('tappa-section').style.display = 'block';
-    if (el('tappa-day-num')) el('tappa-day-num').textContent = 'GIORNO ' + String(t.day).padStart(2,'0');
+    if (el('tappa-day-num')) el('tappa-day-num').textContent = 'GIORNO ' + t.day;
     if (el('tappa-route'))   el('tappa-route').textContent   = t.from && t.to ? t.from + ' → ' + t.to : '';
     if (el('tappa-km'))      el('tappa-km').textContent      = t.km + ' km';
     if (el('tappa-dis'))     el('tappa-dis').textContent     = '↑' + t.dislivello + 'm';
