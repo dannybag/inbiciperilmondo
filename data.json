@@ -4,15 +4,15 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 2,
-    "from": "Parma",
-    "to": "Bologna",
-    "km": 132,
-    "dislivello": 300,
-    "updated": "2026-06-02T12:44:07.262Z",
-    "totKm": 274,
-    "totDis": 510,
-    "tappe": 2
+    "day": 3,
+    "from": "Bologna",
+    "to": "Firenze ",
+    "km": 92,
+    "dislivello": 111,
+    "updated": "2026-06-02T12:45:36.602Z",
+    "totKm": 366,
+    "totDis": 621,
+    "tappe": 3
   },
   "tappe": [
     {
@@ -30,6 +30,14 @@
       "km": 132,
       "dislivello": 300,
       "updated": "2026-06-02T12:44:07.262Z"
+    },
+    {
+      "day": 3,
+      "from": "Bologna",
+      "to": "Firenze ",
+      "km": 92,
+      "dislivello": 111,
+      "updated": "2026-06-02T12:45:36.602Z"
     }
   ]
 }
