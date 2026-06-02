@@ -39,62 +39,43 @@ jobs:
 
             console.log('--- WBR Fundraising Scraper ---');
             console.log('Data/ora:', new Date().toISOString());
-            console.log('URL:', 'https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo?tab=overview');
 
             await page.goto('https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo?tab=overview', {
               waitUntil: 'networkidle',
               timeout: 30000
             });
 
-            // Dump testo visibile della pagina per debug
+            // Dump testo visibile per debug
             const bodyText = await page.evaluate(() => document.body.innerText);
-            console.log('\n--- TESTO PAGINA (prime 1000 chars) ---');
-            console.log(bodyText.slice(0, 1000));
+            console.log('\n--- TESTO PAGINA ---');
+            console.log(bodyText.slice(0, 2000));
 
-            // Cerca l'importo raccolto nella pagina
+            // Cerca "collected" nel testo e prendi il numero prima
             let raised = 0;
-            let foundSelector = 'nessuno';
+            let goal = 1700;
 
-            const selectors = [
-              '[class*="raised"]',
-              '[class*="amount"]',
-              '[class*="collected"]',
-              '[data-testid*="raised"]',
-              '[class*="total"]',
-              '[class*="goal"]',
-              '[class*="progress"]',
-              '[class*="donation"]',
-              '[class*="funded"]'
-            ];
+            // Cerca pattern tipo "EUR 0 collected" o "€0 collected" o "0 collected"
+            const collectedMatch = bodyText.match(/(?:EUR|€|euro)?\s*([\d,.']+)\s*collected/i);
+            if (collectedMatch) {
+              raised = parseInt(collectedMatch[1].replace(/[,.']/g, '')) || 0;
+              console.log('\nTrovato "collected":', collectedMatch[0], '→ €' + raised);
+            } else {
+              console.log('\n⚠ Pattern "collected" non trovato nel testo');
+            }
 
-            console.log('\n--- RICERCA SELETTORI ---');
-            for (const sel of selectors) {
-              try {
-                const els = await page.$$(sel);
-                if (els.length > 0) {
-                  for (const el of els) {
-                    const text = await el.textContent();
-                    console.log(`Selettore "${sel}": "${text.trim().slice(0, 80)}"`);
-                    const match = text.match(/[\d.,]+/);
-                    if (match && raised === 0) {
-                      const val = parseInt(match[0].replace(/[.,]/g, '')) || 0;
-                      if (val > 0) {
-                        raised = val;
-                        foundSelector = sel;
-                      }
-                    }
-                  }
-                }
-              } catch(e) {
-                console.log(`Selettore "${sel}": errore - ${e.message}`);
-              }
+            // Cerca anche il goal per aggiornarlo se cambia
+            const goalMatch = bodyText.match(/(?:EUR|€|euro)?\s*([\d,.']+)\s*goal/i);
+            if (goalMatch) {
+              const g = parseInt(goalMatch[1].replace(/[,.']/g, '')) || 0;
+              if (g > 0) goal = g;
+              console.log('Trovato "goal":', goalMatch[0], '→ €' + goal);
             }
 
             await browser.close();
 
             console.log('\n--- RISULTATO ---');
-            console.log('Selettore usato:', foundSelector);
-            console.log('Importo trovato: €' + raised);
+            console.log('Importo raccolto: €' + raised);
+            console.log('Goal: €' + goal);
 
             // Leggi data.json corrente
             let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {} };
@@ -105,15 +86,15 @@ jobs:
               console.log('data.json non trovato, uso default');
             }
 
-            // Aggiorna solo se il valore è > 0 e diverso da quello attuale
-            if (raised > 0 && raised !== data.fundraising.raised) {
+            // Aggiorna sempre raised (anche se 0) e goal
+            const changed = (raised !== data.fundraising.raised) || (goal !== data.fundraising.goal);
+            if (changed) {
               data.fundraising.raised = raised;
+              data.fundraising.goal = goal;
               fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
-              console.log('✓ data.json aggiornato con €' + raised);
-            } else if (raised === 0) {
-              console.log('⚠ Importo 0 o non trovato — data.json non modificato');
+              console.log('✓ data.json aggiornato');
             } else {
-              console.log('= Nessuna variazione — data.json non modificato');
+              console.log('= Nessuna variazione');
             }
           })();
           EOF
