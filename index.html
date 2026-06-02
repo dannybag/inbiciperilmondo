@@ -1090,8 +1090,13 @@
 
   // ---- AGGIORNA CONTATORI TAPPA ----
   function updateTappa(t) {
-    if (!t || t.day === 0) return;
     const el = (id) => document.getElementById(id);
+    if (!t || t.day === 0) {
+      if (el('tappa-section')) el('tappa-section').style.display = 'none';
+      ['tappa-day-num','tappa-route','tappa-km','tappa-dis','cnt-tappe','cnt-km','cnt-dis']
+        .forEach(id => { if(el(id)) el(id).textContent = '—'; });
+      return;
+    }
     if (el('tappa-section')) el('tappa-section').style.display = 'block';
     if (el('tappa-day-num')) el('tappa-day-num').textContent = t.day;
     if (el('tappa-route'))   el('tappa-route').textContent   = t.from && t.to ? t.from + ' → ' + t.to : '';
@@ -1254,23 +1259,33 @@
   async function tapDelete(day) {
     if (!confirm('Eliminare la tappa del giorno ' + day + '?')) return;
     const token = localStorage.getItem('gh-token') || '';
-    if (!token) { alert('Token non trovato. Aprire TAP e inserire il token.'); return; }
+    if (!token) { alert('Inserisci il token GitHub nel pannello TAP prima di eliminare.'); return; }
+
     _tappeList = _tappeList.filter(t => t.day !== day);
     _tappeList.sort((a,b) => a.day - b.day);
     const tots = tapCalcTotals(_tappeList);
-    const lastTappa = _tappeList.length > 0 ? { ..._tappeList[_tappeList.length-1], ...tots } : { day:0, from:'', to:'', km:0, dislivello:0, totKm:0, totDis:0, tappe:0, updated:'' };
     _prev = { totKm: tots.totKm, totDis: tots.totDis, tappe: tots.tappe };
+
+    // Mostra sempre l'ultima tappa rimasta (o nascondi se lista vuota)
+    let displayTappa;
+    if (_tappeList.length > 0) {
+      const last = _tappeList[_tappeList.length - 1];
+      displayTappa = { ...last, ...tots };
+    } else {
+      displayTappa = { day: 0 };
+    }
+
+    // Aggiorna subito il display senza aspettare GitHub
+    updateTappa(displayTappa);
+    tapShowHistory();
+
     document.getElementById('tap-msg').textContent = 'Salvataggio...';
-    let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {}, tappe: [] };
+    let data = { fundraising: { raised: 0, goal: 1700 }, tappa: displayTappa, tappe: _tappeList };
     try {
       const r = await fetch(GH_API, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, cache: 'no-store' });
-      if (r.ok) { const m = await r.json(); data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(m.content.replace(/\n/g,'')), c => c.charCodeAt(0)))); }
+      if (r.ok) { const m = await r.json(); const existing = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(m.content.replace(/\n/g,'')), c => c.charCodeAt(0)))); data.fundraising = existing.fundraising || data.fundraising; }
     } catch(e) {}
-    data.tappe = _tappeList;
-    data.tappa = lastTappa;
     await saveToGitHub(data, token, document.getElementById('tap-msg'));
-    updateTappa(lastTappa);
-    tapShowHistory();
   }
 
   // Chiudi pannelli cliccando fuori
