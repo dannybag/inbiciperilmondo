@@ -876,13 +876,13 @@
     <div class="dona-step">
       <div class="d-num">Passo 01</div>
       <div class="d-title">Scopri WBR</div>
-      <div class="d-text">Visita il sito per conoscere il progetto <strong>Buffalo</strong> e le comunità che cambiano grazie a una bici.</div>
+      <div class="d-text">Visita il sito <strong>World Bicycle Relief</strong> per conoscere il progetto <strong>Buffalo</strong> e le comunità che cambiano grazie ad una bicicletta.</div>
       <a href="https://worldbicyclerelief.org" class="btn-orange-sm" target="_blank">worldbicyclerelief.org</a>
     </div>
     <div class="dona-step">
       <div class="d-num">Passo 02</div>
       <div class="d-title">Dona</div>
-      <div class="d-text">Ogni euro raccolto va all'acquisto di biciclette <strong>Buffalo</strong>. Con 147€ ne compri una intera.</div>
+      <div class="d-text">La donazione avviene direttamente su World Bicycle Relief e ogni euro raccolto va all'acquisto di biciclette Buffalo.</div>
       <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="btn-orange-sm" target="_blank">Dona ora</a>
     </div>
     <div class="dona-step">
@@ -1301,10 +1301,19 @@
       const existing = await fetch(GH_TRIGGER, { headers, cache: 'no-store' });
       if (existing.ok) { const d = await existing.json(); sha = d.sha; }
       const content = btoa(new Date().toISOString());
-      const body = { message: 'TAP update', content };
+      const body = { message: 'TAP update ' + new Date().toISOString().slice(0,16), content };
       if (sha) body.sha = sha;
-      await fetch(GH_TRIGGER, { method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-    } catch(e) {}
+      const res = await fetch(GH_TRIGGER, { method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      if (res.ok) {
+        document.getElementById('tap-msg').textContent = '✓ Salvato · Workflow avviato';
+      } else {
+        const err = await res.json();
+        console.error('tap.trigger error:', err);
+        document.getElementById('tap-msg').textContent = '✓ Salvato (workflow: ' + (err.message || res.status) + ')';
+      }
+    } catch(e) {
+      console.error('writeTriggerFile:', e);
+    }
   }
 
   // ---- SHIFT shortcuts ----
