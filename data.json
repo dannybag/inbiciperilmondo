@@ -1,17 +1,18 @@
 {
   "fundraising": {
-    "raised": 150,
+    "raised": 0,
     "goal": 1700
   },
   "tappa": {
-    "day": 2,
-    "from": "Parma",
-    "to": "Bologna",
-    "km": 106,
-    "dislivello": 210,
-    "totKm": 248,
-    "totDis": 430,
-    "tappe": 2,
-    "updated": "2026-05-29T15:24:51.571Z"
-  }
+    "day": 0,
+    "from": "",
+    "to": "",
+    "km": 0,
+    "dislivello": 0,
+    "totKm": 0,
+    "totDis": 0,
+    "tappe": 0,
+    "updated": ""
+  },
+  "tappe": []
 }

@@ -934,53 +934,75 @@
 
 <!-- TAP: INSTAGRAM TAPPA -->
 <div id="tap-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:9999; align-items:center; justify-content:center; overflow-y:auto; padding:2rem 0;">
-  <div style="background:#1A1A1A; border:2px solid #F05A28; border-radius:8px; padding:2.5rem; width:420px; max-width:92vw;">
-    <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#F05A28; margin-bottom:2rem;">🚴 TAP · Tappa del giorno</div>
+  <div style="background:#1A1A1A; border:2px solid #F05A28; border-radius:8px; padding:2rem; width:460px; max-width:92vw;">
 
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
-      <div>
-        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Giorno</label>
-        <input id="tap-day" type="number" min="1" max="30" value="1" oninput="tapRefresh()"
-          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.5); color:#F05A28; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
-      </div>
-      <div>
-        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Km tappa</label>
-        <input id="tap-km" type="number" min="0" value="0" oninput="tapRefresh()"
-          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
+    <!-- HEADER con tabs -->
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem;">
+      <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#F05A28;">🚴 TAP · Tappe</div>
+      <div style="display:flex; gap:0.4rem;">
+        <button id="tap-tab-new" onclick="tapShowForm(null)" style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:3px; cursor:pointer; background:#F05A28; color:#FFF8F4; border:none;">+ Nuova</button>
+        <button id="tap-tab-hist" onclick="tapShowHistory()" style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:3px; cursor:pointer; background:transparent; color:rgba(255,248,244,0.4); border:1px solid rgba(255,248,244,0.15);">Storico</button>
       </div>
     </div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
-      <div>
-        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Da</label>
-        <input id="tap-from" type="text" value="Milano"
-          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.95rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
-      </div>
-      <div>
-        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">A</label>
-        <input id="tap-to" type="text" value=""
-          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.95rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
-      </div>
-    </div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
-      <div>
-        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Dislivello tappa (m)</label>
-        <input id="tap-dis" type="number" min="0" value="0" oninput="tapRefresh()"
-          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
-      </div>
-      <div style="display:flex; flex-direction:column; justify-content:center; gap:0.6rem; padding:0.5rem 0;">
+
+    <!-- FORM inserimento/modifica -->
+    <div id="tap-form">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
         <div>
-          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; color:rgba(255,248,244,0.25); text-transform:uppercase; letter-spacing:0.1em;">Tappe · Km tot · Dis tot</div>
-          <div id="tap-totals" style="font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:700; color:rgba(240,90,40,0.8); margin-top:0.3rem;">— · — · —</div>
+          <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Giorno</label>
+          <input id="tap-day" type="number" min="1" max="30" value="1" oninput="tapRefresh()"
+            style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.5); color:#F05A28; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
+        </div>
+        <div>
+          <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Km tappa</label>
+          <input id="tap-km" type="number" min="0" value="0" oninput="tapRefresh()"
+            style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
         </div>
       </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+        <div>
+          <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Da</label>
+          <input id="tap-from" type="text" value="Milano"
+            style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.95rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
+        </div>
+        <div>
+          <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">A</label>
+          <input id="tap-to" type="text" value=""
+            style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.95rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+        <div>
+          <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Dislivello (m)</label>
+          <input id="tap-dis" type="number" min="0" value="0" oninput="tapRefresh()"
+            style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
+        </div>
+        <div style="display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; color:rgba(255,248,244,0.25); text-transform:uppercase; letter-spacing:0.1em;">Dopo salvataggio</div>
+          <div id="tap-totals" style="font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; color:rgba(240,90,40,0.8); margin-top:0.3rem;">— · — · —</div>
+        </div>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">GitHub Token</label>
+        <input id="tap-token" type="password" placeholder="ghp_..."
+          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; padding:0.5rem 0.8rem; border-radius:4px; outline:none;">
+      </div>
+      <div style="display:flex; gap:1rem;">
+        <button onclick="tapSave()" style="flex:1; background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:none; border-radius:4px; cursor:pointer;">Salva</button>
+        <button onclick="tapClose()" style="flex:1; background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Annulla</button>
+      </div>
     </div>
 
-    <div style="display:flex; gap:1rem; margin-top:0.5rem;">
-      <button onclick="tapSave()" style="flex:1; background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:none; border-radius:4px; cursor:pointer;">Salva</button>
-      <button onclick="tapClose()" style="flex:1; background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Annulla</button>
+    <!-- STORICO tappe -->
+    <div id="tap-history" style="display:none;">
+      <div id="tap-history-list" style="max-height:380px; overflow-y:auto;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:rgba(255,248,244,0.25); text-align:center; padding:2rem;">Nessuna tappa registrata</div>
+      </div>
+      <button onclick="tapClose()" style="width:100%; margin-top:1.2rem; background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Chiudi</button>
     </div>
+
     <div id="tap-msg" style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:#F05A28; margin-top:1rem; text-align:center; min-height:1rem;"></div>
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:rgba(255,248,244,0.15); margin-top:1.5rem; text-align:center;">SHIFT + TAP per aprire</div>
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:rgba(255,248,244,0.15); margin-top:1rem; text-align:center;">SHIFT + TAP per aprire</div>
   </div>
 </div>
 
@@ -993,6 +1015,7 @@
 
   // Totali precedenti caricati da GitHub al load
   let _prev = { totKm: 0, totDis: 0, tappe: 0 };
+  let _tappeList = [];
 
   // ---- LEGGI DA GITHUB (via API, nessuna cache CDN) ----
   async function loadFromGitHub() {
@@ -1005,10 +1028,12 @@
       const meta = await res.json();
       const data = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g,'')))));
       if (data.fundraising) updateBar(data.fundraising.raised || 0, data.fundraising.goal || 1700);
-      if (data.tappa && data.tappa.day > 0) {
-        _prev = { totKm: data.tappa.totKm || 0, totDis: data.tappa.totDis || 0, tappe: data.tappa.tappe || 0 };
-        updateTappa(data.tappa);
+      if (data.tappe && data.tappe.length > 0) {
+        _tappeList = data.tappe;
+        const tots = tapCalcTotals(_tappeList);
+        _prev = { totKm: tots.totKm, totDis: tots.totDis, tappe: tots.tappe };
       }
+      if (data.tappa && data.tappa.day > 0) updateTappa(data.tappa);
     } catch(e) {
       // fallback localStorage
       try {
@@ -1104,25 +1129,90 @@
   }
 
   // ---- TAP PANEL ----
-  function openAdm1() {
-    document.getElementById('tap-day').value   = _prev.tappe + 1;
-    document.getElementById('tap-km').value    = 0;
-    document.getElementById('tap-dis').value   = 0;
-    document.getElementById('tap-from').value  = localStorage.getItem('tap-last-to') || 'Milano';
-    document.getElementById('tap-to').value    = '';
-    document.getElementById('tap-token') && (document.getElementById('tap-token').value = localStorage.getItem('gh-token') || '');
+  // Array storico tappe (caricato da GitHub)
+  let _tappeList = [];
+
+  function tapCalcTotals(list) {
+    return list.reduce((acc, t) => ({
+      totKm:  acc.totKm  + (parseInt(t.km) || 0),
+      totDis: acc.totDis + (parseInt(t.dislivello) || 0),
+      tappe:  acc.tappe  + 1
+    }), { totKm: 0, totDis: 0, tappe: 0 });
+  }
+
+  function tapShowForm(tappa) {
+    // tappa = null per nuova, oppure oggetto per modifica
+    document.getElementById('tap-form').style.display = 'block';
+    document.getElementById('tap-history').style.display = 'none';
+    document.getElementById('tap-tab-new').style.background = '#F05A28';
+    document.getElementById('tap-tab-new').style.color = '#FFF8F4';
+    document.getElementById('tap-tab-hist').style.background = 'transparent';
+    document.getElementById('tap-tab-hist').style.color = 'rgba(255,248,244,0.4)';
+    if (tappa) {
+      document.getElementById('tap-day').value  = tappa.day;
+      document.getElementById('tap-km').value   = tappa.km;
+      document.getElementById('tap-dis').value  = tappa.dislivello;
+      document.getElementById('tap-from').value = tappa.from;
+      document.getElementById('tap-to').value   = tappa.to;
+    } else {
+      // Nuova tappa: giorno successivo all'ultimo
+      const nextDay = _tappeList.length > 0 ? Math.max(..._tappeList.map(t=>t.day)) + 1 : 1;
+      document.getElementById('tap-day').value  = nextDay;
+      document.getElementById('tap-km').value   = 0;
+      document.getElementById('tap-dis').value  = 0;
+      document.getElementById('tap-from').value = localStorage.getItem('tap-last-to') || 'Milano';
+      document.getElementById('tap-to').value   = '';
+    }
     document.getElementById('tap-msg').textContent = '';
-    document.getElementById('tap-totals').textContent = 'Totali attuali: ' + _prev.tappe + ' tappe · ' + _prev.totKm + ' km · ↑' + _prev.totDis + 'm';
+    tapRefresh();
+  }
+
+  function tapShowHistory() {
+    document.getElementById('tap-form').style.display = 'none';
+    document.getElementById('tap-history').style.display = 'block';
+    document.getElementById('tap-tab-hist').style.background = '#F05A28';
+    document.getElementById('tap-tab-hist').style.color = '#FFF8F4';
+    document.getElementById('tap-tab-new').style.background = 'transparent';
+    document.getElementById('tap-tab-new').style.color = 'rgba(255,248,244,0.4)';
+    const list = document.getElementById('tap-history-list');
+    if (_tappeList.length === 0) {
+      list.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.6rem; color:rgba(255,248,244,0.25); text-align:center; padding:2rem;">Nessuna tappa registrata</div>';
+      return;
+    }
+    const sorted = [..._tappeList].sort((a,b) => b.day - a.day);
+    list.innerHTML = sorted.map(t => `
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:0.7rem 0; border-bottom:1px solid rgba(240,90,40,0.1); gap:0.5rem;">
+        <div>
+          <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; font-weight:700; color:#F05A28;">G${t.day}</span>
+          <span style="font-family:'Barlow',sans-serif; font-size:0.8rem; color:rgba(255,248,244,0.7); margin-left:0.5rem;">${t.from} → ${t.to}</span>
+          <br>
+          <span style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:rgba(255,248,244,0.35);">${t.km} km · ↑${t.dislivello}m</span>
+        </div>
+        <div style="display:flex; gap:0.4rem; flex-shrink:0;">
+          <button onclick="tapShowForm(${JSON.stringify(t).replace(/"/g,'&quot;')})" style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; padding:0.3rem 0.7rem; background:transparent; border:1px solid rgba(240,90,40,0.5); color:#F05A28; border-radius:3px; cursor:pointer;">Modifica</button>
+          <button onclick="tapDelete(${t.day})" style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; padding:0.3rem 0.7rem; background:transparent; border:1px solid rgba(255,255,255,0.1); color:rgba(255,248,244,0.3); border-radius:3px; cursor:pointer;">✕</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function openAdm1() {
+    document.getElementById('tap-token').value = localStorage.getItem('gh-token') || '';
+    document.getElementById('tap-msg').textContent = '';
+    tapShowForm(null);
     document.getElementById('tap-overlay').style.display = 'flex';
   }
   function tapClose() { document.getElementById('tap-overlay').style.display = 'none'; }
 
   function tapRefresh() {
+    const day = parseInt(document.getElementById('tap-day').value) || 1;
     const km  = parseInt(document.getElementById('tap-km').value)  || 0;
     const dis = parseInt(document.getElementById('tap-dis').value) || 0;
+    // Simula inserimento/modifica per preview totali
+    const preview = _tappeList.filter(t => t.day !== day);
+    preview.push({ day, km, dislivello: dis });
+    const tots = tapCalcTotals(preview);
     document.getElementById('tap-totals').textContent =
-      'Dopo salvataggio: ' + (_prev.tappe + (km>0?1:0)) + ' tappe · ' +
-      (_prev.totKm + km) + ' km · ↑' + (_prev.totDis + dis) + 'm';
+      tots.tappe + ' tappe · ' + tots.totKm + ' km · ↑' + tots.totDis + 'm';
   }
 
   async function tapSave() {
@@ -1132,24 +1222,54 @@
     const from = document.getElementById('tap-from').value || 'Milano';
     const to   = document.getElementById('tap-to').value   || '';
     const msg  = document.getElementById('tap-msg');
-    const tokenEl = document.getElementById('tap-token');
-    const token = (tokenEl ? tokenEl.value.trim() : '') || localStorage.getItem('gh-token') || '';
+    const token = (document.getElementById('tap-token').value.trim()) || localStorage.getItem('gh-token') || '';
     if (token) localStorage.setItem('gh-token', token);
     if (!token) { msg.textContent = '✗ Inserisci il token GitHub'; return; }
     if (to) localStorage.setItem('tap-last-to', to);
-    const totKm  = _prev.totKm  + km;
-    const totDis = _prev.totDis + dis;
-    const tappe  = _prev.tappe  + (km > 0 ? 1 : 0);
-    const tappa  = { day, from, to, km, dislivello: dis, totKm, totDis, tappe, updated: new Date().toISOString() };
+
+    // Aggiorna array locale (sostituisce o aggiunge)
+    _tappeList = _tappeList.filter(t => t.day !== day);
+    _tappeList.push({ day, from, to, km, dislivello: dis, updated: new Date().toISOString() });
+    _tappeList.sort((a,b) => a.day - b.day);
+
+    // Ricalcola totali dall'array completo
+    const tots = tapCalcTotals(_tappeList);
+    const lastTappa = _tappeList[_tappeList.length - 1];
+    const tappa = { ...lastTappa, ...tots };
+    _prev = { totKm: tots.totKm, totDis: tots.totDis, tappe: tots.tappe };
+
     msg.textContent = 'Salvataggio...';
-    let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {} };
+    let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {}, tappe: [] };
     try {
       const r = await fetch(GH_API, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, cache: 'no-store' });
-      if (r.ok) { const m = await r.json(); const d = JSON.parse(decodeURIComponent(escape(atob(m.content.replace(/\n/g,''))))); data = d; }
+      if (r.ok) { const m = await r.json(); data = JSON.parse(decodeURIComponent(escape(atob(m.content.replace(/\n/g,''))))); }
     } catch(e) {}
+    data.tappe = _tappeList;
     data.tappa = tappa;
     const ok = await saveToGitHub(data, token, msg);
-    if (ok) { _prev = { totKm, totDis, tappe }; updateTappa(tappa); setTimeout(() => tapClose(), 1200); }
+    if (ok) { updateTappa(tappa); setTimeout(() => tapClose(), 1200); }
+  }
+
+  async function tapDelete(day) {
+    if (!confirm('Eliminare la tappa del giorno ' + day + '?')) return;
+    const token = localStorage.getItem('gh-token') || '';
+    if (!token) { alert('Token non trovato. Aprire TAP e inserire il token.'); return; }
+    _tappeList = _tappeList.filter(t => t.day !== day);
+    _tappeList.sort((a,b) => a.day - b.day);
+    const tots = tapCalcTotals(_tappeList);
+    const lastTappa = _tappeList.length > 0 ? { ..._tappeList[_tappeList.length-1], ...tots } : { day:0, from:'', to:'', km:0, dislivello:0, totKm:0, totDis:0, tappe:0, updated:'' };
+    _prev = { totKm: tots.totKm, totDis: tots.totDis, tappe: tots.tappe };
+    document.getElementById('tap-msg').textContent = 'Salvataggio...';
+    let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {}, tappe: [] };
+    try {
+      const r = await fetch(GH_API, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, cache: 'no-store' });
+      if (r.ok) { const m = await r.json(); data = JSON.parse(decodeURIComponent(escape(atob(m.content.replace(/\n/g,''))))); }
+    } catch(e) {}
+    data.tappe = _tappeList;
+    data.tappa = lastTappa;
+    await saveToGitHub(data, token, document.getElementById('tap-msg'));
+    updateTappa(lastTappa);
+    tapShowHistory();
   }
 
   let seq = '';
