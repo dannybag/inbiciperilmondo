@@ -1129,9 +1129,6 @@
   }
 
   // ---- TAP PANEL ----
-  // Array storico tappe (caricato da GitHub)
-  let _tappeList = [];
-
   function tapCalcTotals(list) {
     return list.reduce((acc, t) => ({
       totKm:  acc.totKm  + (parseInt(t.km) || 0),
@@ -1272,12 +1269,16 @@
     tapShowHistory();
   }
 
-  let seq = '';
-  document.addEventListener('keydown', (e) => {
-    if (e.shiftKey) { seq += e.key.toLowerCase(); if (seq.endsWith('fnd')) { seq=''; openAdmin(); } if (seq.endsWith('tap')) { seq=''; openAdm1(); } if (seq.length > 12) seq = seq.slice(-12); } else seq = '';
+  // Chiudi pannelli cliccando fuori
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('fndin-overlay').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('fndin-overlay')) closeAdmin();
+    });
+    document.getElementById('tap-overlay').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('tap-overlay')) tapClose();
+    });
   });
-  document.getElementById('fndin-overlay').addEventListener('click', (e) => { if (e.target === document.getElementById('fndin-overlay')) closeAdmin(); });
-  document.getElementById('tap-overlay').addEventListener('click', (e) => { if (e.target === document.getElementById('tap-overlay')) tapClose(); });
+
   loadFromGitHub();
 </script>
 
