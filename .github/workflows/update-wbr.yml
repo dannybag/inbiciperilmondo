@@ -4,7 +4,9 @@ on:
   schedule:
     - cron: '0 */6 * * *'  # ogni 6 ore (più affidabile su GitHub free)
   push:
-    branches: [ main ]     # gira anche ad ogni push
+    branches: [ main ]
+    paths:
+      - 'tap.trigger'        # parte solo quando TAP aggiorna questo file
   workflow_dispatch:        # avvio manuale dal pannello Actions
 
 jobs:
