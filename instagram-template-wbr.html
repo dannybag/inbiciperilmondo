@@ -673,7 +673,155 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
+// ---- GITHUB CONFIG ----
+const GH_OWNER = 'dannybag';
+const GH_REPO  = 'inbiciperilmondo';
+const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/data.json`;
+
 function pad(n) { return String(n).padStart(2, '0'); }
+
+// Leggi data.json da GitHub
+async function loadFromGitHub() {
+  try {
+    const token = localStorage.getItem('gh-token') || '';
+    const headers = { 'Accept': 'application/vnd.github.v3+json' };
+    if (token) headers['Authorization'] = `token ${token}`;
+    const res = await fetch(GH_API + '?t=' + Date.now(), { headers, cache: 'no-store' });
+    if (!res.ok) throw new Error();
+    const meta = await res.json();
+    const data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(meta.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
+    if (data.tappa && data.tappa.day > 0) {
+      populateFromTappa(data.tappa, data.tappe || []);
+    }
+  } catch(e) {
+    console.log('GitHub load failed, using defaults');
+  }
+}
+
+function populateFromTappa(tappa, tappeList) {
+  document.getElementById('dayNum').value    = tappa.day || 1;
+  document.getElementById('fromCity').value  = tappa.from || 'Milano';
+  document.getElementById('toCity').value    = tappa.to || '';
+  document.getElementById('kmDay').value     = tappa.km || 0;
+  document.getElementById('dislivello').value = tappa.dislivello || 0;
+  document.getElementById('kmTot').value     = tappa.totKm || 0;
+  document.getElementById('dislivelloTot').value = tappa.totDis || 0;
+  update();
+}
+
+function update() {
+  const day = parseInt(document.getElementById('dayNum').value) || 1;
+  const from = document.getElementById('fromCity').value || '—';
+  const to = document.getElementById('toCity').value || '—';
+  const km = parseInt(document.getElementById('kmDay').value) || 0;
+  const dislivello = parseInt(document.getElementById('dislivello').value) || 0;
+  const tot = parseInt(document.getElementById('kmTot').value) || 0;
+  const disTot = parseInt(document.getElementById('dislivelloTot').value) || 0;
+  const pct = Math.min(100, Math.round(tot / 1700 * 100));
+  const dayStr = pad(day);
+  const route = `${from} → ${to}`;
+  const kmStr = `${km} km`;
+  const msgs = ["Ancora\nin sella!", "Le gambe\ngirano!", "Una Buffalo\nin più!", "Non mi\nfermo!", "Palermo\nsi avvicina!"];
+  const msg = msgs[(day - 1) % msgs.length];
+  const tappe = Math.round(tot / (km || 1));
+
+  // Story
+  document.getElementById('s-day-num').textContent = dayStr;
+  document.getElementById('s-from-to').textContent = route;
+  document.getElementById('s-km').textContent = `${kmStr} · ↑${dislivello}m`;
+  document.getElementById('s-badge').textContent = `GIORNO ${dayStr}`;
+  document.getElementById('s-caption').textContent = `${route} · ${kmStr} · ↑${dislivello}m`;
+  document.getElementById('s-prog').style.width = `${pct}%`;
+  document.getElementById('s-close-day').textContent = dayStr;
+  document.getElementById('s-close-sub').innerHTML = `${tot} km · ↑${disTot}m`;
+  document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = msg.replace('\n', '<br>');
+
+  // Post
+  document.getElementById('p-day-num').textContent = dayStr;
+  document.getElementById('p-from-to').textContent = route;
+  document.getElementById('p-km').textContent = `${kmStr} · ↑${dislivello}m`;
+  document.getElementById('p-badge').textContent = `GIORNO ${dayStr}`;
+  document.getElementById('p-caption').textContent = `${route} · ${kmStr} · ↑${dislivello}m`;
+  document.getElementById('p-prog').style.width = `${pct}%`;
+  document.getElementById('p-close-day').textContent = dayStr;
+  document.getElementById('p-close-sub').innerHTML = `${tot} km · ↑${disTot}m`;
+  document.querySelectorAll('.slide-close .close-msg')[1].innerHTML = msg.replace('\n', '<br>');
+}
+
+function admOpen() {
+  document.getElementById('adm-day').value  = document.getElementById('dayNum').value;
+  document.getElementById('adm-from').value = document.getElementById('fromCity').value;
+  document.getElementById('adm-to').value   = document.getElementById('toCity').value;
+  document.getElementById('adm-km').value   = document.getElementById('kmDay').value;
+  document.getElementById('adm-dis').value  = document.getElementById('dislivello').value;
+  admRefreshTotals();
+  document.getElementById('adm-msg').textContent = '';
+  document.getElementById('adm-overlay').style.display = 'flex';
+}
+
+function admRefreshTotals() {
+  document.getElementById('adm-kmtot-display').textContent = document.getElementById('kmTot').value + ' km';
+  document.getElementById('adm-distot-display').textContent = document.getElementById('dislivelloTot').value + ' m';
+}
+
+function admSave() {
+  const day  = parseInt(document.getElementById('adm-day').value) || 1;
+  const km   = parseInt(document.getElementById('adm-km').value)  || 0;
+  const dis  = parseInt(document.getElementById('adm-dis').value) || 0;
+  const from = document.getElementById('adm-from').value || 'Milano';
+  const to   = document.getElementById('adm-to').value   || '';
+  document.getElementById('dayNum').value    = day;
+  document.getElementById('fromCity').value  = from;
+  document.getElementById('toCity').value    = to;
+  document.getElementById('kmDay').value     = km;
+  document.getElementById('dislivello').value = dis;
+  update();
+  document.getElementById('adm-msg').textContent = '✓ Aggiornato!';
+  setTimeout(() => admClose(), 800);
+}
+
+function admClose() {
+  document.getElementById('adm-overlay').style.display = 'none';
+}
+
+document.getElementById('adm-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('adm-overlay')) admClose();
+});
+
+// Download slides
+async function downloadSlides() {
+  const btn = document.getElementById('downloadBtn');
+  btn.textContent = 'Generando...';
+  btn.disabled = true;
+  const day = document.getElementById('dayNum').value || '01';
+  const isPost = document.querySelector('.tab.active').textContent.includes('Post');
+  const allWraps = document.querySelectorAll('.frame-wrap');
+  const slides = isPost
+    ? [ { el: document.querySelector('#wrapPost .frame-post'), name: `giorno${pad(day)}_apertura` },
+        { el: document.querySelector('#wrapPost2 .frame-post'), name: `giorno${pad(day)}_foto` },
+        { el: document.querySelector('#wrapPost3 .frame-post'), name: `giorno${pad(day)}_chiusura` } ]
+    : [ { el: allWraps[0]?.querySelector('.frame-story'), name: `giorno${pad(day)}_apertura` },
+        { el: allWraps[1]?.querySelector('.frame-story'), name: `giorno${pad(day)}_foto` },
+        { el: allWraps[2]?.querySelector('.frame-story'), name: `giorno${pad(day)}_chiusura` } ];
+  for (const slide of slides) {
+    if (!slide.el) continue;
+    try {
+      const canvas = await html2canvas(slide.el, { scale: 4, useCORS: true, backgroundColor: null, logging: false });
+      const link = document.createElement('a');
+      link.download = `WBR_${slide.name}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      await new Promise(r => setTimeout(r, 400));
+    } catch(e) { console.error(e); }
+  }
+  btn.textContent = '⬇ Scarica 3 slides';
+  btn.disabled = false;
+}
+
+loadFromGitHub();
+</script>
+</body>
+</html>
 
 function saveKmForDay(day, km) {
   const data = JSON.parse(localStorage.getItem('wbr-daily-km') || '{}');
