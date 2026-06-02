@@ -1351,14 +1351,21 @@
   let menuOpen = false;
   let authenticated = false;
 
-  // Bottone sempre visibile
+  // Bottone visibile solo in fondo alla pagina
   function checkScroll() {
     const fab = document.getElementById('fab-btn');
-    fab.style.display = 'flex';
-    fab.style.opacity = '1';
+    const scrolled = window.scrollY + window.innerHeight;
+    const total = document.documentElement.scrollHeight;
+    if (scrolled >= total - 80) {
+      fab.style.display = 'flex';
+      setTimeout(() => fab.style.opacity = '1', 30);
+    } else {
+      fab.style.opacity = '0';
+      setTimeout(() => { if (fab.style.opacity === '0') fab.style.display = 'none'; }, 350);
+    }
   }
+  window.addEventListener('scroll', checkScroll);
   window.addEventListener('load', checkScroll);
-  checkScroll();
 
   function fabClick() {
     if (!authenticated) {
