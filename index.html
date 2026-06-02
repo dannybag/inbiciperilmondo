@@ -468,7 +468,6 @@
     top: 50%;
     left: 0%;
     transform: translate(-50%, -50%);
-    font-size: 1.4rem;
     line-height: 1;
     filter: drop-shadow(0 0 4px rgba(240,90,40,0.6));
   }
@@ -744,7 +743,7 @@
   </div>
   <div class="progress-track">
     <div class="progress-fill" style="width:0%"></div>
-    <div class="progress-bike">🚴</div>
+    <div class="progress-bike"><img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="bici" style="height:1.8rem; width:auto; display:block;"></div>
   </div>
   <div class="progress-footer">
     <span class="progress-pct">0% raggiunto</span>
@@ -882,7 +881,7 @@
     <div class="dona-step">
       <div class="d-num">Passo 02</div>
       <div class="d-title">Dona</div>
-      <div class="d-text">La donazione avviene direttamente su World Bicycle Relief e ogni euro raccolto va all'acquisto di biciclette Buffalo.</div>
+      <div class="d-text">La donazione avviene direttamente su <strong>World Bicycle Relief</strong> e ogni euro raccolto va all'acquisto di biciclette <strong>Buffalo</strong>.</div>
       <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="btn-orange-sm" target="_blank">Dona ora</a>
     </div>
     <div class="dona-step">
@@ -1294,25 +1293,26 @@
 
   // Scrive tap.trigger su GitHub per avviare il workflow
   async function writeTriggerFile(token) {
+    const msg = document.getElementById('tap-msg');
     try {
       const GH_TRIGGER = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/tap.trigger`;
       const headers = { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' };
       let sha = '';
       const existing = await fetch(GH_TRIGGER, { headers, cache: 'no-store' });
       if (existing.ok) { const d = await existing.json(); sha = d.sha; }
+      else if (existing.status !== 404) throw new Error('Lettura tap.trigger: ' + existing.status);
       const content = btoa(new Date().toISOString());
       const body = { message: 'TAP update ' + new Date().toISOString().slice(0,16), content };
       if (sha) body.sha = sha;
       const res = await fetch(GH_TRIGGER, { method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       if (res.ok) {
-        document.getElementById('tap-msg').textContent = '✓ Salvato · Workflow avviato';
+        if (msg) msg.textContent = '✓ Salvato · Workflow avviato';
       } else {
         const err = await res.json();
-        console.error('tap.trigger error:', err);
-        document.getElementById('tap-msg').textContent = '✓ Salvato (workflow: ' + (err.message || res.status) + ')';
+        if (msg) msg.textContent = '✓ Salvato · Workflow errore: ' + (err.message || res.status);
       }
     } catch(e) {
-      console.error('writeTriggerFile:', e);
+      if (msg) msg.textContent = '✓ Salvato · Trigger fallito: ' + e.message;
     }
   }
 
