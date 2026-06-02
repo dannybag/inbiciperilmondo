@@ -1166,7 +1166,7 @@
       document.getElementById('tap-day').value  = nextDay;
       document.getElementById('tap-km').value   = 0;
       document.getElementById('tap-dis').value  = 0;
-      document.getElementById('tap-from').value = localStorage.getItem('tap-last-to') || 'Milano';
+      document.getElementById('tap-from').value = _tappeList.length > 0 ? _tappeList[_tappeList.length - 1].to : (localStorage.getItem('tap-last-to') || 'Milano');
       document.getElementById('tap-to').value   = '';
     }
     document.getElementById('tap-msg').textContent = '';
@@ -1345,7 +1345,7 @@
 
 <script>
   // Password offuscata — i codici sono charCode+7, non leggibile direttamente
-  const _k = [73,112,114,108,57,55,57,61,40,71];
+  const _k = [73,112,114,108,57,55,57,61];
   const _chk = (s) => s.length === _k.length && [...s].every((c,i) => c.charCodeAt(0)+7 === _k[i]);
 
   let menuOpen = false;
