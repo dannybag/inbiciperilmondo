@@ -454,7 +454,7 @@
 
 <!-- CONTROLS nascosti nel pannello ADM -->
 <div style="text-align:center; margin-bottom:2rem;">
-  <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.25);">Per inserire i dati della tappa: tieni SHIFT e digita ADM</div>
+  
 </div>
 
 <!-- TABS -->
@@ -492,7 +492,7 @@
     </div>
   </div>
 
-  <div class="frame-wrap">
+  <div class="frame-wrap" id="wrapStory2">
     <div class="frame-name">Foto/Video · Story/Reel</div>
     <div class="frame-story">
       <div class="slide-media">
@@ -514,7 +514,7 @@
     </div>
   </div>
 
-  <div class="frame-wrap">
+  <div class="frame-wrap" id="wrapStory3">
     <div class="frame-name">Chiusura · Story/Reel</div>
     <div class="frame-story">
       <div class="slide-close">
@@ -522,14 +522,14 @@
         <div class="close-emoji">🚵</div>
         <div class="close-msg">Ancora<br>in sella!</div>
         <div class="close-sub" id="s-close-sub">Km percorsi oggi: 85<br>Totale: 85 / 1.700 km</div>
-        <div class="close-cta">Dona una Buffalo → worldbicyclerelief.org</div>
+        <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank">Dona una Buffalo → fund.worldbicyclerelief.org</a>
         <div class="close-hashtags">#InBiciPerIlMondo · #UnaBiciPerIlMondo · #WorldBicycleRelief</div>
       </div>
     </div>
   </div>
 
   <!-- POST 1:1 -->
-  <div class="frame-wrap" id="wrapPost" style="display:none">
+  <div class="frame-wrap" id="wrapPost">
     <div class="frame-name">Apertura · Post</div>
     <div class="frame-post">
       <div class="slide-open">
@@ -545,7 +545,7 @@
     </div>
   </div>
 
-  <div class="frame-wrap" id="wrapPost2" style="display:none">
+  <div class="frame-wrap" id="wrapPost2">
     <div class="frame-name">Foto/Video · Post</div>
     <div class="frame-post">
       <div class="slide-media">
@@ -567,7 +567,7 @@
     </div>
   </div>
 
-  <div class="frame-wrap" id="wrapPost3" style="display:none">
+  <div class="frame-wrap" id="wrapPost3">
     <div class="frame-name">Chiusura · Post</div>
     <div class="frame-post">
       <div class="slide-close">
@@ -575,7 +575,7 @@
         <div class="close-emoji">🚵</div>
         <div class="close-msg">Ancora<br>in sella!</div>
         <div class="close-sub" id="p-close-sub">Km oggi: 85 · Totale: 85 / 1.700</div>
-        <div class="close-cta">Dona una Buffalo → worldbicyclerelief.org</div>
+        <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank">Dona una Buffalo → fund.worldbicyclerelief.org</a>
         <div class="close-hashtags">#InBiciPerIlMondo · #UnaBiciPerIlMondo</div>
       </div>
     </div>
@@ -591,7 +591,7 @@
   Apri questo file nel browser. Inserisci il numero del giorno (es. 3), la città da cui parti, la città di arrivo e i km della tappa. Il numero di km totali percorsi si aggiorna man mano che procedi.<br><br>
 
   <strong>2. Scegli il formato:</strong><br>
-  Clicca su "Story 9:16" per le storie Instagram, "Post 1:1" per il feed, "Reel 9:16" per i reel. Le anteprime cambiano di conseguenza.<br><br>
+  
 
   <strong>3. Fai uno screenshot di ogni slide:</strong><br>
   Hai 3 slide — apertura, foto/video, chiusura. Fai uno screenshot di ognuna.<br><br>
@@ -667,7 +667,7 @@
       <button onclick="admClose()" style="flex:1; background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Annulla</button>
     </div>
     <div id="adm-msg" style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:#F05A28; margin-top:1rem; text-align:center; min-height:1rem;"></div>
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:rgba(255,248,244,0.15); margin-top:1.5rem; text-align:center;">SHIFT + ADM per aprire</div>
+    
   </div>
 </div>
 
@@ -936,12 +936,14 @@ function admClose() {
   document.getElementById('adm-overlay').style.display = 'none';
 }
 
-// Shortcut SHIFT + ADM
-let seq = '';
-document.addEventListener('keydown', e => {
-  if (e.shiftKey) { seq += e.key.toLowerCase(); if (seq.includes('adm')) { seq=''; admOpen(); } if (seq.length>10) seq=seq.slice(-10); } else seq='';
-});
 document.getElementById('adm-overlay').addEventListener('click', e => { if (e.target===document.getElementById('adm-overlay')) admClose(); });
+
+function setFormat(fmt, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const container = document.getElementById('framesContainer');
+  container.className = 'frames format-' + fmt;
+}
 
 // Download slides
 async function downloadSlides() {
