@@ -1,1 +1,128 @@
+name: Aggiorna raccolta fondi WBR
 
+on:
+  schedule:
+    - cron: '0 * * * *'   # ogni ora
+  workflow_dispatch:        # avvio manuale dal pannello Actions
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installa Playwright
+        run: |
+          npm install playwright @playwright/test
+          npx playwright install chromium --with-deps
+
+      - name: Leggi dati da WBR e aggiorna data.json
+        run: |
+          cat << 'EOF' > fetch_wbr.js
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+
+          (async () => {
+            const browser = await chromium.launch();
+            const page = await browser.newPage();
+
+            console.log('--- WBR Fundraising Scraper ---');
+            console.log('Data/ora:', new Date().toISOString());
+            console.log('URL:', 'https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo?tab=overview');
+
+            await page.goto('https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo?tab=overview', {
+              waitUntil: 'networkidle',
+              timeout: 30000
+            });
+
+            // Dump testo visibile della pagina per debug
+            const bodyText = await page.evaluate(() => document.body.innerText);
+            console.log('\n--- TESTO PAGINA (prime 1000 chars) ---');
+            console.log(bodyText.slice(0, 1000));
+
+            // Cerca l'importo raccolto nella pagina
+            let raised = 0;
+            let foundSelector = 'nessuno';
+
+            const selectors = [
+              '[class*="raised"]',
+              '[class*="amount"]',
+              '[class*="collected"]',
+              '[data-testid*="raised"]',
+              '[class*="total"]',
+              '[class*="goal"]',
+              '[class*="progress"]',
+              '[class*="donation"]',
+              '[class*="funded"]'
+            ];
+
+            console.log('\n--- RICERCA SELETTORI ---');
+            for (const sel of selectors) {
+              try {
+                const els = await page.$$(sel);
+                if (els.length > 0) {
+                  for (const el of els) {
+                    const text = await el.textContent();
+                    console.log(`Selettore "${sel}": "${text.trim().slice(0, 80)}"`);
+                    const match = text.match(/[\d.,]+/);
+                    if (match && raised === 0) {
+                      const val = parseInt(match[0].replace(/[.,]/g, '')) || 0;
+                      if (val > 0) {
+                        raised = val;
+                        foundSelector = sel;
+                      }
+                    }
+                  }
+                }
+              } catch(e) {
+                console.log(`Selettore "${sel}": errore - ${e.message}`);
+              }
+            }
+
+            await browser.close();
+
+            console.log('\n--- RISULTATO ---');
+            console.log('Selettore usato:', foundSelector);
+            console.log('Importo trovato: €' + raised);
+
+            // Leggi data.json corrente
+            let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {} };
+            try {
+              data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+              console.log('Valore attuale in data.json: €' + data.fundraising.raised);
+            } catch(e) {
+              console.log('data.json non trovato, uso default');
+            }
+
+            // Aggiorna solo se il valore è > 0 e diverso da quello attuale
+            if (raised > 0 && raised !== data.fundraising.raised) {
+              data.fundraising.raised = raised;
+              fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
+              console.log('✓ data.json aggiornato con €' + raised);
+            } else if (raised === 0) {
+              console.log('⚠ Importo 0 o non trovato — data.json non modificato');
+            } else {
+              console.log('= Nessuna variazione — data.json non modificato');
+            }
+          })();
+          EOF
+          node fetch_wbr.js
+
+      - name: Commit e push se ci sono modifiche
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet data.json || (
+            git add data.json &&
+            git commit -m "Auto: aggiornamento raccolta fondi WBR" &&
+            git push
+          )
