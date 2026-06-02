@@ -195,7 +195,8 @@
   }
   .open-tag {
     font-family: var(--mono);
-    font-size: 0.5rem;
+    font-size: 0.48rem;
+    font-weight: 700;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--orange);
@@ -222,7 +223,7 @@
   .frame-story .open-day-num { font-size: 6rem; }
   .open-route {
     font-family: var(--mono);
-    font-size: 0.5rem;
+    font-size: 0.65rem;
     letter-spacing: 0.15em;
     color: rgba(255,248,244,0.5);
     position: relative;
@@ -241,8 +242,9 @@
   .frame-story .open-from-to { font-size: 0.9rem; }
   .open-km {
     font-family: var(--mono);
-    font-size: 0.55rem;
-    color: rgba(255,248,244,0.35);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(255,248,244,0.6);
     position: relative;
     margin-top: 0.2rem;
   }
@@ -396,21 +398,23 @@
     margin-top: 0.5rem;
     line-height: 1.5;
   }
-  .frame-story .close-sub { font-size: 0.6rem; }
+  .frame-story .close-sub { font-size: 0.75rem; font-weight: 600; }
   .close-cta {
     position: relative;
     margin-top: 1rem;
     display: inline-block;
-    background: var(--dark);
-    color: var(--cream);
+    background: transparent;
+    color: #444;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 0.4rem 0.9rem;
-    border-radius: 2px;
+    padding: 0.4rem 1rem;
+    border-radius: 3px;
+    border: 1.5px solid #444;
     width: fit-content;
+    text-decoration: none;
   }
   .close-hashtags {
     position: absolute;
@@ -467,7 +471,7 @@
   <div class="frame-wrap" id="wrapStory">
     <div class="frame-story">
       <div class="slide-open">
-        <div class="open-tag"><img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="" style="height:1.2rem; width:auto; vertical-align:middle; margin-right:0.4rem;"> Una Bici per il Mondo</div>
+        <div class="open-tag"><img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="" style="height:3rem; width:auto; vertical-align:middle; margin-right:0.6rem;"> Una Bici per il Mondo</div>
         <div class="open-day-label">Tappa</div>
         <div class="open-day-num" id="s-day-num">01</div>
         <div class="open-route">Tappa di oggi</div>
@@ -504,10 +508,12 @@
     <div class="frame-story">
       <div class="slide-close">
         <div class="close-day" id="s-close-day">01</div>
-        <div class="close-emoji"><img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="" style="height:3rem; width:auto;"></div>
-        <div class="close-msg">Ancora<br>in sella!</div>
+        <div style="display:flex; align-items:center; justify-content:center; gap:0.8rem;">
+          <img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="" style="height:5rem; width:auto;">
+          <div class="close-msg">Ancora<br>in sella!</div>
+        </div>
         <div class="close-sub" id="s-close-sub">Km percorsi oggi: 85<br>Totale: 85 / 1.700 km</div>
-        <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank">Dona una Buffalo → fund.worldbicyclerelief.org</a>
+        <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank">Dona una Buffalo</a>
         <div class="close-hashtags">#InBiciPerIlMondo · #UnaBiciPerIlMondo · #WorldBicycleRelief</div>
       </div>
     </div>
