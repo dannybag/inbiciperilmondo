@@ -529,7 +529,7 @@
   </div>
 
   <!-- POST 1:1 -->
-  <div class="frame-wrap" id="wrapPost">
+  <div class="frame-wrap" id="wrapPost" style="display:none">
     <div class="frame-name">Apertura · Post</div>
     <div class="frame-post">
       <div class="slide-open">
@@ -545,7 +545,7 @@
     </div>
   </div>
 
-  <div class="frame-wrap" id="wrapPost2">
+  <div class="frame-wrap" id="wrapPost2" style="display:none">
     <div class="frame-name">Foto/Video · Post</div>
     <div class="frame-post">
       <div class="slide-media">
@@ -567,7 +567,7 @@
     </div>
   </div>
 
-  <div class="frame-wrap" id="wrapPost3">
+  <div class="frame-wrap" id="wrapPost3" style="display:none">
     <div class="frame-name">Chiusura · Post</div>
     <div class="frame-post">
       <div class="slide-close">
@@ -795,27 +795,50 @@ async function downloadSlides() {
   btn.disabled = true;
   const day = document.getElementById('dayNum').value || '01';
   const isPost = document.querySelector('.tab.active').textContent.includes('Post');
-  const allWraps = document.querySelectorAll('.frame-wrap');
+
   const slides = isPost
-    ? [ { el: document.querySelector('#wrapPost .frame-post'), name: `giorno${pad(day)}_apertura` },
-        { el: document.querySelector('#wrapPost2 .frame-post'), name: `giorno${pad(day)}_foto` },
-        { el: document.querySelector('#wrapPost3 .frame-post'), name: `giorno${pad(day)}_chiusura` } ]
-    : [ { el: allWraps[0]?.querySelector('.frame-story'), name: `giorno${pad(day)}_apertura` },
-        { el: allWraps[1]?.querySelector('.frame-story'), name: `giorno${pad(day)}_foto` },
-        { el: allWraps[2]?.querySelector('.frame-story'), name: `giorno${pad(day)}_chiusura` } ];
+    ? [ { id: 'wrapPost',  sel: '.frame-post', name: `giorno${pad(day)}_apertura` },
+        { id: 'wrapPost2', sel: '.frame-post', name: `giorno${pad(day)}_foto` },
+        { id: 'wrapPost3', sel: '.frame-post', name: `giorno${pad(day)}_chiusura` } ]
+    : [ { id: 'wrapStory',  sel: '.frame-story', name: `giorno${pad(day)}_apertura` },
+        { id: 'wrapStory2', sel: '.frame-story', name: `giorno${pad(day)}_foto` },
+        { id: 'wrapStory3', sel: '.frame-story', name: `giorno${pad(day)}_chiusura` } ];
+
   for (const slide of slides) {
-    if (!slide.el) continue;
-    try {
-      const canvas = await html2canvas(slide.el, { scale: 4, useCORS: true, backgroundColor: null, logging: false });
-      const link = document.createElement('a');
-      link.download = `WBR_${slide.name}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-      await new Promise(r => setTimeout(r, 400));
-    } catch(e) { console.error(e); }
+    const wrap = document.getElementById(slide.id);
+    if (!wrap) continue;
+    const wasHidden = wrap.style.display === 'none';
+    if (wasHidden) wrap.style.display = 'flex';
+    const el = wrap.querySelector(slide.sel);
+    if (el) {
+      try {
+        const canvas = await html2canvas(el, { scale: 4, useCORS: true, backgroundColor: null, logging: false });
+        const link = document.createElement('a');
+        link.download = `WBR_${slide.name}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        await new Promise(r => setTimeout(r, 400));
+      } catch(e) { console.error(e); }
+    }
+    if (wasHidden) wrap.style.display = 'none';
   }
+
   btn.textContent = '⬇ Scarica 3 slides';
   btn.disabled = false;
+}
+
+function setFormat(fmt, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const showStory = (fmt === 'story' || fmt === 'reel');
+  ['wrapStory','wrapStory2','wrapStory3'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = showStory ? 'flex' : 'none';
+  });
+  ['wrapPost','wrapPost2','wrapPost3'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = showStory ? 'none' : 'flex';
+  });
 }
 
 loadFromGitHub();
