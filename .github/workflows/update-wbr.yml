@@ -111,5 +111,6 @@ jobs:
           git diff --quiet data.json || (
             git add data.json &&
             git commit -m "Auto: aggiornamento raccolta fondi WBR" &&
+            git pull --rebase &&
             git push
           )
