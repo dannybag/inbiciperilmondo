@@ -1,0 +1,113 @@
+name: Aggiorna raccolta fondi WBR
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # ogni 6 ore (più affidabile su GitHub free)
+  push:
+    branches: [ main ]     # gira anche ad ogni push
+  workflow_dispatch:        # avvio manuale dal pannello Actions
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Installa Playwright
+        run: |
+          npm install playwright @playwright/test
+          npx playwright install chromium --with-deps
+
+      - name: Leggi dati da WBR e aggiorna data.json
+        run: |
+          cat << 'EOF' > fetch_wbr.js
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+
+          (async () => {
+            const browser = await chromium.launch();
+            const page = await browser.newPage();
+
+            console.log('--- WBR Fundraising Scraper ---');
+            console.log('Data/ora:', new Date().toISOString());
+
+            await page.goto('https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo?tab=overview', {
+              waitUntil: 'networkidle',
+              timeout: 30000
+            });
+
+            // Dump testo visibile per debug
+            const bodyText = await page.evaluate(() => document.body.innerText);
+            console.log('\n--- TESTO PAGINA ---');
+            console.log(bodyText.slice(0, 2000));
+
+            // Cerca "collected" nel testo e prendi il numero prima
+            let raised = 0;
+            let goal = 1700;
+
+            // Cerca pattern tipo "EUR 0 collected" o "€0 collected" o "0 collected"
+            const collectedMatch = bodyText.match(/(?:EUR|€|euro)?\s*([\d,.']+)\s*collected/i);
+            if (collectedMatch) {
+              raised = parseInt(collectedMatch[1].replace(/[,.']/g, '')) || 0;
+              console.log('\nTrovato "collected":', collectedMatch[0], '→ €' + raised);
+            } else {
+              console.log('\n⚠ Pattern "collected" non trovato nel testo');
+            }
+
+            // Cerca anche il goal per aggiornarlo se cambia
+            const goalMatch = bodyText.match(/(?:EUR|€|euro)?\s*([\d,.']+)\s*goal/i);
+            if (goalMatch) {
+              const g = parseInt(goalMatch[1].replace(/[,.']/g, '')) || 0;
+              if (g > 0) goal = g;
+              console.log('Trovato "goal":', goalMatch[0], '→ €' + goal);
+            }
+
+            await browser.close();
+
+            console.log('\n--- RISULTATO ---');
+            console.log('Importo raccolto: €' + raised);
+            console.log('Goal: €' + goal);
+
+            // Leggi data.json corrente
+            let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {} };
+            try {
+              data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+              console.log('Valore attuale in data.json: €' + data.fundraising.raised);
+            } catch(e) {
+              console.log('data.json non trovato, uso default');
+            }
+
+            // Aggiorna sempre raised (anche se 0) e goal
+            const changed = (raised !== data.fundraising.raised) || (goal !== data.fundraising.goal);
+            if (changed) {
+              data.fundraising.raised = raised;
+              data.fundraising.goal = goal;
+              fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
+              console.log('✓ data.json aggiornato');
+            } else {
+              console.log('= Nessuna variazione');
+            }
+          })();
+          EOF
+          node fetch_wbr.js
+
+      - name: Commit e push se ci sono modifiche
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet data.json || (
+            git add data.json &&
+            git commit -m "Auto: aggiornamento raccolta fondi WBR" &&
+            git push
+          )
