@@ -2,7 +2,9 @@ name: Aggiorna raccolta fondi WBR
 
 on:
   schedule:
-    - cron: '0 * * * *'   # ogni ora
+    - cron: '0 */6 * * *'  # ogni 6 ore (più affidabile su GitHub free)
+  push:
+    branches: [ main ]     # gira anche ad ogni push
   workflow_dispatch:        # avvio manuale dal pannello Actions
 
 jobs:
