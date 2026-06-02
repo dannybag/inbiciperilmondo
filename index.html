@@ -536,7 +536,7 @@
   /* ---- TAPPA DEL GIORNO ---- */
   /* ---- LIVE SECTIONS ---- */
   .live-section {
-    background: #0D0D0D;
+    background: #111;
     border-top: 2px solid var(--orange);
     padding: 1.2rem 5vw;
     text-align: center;
@@ -652,7 +652,7 @@
 
 <!-- STICKY BAR -->
 <div class="sticky-bar">
-  <a href="https://fund.worldbicyclerelief.org/en-GB" class="btn-sticky-orange" target="_blank">Dona ora</a>
+  <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="btn-sticky-orange" target="_blank">Dona ora</a>
   <a href="https://worldbicyclerelief.org" class="btn-sticky-ghost" target="_blank">worldbicyclerelief.org</a>
 </div>
 
@@ -712,24 +712,23 @@
 
   <!-- SEZIONE 1: Tappa del giorno -->
   <div class="live-section">
-    <div class="live-label">In viaggio · Tappa del giorno</div>
+    <div class="live-label">Tappa del giorno</div>
     <div class="live-row">
-      <span class="live-big" id="tappa-day-num">—</span>
-      <span class="live-sep">·</span>
       <span class="live-route" id="tappa-route">—</span>
       <span class="live-sep">·</span>
-      <span class="live-stat"><span id="tappa-km">—</span> <span class="live-sublabel">km oggi</span></span>
+      <span class="live-stat"><span id="tappa-km">—</span></span>
+      <span class="live-sep">·</span>
       <span class="live-stat"><span id="tappa-dis">—</span></span>
     </div>
   </div>
 
   <!-- SEZIONE 2: Fin qui -->
   <div class="live-section live-section-alt">
-    <div class="live-label">Il viaggio · Fin qui</div>
+    <div class="live-label">Fin qui</div>
     <div class="live-row">
-      <span class="live-big">TAPPE <span id="cnt-tappe">—</span></span>
+      <span class="live-stat"><span id="cnt-tappe">—</span> <span class="live-sublabel">tappe percorse</span></span>
       <span class="live-sep">·</span>
-      <span class="live-stat"><span id="cnt-km">—</span> <span class="live-sublabel">km percorsi</span></span>
+      <span class="live-stat"><span id="cnt-km">—</span> <span class="live-sublabel">percorsi</span></span>
       <span class="live-sep">·</span>
       <span class="live-stat"><span id="cnt-dis">—</span> <span class="live-sublabel">dislivello effettuato</span></span>
     </div>
@@ -884,7 +883,7 @@
       <div class="d-num">Passo 02</div>
       <div class="d-title">Dona</div>
       <div class="d-text">Ogni euro raccolto va all'acquisto di biciclette <strong>Buffalo</strong>. Con 147€ ne compri una intera.</div>
-      <a href="https://fund.worldbicyclerelief.org/en-GB" class="btn-orange-sm" target="_blank">Dona ora</a>
+      <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="btn-orange-sm" target="_blank">Dona ora</a>
     </div>
     <div class="dona-step">
       <div class="d-num">Passo 03</div>
@@ -1065,7 +1064,7 @@
     if (!t || t.day === 0) return;
     const el = (id) => document.getElementById(id);
     if (el('tappa-section')) el('tappa-section').style.display = 'block';
-    if (el('tappa-day-num')) el('tappa-day-num').textContent = 'GIORNO ' + t.day;
+    if (el('tappa-day-num')) el('tappa-day-num').textContent = t.day;
     if (el('tappa-route'))   el('tappa-route').textContent   = t.from && t.to ? t.from + ' → ' + t.to : '';
     if (el('tappa-km'))      el('tappa-km').textContent      = t.km + ' km';
     if (el('tappa-dis'))     el('tappa-dis').textContent     = '↑' + t.dislivello + 'm';
