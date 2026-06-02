@@ -1253,7 +1253,11 @@
     data.tappe = _tappeList;
     data.tappa = tappa;
     const ok = await saveToGitHub(data, token, msg);
-    if (ok) { updateTappa(tappa); setTimeout(() => tapClose(), 1200); }
+    if (ok) {
+      updateTappa(tappa);
+      await writeTriggerFile(token);
+      setTimeout(() => tapClose(), 1200);
+    }
   }
 
   async function tapDelete(day) {
@@ -1288,7 +1292,22 @@
     await saveToGitHub(data, token, document.getElementById('tap-msg'));
   }
 
-  // Chiudi pannelli cliccando fuori
+  // Scrive tap.trigger su GitHub per avviare il workflow
+  async function writeTriggerFile(token) {
+    try {
+      const GH_TRIGGER = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/tap.trigger`;
+      const headers = { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' };
+      let sha = '';
+      const existing = await fetch(GH_TRIGGER, { headers, cache: 'no-store' });
+      if (existing.ok) { const d = await existing.json(); sha = d.sha; }
+      const content = btoa(new Date().toISOString());
+      const body = { message: 'TAP update', content };
+      if (sha) body.sha = sha;
+      await fetch(GH_TRIGGER, { method: 'PUT', headers: { ...headers, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    } catch(e) {}
+  }
+
+  // ---- SHIFT shortcuts ----
   document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('fndin-overlay').addEventListener('click', (e) => {
       if (e.target === document.getElementById('fndin-overlay')) closeAdmin();
