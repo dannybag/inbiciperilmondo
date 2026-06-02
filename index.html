@@ -1026,12 +1026,16 @@
       const res = await fetch(GH_API + '?t=' + Date.now(), { headers, cache: 'no-store' });
       if (!res.ok) throw new Error('fetch ' + res.status);
       const meta = await res.json();
-      const data = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g,'')))));
+      const data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(meta.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
       if (data.fundraising) updateBar(data.fundraising.raised || 0, data.fundraising.goal || 1700);
+      // Compatibilità: usa tappe[] se esiste, altrimenti usa tappa legacy
       if (data.tappe && data.tappe.length > 0) {
         _tappeList = data.tappe;
         const tots = tapCalcTotals(_tappeList);
         _prev = { totKm: tots.totKm, totDis: tots.totDis, tappe: tots.tappe };
+      } else if (data.tappa && data.tappa.day > 0) {
+        _tappeList = [data.tappa];
+        _prev = { totKm: data.tappa.totKm || 0, totDis: data.tappa.totDis || 0, tappe: data.tappa.tappe || 1 };
       }
       if (data.tappa && data.tappa.day > 0) updateTappa(data.tappa);
     } catch(e) {
@@ -1121,7 +1125,7 @@
     let data = { fundraising: { raised, goal }, tappa: { day:0,from:'',to:'',km:0,dislivello:0,totKm:0,totDis:0,tappe:0,updated:'' } };
     try {
       const r = await fetch(GH_API, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, cache: 'no-store' });
-      if (r.ok) { const m = await r.json(); const d = JSON.parse(decodeURIComponent(escape(atob(m.content.replace(/\n/g,''))))); data = d; }
+      if (r.ok) { const m = await r.json(); const d = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(m.content.replace(/\n/g,'')), c => c.charCodeAt(0)))); data = d; }
     } catch(e) {}
     data.fundraising = { raised, goal };
     const ok = await saveToGitHub(data, token, msg);
@@ -1239,7 +1243,7 @@
     let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {}, tappe: [] };
     try {
       const r = await fetch(GH_API, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, cache: 'no-store' });
-      if (r.ok) { const m = await r.json(); data = JSON.parse(decodeURIComponent(escape(atob(m.content.replace(/\n/g,''))))); }
+      if (r.ok) { const m = await r.json(); data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(m.content.replace(/\n/g,'')), c => c.charCodeAt(0)))); }
     } catch(e) {}
     data.tappe = _tappeList;
     data.tappa = tappa;
@@ -1260,7 +1264,7 @@
     let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {}, tappe: [] };
     try {
       const r = await fetch(GH_API, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, cache: 'no-store' });
-      if (r.ok) { const m = await r.json(); data = JSON.parse(decodeURIComponent(escape(atob(m.content.replace(/\n/g,''))))); }
+      if (r.ok) { const m = await r.json(); data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(m.content.replace(/\n/g,'')), c => c.charCodeAt(0)))); }
     } catch(e) {}
     data.tappe = _tappeList;
     data.tappa = lastTappa;
@@ -1332,21 +1336,14 @@
   let menuOpen = false;
   let authenticated = false;
 
-  // Bottone visibile solo quando si è in fondo alla pagina
+  // Bottone sempre visibile
   function checkScroll() {
     const fab = document.getElementById('fab-btn');
-    const scrolled = window.scrollY + window.innerHeight;
-    const total = document.documentElement.scrollHeight;
-    if (scrolled >= total - 80) {
-      fab.style.display = 'flex';
-      setTimeout(() => fab.style.opacity = '1', 30);
-    } else {
-      fab.style.opacity = '0';
-      setTimeout(() => { if (fab.style.opacity === '0') fab.style.display = 'none'; }, 350);
-    }
+    fab.style.display = 'flex';
+    fab.style.opacity = '1';
   }
-  window.addEventListener('scroll', checkScroll);
   window.addEventListener('load', checkScroll);
+  checkScroll();
 
   function fabClick() {
     if (!authenticated) {
