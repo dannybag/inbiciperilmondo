@@ -452,19 +452,7 @@
 <h1>Una Bici per il Mondo · Instagram Kit</h1>
 <div class="subtitle">Milano → Palermo · World Bicycle Relief · Template giornaliero</div>
 
-<!-- CONTROLS nascosti nel pannello ADM -->
-<div style="text-align:center; margin-bottom:2rem;">
-  
-</div>
 
-<!-- TABS -->
-<div class="tabs">
-  <button class="tab active" onclick="setFormat('story', this)">Story 9:16</button>
-  <button class="tab" onclick="setFormat('post', this)">Post 1:1</button>
-  <button class="tab" onclick="setFormat('reel', this)">Reel 9:16</button>
-</div>
-
-<!-- DOWNLOAD BUTTON -->
 <div style="display:flex; justify-content:center; margin-bottom:2rem;">
   <button id="downloadBtn" onclick="downloadSlides()"
     style="background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 2rem; border:none; border-radius:3px; cursor:pointer;">
@@ -477,7 +465,6 @@
 
   <!-- STORY / REEL -->
   <div class="frame-wrap" id="wrapStory">
-    <div class="frame-name">Apertura · Story/Reel</div>
     <div class="frame-story">
       <div class="slide-open">
         <div class="open-tag">🚴 Una Bici per il Mondo · Day</div>
@@ -493,7 +480,6 @@
   </div>
 
   <div class="frame-wrap" id="wrapStory2">
-    <div class="frame-name">Foto/Video · Story/Reel</div>
     <div class="frame-story">
       <div class="slide-media">
         <div class="media-overlay-top">
@@ -515,7 +501,6 @@
   </div>
 
   <div class="frame-wrap" id="wrapStory3">
-    <div class="frame-name">Chiusura · Story/Reel</div>
     <div class="frame-story">
       <div class="slide-close">
         <div class="close-day" id="s-close-day">01</div>
@@ -524,59 +509,6 @@
         <div class="close-sub" id="s-close-sub">Km percorsi oggi: 85<br>Totale: 85 / 1.700 km</div>
         <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank">Dona una Buffalo → fund.worldbicyclerelief.org</a>
         <div class="close-hashtags">#InBiciPerIlMondo · #UnaBiciPerIlMondo · #WorldBicycleRelief</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- POST 1:1 -->
-  <div class="frame-wrap" id="wrapPost" style="display:none">
-    <div class="frame-name">Apertura · Post</div>
-    <div class="frame-post">
-      <div class="slide-open">
-        <div class="open-tag">🚴 Una Bici per il Mondo · Day</div>
-        <div class="open-day-label">Giorno</div>
-        <div class="open-day-num" id="p-day-num">01</div>
-        <div class="open-route">Tappa di oggi</div>
-        <div class="open-from-to" id="p-from-to">Milano → Bologna</div>
-        <div class="open-km" id="p-km">85 km · ↑500m</div>
-        <div class="open-bar"></div>
-        <div class="open-hashtag">#InBiciPerIlMondo</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="frame-wrap" id="wrapPost2" style="display:none">
-    <div class="frame-name">Foto/Video · Post</div>
-    <div class="frame-post">
-      <div class="slide-media">
-        <div class="media-overlay-top">
-          <div class="media-day-badge" id="p-badge">GIORNO 01</div>
-          <div class="media-tag">Una Bici per il Mondo</div>
-        </div>
-        <div class="media-placeholder">
-          <div class="media-icon">📷</div>
-          <div class="media-hint">Inserisci qui<br>foto o video</div>
-        </div>
-        <div class="media-overlay-bottom">
-          <div class="media-caption" id="p-caption">Milano → Bologna · 85 km</div>
-          <div class="media-progress">
-            <div class="media-progress-fill" id="p-prog" style="width:5%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="frame-wrap" id="wrapPost3" style="display:none">
-    <div class="frame-name">Chiusura · Post</div>
-    <div class="frame-post">
-      <div class="slide-close">
-        <div class="close-day" id="p-close-day">01</div>
-        <div class="close-emoji">🚵</div>
-        <div class="close-msg">Ancora<br>in sella!</div>
-        <div class="close-sub" id="p-close-sub">Km oggi: 85 · Totale: 85 / 1.700</div>
-        <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank">Dona una Buffalo → fund.worldbicyclerelief.org</a>
-        <div class="close-hashtags">#InBiciPerIlMondo · #UnaBiciPerIlMondo</div>
       </div>
     </div>
   </div>
@@ -794,13 +726,7 @@ async function downloadSlides() {
   btn.textContent = 'Generando...';
   btn.disabled = true;
   const day = document.getElementById('dayNum').value || '01';
-  const isPost = document.querySelector('.tab.active').textContent.includes('Post');
-
-  const slides = isPost
-    ? [ { id: 'wrapPost',  sel: '.frame-post', name: `giorno${pad(day)}_apertura` },
-        { id: 'wrapPost2', sel: '.frame-post', name: `giorno${pad(day)}_foto` },
-        { id: 'wrapPost3', sel: '.frame-post', name: `giorno${pad(day)}_chiusura` } ]
-    : [ { id: 'wrapStory',  sel: '.frame-story', name: `giorno${pad(day)}_apertura` },
+  const slides = [ { id: 'wrapStory',  sel: '.frame-story', name: `giorno${pad(day)}_apertura` },
         { id: 'wrapStory2', sel: '.frame-story', name: `giorno${pad(day)}_foto` },
         { id: 'wrapStory3', sel: '.frame-story', name: `giorno${pad(day)}_chiusura` } ];
 
@@ -827,19 +753,6 @@ async function downloadSlides() {
   btn.disabled = false;
 }
 
-function setFormat(fmt, btn) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  const showStory = (fmt === 'story' || fmt === 'reel');
-  ['wrapStory','wrapStory2','wrapStory3'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = showStory ? 'flex' : 'none';
-  });
-  ['wrapPost','wrapPost2','wrapPost3'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = showStory ? 'none' : 'flex';
-  });
-}
 
 loadFromGitHub();
 </script>
