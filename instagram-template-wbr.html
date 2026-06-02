@@ -333,6 +333,7 @@
     font-family: 'Barlow', sans-serif;
     font-size: 0.65rem;
     font-style: italic;
+    font-weight: 700;
     color: var(--cream);
     opacity: 0.85;
     line-height: 1.4;
@@ -489,9 +490,19 @@
           <div class="media-day-badge" id="s-badge">TAPPA 01</div>
           <div class="media-tag">Una Bici per il Mondo</div>
         </div>
-        <div class="media-placeholder">
-          <div class="media-icon">📷</div>
-          <div class="media-hint">Inserisci qui<br>foto o video</div>
+        <div class="media-placeholder" id="mediaPlaceholder" style="cursor:pointer; position:relative; overflow:hidden;">
+          <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="loadPhoto(this)">
+          <div id="mediaHint" onclick="document.getElementById('photoInput').click()" style="display:flex; flex-direction:column; align-items:center; gap:0.3rem; cursor:pointer; width:100%; height:100%; justify-content:center;">
+            <div class="media-icon">📷</div>
+            <div class="media-hint">Tocca per caricare<br>la tua foto</div>
+          </div>
+          <img id="photoPreview" style="display:none; position:absolute; width:100%; height:100%; object-fit:cover; touch-action:none; cursor:grab;">
+          <!-- Controlli foto -->
+          <div id="photoControls" style="display:none; position:absolute; bottom:0.4rem; right:0.4rem; z-index:10; display:none; gap:0.3rem; flex-direction:column;">
+            <button onclick="zoomPhoto(1.3)" style="width:2rem; height:2rem; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; font-size:1rem; cursor:pointer; line-height:1;">+</button>
+            <button onclick="zoomPhoto(0.77)" style="width:2rem; height:2rem; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; font-size:1rem; cursor:pointer; line-height:1;">−</button>
+            <button onclick="document.getElementById('photoInput').click()" style="width:2rem; height:2rem; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:50%; font-size:0.7rem; cursor:pointer; line-height:1;">📷</button>
+          </div>
         </div>
         <div class="media-overlay-bottom">
           <div class="media-caption" id="s-caption">Milano → Bologna · 85 km</div>
@@ -740,6 +751,9 @@ async function downloadSlides() {
     if (!wrap) continue;
     const wasHidden = wrap.style.display === 'none';
     if (wasHidden) wrap.style.display = 'flex';
+    // Nascondi controlli foto durante la cattura
+    const controls = document.getElementById('photoControls');
+    if (controls) controls.style.display = 'none';
     const el = wrap.querySelector(slide.sel);
     if (el) {
       try {
@@ -751,6 +765,8 @@ async function downloadSlides() {
         await new Promise(r => setTimeout(r, 400));
       } catch(e) { console.error(e); }
     }
+    // Mostra di nuovo i controlli
+    if (controls) controls.style.display = 'flex';
     if (wasHidden) wrap.style.display = 'none';
   }
 
@@ -758,6 +774,99 @@ async function downloadSlides() {
   btn.disabled = false;
 }
 
+
+// ---- PHOTO ADJUST ----
+let photoScale = 1;
+let photoX = 0, photoY = 0;
+let dragStart = null;
+
+function applyPhotoTransform() {
+  const img = document.getElementById('photoPreview');
+  img.style.transform = `translate(calc(-50% + ${photoX}px), calc(-50% + ${photoY}px)) scale(${photoScale})`;
+}
+
+function zoomPhoto(factor) {
+  photoScale = Math.min(15, Math.max(0.1, photoScale * factor));
+  applyPhotoTransform();
+}
+
+function loadPhoto(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = document.getElementById('photoPreview');
+    const hint = document.getElementById('mediaHint');
+    const controls = document.getElementById('photoControls');
+    const container = document.getElementById('mediaPlaceholder');
+
+    img.onload = () => {
+      // Calcola scala iniziale per coprire il frame (come cover)
+      const cw = container.offsetWidth  || 270;
+      const ch = container.offsetHeight || 480;
+      const scaleX = cw / img.naturalWidth;
+      const scaleY = ch / img.naturalHeight;
+      photoScale = Math.max(scaleX, scaleY);
+      photoX = 0; photoY = 0;
+      applyPhotoTransform();
+    };
+
+    img.src = e.target.result;
+    img.style.cssText = `
+      display:block;
+      position:absolute;
+      top:50%; left:50%;
+      max-width:none;
+      width:auto; height:auto;
+      cursor:grab;
+    `;
+    hint.style.display = 'none';
+    controls.style.display = 'flex';
+
+    // Touch drag
+    const onTouchStart = (ev) => {
+      if (ev.touches.length === 1)
+        dragStart = { x: ev.touches[0].clientX - photoX, y: ev.touches[0].clientY - photoY };
+    };
+    const onTouchMove = (ev) => {
+      ev.preventDefault();
+      if (ev.touches.length === 1 && dragStart) {
+        photoX = ev.touches[0].clientX - dragStart.x;
+        photoY = ev.touches[0].clientY - dragStart.y;
+        applyPhotoTransform();
+      }
+    };
+    const onTouchEnd = () => { dragStart = null; };
+
+    // Mouse drag
+    const onMouseDown = (ev) => {
+      dragStart = { x: ev.clientX - photoX, y: ev.clientY - photoY };
+      img.style.cursor = 'grabbing';
+    };
+    const onMouseMove = (ev) => {
+      if (!dragStart) return;
+      photoX = ev.clientX - dragStart.x;
+      photoY = ev.clientY - dragStart.y;
+      applyPhotoTransform();
+    };
+    const onMouseUp = () => {
+      dragStart = null;
+      img.style.cursor = 'grab';
+    };
+
+    img.removeEventListener('touchstart', onTouchStart);
+    img.removeEventListener('touchmove', onTouchMove);
+    img.removeEventListener('touchend', onTouchEnd);
+    img.removeEventListener('mousedown', onMouseDown);
+
+    img.addEventListener('touchstart', onTouchStart, { passive: true });
+    img.addEventListener('touchmove', onTouchMove, { passive: false });
+    img.addEventListener('touchend', onTouchEnd);
+    img.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+  reader.readAsDataURL(input.files[0]);
+}
 
 loadFromGitHub();
 </script>
