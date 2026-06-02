@@ -1349,7 +1349,15 @@
   const _chk = (s) => s.length === _k.length && [...s].every((c,i) => c.charCodeAt(0)+7 === _k[i]);
 
   let menuOpen = false;
-  let authenticated = false;
+  const AUTH_DURATION = 20 * 60 * 1000; // 20 minuti in ms
+
+  function isAuthenticated() {
+    const ts = sessionStorage.getItem('auth-ts');
+    return ts && (Date.now() - parseInt(ts)) < AUTH_DURATION;
+  }
+  function setAuthenticated() {
+    sessionStorage.setItem('auth-ts', Date.now());
+  }
 
   // Bottone visibile solo in fondo alla pagina
   function checkScroll() {
@@ -1368,7 +1376,7 @@
   window.addEventListener('load', checkScroll);
 
   function fabClick() {
-    if (!authenticated) {
+    if (!isAuthenticated()) {
       document.getElementById('pwd-input').value = '';
       document.getElementById('pwd-error').textContent = '';
       document.getElementById('pwd-overlay').style.display = 'flex';
@@ -1381,7 +1389,7 @@
   function checkPwd() {
     const val = document.getElementById('pwd-input').value;
     if (_chk(val)) {
-      authenticated = true;
+      setAuthenticated();
       closePwd();
       showMenu();
     } else {
