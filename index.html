@@ -1084,7 +1084,7 @@
     if (msgEl) msgEl.textContent = 'Caricamento attività...';
     const token = await stravaGetToken();
     if (!token) { if (msgEl) msgEl.textContent = '✗ Strava non connesso — clicca Connetti'; return; }
-    const res = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=10', {
+    const res = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=40', {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     const acts = await res.json();
