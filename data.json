@@ -6,22 +6,22 @@
   "tappa": {
     "day": 1,
     "from": "Milano",
-    "to": "Piacenza",
-    "km": 53,
-    "dislivello": 210,
-    "updated": "2026-06-04T11:08:53.517Z",
-    "totKm": 53,
-    "totDis": 210,
+    "to": "Parma",
+    "km": 139,
+    "dislivello": 1815,
+    "updated": "2026-06-04T14:54:24.169Z",
+    "totKm": 139,
+    "totDis": 1815,
     "tappe": 1
   },
   "tappe": [
     {
       "day": 1,
       "from": "Milano",
-      "to": "Piacenza",
-      "km": 53,
-      "dislivello": 210,
-      "updated": "2026-06-04T11:08:53.517Z"
+      "to": "Parma",
+      "km": 139,
+      "dislivello": 1815,
+      "updated": "2026-06-04T14:54:24.169Z"
     }
   ]
 }
