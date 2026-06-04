@@ -679,7 +679,12 @@
     transition: transform 0.4s ease;
   }
   .gallery-item img:hover { transform: scale(1.04); }
-  .gallery-credit {
+  .gallery-item.mobile-only { display: none; }
+  @media (max-width: 600px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
+    .gallery-item.tall { grid-row: span 1; aspect-ratio: 4/3; }
+    .gallery-item.mobile-only { display: block; }
+  }
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.6rem;
     letter-spacing: 0.1em;
@@ -866,7 +871,10 @@
       <img src="https://worldbicyclerelief.org/wp-content/uploads/2019/09/Fab_Five-LMD-1437.jpg" alt="Cinque ragazze con le loro Buffalo Bicycle" loading="lazy" onerror="this.parentElement.style.display='none'">
     </div>
     <div class="gallery-item">
-      <img src="https://worldbicyclerelief.org/wp-content/uploads/2023/10/NoreenMusati_3980-scaled.jpg" alt="Noreen in Zambia con la Buffalo" loading="lazy" onerror="this.parentElement.style.display='none'">
+      <img src="https://worldbicyclerelief.org/wp-content/uploads/2023/03/Sandry-6-scaled.jpg" alt="Sandry in bici nel deserto della Guajira, Colombia" loading="lazy" onerror="this.parentElement.style.display='none'">
+    </div>
+    <div class="gallery-item mobile-only">
+      <img src="https://worldbicyclerelief.org/wp-content/uploads/2023/03/Sandry-3-scaled.jpg" alt="Sandry percorre il tragitto per la scuola in Colombia" loading="lazy" onerror="this.parentElement.style.display='none'">
     </div>
   </div>
   <div class="gallery-credit">Foto: © World Bicycle Relief · <a href="https://worldbicyclerelief.org" target="_blank">worldbicyclerelief.org</a></div>
