@@ -443,7 +443,7 @@
   /* ---- PROGRESS BAR ---- */
   .progress-section {
     background: #111;
-    padding: 2.5rem 5vw;
+    padding: 1.2rem 5vw;
     border-top: 1px solid rgba(240,90,40,0.2);
   }
   .progress-header {
@@ -510,11 +510,17 @@
   }
   .bikes-count {
     display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.3rem;
     margin-top: 0.8rem;
     padding-top: 0.8rem;
-    border-top: 1px solid rgba(240,90,40,0.15);
+    margin-left: -5vw;
+    margin-right: -5vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    border-top: 1px solid rgba(240,90,40,0.2);
   }
   .bikes-count-num {
     font-family: 'Barlow Condensed', sans-serif;
@@ -526,7 +532,7 @@
   }
   .bikes-count-label {
     font-family: 'Barlow', sans-serif;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: rgba(255,248,244,0.55);
     line-height: 1.3;
   }
@@ -582,7 +588,7 @@
     text-align: center;
   }
   .live-section-alt {
-    background: #0D0D0D;
+    background: #111;
     border-top: 1px solid rgba(240,90,40,0.2);
   }
   .live-label {
@@ -611,7 +617,7 @@
   }
   .live-route {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-size: clamp(1.15rem, 2.8vw, 1.7rem);
     font-weight: 700;
     color: rgba(255,248,244,0.6);
     text-transform: uppercase;
@@ -623,7 +629,7 @@
   }
   .live-stat {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-size: clamp(1.15rem, 2.8vw, 1.7rem);
     font-weight: 700;
     color: var(--orange);
     white-space: nowrap;
@@ -792,7 +798,7 @@
   </div>
   <div class="bikes-count">
     <span class="bikes-count-num" id="bikes-count-num">0</span>
-    <span class="bikes-count-label">bici <strong>Buffalo</strong> che possiamo comprare</span>
+    <span class="bikes-count-label">Biciclette <strong>Buffalo</strong> donate fino ad ora, dateci dentro!</span>
   </div>
 </div>
 
