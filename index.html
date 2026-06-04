@@ -489,6 +489,28 @@
     color: var(--orange);
     letter-spacing: 0.04em;
   }
+  .bikes-count {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(240,90,40,0.15);
+  }
+  .bikes-count-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--orange);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .bikes-count-label {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255,248,244,0.55);
+    line-height: 1.3;
+  }
 
   /* ---- CONTATORI VIAGGIO ---- */
   .trip-counters {
@@ -749,6 +771,10 @@
     <span class="progress-pct">0% raggiunto</span>
     <span class="progress-bikes">= 0 bici <strong>Buffalo</strong> donate</span>
   </div>
+  <div class="bikes-count">
+    <span class="bikes-count-num" id="bikes-count-num">0</span>
+    <span class="bikes-count-label">bici <strong>Buffalo</strong> che possiamo comprare</span>
+  </div>
 </div>
 
 <hr class="div">
@@ -986,6 +1012,17 @@
         <input id="tap-token" type="password" placeholder="ghp_..."
           style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; padding:0.5rem 0.8rem; border-radius:4px; outline:none;">
       </div>
+      <div style="display:flex; gap:0.6rem; margin-bottom:1rem;">
+        <button onclick="stravaFetchLatest(document.getElementById('tap-msg'))"
+          style="flex:1; background:#FC4C02; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.5rem; border:none; border-radius:4px; cursor:pointer;">
+          ⚡ Leggi da Strava
+        </button>
+        <button onclick="stravaConnect()"
+          style="flex:0 0 auto; background:transparent; color:rgba(255,248,244,0.3); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; padding:0.5rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">
+          Connetti
+        </button>
+      </div>
+
       <div style="display:flex; gap:1rem;">
         <button onclick="tapSave()" style="flex:1; background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:none; border-radius:4px; cursor:pointer;">Salva</button>
         <button onclick="tapClose()" style="flex:1; background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Annulla</button>
@@ -1011,6 +1048,73 @@
   const GH_REPO  = 'inbiciperilmondo';
   const GH_FILE  = 'data.json';
   const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
+
+  // ---- STRAVA CONFIG ----
+  const STRAVA_ID       = '255299';
+  const STRAVA_SECRET   = '82caf4d5b1395ef7ba54d32aba131357ff87f7d2';
+  const STRAVA_REDIRECT = 'https://dannybag.github.io/inbiciperilmondo/index.html';
+
+  function stravaConnect() {
+    const url = `https://www.strava.com/oauth/authorize?client_id=${STRAVA_ID}&response_type=code&redirect_uri=${encodeURIComponent(STRAVA_REDIRECT)}&approval_prompt=force&scope=activity:read_all`;
+    window.location.href = url;
+  }
+
+  async function stravaGetToken() {
+    const expiry = parseInt(localStorage.getItem('strava-expiry') || '0');
+    if (Date.now() / 1000 < expiry - 60) return localStorage.getItem('strava-access');
+    const refresh = localStorage.getItem('strava-refresh');
+    if (!refresh) return null;
+    const res = await fetch('https://www.strava.com/oauth/token', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ client_id: STRAVA_ID, client_secret: STRAVA_SECRET, refresh_token: refresh, grant_type: 'refresh_token' })
+    });
+    const d = await res.json();
+    if (d.access_token) {
+      localStorage.setItem('strava-access', d.access_token);
+      localStorage.setItem('strava-refresh', d.refresh_token);
+      localStorage.setItem('strava-expiry', d.expires_at);
+      return d.access_token;
+    }
+    return null;
+  }
+
+  async function stravaFetchLatest(msgEl) {
+    if (msgEl) msgEl.textContent = 'Lettura Strava...';
+    const token = await stravaGetToken();
+    if (!token) { if (msgEl) msgEl.textContent = '✗ Strava non connesso'; return; }
+    const res = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=1', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const acts = await res.json();
+    if (!acts || acts.length === 0) { if (msgEl) msgEl.textContent = '✗ Nessuna attività trovata'; return; }
+    const act = acts[0];
+    const km  = Math.round(act.distance / 1000);
+    const dis = Math.round(act.total_elevation_gain);
+    document.getElementById('tap-km').value  = km;
+    document.getElementById('tap-dis').value = dis;
+    tapRefresh();
+    if (msgEl) msgEl.textContent = `✓ ${act.name} · ${km} km · ↑${dis}m`;
+  }
+
+  // Gestione callback OAuth Strava
+  async function handleStravaCallback() {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    if (!code) return;
+    window.history.replaceState({}, '', window.location.pathname);
+    const res = await fetch('https://www.strava.com/oauth/token', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ client_id: STRAVA_ID, client_secret: STRAVA_SECRET, code, grant_type: 'authorization_code' })
+    });
+    const d = await res.json();
+    if (d.refresh_token) {
+      localStorage.setItem('strava-access', d.access_token);
+      localStorage.setItem('strava-refresh', d.refresh_token);
+      localStorage.setItem('strava-expiry', d.expires_at);
+      openAdm1();
+    }
+  }
+  handleStravaCallback();
 
   // Totali precedenti caricati da GitHub al load
   let _prev = { totKm: 0, totDis: 0, tappe: 0 };
@@ -1085,6 +1189,8 @@
     if (goalEl)   goalEl.textContent   = '€' + goal;
     if (pctEl)    pctEl.textContent    = pct + '% raggiunto';
     if (bikesEl)  bikesEl.innerHTML    = '= ' + bikes + ' bici <strong>Buffalo</strong> donate';
+    const bikesNum = document.getElementById('bikes-count-num');
+    if (bikesNum) bikesNum.textContent = bikes;
   }
 
   // ---- AGGIORNA CONTATORI TAPPA ----
