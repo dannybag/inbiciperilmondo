@@ -4,7 +4,24 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 0
+    "day": 1,
+    "from": "Milano",
+    "to": "Piacenza",
+    "km": 53,
+    "dislivello": 210,
+    "updated": "2026-06-04T11:08:53.517Z",
+    "totKm": 53,
+    "totDis": 210,
+    "tappe": 1
   },
-  "tappe": []
+  "tappe": [
+    {
+      "day": 1,
+      "from": "Milano",
+      "to": "Piacenza",
+      "km": 53,
+      "dislivello": 210,
+      "updated": "2026-06-04T11:08:53.517Z"
+    }
+  ]
 }
