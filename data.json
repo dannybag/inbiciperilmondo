@@ -10,19 +10,11 @@
     "km": 67,
     "dislivello": 1139,
     "updated": "2026-06-04T14:55:32.734Z",
-    "totKm": 329,
-    "totDis": 5032,
-    "tappe": 3
+    "totKm": 190,
+    "totDis": 3217,
+    "tappe": 2
   },
   "tappe": [
-    {
-      "day": 1,
-      "from": "Milano",
-      "to": "Parma",
-      "km": 139,
-      "dislivello": 1815,
-      "updated": "2026-06-04T14:54:24.169Z"
-    },
     {
       "day": 2,
       "from": "Parma",
