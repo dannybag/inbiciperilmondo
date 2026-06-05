@@ -175,117 +175,122 @@
   }
 
   /* ===========================
-     SLIDE 1: APERTURA
+     SLIDE 1: APERTURA — Race Dispatch
   =========================== */
   .slide-open {
     width: 100%; height: 100%;
-    background: var(--dark);
+    background: #0A0A0A;
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 1.5rem;
+    justify-content: flex-end;
+    padding: 0;
     overflow: hidden;
   }
-  .slide-open::before {
+  /* Striscia arancione diagonale di sfondo */
+  .slide-open::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 80% 20%, rgba(240,90,40,0.15) 0%, transparent 60%);
+    top: -30%;
+    right: -10%;
+    width: 55%;
+    height: 100%;
+    background: var(--orange);
+    transform: skewX(-8deg);
+    opacity: 0.08;
+    pointer-events: none;
   }
   .open-tag {
+    position: absolute;
+    top: 1rem; left: 1.2rem;
     font-family: var(--mono);
-    font-size: 0.48rem;
-    font-weight: 700;
+    font-size: 0.65rem;
+    font-weight: 900;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--orange);
-    position: relative;
-    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
   .open-day-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: rgba(255,248,244,0.4);
-    position: relative;
+    color: var(--orange);
+    padding: 0 1.2rem;
+    margin-bottom: 0.2rem;
   }
   .open-day-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 7rem;
-    line-height: 0.85;
+    font-size: 5.5rem;
+    line-height: 0.9;
     color: var(--orange);
-    position: relative;
+    padding: 0 1.2rem;
     letter-spacing: -0.02em;
   }
-  .frame-story .open-day-num { font-size: 6rem; }
-  .open-route {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    color: rgba(255,248,244,0.5);
-    position: relative;
-    margin-top: 0.5rem;
-  }
+  .frame-story .open-day-num { font-size: 4.5rem; }
+  .open-route { display: none; }
   .open-from-to {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 1.1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
     color: var(--cream);
-    position: relative;
-    margin-top: 0.3rem;
-    letter-spacing: 0.03em;
+    padding: 0 1.2rem;
+    margin-top: 0.2rem;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
+    line-height: 1;
+    border-left: 3px solid var(--orange);
   }
-  .frame-story .open-from-to { font-size: 0.9rem; }
+  .frame-story .open-from-to { font-size: 1.1rem; }
   .open-km {
     font-family: var(--mono);
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     font-weight: 600;
-    color: rgba(255,248,244,0.6);
-    position: relative;
-    margin-top: 0.2rem;
+    color: rgba(255,248,244,0.55);
+    padding: 0.4rem 1.2rem 1.2rem;
+    letter-spacing: 0.1em;
   }
   .open-bar {
     position: absolute;
-    bottom: 0; left: 0; right: 0;
+    top: 0; left: 0; right: 0;
     height: 3px;
     background: var(--orange);
   }
   .open-hashtag {
     position: absolute;
-    bottom: 1rem; right: 1.2rem;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.65rem;
+    top: 1rem; right: 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.4rem;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: rgba(255,248,244,0.25);
+    color: rgba(255,248,244,0.18);
     text-transform: uppercase;
   }
 
   /* ===========================
-     SLIDE 2: FOTO/VIDEO
+     SLIDE 2: FOTO/VIDEO — Full Bleed
   =========================== */
   .slide-media {
     width: 100%; height: 100%;
     background: #111;
     position: relative;
-    display: flex;
-    flex-direction: column;
+    overflow: hidden;
   }
   .media-placeholder {
-    flex: 1;
-    background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #1A1A1A 0%, #2A2A2A 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 0.5rem;
-    border: 2px dashed rgba(240,90,40,0.3);
-    margin: 0.8rem;
-    border-radius: 6px;
+    border: 1px dashed rgba(240,90,40,0.25);
+    margin: 0;
+    border-radius: 0;
   }
   .media-icon { font-size: 2rem; opacity: 0.3; }
   .media-hint {
@@ -299,49 +304,48 @@
   .media-overlay-top {
     position: absolute;
     top: 0; left: 0; right: 0;
-    padding: 0.8rem 1rem 0.5rem;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
+    padding: 0.9rem 1rem 1.5rem;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, transparent 100%);
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
   .media-day-badge {
     background: var(--orange);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 0.25rem 0.6rem;
+    padding: 0.15rem 0.6rem;
     border-radius: 2px;
     color: var(--cream);
+    line-height: 1.4;
   }
   .media-tag {
     font-family: var(--mono);
-    font-size: 0.45rem;
+    font-size: 0.6rem;
+    font-weight: 800;
     letter-spacing: 0.15em;
-    color: rgba(255,248,244,0.6);
+    color: var(--orange);
     text-transform: uppercase;
   }
   .media-overlay-bottom {
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    padding: 0.5rem 1rem 0.8rem;
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    padding: 2rem 1rem 0.9rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
   }
   .media-caption {
-    font-family: 'Barlow', sans-serif;
-    font-size: 0.65rem;
-    font-style: italic;
-    font-weight: 700;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem;
     color: var(--cream);
-    opacity: 0.85;
-    line-height: 1.4;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
   }
   .media-progress {
-    margin-top: 0.4rem;
-    height: 2px;
-    background: rgba(255,255,255,0.2);
+    margin-top: 0.5rem;
+    height: 3px;
+    background: rgba(255,255,255,0.15);
     border-radius: 1px;
     overflow: hidden;
   }
@@ -352,89 +356,85 @@
   }
 
   /* ===========================
-     SLIDE 3: CHIUSURA
+     SLIDE 3: CHIUSURA — Stats Card
   =========================== */
   .slide-close {
     width: 100%; height: 100%;
-    background: var(--orange);
+    background: #0A0A0A;
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 1.5rem;
+    justify-content: space-between;
+    padding: 1.2rem;
     overflow: hidden;
   }
   .slide-close::before {
-    content: 'BUFFALO';
+    content: '';
     position: absolute;
-    bottom: -0.15em;
-    right: -0.05em;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 6rem;
-    color: rgba(0,0,0,0.1);
-    line-height: 1;
+    bottom: 0; left: 0; right: 0;
+    height: 35%;
+    background: var(--orange);
+    clip-path: polygon(0 30%, 100% 0%, 100% 100%, 0% 100%);
+    opacity: 1;
     pointer-events: none;
-    letter-spacing: -0.02em;
   }
-  .close-emoji {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    position: relative;
-  }
+  .close-emoji { display: none; }
   .close-msg {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem;
-    color: var(--dark);
-    line-height: 1;
+    font-size: 1.6rem;
+    color: var(--cream);
+    line-height: 1.1;
     position: relative;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
   }
-  .frame-story .close-msg { font-size: 1.8rem; }
+  .frame-story .close-msg { font-size: 1.4rem; }
   .close-sub {
-    font-family: 'Barlow', sans-serif;
-    font-size: 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
     font-weight: 600;
-    color: rgba(26,26,26,0.7);
+    color: rgba(255,248,244,0.6);
     position: relative;
-    margin-top: 0.5rem;
-    line-height: 1.5;
+    margin-top: 0.3rem;
+    line-height: 1.6;
   }
-  .frame-story .close-sub { font-size: 0.75rem; font-weight: 600; }
+  .frame-story .close-sub { font-size: 0.65rem; }
   .close-cta {
     position: relative;
-    margin-top: 1rem;
-    display: inline-block;
-    background: transparent;
-    color: #444;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    background: var(--dark);
+    color: var(--cream);
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800;
     font-size: 0.75rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 0.4rem 1rem;
+    padding: 0.5rem 1.2rem;
     border-radius: 3px;
-    border: 1.5px solid #444;
+    border: none;
     width: fit-content;
     text-decoration: none;
     align-self: center;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
   }
   .close-hashtags {
     position: absolute;
-    bottom: 1rem; left: 1.5rem;
+    bottom: 0.7rem; left: 1.2rem;
     font-family: var(--mono);
-    font-size: 0.45rem;
-    letter-spacing: 0.08em;
-    color: rgba(26,26,26,0.45);
+    font-size: 0.38rem;
+    letter-spacing: 0.06em;
+    color: rgba(26,26,26,0.5);
+    z-index: 2;
   }
   .close-day {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: rgba(255,248,244,0.15);
     position: absolute;
     top: 1rem; right: 1.2rem;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
-    color: rgba(26,26,26,0.2);
-    position: absolute;
   }
 
   /* FORMAT VISIBILITY */
@@ -475,11 +475,33 @@
   <div class="frame-wrap" id="wrapStory">
     <div class="frame-story">
       <div class="slide-open">
-        <div class="open-tag"><img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="" style="height:3rem; width:auto; vertical-align:middle; margin-right:0.6rem;"> Una Bici per il Mondo</div>
-        <div class="open-day-label">Tappa</div>
-        <div class="open-day-num" id="s-day-num">01</div>
-        <div class="open-from-to" id="s-from-to">Milano → Bologna</div>
-        <div class="open-km" id="s-km">85 km · ↑500m</div>
+
+        <!-- FOTO OPZIONALE - full frame -->
+        <div id="openPhotoArea" style="position:absolute; inset:0; overflow:hidden;">
+          <input type="file" id="openPhotoInput" accept="image/*" style="display:none" onchange="loadOpenPhoto(this)">
+          <div id="openPhotoHint" onclick="document.getElementById('openPhotoInput').click()" style="position:absolute; inset:0; cursor:pointer;"></div>
+          <img id="openPhotoPreview" src="" style="display:none; position:absolute; top:50%; left:50%; cursor:grab; max-width:none; width:auto; height:auto;">
+          <div id="openPhotoControls" style="display:none; position:absolute; top:0.3rem; right:0.3rem; z-index:10; flex-direction:column; gap:0.3rem;">
+            <button onclick="event.stopPropagation(); zoomOpenPhoto(1.3)" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; font-size:0.9rem; cursor:pointer; line-height:1;">+</button>
+            <button onclick="event.stopPropagation(); zoomOpenPhoto(0.77)" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; font-size:0.9rem; cursor:pointer; line-height:1;">−</button>
+            <button onclick="event.stopPropagation(); document.getElementById('openPhotoInput').click()" style="width:1.8rem; height:1.8rem; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:50%; font-size:0.65rem; cursor:pointer; line-height:1;">📷</button>
+            <button onclick="event.stopPropagation(); removeOpenPhoto()" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:rgba(255,255,255,0.5); border:none; border-radius:50%; font-size:0.7rem; cursor:pointer; line-height:1;">✕</button>
+          </div>
+        </div>
+
+        <!-- TOP OVERLAY: logo -->
+        <div class="open-tag" style="position:absolute; top:1rem; left:1.2rem; z-index:2;">
+          <img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="" style="height:3rem; width:auto; vertical-align:middle; margin-right:0.6rem;"> Una Bici per il Mondo
+        </div>
+
+        <!-- BOTTOM OVERLAY: tappa info -->
+        <div style="position:absolute; bottom:0; left:0; right:0; z-index:2; padding:2.5rem 1.2rem 1.2rem; background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);">
+          <div class="open-day-label">Tappa</div>
+          <div class="open-day-num" id="s-day-num">01</div>
+          <div class="open-from-to" id="s-from-to">Milano → Bologna</div>
+          <div class="open-km" id="s-km">85 km · ↑500m</div>
+        </div>
+
         <div class="open-bar"></div>
         <div class="open-hashtag">#InBiciPerIlMondo</div>
       </div>
@@ -489,25 +511,28 @@
   <div class="frame-wrap" id="wrapStory2">
     <div class="frame-story">
       <div class="slide-media">
-        <div class="media-overlay-top">
-          <div class="media-day-badge" id="s-badge">TAPPA 01</div>
-          <div class="media-tag">Una Bici per il Mondo</div>
-        </div>
-        <div class="media-placeholder" id="mediaPlaceholder" style="cursor:pointer; position:relative; overflow:hidden;">
+        <!-- Placeholder/foto prima, poi overlays sopra -->
+        <div class="media-placeholder" id="mediaPlaceholder" style="cursor:pointer; position:absolute; inset:0; overflow:hidden;">
           <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="loadPhoto(this)">
           <div id="mediaHint" onclick="document.getElementById('photoInput').click()" style="display:flex; flex-direction:column; align-items:center; gap:0.3rem; cursor:pointer; width:100%; height:100%; justify-content:center;">
             <div class="media-icon">📷</div>
             <div class="media-hint">Tocca per caricare<br>la tua foto</div>
           </div>
-          <img id="photoPreview" style="display:none; position:absolute; width:100%; height:100%; object-fit:cover; touch-action:none; cursor:grab;">
+          <img id="photoPreview" style="display:none; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;">
           <!-- Controlli foto -->
-          <div id="photoControls" style="display:none; position:absolute; bottom:0.4rem; right:0.4rem; z-index:10; display:none; gap:0.3rem; flex-direction:column;">
+          <div id="photoControls" style="display:none; position:absolute; bottom:0.4rem; right:0.4rem; z-index:10; flex-direction:column; gap:0.3rem;">
             <button onclick="zoomPhoto(1.3)" style="width:2rem; height:2rem; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; font-size:1rem; cursor:pointer; line-height:1;">+</button>
             <button onclick="zoomPhoto(0.77)" style="width:2rem; height:2rem; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; font-size:1rem; cursor:pointer; line-height:1;">−</button>
             <button onclick="document.getElementById('photoInput').click()" style="width:2rem; height:2rem; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:50%; font-size:0.7rem; cursor:pointer; line-height:1;">📷</button>
+            <button onclick="removePhoto()" style="width:2rem; height:2rem; background:rgba(0,0,0,0.6); color:rgba(255,255,255,0.5); border:none; border-radius:50%; font-size:0.8rem; cursor:pointer; line-height:1;">✕</button>
           </div>
         </div>
-        <div class="media-overlay-bottom">
+        <!-- Overlays sopra la foto -->
+        <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
+          <div class="media-day-badge" id="s-badge">TAPPA 01</div>
+          <div class="media-tag">Una Bici per il Mondo</div>
+        </div>
+        <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2;">
           <div class="media-caption" id="s-caption">Milano → Bologna · 85 km</div>
           <div class="media-progress">
             <div class="media-progress-fill" id="s-prog" style="width:5%"></div>
@@ -521,37 +546,48 @@
     <div class="frame-story">
       <div class="slide-close">
         <div class="close-day" id="s-close-day">01</div>
-        <div style="display:flex; align-items:center; justify-content:center; gap:0.8rem;">
-          <img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="" style="height:5rem; width:auto;">
-          <div class="close-msg">Ancora<br>in sella!</div>
-        </div>
-        <div class="close-sub" id="s-close-sub">Km percorsi oggi: 85<br>Totale: 85 / 1.700 km</div>
 
-        <!-- BARRA RACCOLTA FONDI MINI -->
-        <div style="position:relative; width:100%; margin-top:0.8rem;">
-          <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.5rem; font-weight:600; letter-spacing:0.1em; color:rgba(26,26,26,0.8); margin-bottom:0.25rem;">
+        <!-- TOP: barra arancione con icona + nome -->
+        <div style="position:absolute; top:0; left:0; right:0; z-index:3; height:3px; background:var(--orange);"></div>
+        <div style="position:relative; z-index:2; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem;">
+          <img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="" style="height:2.5rem; width:auto; vertical-align:middle;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange);">Una Bici per il Mondo</div>
+        </div>
+
+        <!-- MESSAGGIO -->
+        <div style="position:relative; z-index:2;">
+          <div class="close-msg">Le gambe<br>girano ancora.</div>
+          <div class="close-sub" id="s-close-sub">Oggi: 85 km · ↑320m<br>Totale: 266 km · ↑450m</div>
+        </div>
+
+        <!-- MIDDLE: barra raccolta fondi -->
+        <div style="position:relative; z-index:2; margin-top:0.5rem;">
+          <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.48rem; font-weight:600; letter-spacing:0.1em; color:rgba(255,248,244,0.4); margin-bottom:0.25rem;">
             <span>Raccolta fondi</span>
             <span id="close-raised-pct">0%</span>
           </div>
-          <div style="background:rgba(26,26,26,0.15); border-radius:2px; height:4px; width:100%; overflow:hidden;">
-            <div id="close-bar-fill" style="height:100%; width:0%; background:#1A1A1A; border-radius:2px; transition:width 0.5s;"></div>
+          <div style="background:rgba(255,255,255,0.1); border-radius:2px; height:4px; width:100%; overflow:hidden;">
+            <div id="close-bar-fill" style="height:100%; width:0%; background:var(--orange); border-radius:2px; transition:width 0.5s;"></div>
           </div>
-          <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.48rem; font-weight:600; letter-spacing:0.08em; color:rgba(26,26,26,0.75); margin-top:0.2rem;">
+          <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.45rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.35); margin-top:0.2rem;">
             <span id="close-raised-amt">€0</span>
             <span>€1.700</span>
           </div>
-          <!-- NUMERO BICI -->
-          <div style="display:flex; align-items:baseline; gap:0.3rem; margin-top:0.5rem; padding-top:0.5rem; border-top:1px solid rgba(26,26,26,0.15);">
-            <span id="close-bikes-num" style="font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:900; color:#1A1A1A; line-height:1; letter-spacing:-0.02em;">0</span>
-            <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; font-weight:800; color:rgba(26,26,26,0.8); line-height:1.3; letter-spacing:0.03em;">bici <strong>Buffalo</strong> per ora!</span>
+          <div style="display:flex; align-items:baseline; gap:0.4rem; margin-top:0.5rem;">
+            <span id="close-bikes-num" style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:var(--orange); line-height:1;">0</span>
+            <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; color:rgba(255,248,244,0.5); letter-spacing:0.05em;">bici <strong style="color:var(--orange);">Buffalo</strong> per ora!</span>
           </div>
         </div>
 
-        <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank" style="display:flex; flex-direction:column; align-items:center; gap:0.1rem; margin-top:0.8rem;">
-          <span style="font-size:0.85rem; font-weight:900; letter-spacing:0.15em;">DONA ORA</span>
-          <span style="font-size:0.45rem; font-weight:800; letter-spacing:0.25em;">LINK IN BIO</span>
-        </a>
-        <div class="close-hashtags">#InBiciPerIlMondo · #UnaBiciPerIlMondo · #WorldBicycleRelief</div>
+        <!-- BOTTOM: CTA su sfondo arancione -->
+        <div style="position:relative; z-index:2; margin-top:auto; padding-top:0.8rem;">
+          <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank">
+            <span style="font-size:0.9rem; font-weight:900; letter-spacing:0.15em;">DONA ORA</span>
+            <span style="font-size:0.42rem; font-weight:800; letter-spacing:0.25em; color:rgba(255,248,244,0.6);">LINK IN BIO</span>
+          </a>
+        </div>
+
+        <div class="close-hashtags">#InBiciPerIlMondo · #WorldBicycleRelief</div>
       </div>
     </div>
   </div>
@@ -802,9 +838,11 @@ async function downloadSlides() {
     if (!wrap) continue;
     const wasHidden = wrap.style.display === 'none';
     if (wasHidden) wrap.style.display = 'flex';
-    // Nascondi controlli foto durante la cattura
+    // Nascondi tutti i controlli foto durante la cattura
     const controls = document.getElementById('photoControls');
+    const openControls = document.getElementById('openPhotoControls');
     if (controls) controls.style.display = 'none';
+    if (openControls) openControls.style.display = 'none';
     const el = wrap.querySelector(slide.sel);
     if (el) {
       try {
@@ -818,6 +856,7 @@ async function downloadSlides() {
     }
     // Mostra di nuovo i controlli
     if (controls) controls.style.display = 'flex';
+    if (openControls && document.getElementById('openPhotoPreview').src) openControls.style.display = 'flex';
     if (wasHidden) wrap.style.display = 'none';
   }
 
@@ -826,7 +865,61 @@ async function downloadSlides() {
 }
 
 
-// ---- PHOTO ADJUST ----
+// ---- PHOTO SLIDE 1 (opzionale) ----
+let openScale = 1, openX = 0, openY = 0, openDragStart = null;
+
+function applyOpenTransform() {
+  const img = document.getElementById('openPhotoPreview');
+  img.style.transform = `translate(calc(-50% + ${openX}px), calc(-50% + ${openY}px)) scale(${openScale})`;
+}
+
+function zoomOpenPhoto(factor) {
+  openScale = Math.min(15, Math.max(0.1, openScale * factor));
+  applyOpenTransform();
+}
+
+function removeOpenPhoto() {
+  const img = document.getElementById('openPhotoPreview');
+  const hint = document.getElementById('openPhotoHint');
+  const controls = document.getElementById('openPhotoControls');
+  img.src = ''; img.style.display = 'none';
+  hint.style.display = 'flex';
+  controls.style.display = 'none';
+  openScale = 1; openX = 0; openY = 0;
+}
+
+function loadOpenPhoto(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = document.getElementById('openPhotoPreview');
+    const hint = document.getElementById('openPhotoHint');
+    const controls = document.getElementById('openPhotoControls');
+    const container = document.getElementById('openPhotoArea');
+    img.onload = () => {
+      const cw = container.offsetWidth || 270;
+      const ch = container.offsetHeight || 160;
+      openScale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+      openX = 0; openY = 0;
+      applyOpenTransform();
+    };
+    img.src = e.target.result;
+    img.style.cssText = 'display:block; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;';
+    hint.style.display = 'none';
+    controls.style.display = 'flex';
+    // Touch
+    img.addEventListener('touchstart', (ev) => { if(ev.touches.length===1) openDragStart={x:ev.touches[0].clientX-openX,y:ev.touches[0].clientY-openY}; }, {passive:true});
+    img.addEventListener('touchmove', (ev) => { ev.preventDefault(); if(ev.touches.length===1&&openDragStart){openX=ev.touches[0].clientX-openDragStart.x;openY=ev.touches[0].clientY-openDragStart.y;applyOpenTransform();} }, {passive:false});
+    img.addEventListener('touchend', () => { openDragStart=null; });
+    // Mouse
+    img.addEventListener('mousedown', (ev) => { openDragStart={x:ev.clientX-openX,y:ev.clientY-openY}; img.style.cursor='grabbing'; });
+    document.addEventListener('mousemove', (ev) => { if(!openDragStart)return; openX=ev.clientX-openDragStart.x; openY=ev.clientY-openDragStart.y; applyOpenTransform(); });
+    document.addEventListener('mouseup', () => { openDragStart=null; if(document.getElementById('openPhotoPreview')) document.getElementById('openPhotoPreview').style.cursor='grab'; });
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+// ---- PHOTO SLIDE 2 ----
 let photoScale = 1;
 let photoX = 0, photoY = 0;
 let dragStart = null;
@@ -839,6 +932,16 @@ function applyPhotoTransform() {
 function zoomPhoto(factor) {
   photoScale = Math.min(15, Math.max(0.1, photoScale * factor));
   applyPhotoTransform();
+}
+
+function removePhoto() {
+  const img = document.getElementById('photoPreview');
+  const hint = document.getElementById('mediaHint');
+  const controls = document.getElementById('photoControls');
+  img.src = ''; img.style.display = 'none';
+  hint.style.display = 'flex';
+  controls.style.display = 'none';
+  photoScale = 1; photoX = 0; photoY = 0;
 }
 
 function loadPhoto(input) {
