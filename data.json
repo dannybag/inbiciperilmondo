@@ -4,7 +4,24 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 0
+    "day": 1,
+    "from": "Firenze ",
+    "to": "",
+    "km": 139,
+    "dislivello": 1815,
+    "updated": "2026-06-05T16:16:28.844Z",
+    "totKm": 139,
+    "totDis": 1815,
+    "tappe": 1
   },
-  "tappe": []
+  "tappe": [
+    {
+      "day": 1,
+      "from": "Firenze ",
+      "to": "",
+      "km": 139,
+      "dislivello": 1815,
+      "updated": "2026-06-05T16:16:28.844Z"
+    }
+  ]
 }
