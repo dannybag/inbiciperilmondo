@@ -1572,11 +1572,11 @@
   const AUTH_DURATION = 20 * 60 * 1000; // 20 minuti in ms
 
   function isAuthenticated() {
-    const ts = sessionStorage.getItem('auth-ts');
+    const ts = localStorage.getItem('auth-ts');
     return ts && (Date.now() - parseInt(ts)) < AUTH_DURATION;
   }
   function setAuthenticated() {
-    sessionStorage.setItem('auth-ts', Date.now());
+    localStorage.setItem('auth-ts', Date.now());
   }
 
   // Bottone visibile solo in fondo alla pagina
