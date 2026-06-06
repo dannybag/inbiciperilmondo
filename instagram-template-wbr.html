@@ -588,7 +588,7 @@
           <div class="media-tag" style="color:var(--orange);">Una Bici per il Mondo</div>
         </div>
         <!-- Caption trascinabile -->
-        <div class="media-caption" id="s-caption" style="position:absolute; bottom:3rem; left:1rem;">Ogni km conta.</div>
+        <div class="media-caption" id="s-caption" contenteditable="true" style="position:absolute; bottom:3rem; left:1rem; outline:none;" title="Tocca per modificare">Ogni km conta.</div>
         <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
           <div class="media-progress">
             <div class="media-progress-fill" id="s-prog" style="width:5%"></div>
@@ -826,7 +826,12 @@ function update() {
   document.getElementById('s-from-to').textContent = route;
   document.getElementById('s-km').textContent = `${kmStr} · ↑${dislivello}m`;
   document.getElementById('s-badge').textContent = `TAPPA ${dayStr}`;
-  document.getElementById('s-caption').textContent = photoMsgLocal;
+  // Aggiorna solo se la caption non è stata modificata manualmente
+  const cap = document.getElementById('s-caption');
+  if (cap && cap.textContent === cap.dataset.lastAuto || !cap.dataset.lastAuto) {
+    cap.textContent = photoMsgLocal;
+    cap.dataset.lastAuto = photoMsgLocal;
+  }
   document.getElementById('s-prog').style.width = `${pct}%`;
   document.getElementById('s-close-day').textContent = dayStr;
   document.getElementById('s-close-sub').innerHTML = `Oggi: ${document.getElementById('kmDay').value} km · ↑${document.getElementById('dislivello').value}m<br>Totale: ${tot} km · ↑${disTot}m`;
@@ -1053,8 +1058,8 @@ function getRandomPhrase() {
 
 function applyPhrase(phrase) {
   currentPhrase = phrase;
+  // Aggiorna solo la slide 2 fissa, non le extra
   document.getElementById('s-caption').textContent = phrase;
-  document.querySelectorAll('[id^="s-caption-extra"]').forEach(el => el.textContent = phrase);
 }
 
 function randomPhrase() {
@@ -1149,7 +1154,7 @@ function addPhotoSlide() {
           <div class="media-day-badge" id="s-badge-extra${extraSlideCount}">TAPPA 01</div>
           <div class="media-tag" style="color:var(--orange);">Una Bici per il Mondo</div>
         </div>
-        <div class="media-caption" id="s-caption-extra${extraSlideCount}" style="position:absolute; bottom:3rem; left:1rem;">${document.getElementById('s-caption')?.textContent || 'Ogni km conta.'}</div>
+        <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="position:absolute; bottom:3rem; left:1rem; outline:none;" title="Tocca per modificare">${currentPhrase || 'Ogni km conta.'}</div>
         <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
           <div class="media-progress"><div class="media-progress-fill" id="s-prog-extra${extraSlideCount}" style="width:5%"></div></div>
         </div>
