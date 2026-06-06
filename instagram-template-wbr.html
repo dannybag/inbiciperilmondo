@@ -1048,8 +1048,17 @@ let photoMsgs = [
 ];
 let currentPhrase = photoMsgs[0];
 
+function getUsedPhrases() {
+  const used = new Set();
+  document.querySelectorAll('.media-caption').forEach(el => used.add(el.textContent.trim()));
+  return used;
+}
+
 function getRandomPhrase() {
-  return photoMsgs[Math.floor(Math.random() * photoMsgs.length)];
+  const used = getUsedPhrases();
+  const available = photoMsgs.filter(p => !used.has(p));
+  const pool = available.length > 0 ? available : photoMsgs;
+  return pool[Math.floor(Math.random() * pool.length)];
 }
 
 let targetCaptionId = 's-caption';
@@ -1061,13 +1070,7 @@ function applyPhrase(phrase) {
 }
 
 function randomPhrase() {
-  let p = getRandomPhrase();
-  // Evita di ripetere la stessa frase
-  const el = document.getElementById(targetCaptionId);
-  const current = el ? el.textContent : '';
-  if (photoMsgs.length > 1) {
-    while (p === current) p = getRandomPhrase();
-  }
+  const p = getRandomPhrase();
   document.getElementById('phrase-current').value = p;
   applyPhrase(p);
 }
