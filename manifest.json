@@ -3,12 +3,12 @@
   "short_name": "InBici",
   "icons": [
     {
-      "src": "img/BikeIconBlack.png",
+      "src": "img/BikeIconB.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "img/BikeIconBlack.png",
+      "src": "img/BikeIconB.png",
       "sizes": "512x512",
       "type": "image/png"
     }
