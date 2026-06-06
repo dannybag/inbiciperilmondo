@@ -760,31 +760,54 @@ function update() {
   const dayStr = pad(day);
   const route = `${from} → ${to}`;
   const kmStr = `${km} km`;
-  const msgs = ["Ancora\nin sella!", "Le gambe\ngirano!", "Una Buffalo\nin più!", "Non mi\nfermo!", "Palermo\nsi avvicina!"];
-  const msg = msgs[(day - 1) % msgs.length];
-  const tappe = Math.round(tot / (km || 1));
+
+  // Frasi chiusura
+  const closeMsgs = ["Ancora\nin sella!", "Le gambe\ngirano!", "Una Buffalo\nin più!", "Non mi\nfermo!", "Palermo\nsi avvicina!"];
+  const closeMsg = closeMsgs[(day - 1) % closeMsgs.length];
+
+  // Frasi slide foto (motivazionali, senza distanza)
+  const photoMsgs = [
+    "Ogni km conta.",
+    "La strada chiama.",
+    "Si pedala!",
+    "Testa bassa e gambe girare.",
+    "Il vento in faccia? Meglio così.",
+    "Un passo alla volta... in bici.",
+    "Non guardo indietro.",
+    "Il Sud si avvicina.",
+    "Asfalto e silenzio.",
+    "Questa è la mia risposta."
+  ];
+  const photoMsg = photoMsgs[Math.floor(Math.random() * photoMsgs.length)];
 
   // Story
   document.getElementById('s-day-num').textContent = dayStr;
   document.getElementById('s-from-to').textContent = route;
   document.getElementById('s-km').textContent = `${kmStr} · ↑${dislivello}m`;
   document.getElementById('s-badge').textContent = `TAPPA ${dayStr}`;
-  document.getElementById('s-caption').textContent = `${route} · ${kmStr} · ↑${dislivello}m`;
+  document.getElementById('s-caption').textContent = photoMsg;
   document.getElementById('s-prog').style.width = `${pct}%`;
   document.getElementById('s-close-day').textContent = dayStr;
   document.getElementById('s-close-sub').innerHTML = `Oggi: ${document.getElementById('kmDay').value} km · ↑${document.getElementById('dislivello').value}m<br>Totale: ${tot} km · ↑${disTot}m`;
-  document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = msg.replace('\n', '<br>');
+  document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = closeMsg.replace('\n', '<br>');
+
+  // Aggiorna anche le slide extra con la stessa frase
+  document.querySelectorAll('[id^="s-caption-extra"]').forEach(el => el.textContent = photoMsg);
+  document.querySelectorAll('[id^="s-badge-extra"]').forEach(el => el.textContent = `TAPPA ${dayStr}`);
+  document.querySelectorAll('[id^="s-prog-extra"]').forEach(el => el.style.width = `${pct}%`);
 
   // Post
-  document.getElementById('p-day-num').textContent = dayStr;
-  document.getElementById('p-from-to').textContent = route;
-  document.getElementById('p-km').textContent = `${kmStr} · ↑${dislivello}m`;
-  document.getElementById('p-badge').textContent = `TAPPA ${dayStr}`;
-  document.getElementById('p-caption').textContent = `${route} · ${kmStr} · ↑${dislivello}m`;
-  document.getElementById('p-prog').style.width = `${pct}%`;
-  document.getElementById('p-close-day').textContent = dayStr;
-  document.getElementById('p-close-sub').innerHTML = `${tot} km · ↑${disTot}m`;
-  document.querySelectorAll('.slide-close .close-msg')[1].innerHTML = msg.replace('\n', '<br>');
+  if (document.getElementById('p-day-num')) {
+    document.getElementById('p-day-num').textContent = dayStr;
+    document.getElementById('p-from-to').textContent = route;
+    document.getElementById('p-km').textContent = `${kmStr} · ↑${dislivello}m`;
+    document.getElementById('p-badge').textContent = `TAPPA ${dayStr}`;
+    document.getElementById('p-caption').textContent = photoMsg;
+    document.getElementById('p-prog').style.width = `${pct}%`;
+    document.getElementById('p-close-day').textContent = dayStr;
+    document.getElementById('p-close-sub').innerHTML = `${tot} km · ↑${disTot}m`;
+    document.querySelectorAll('.slide-close .close-msg')[1].innerHTML = closeMsg.replace('\n', '<br>');
+  }
 }
 
 function admOpen() {
