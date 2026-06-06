@@ -820,7 +820,7 @@ function update() {
   document.getElementById('s-km').textContent = `${kmStr} · ↑${dislivello}m`;
   document.getElementById('s-badge').textContent = `TAPPA ${dayStr}`;
   // Non cambia la frase automaticamente - viene gestita dai bottoni 💬 per slide
-  const photoMsgLocal = document.getElementById('s-caption')?.textContent || getNextPhrase();
+  const photoMsgLocal = document.getElementById('s-caption')?.textContent || '';
   document.getElementById('s-prog').style.width = `${pct}%`;
   document.getElementById('s-close-day').textContent = dayStr;
   document.getElementById('s-close-sub').innerHTML = `Oggi: ${document.getElementById('kmDay').value} km · ↑${document.getElementById('dislivello').value}m<br>Totale: ${tot} km · ↑${disTot}m`;
@@ -1065,6 +1065,7 @@ function applyPhrase(phrase) {
 }
 
 function randomPhrase() {
+  // Prende dalla coda senza consumarla se possibile
   const p = getNextPhrase();
   document.getElementById('phrase-current').value = p;
   applyPhrase(p);
@@ -1349,6 +1350,9 @@ function loadPhoto(input) {
 }
 
 shufflePhrases();
+// Assegna frase iniziale alla slide 2
+const cap2 = document.getElementById('s-caption');
+if (cap2) cap2.textContent = getNextPhrase();
 loadFromGitHub();
 </script>
 </body>
