@@ -484,7 +484,7 @@
     style="background:transparent; color:#F05A28; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 1.5rem; border:2px solid #F05A28; border-radius:3px; cursor:pointer;">
     + Slide foto
   </button>
-  <button onclick="openPhrasePanel()"
+  <button onclick="openPhrasePanel('s-caption')"
     style="background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 1.5rem; border:2px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;">
     💬 Frasi
   </button>
@@ -587,8 +587,9 @@
           <div class="media-day-badge" id="s-badge">TAPPA 01</div>
           <div class="media-tag" style="color:var(--orange);">Una Bici per il Mondo</div>
         </div>
-        <!-- Caption trascinabile -->
+        <!-- Caption trascinabile + bottone frase -->
         <div class="media-caption" id="s-caption" contenteditable="true" style="position:absolute; bottom:3rem; left:1rem; outline:none;" title="Tocca per modificare">Ogni km conta.</div>
+        <button onclick="openPhrasePanel('s-caption')" style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.5rem; cursor:pointer;">💬 frase</button>
         <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
           <div class="media-progress">
             <div class="media-progress-fill" id="s-prog" style="width:5%"></div>
@@ -838,7 +839,6 @@ function update() {
   document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = closeMsg.replace('\n', '<br>');
 
   // Aggiorna anche le slide extra con la stessa frase
-  document.querySelectorAll('[id^="s-caption-extra"]').forEach(el => el.textContent = photoMsgLocal);
   document.querySelectorAll('[id^="s-badge-extra"]').forEach(el => el.textContent = `TAPPA ${dayStr}`);
   document.querySelectorAll('[id^="s-prog-extra"]').forEach(el => el.style.width = `${pct}%`);
 
@@ -1056,14 +1056,22 @@ function getRandomPhrase() {
   return photoMsgs[Math.floor(Math.random() * photoMsgs.length)];
 }
 
+let targetCaptionId = 's-caption';
+
 function applyPhrase(phrase) {
   currentPhrase = phrase;
-  // Aggiorna solo la slide 2 fissa, non le extra
-  document.getElementById('s-caption').textContent = phrase;
+  const el = document.getElementById(targetCaptionId);
+  if (el) el.textContent = phrase;
 }
 
 function randomPhrase() {
-  const p = getRandomPhrase();
+  let p = getRandomPhrase();
+  // Evita di ripetere la stessa frase
+  const el = document.getElementById(targetCaptionId);
+  const current = el ? el.textContent : '';
+  if (photoMsgs.length > 1) {
+    while (p === current) p = getRandomPhrase();
+  }
   document.getElementById('phrase-current').value = p;
   applyPhrase(p);
 }
@@ -1098,8 +1106,10 @@ function renderPhraseList() {
     </div>`).join('');
 }
 
-function openPhrasePanel() {
-  document.getElementById('phrase-current').value = currentPhrase;
+function openPhrasePanel(captionId) {
+  if (captionId) targetCaptionId = captionId;
+  const el = document.getElementById(targetCaptionId);
+  document.getElementById('phrase-current').value = el ? el.textContent : currentPhrase;
   renderPhraseList();
   document.getElementById('phrase-overlay').style.display = 'flex';
 }
@@ -1155,6 +1165,7 @@ function addPhotoSlide() {
           <div class="media-tag" style="color:var(--orange);">Una Bici per il Mondo</div>
         </div>
         <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="position:absolute; bottom:3rem; left:1rem; outline:none;" title="Tocca per modificare">${currentPhrase || 'Ogni km conta.'}</div>
+        <button onclick="openPhrasePanel('s-caption-extra${extraSlideCount}')" style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.5rem; cursor:pointer;">💬 frase</button>
         <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
           <div class="media-progress"><div class="media-progress-fill" id="s-prog-extra${extraSlideCount}" style="width:5%"></div></div>
         </div>
