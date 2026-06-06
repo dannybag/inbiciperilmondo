@@ -814,21 +814,13 @@ function update() {
   const closeMsgs = ["Ancora\nin sella!", "Le gambe\ngirano!", "Una Buffalo\nin più!", "Non mi\nfermo!", "Palermo\nsi avvicina!"];
   const closeMsg = closeMsgs[(day - 1) % closeMsgs.length];
 
-  // Frasi slide foto
-  const photoMsgLocal = getRandomPhrase();
-  currentPhrase = photoMsgLocal;
-
   // Story
   document.getElementById('s-day-num').textContent = dayStr;
   document.getElementById('s-from-to').textContent = route;
   document.getElementById('s-km').textContent = `${kmStr} · ↑${dislivello}m`;
   document.getElementById('s-badge').textContent = `TAPPA ${dayStr}`;
-  // Aggiorna solo se la caption non è stata modificata manualmente
-  const cap = document.getElementById('s-caption');
-  if (cap && cap.textContent === cap.dataset.lastAuto || !cap.dataset.lastAuto) {
-    cap.textContent = photoMsgLocal;
-    cap.dataset.lastAuto = photoMsgLocal;
-  }
+  // Non cambia la frase automaticamente - viene gestita dai bottoni 💬 per slide
+  const photoMsgLocal = document.getElementById('s-caption')?.textContent || getRandomPhrase();
   document.getElementById('s-prog').style.width = `${pct}%`;
   document.getElementById('s-close-day').textContent = dayStr;
   document.getElementById('s-close-sub').innerHTML = `Oggi: ${document.getElementById('kmDay').value} km · ↑${document.getElementById('dislivello').value}m<br>Totale: ${tot} km · ↑${disTot}m`;
@@ -1048,26 +1040,17 @@ let photoMsgs = [
 ];
 let currentPhrase = photoMsgs[0];
 
+let usedPhraseSet = new Set();
 let phraseIndex = 0;
 
 function getRandomPhrase() {
-  // Ruota sequenzialmente in ordine casuale - nessuna ripetizione finché non si esaurisce il pool
-  if (phraseIndex === 0) {
-    // Mescola l'array
-    for (let i = photoMsgs.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [photoMsgs[i], photoMsgs[j]] = [photoMsgs[j], photoMsgs[i]];
-    }
-  }
-  const p = photoMsgs[phraseIndex];
-  phraseIndex = (phraseIndex + 1) % photoMsgs.length;
+  // Se ho usato tutte le frasi, resetto
+  if (usedPhraseSet.size >= photoMsgs.length) usedPhraseSet.clear();
+  // Prendo quelle non ancora usate
+  const available = photoMsgs.filter(p => !usedPhraseSet.has(p));
+  const p = available[Math.floor(Math.random() * available.length)];
+  usedPhraseSet.add(p);
   return p;
-}
-
-function getUsedPhrases() {
-  const used = new Set();
-  document.querySelectorAll('.media-caption').forEach(el => used.add(el.textContent.trim()));
-  return used;
 }
 
 let targetCaptionId = 's-caption';
@@ -1363,6 +1346,9 @@ function loadPhoto(input) {
 }
 
 loadFromGitHub();
+// Marca la frase iniziale come usata
+const initialCap = document.getElementById('s-caption');
+if (initialCap) usedPhraseSet.add(initialCap.textContent.trim());
 </script>
 </body>
 </html>
