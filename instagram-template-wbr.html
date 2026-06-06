@@ -1048,17 +1048,26 @@ let photoMsgs = [
 ];
 let currentPhrase = photoMsgs[0];
 
+let phraseIndex = 0;
+
+function getRandomPhrase() {
+  // Ruota sequenzialmente in ordine casuale - nessuna ripetizione finché non si esaurisce il pool
+  if (phraseIndex === 0) {
+    // Mescola l'array
+    for (let i = photoMsgs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [photoMsgs[i], photoMsgs[j]] = [photoMsgs[j], photoMsgs[i]];
+    }
+  }
+  const p = photoMsgs[phraseIndex];
+  phraseIndex = (phraseIndex + 1) % photoMsgs.length;
+  return p;
+}
+
 function getUsedPhrases() {
   const used = new Set();
   document.querySelectorAll('.media-caption').forEach(el => used.add(el.textContent.trim()));
   return used;
-}
-
-function getRandomPhrase() {
-  const used = getUsedPhrases();
-  const available = photoMsgs.filter(p => !used.has(p));
-  const pool = available.length > 0 ? available : photoMsgs;
-  return pool[Math.floor(Math.random() * pool.length)];
 }
 
 let targetCaptionId = 's-caption';
