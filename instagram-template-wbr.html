@@ -519,10 +519,6 @@
     style="background:transparent; color:#F05A28; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 1.5rem; border:2px solid #F05A28; border-radius:3px; cursor:pointer;">
     + Slide foto
   </button>
-  <button onclick="openStylePanel()"
-    style="background:transparent; color:rgba(255,248,244,0.5); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 1.5rem; border:2px solid rgba(255,248,244,0.2); border-radius:3px; cursor:pointer;">
-    🎨 Stile
-  </button>
 </div>
 
 <!-- PANNELLO STILE -->
@@ -678,6 +674,7 @@
         <!-- Caption trascinabile + bottone frase -->
         <div class="media-caption" id="s-caption" contenteditable="true" style="position:absolute; bottom:3rem; left:1rem; outline:none;" title="Tocca per modificare">Ogni km conta.</div>
         <button onclick="openPhrasePanel('s-caption'); styleTargetId='s-caption';" style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.5rem; cursor:pointer;">💬 frase</button>
+        <button onclick="styleTargetId='s-caption'; openStylePanel('s-caption');" style="position:absolute; bottom:0.4rem; left:4rem; z-index:5; background:rgba(26,26,26,0.8); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.5rem; cursor:pointer;">🎨 stile</button>
         <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
           <div class="media-progress">
             <div class="media-progress-fill" id="s-prog" style="width:5%"></div>
@@ -1153,7 +1150,7 @@ const BG_COLORS = [
 
 const EMOJIS = ['🚴','🚵','🏔️','🌄','🌅','🛣️','⛰️','🌿','☀️','🌊','💪','🔥','❤️','🧡','💛','💚','💙','⭐','✨','🏅','🎯','🤟','👊','🙏','📍','📸','🇮🇹','🌍','🐃','🦓'];
 
-let styleTargetId = null;
+let styleTargetId = 's-caption';
 
 function buildStylePanel() {
   // Font grid
