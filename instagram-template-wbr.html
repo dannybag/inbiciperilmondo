@@ -505,6 +505,16 @@
 </style>
 </head>
 <body>
+<!-- Font preload (invisibile) -->
+<div style="position:fixed; visibility:hidden; pointer-events:none; font-size:1px; top:-100px;">
+  <span style="font-family:'Anton', sans-serif;">x</span>
+  <span style="font-family:'Racing Sans One', cursive;">x</span>
+  <span style="font-family:'Russo One', sans-serif;">x</span>
+  <span style="font-family:'Outfit', sans-serif;">x</span>
+  <span style="font-family:'Pacifico', cursive;">x</span>
+  <span style="font-family:'Permanent Marker', cursive;">x</span>
+</div>
+
 
 <h1>Una Bici per il Mondo · Instagram Kit</h1>
 <div class="subtitle">Milano → Palermo · World Bicycle Relief · Template giornaliero</div>
@@ -1200,6 +1210,11 @@ function getTarget() {
 
 function applyFont(fontFamily, btn) {
   const el = getTarget(); if (!el) return;
+  // Forza caricamento font poi applica
+  document.fonts.load('1rem ' + fontFamily).then(() => {
+    el.style.fontFamily = fontFamily;
+    el.style.setProperty('font-family', fontFamily, 'important');
+  });
   el.style.fontFamily = fontFamily;
   document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
