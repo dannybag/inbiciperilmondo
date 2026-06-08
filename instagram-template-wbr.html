@@ -331,8 +331,8 @@
   }
   .cap-wrapper {
     position: absolute;
-    left: 50%; top: 60%;
-    transform: translate(-50%, -50%);
+    left: 50%; bottom: 3.5rem;
+    transform: translateX(-50%);
     display: inline-block;
     white-space: nowrap;
     cursor: grab;
@@ -356,7 +356,6 @@
   }
   .cap-rot-handle   { top: -1rem; right: -1rem; }
   .cap-scale-handle { bottom: -1rem; right: -1rem; cursor: nwse-resize; }
-  @media (pointer: coarse) { .cap-handle { display: none !important; } }
 
   .size-btn {
     background: #2A2A2A;
@@ -1132,12 +1131,15 @@ function initCaption(textEl) {
   const rotH = document.createElement('div');
   rotH.className = 'cap-handle cap-rot-handle';
   rotH.innerHTML = '↻';
-  wrapper.appendChild(rotH);
-
-  const scaH = document.createElement('div');
-  scaH.className = 'cap-handle cap-scale-handle';
-  scaH.innerHTML = '⤡';
-  wrapper.appendChild(scaH);
+  // Mostra handle solo su desktop
+  const isMobile = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  if (!isMobile) {
+    const scaH = document.createElement('div');
+    scaH.className = 'cap-handle cap-scale-handle';
+    scaH.innerHTML = '⤡';
+    wrapper.appendChild(rotH);
+    wrapper.appendChild(scaH);
+  }
 
   captionState[id] = { x: 0, y: 0, rot: 0, scale: 1 };
   applyTransform(id);
@@ -1225,7 +1227,7 @@ function applyTransform(id) {
   const s = captionState[id];
   const w = document.getElementById('wrap_' + id);
   if (!w || !s) return;
-  w.style.transform = `translate(calc(-50% + ${s.x}px), calc(-50% + ${s.y}px)) rotate(${s.rot}deg) scale(${s.scale})`;
+  w.style.transform = `translate(calc(-50% + ${s.x}px), ${s.y}px) rotate(${s.rot}deg) scale(${s.scale})`;
 }
 
 function makeDraggable(el) { initCaption(el); }
