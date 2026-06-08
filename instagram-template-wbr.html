@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Instagram Template · Una Bici per il Mondo</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,600;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,600;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&family=Anton&family=Racing+Sans+One&family=Russo+One&family=Pacifico&family=Permanent+Marker&family=Outfit:wght@400;700&display=swap');
 
   :root {
     --orange: #F05A28;
@@ -329,7 +329,42 @@
     color: var(--orange);
     text-transform: uppercase;
   }
-  .media-overlay-bottom {
+  .size-btn {
+    background: #2A2A2A;
+    border: 1px solid rgba(240,90,40,0.3);
+    color: rgba(255,248,244,0.7);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.6rem;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .size-btn:hover { border-color: #F05A28; color: #F05A28; }
+
+  .font-btn {
+    background: #2A2A2A;
+    border: 1px solid rgba(255,248,244,0.1);
+    color: #FFF8F4;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+    line-height: 1.2;
+  }
+  .font-btn:hover, .font-btn.active { border-color: #F05A28; }
+
+  .color-swatch {
+    width: 2rem; height: 2rem;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+  }
+  .color-swatch:hover { border-color: #fff; transform: scale(1.1); }
+
+
     position: absolute;
     bottom: 0; left: 0; right: 0;
     padding: 0.6rem 1rem 0.6rem;
@@ -484,6 +519,63 @@
     style="background:transparent; color:#F05A28; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 1.5rem; border:2px solid #F05A28; border-radius:3px; cursor:pointer;">
     + Slide foto
   </button>
+  <button onclick="openStylePanel()"
+    style="background:transparent; color:rgba(255,248,244,0.5); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 1.5rem; border:2px solid rgba(255,248,244,0.2); border-radius:3px; cursor:pointer;">
+    🎨 Stile
+  </button>
+</div>
+
+<!-- PANNELLO STILE -->
+<div id="style-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#1A1A1A; border:2px solid #F05A28; border-radius:8px; padding:1.5rem; width:460px; max-width:94vw; max-height:88vh; overflow-y:auto;">
+
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:#F05A28; margin-bottom:0.5rem;">🎨 Stile · <span id="style-target-label" style="color:rgba(255,248,244,0.4);">clicca 💬 su una slide per selezionarla</span></div>
+
+    <!-- FONT -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Font</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem;" id="font-grid"></div>
+    </div>
+
+    <!-- DIMENSIONE -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Dimensione</div>
+      <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+        <button onclick="applyFontSize('0.7rem')"  class="size-btn">XS</button>
+        <button onclick="applyFontSize('0.9rem')"  class="size-btn">S</button>
+        <button onclick="applyFontSize('1.05rem')" class="size-btn">M ✓</button>
+        <button onclick="applyFontSize('1.3rem')"  class="size-btn">L</button>
+        <button onclick="applyFontSize('1.7rem')"  class="size-btn">XL</button>
+        <button onclick="applyFontSize('2.2rem')"  class="size-btn">XXL</button>
+      </div>
+    </div>
+
+    <!-- COLORI -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Colore testo</div>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;" id="color-grid"></div>
+    </div>
+
+    <!-- SFONDO TESTO -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Sfondo testo</div>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;" id="bg-grid"></div>
+    </div>
+
+    <!-- EMOJI -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Emoji rapide</div>
+      <div style="display:flex; flex-wrap:wrap; gap:0.3rem; font-size:1.4rem;" id="emoji-grid"></div>
+    </div>
+
+    <!-- STICKER (placeholder) -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Sticker <span style="color:rgba(255,248,244,0.2);">(prossimamente)</span></div>
+      <div id="sticker-grid" style="display:flex; flex-wrap:wrap; gap:0.4rem; opacity:0.3; font-size:0.6rem; font-family:'IBM Plex Mono',monospace; color:rgba(255,248,244,0.4);">Carica sticker nel repo → img/stickers/ per vederli qui</div>
+    </div>
+
+    <button onclick="closeStylePanel()" style="width:100%; background:transparent; color:rgba(255,248,244,0.3); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.6rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Chiudi</button>
+  </div>
 </div>
 
 <!-- PANNELLO FRASI -->
@@ -585,7 +677,7 @@
         </div>
         <!-- Caption trascinabile + bottone frase -->
         <div class="media-caption" id="s-caption" contenteditable="true" style="position:absolute; bottom:3rem; left:1rem; outline:none;" title="Tocca per modificare">Ogni km conta.</div>
-        <button onclick="openPhrasePanel('s-caption')" style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.5rem; cursor:pointer;">💬 frase</button>
+        <button onclick="openPhrasePanel('s-caption'); styleTargetId='s-caption';" style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.5rem; cursor:pointer;">💬 frase</button>
         <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
           <div class="media-progress">
             <div class="media-progress-fill" id="s-prog" style="width:5%"></div>
@@ -1023,6 +1115,123 @@ function makeDraggable(el, containerId) {
 document.addEventListener('DOMContentLoaded', () => {
   const cap = document.getElementById('s-caption');
   if (cap) makeDraggable(cap, 'mediaPlaceholder');
+});
+
+// ---- PANNELLO STILE ----
+const FONTS = [
+  { name: 'Bebas Neue',       label: 'BEBAS NEUE',       style: "'Bebas Neue', sans-serif" },
+  { name: 'Barlow Condensed', label: 'Barlow Condensed', style: "'Barlow Condensed', sans-serif" },
+  { name: 'Anton',            label: 'ANTON',             style: "'Anton', sans-serif" },
+  { name: 'Racing Sans One',  label: 'Racing Sans',       style: "'Racing Sans One', cursive" },
+  { name: 'Russo One',        label: 'RUSSO ONE',         style: "'Russo One', sans-serif" },
+  { name: 'Outfit',           label: 'Outfit Clean',      style: "'Outfit', sans-serif" },
+  { name: 'Pacifico',         label: 'Pacifico fun',      style: "'Pacifico', cursive" },
+  { name: 'Permanent Marker', label: 'Marker!',           style: "'Permanent Marker', cursive" },
+];
+
+const COLORS = [
+  { label:'Bianco',    val:'#FFFFFF' },
+  { label:'Arancione', val:'#F05A28' },
+  { label:'Nero',      val:'#0A0A0A' },
+  { label:'Giallo',    val:'#FFD600' },
+  { label:'Azzurro',   val:'#29B6F6' },
+  { label:'Verde',     val:'#66BB6A' },
+  { label:'Rosso',     val:'#EF5350' },
+  { label:'Rosa',      val:'#EC407A' },
+  { label:'Viola',     val:'#AB47BC' },
+  { label:'Beige',     val:'#FFF8F4' },
+];
+
+const BG_COLORS = [
+  { label:'Nessuno',   val:'transparent' },
+  { label:'Nero 60%',  val:'rgba(0,0,0,0.6)' },
+  { label:'Nero 90%',  val:'rgba(0,0,0,0.9)' },
+  { label:'Bianco 70%',val:'rgba(255,255,255,0.7)' },
+  { label:'Arancione', val:'rgba(240,90,40,0.85)' },
+  { label:'Giallo',    val:'rgba(255,214,0,0.85)' },
+];
+
+const EMOJIS = ['🚴','🚵','🏔️','🌄','🌅','🛣️','⛰️','🌿','☀️','🌊','💪','🔥','❤️','🧡','💛','💚','💙','⭐','✨','🏅','🎯','🤟','👊','🙏','📍','📸','🇮🇹','🌍','🐃','🦓'];
+
+let styleTargetId = null;
+
+function buildStylePanel() {
+  // Font grid
+  const fg = document.getElementById('font-grid');
+  fg.innerHTML = FONTS.map(f => `
+    <button class="font-btn" style="font-family:${f.style}" onclick="applyFont('${f.style}', this)">
+      ${f.label}
+    </button>`).join('');
+
+  // Color grid
+  const cg = document.getElementById('color-grid');
+  cg.innerHTML = COLORS.map(c => `
+    <div class="color-swatch" style="background:${c.val}; ${c.val==='#FFFFFF'?'border-color:#555':''}"
+      title="${c.label}" onclick="applyColor('${c.val}')"></div>`).join('');
+
+  // BG grid
+  const bg = document.getElementById('bg-grid');
+  bg.innerHTML = BG_COLORS.map(c => `
+    <button onclick="applyBg('${c.val}')"
+      style="background:${c.val==='transparent'?'#2A2A2A':c.val}; border:1px solid rgba(255,255,255,0.15); color:${c.val.includes('255,255,255')?'#000':'#fff'}; font-family:'IBM Plex Mono',monospace; font-size:0.5rem; padding:0.3rem 0.5rem; border-radius:3px; cursor:pointer; letter-spacing:0.08em;">
+      ${c.label}
+    </button>`).join('');
+
+  // Emoji grid
+  const eg = document.getElementById('emoji-grid');
+  eg.innerHTML = EMOJIS.map(e => `
+    <span style="cursor:pointer; padding:0.1rem;" onclick="insertEmoji('${e}')" title="Inserisci">${e}</span>`).join('');
+}
+
+function openStylePanel(captionId) {
+  if (captionId) {
+    styleTargetId = captionId;
+    const el = document.getElementById(captionId);
+    document.getElementById('style-target-label').textContent = el ? `"${el.textContent.slice(0,30)}..."` : '';
+  }
+  buildStylePanel();
+  document.getElementById('style-overlay').style.display = 'flex';
+}
+
+function closeStylePanel() {
+  document.getElementById('style-overlay').style.display = 'none';
+}
+
+function getTarget() {
+  return styleTargetId ? document.getElementById(styleTargetId) : null;
+}
+
+function applyFont(fontFamily, btn) {
+  const el = getTarget(); if (!el) return;
+  el.style.fontFamily = fontFamily;
+  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function applyFontSize(size) {
+  const el = getTarget(); if (!el) return;
+  el.style.fontSize = size;
+}
+
+function applyColor(color) {
+  const el = getTarget(); if (!el) return;
+  el.style.color = color;
+}
+
+function applyBg(bg) {
+  const el = getTarget(); if (!el) return;
+  el.style.background = bg;
+  el.style.padding = bg === 'transparent' ? '0' : '0.2rem 0.5rem';
+  el.style.borderRadius = bg === 'transparent' ? '0' : '3px';
+}
+
+function insertEmoji(emoji) {
+  const el = getTarget(); if (!el) return;
+  el.textContent += emoji;
+}
+
+document.getElementById('style-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('style-overlay')) closeStylePanel();
 });
 
 // ---- GESTIONE FRASI ----
