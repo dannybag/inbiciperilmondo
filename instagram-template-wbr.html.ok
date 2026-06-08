@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram Template · Una Bici per il Mondo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,600;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&family=Anton&family=Racing+Sans+One&family=Russo+One&family=Pacifico&family=Permanent+Marker&family=Outfit:wght@400;700&display=swap');
+
+  :root {
+    --orange: #F05A28;
+    --dark:   #1A1A1A;
+    --cream:  #FFF8F4;
+    --mono:   'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0D0D0D;
+    font-family: 'Barlow', sans-serif;
+    color: var(--cream);
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    text-align: center;
+    margin-bottom: 0.3rem;
+  }
+  .subtitle {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,248,244,0.3);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  /* CONTROLS */
+  .controls {
+    background: #1A1A1A;
+    border: 1px solid rgba(240,90,40,0.3);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .control-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .control-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,248,244,0.4);
+  }
+  .control-group input[type="number"] {
+    background: #2A2A2A;
+    border: 1px solid rgba(240,90,40,0.4);
+    color: var(--cream);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    width: 90px;
+    text-align: center;
+    padding: 0.3rem;
+    border-radius: 4px;
+    outline: none;
+  }
+  .control-group input[type="text"],
+  .control-group input[type="number"].wide {
+    background: #2A2A2A;
+    border: 1px solid rgba(240,90,40,0.4);
+    color: var(--cream);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    outline: none;
+    width: 200px;
+  }
+  .control-group input[type="number"].wide { width: 120px; font-size: 0.9rem; font-family: 'Barlow', sans-serif; }
+  .btn-preview {
+    background: var(--orange);
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1.2rem;
+  }
+
+  /* FORMAT TABS */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .tab {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid rgba(240,90,40,0.4);
+    border-radius: 3px;
+    cursor: pointer;
+    color: rgba(255,248,244,0.5);
+    background: transparent;
+    transition: all 0.2s;
+  }
+  .tab.active {
+    background: var(--orange);
+    color: var(--cream);
+    border-color: var(--orange);
+  }
+
+  /* FRAMES CONTAINER */
+  .frames {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .frame-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .frame-name {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,248,244,0.3);
+  }
+
+  /* ===== STORY / REEL 9:16 ===== */
+  .frame-story {
+    width: 270px;
+    height: 480px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  /* ===== POST 1:1 ===== */
+  .frame-post {
+    width: 360px;
+    height: 360px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  /* ===========================
+     SLIDE 1: APERTURA — Race Dispatch
+  =========================== */
+  .slide-open {
+    width: 100%; height: 100%;
+    background: #0A0A0A;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0;
+    overflow: hidden;
+  }
+  /* Striscia arancione diagonale di sfondo */
+  .slide-open::after {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 55%;
+    height: 100%;
+    background: var(--orange);
+    transform: skewX(-8deg);
+    opacity: 0.08;
+    pointer-events: none;
+  }
+  .open-tag {
+    position: absolute;
+    top: 1rem; left: 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .open-day-label {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--orange);
+    padding: 0 1.2rem;
+    margin-bottom: 0.2rem;
+  }
+  .open-day-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5.5rem;
+    line-height: 0.9;
+    color: var(--orange);
+    padding: 0 1.2rem;
+    letter-spacing: -0.02em;
+  }
+  .frame-story .open-day-num { font-size: 4.5rem; }
+  .open-route { display: none; }
+  .open-from-to {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--cream);
+    padding: 0 1.2rem;
+    margin-top: 0.2rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1;
+    border-left: 3px solid var(--orange);
+  }
+  .frame-story .open-from-to { font-size: 1.1rem; }
+  .open-km {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: rgba(255,248,244,0.55);
+    padding: 0.4rem 1.2rem 1.2rem;
+    letter-spacing: 0.1em;
+  }
+  .open-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--orange);
+  }
+  .open-hashtag {
+    position: absolute;
+    top: 1rem; right: 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.4rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgba(255,248,244,0.18);
+    text-transform: uppercase;
+  }
+
+  /* ===========================
+     SLIDE 2: FOTO/VIDEO — Full Bleed
+  =========================== */
+  .slide-media {
+    width: 100%; height: 100%;
+    background: #111;
+    position: relative;
+    overflow: hidden;
+  }
+  .media-placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #1A1A1A 0%, #2A2A2A 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: 1px dashed rgba(240,90,40,0.25);
+    margin: 0;
+    border-radius: 0;
+  }
+  .media-icon { font-size: 2rem; opacity: 0.3; }
+  .media-hint {
+    font-family: var(--mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,248,244,0.25);
+    text-align: center;
+  }
+  .media-overlay-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 0.9rem 1rem 1.5rem;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, transparent 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .media-day-badge {
+    background: var(--orange);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.6rem;
+    border-radius: 2px;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+  .media-tag {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: var(--orange);
+    text-transform: uppercase;
+  }
+  .size-btn {
+    background: #2A2A2A;
+    border: 1px solid rgba(240,90,40,0.3);
+    color: rgba(255,248,244,0.7);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.6rem;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .size-btn:hover { border-color: #F05A28; color: #F05A28; }
+
+  .font-btn {
+    background: #2A2A2A;
+    border: 1px solid rgba(255,248,244,0.1);
+    color: #FFF8F4;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+    line-height: 1.2;
+  }
+  .font-btn:hover, .font-btn.active { border-color: #F05A28; }
+
+  .color-swatch {
+    width: 2rem; height: 2rem;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+  }
+  .color-swatch:hover { border-color: #fff; transform: scale(1.1); }
+
+
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 0.6rem 1rem 0.6rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .media-caption {
+    font-size: 1.05rem;
+    color: var(--cream);
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    position: absolute;
+    bottom: 3rem;
+    left: 1rem;
+    right: 1rem;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    z-index: 5;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  }
+    color: var(--cream);
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+  }
+  .media-progress {
+    margin-top: 0.5rem;
+    height: 3px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .media-progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 1px;
+  }
+
+  /* ===========================
+     SLIDE 3: CHIUSURA — Stats Card
+  =========================== */
+  .slide-close {
+    width: 100%; height: 100%;
+    background: #0A0A0A;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.2rem;
+    overflow: hidden;
+  }
+  .slide-close::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 35%;
+    background: var(--orange);
+    clip-path: polygon(0 30%, 100% 0%, 100% 100%, 0% 100%);
+    opacity: 1;
+    pointer-events: none;
+  }
+  .close-emoji { display: none; }
+  .close-msg {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--cream);
+    line-height: 1.1;
+    position: relative;
+    letter-spacing: 0.04em;
+  }
+  .frame-story .close-msg { font-size: 1.4rem; }
+  .close-sub {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: rgba(255,248,244,0.6);
+    position: relative;
+    margin-top: 0.3rem;
+    line-height: 1.6;
+  }
+  .frame-story .close-sub { font-size: 0.65rem; }
+  .close-cta {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.2rem;
+    border-radius: 3px;
+    border: none;
+    width: fit-content;
+    text-decoration: none;
+    align-self: center;
+    margin: 0 auto;
+  }
+  .close-hashtags {
+    position: absolute;
+    bottom: 0.7rem; left: 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.38rem;
+    letter-spacing: 0.06em;
+    color: rgba(26,26,26,0.5);
+    z-index: 2;
+  }
+  .close-day {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    color: rgba(255,248,244,0.15);
+    position: absolute;
+    top: 1rem; right: 1.2rem;
+  }
+
+  /* FORMAT VISIBILITY */
+  .format-story .frame-post { display: none; }
+  .format-post .frame-story { display: none; }
+  .format-reel .frame-post { display: none; }
+
+  .tip {
+    max-width: 700px;
+    margin: 2.5rem auto 0;
+    background: #1A1A1A;
+    border-left: 3px solid var(--orange);
+    padding: 1rem 1.5rem;
+    font-size: 0.8rem;
+    color: rgba(255,248,244,0.5);
+    line-height: 1.7;
+  }
+  .tip strong { color: var(--orange); }
+</style>
+</head>
+<body>
+<!-- Font preload (invisibile) -->
+<div style="position:fixed; visibility:hidden; pointer-events:none; font-size:1px; top:-100px;">
+  <span style="font-family:'Anton', sans-serif;">x</span>
+  <span style="font-family:'Racing Sans One', cursive;">x</span>
+  <span style="font-family:'Russo One', sans-serif;">x</span>
+  <span style="font-family:'Outfit', sans-serif;">x</span>
+  <span style="font-family:'Pacifico', cursive;">x</span>
+  <span style="font-family:'Permanent Marker', cursive;">x</span>
+</div>
+
+
+<h1>Una Bici per il Mondo · Instagram Kit</h1>
+<div class="subtitle">Milano → Palermo · World Bicycle Relief · Template giornaliero</div>
+
+
+<div style="display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
+  <button id="downloadBtn" onclick="downloadSlides()"
+    style="background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 2rem; border:none; border-radius:3px; cursor:pointer;">
+    ⬇ Scarica slides
+  </button>
+  <button onclick="addPhotoSlide()"
+    style="background:transparent; color:#F05A28; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 1.5rem; border:2px solid #F05A28; border-radius:3px; cursor:pointer;">
+    + Slide foto
+  </button>
+</div>
+
+<!-- PANNELLO STILE -->
+<div id="style-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#1A1A1A; border:2px solid #F05A28; border-radius:8px; padding:1.5rem; width:460px; max-width:94vw; max-height:88vh; overflow-y:auto;">
+
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:#F05A28; margin-bottom:0.5rem;">🎨 Stile · <span id="style-target-label" style="color:rgba(255,248,244,0.4);">clicca 💬 su una slide per selezionarla</span></div>
+
+    <!-- FONT -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Font</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem;" id="font-grid"></div>
+    </div>
+
+    <!-- DIMENSIONE -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Dimensione</div>
+      <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+        <button onclick="applyFontSize('0.7rem')"  class="size-btn">XS</button>
+        <button onclick="applyFontSize('0.9rem')"  class="size-btn">S</button>
+        <button onclick="applyFontSize('1.05rem')" class="size-btn">M ✓</button>
+        <button onclick="applyFontSize('1.3rem')"  class="size-btn">L</button>
+        <button onclick="applyFontSize('1.7rem')"  class="size-btn">XL</button>
+        <button onclick="applyFontSize('2.2rem')"  class="size-btn">XXL</button>
+      </div>
+    </div>
+
+    <!-- COLORI -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Colore testo</div>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;" id="color-grid"></div>
+    </div>
+
+    <!-- SFONDO TESTO -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Sfondo testo</div>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;" id="bg-grid"></div>
+    </div>
+
+    <!-- EMOJI -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Emoji rapide</div>
+      <div style="display:flex; flex-wrap:wrap; gap:0.3rem; font-size:1.4rem;" id="emoji-grid"></div>
+    </div>
+
+    <!-- STICKER (placeholder) -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Sticker <span style="color:rgba(255,248,244,0.2);">(prossimamente)</span></div>
+      <div id="sticker-grid" style="display:flex; flex-wrap:wrap; gap:0.4rem; opacity:0.3; font-size:0.6rem; font-family:'IBM Plex Mono',monospace; color:rgba(255,248,244,0.4);">Carica sticker nel repo → img/stickers/ per vederli qui</div>
+    </div>
+
+    <button onclick="closeStylePanel()" style="width:100%; background:transparent; color:rgba(255,248,244,0.3); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.6rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Chiudi</button>
+  </div>
+</div>
+
+<!-- PANNELLO FRASI -->
+<div id="phrase-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#1A1A1A; border:2px solid #F05A28; border-radius:8px; padding:1.5rem; width:420px; max-width:92vw; max-height:85vh; overflow-y:auto;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:#F05A28; margin-bottom:1rem;">💬 Gestione frasi slide foto</div>
+
+    <!-- Frase corrente + nuovo random -->
+    <div style="margin-bottom:1rem;">
+      <label style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Frase corrente</label>
+      <div style="display:flex; gap:0.5rem;">
+        <input id="phrase-current" type="text" style="flex:1; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.9rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
+        <button onclick="applyCurrentPhrase()" style="background:#F05A28; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.5rem 0.8rem; border:none; border-radius:4px; cursor:pointer;">Applica</button>
+        <button onclick="randomPhrase()" style="background:transparent; color:#F05A28; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.5rem 0.8rem; border:1px solid #F05A28; border-radius:4px; cursor:pointer;">🔀</button>
+      </div>
+    </div>
+
+    <!-- Lista frasi -->
+    <div style="margin-bottom:1rem;">
+      <label style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Tutte le frasi <span id="phrase-count" style="color:#F05A28;"></span></label>
+      <div id="phrase-list" style="max-height:200px; overflow-y:auto;"></div>
+    </div>
+
+    <!-- Aggiungi frase -->
+    <div style="margin-bottom:1rem;">
+      <label style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Aggiungi nuova frase</label>
+      <div style="display:flex; gap:0.5rem;">
+        <input id="phrase-new" type="text" placeholder="Scrivi qui..." style="flex:1; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.9rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;" onkeydown="if(event.key==='Enter') addPhrase()">
+        <button onclick="addPhrase()" style="background:#F05A28; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.5rem 0.8rem; border:none; border-radius:4px; cursor:pointer;">+</button>
+      </div>
+    </div>
+
+    <button onclick="closePhrasePanel()" style="width:100%; background:transparent; color:rgba(255,248,244,0.3); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.6rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Chiudi</button>
+  </div>
+</div>
+
+<!-- FRAMES -->
+<div class="frames format-story" id="framesContainer">
+
+  <!-- STORY / REEL -->
+  <div class="frame-wrap" id="wrapStory">
+    <div class="frame-story">
+      <div class="slide-open">
+
+        <!-- FOTO OPZIONALE - full frame -->
+        <div id="openPhotoArea" style="position:absolute; inset:0; overflow:hidden;">
+          <input type="file" id="openPhotoInput" accept="image/*" style="display:none" onchange="loadOpenPhoto(this)">
+          <div id="openPhotoHint" onclick="document.getElementById('openPhotoInput').click()" style="position:absolute; inset:0; cursor:pointer;"></div>
+          <img id="openPhotoPreview" src="" style="display:none; position:absolute; top:50%; left:50%; cursor:grab; max-width:none; width:auto; height:auto;">
+          <div id="openPhotoControls" style="display:none; position:absolute; top:0.3rem; right:0.3rem; z-index:10; flex-direction:column; gap:0.3rem;">
+            <button onclick="event.stopPropagation(); zoomOpenPhoto(1.3)" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; font-size:0.9rem; cursor:pointer; line-height:1;">+</button>
+            <button onclick="event.stopPropagation(); zoomOpenPhoto(0.77)" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; font-size:0.9rem; cursor:pointer; line-height:1;">−</button>
+            <button onclick="event.stopPropagation(); document.getElementById('openPhotoInput').click()" style="width:1.8rem; height:1.8rem; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:50%; font-size:0.65rem; cursor:pointer; line-height:1;">📷</button>
+            <button onclick="event.stopPropagation(); removeOpenPhoto()" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:rgba(255,255,255,0.5); border:none; border-radius:50%; font-size:0.7rem; cursor:pointer; line-height:1;">✕</button>
+          </div>
+        </div>
+
+        <!-- TOP OVERLAY: logo -->
+        <div class="open-tag" style="position:absolute; top:1rem; left:1.2rem; z-index:2;">
+          <img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="" style="height:3rem; width:auto; vertical-align:middle; margin-right:0.6rem;"> Una Bici per il Mondo
+        </div>
+
+        <!-- BOTTOM OVERLAY: tappa info -->
+        <div style="position:absolute; bottom:0; left:0; right:0; z-index:2; padding:2.5rem 1.2rem 1.2rem; background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);">
+          <div class="open-day-label">Tappa</div>
+          <div class="open-day-num" id="s-day-num">01</div>
+          <div class="open-from-to" id="s-from-to">Milano → Bologna</div>
+          <div class="open-km" id="s-km">85 km · ↑500m</div>
+        </div>
+
+        <div class="open-bar"></div>
+        <div class="open-hashtag">#InBiciPerIlMondo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-wrap" id="wrapStory2">
+    <div class="frame-story">
+      <div class="slide-media">
+        <!-- Placeholder/foto prima, poi overlays sopra -->
+        <div class="media-placeholder" id="mediaPlaceholder" style="cursor:pointer; position:absolute; inset:0; overflow:hidden;">
+          <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="loadPhoto(this)">
+          <div id="mediaHint" onclick="document.getElementById('photoInput').click()" style="display:flex; flex-direction:column; align-items:center; gap:0.3rem; cursor:pointer; width:100%; height:100%; justify-content:center;">
+            <div class="media-icon">📷</div>
+            <div class="media-hint">Tocca per caricare<br>la tua foto</div>
+          </div>
+          <img id="photoPreview" style="display:none; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;">
+          <!-- Controlli foto -->
+          <div id="photoControls" style="display:none; position:absolute; bottom:0.4rem; right:0.4rem; z-index:10; flex-direction:column; gap:0.3rem;">
+            <button onclick="zoomPhoto(1.3)" style="width:2rem; height:2rem; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; font-size:1rem; cursor:pointer; line-height:1;">+</button>
+            <button onclick="zoomPhoto(0.77)" style="width:2rem; height:2rem; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; font-size:1rem; cursor:pointer; line-height:1;">−</button>
+            <button onclick="document.getElementById('photoInput').click()" style="width:2rem; height:2rem; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:50%; font-size:0.7rem; cursor:pointer; line-height:1;">📷</button>
+            <button onclick="removePhoto()" style="width:2rem; height:2rem; background:rgba(0,0,0,0.6); color:rgba(255,255,255,0.5); border:none; border-radius:50%; font-size:0.8rem; cursor:pointer; line-height:1;">✕</button>
+          </div>
+        </div>
+        <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
+          <div class="media-day-badge" id="s-badge">TAPPA 01</div>
+          <div class="media-tag" style="color:var(--orange);">Una Bici per il Mondo</div>
+        </div>
+        <!-- Caption trascinabile + bottone frase -->
+        <div class="media-caption" id="s-caption" contenteditable="true" style="position:absolute; bottom:3rem; left:1rem; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare">Ogni km conta.</div>
+        <button onclick="openPhrasePanel('s-caption'); styleTargetId='s-caption';" style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.5rem; cursor:pointer;">💬 frase</button>
+        <button onclick="styleTargetId='s-caption'; openStylePanel('s-caption');" style="position:absolute; bottom:0.4rem; left:4rem; z-index:5; background:rgba(26,26,26,0.8); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.5rem; cursor:pointer;">🎨 stile</button>
+        <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
+          <div class="media-progress">
+            <div class="media-progress-fill" id="s-prog" style="width:5%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="frame-wrap" id="wrapStory3">
+    <div class="frame-story">
+      <div class="slide-close">
+        <div class="close-day" id="s-close-day">01</div>
+
+        <!-- TOP: barra arancione con icona + nome -->
+        <div style="position:absolute; top:0; left:0; right:0; z-index:3; height:3px; background:var(--orange);"></div>
+        <div style="position:relative; z-index:2; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem;">
+          <img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="" style="height:2.5rem; width:auto; vertical-align:middle;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange);">Una Bici per il Mondo</div>
+        </div>
+
+        <!-- MESSAGGIO -->
+        <div style="position:relative; z-index:2;">
+          <div class="close-msg">Le gambe<br>girano ancora.</div>
+          <div class="close-sub" id="s-close-sub">Oggi: 85 km · ↑320m<br>Totale: 266 km · ↑450m</div>
+        </div>
+
+        <!-- MIDDLE: barra raccolta fondi -->
+        <div style="position:relative; z-index:2; margin-top:0.5rem;">
+          <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.48rem; font-weight:600; letter-spacing:0.1em; color:rgba(255,248,244,0.4); margin-bottom:0.25rem;">
+            <span>Raccolta fondi</span>
+            <span id="close-raised-pct">0%</span>
+          </div>
+          <div style="background:rgba(255,255,255,0.1); border-radius:2px; height:4px; width:100%; overflow:hidden;">
+            <div id="close-bar-fill" style="height:100%; width:0%; background:var(--orange); border-radius:2px; transition:width 0.5s;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.45rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.35); margin-top:0.2rem;">
+            <span id="close-raised-amt">€0</span>
+            <span>€1.700</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.4rem; margin-top:0.5rem;">
+            <span id="close-bikes-num" style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:var(--orange); line-height:1;">0</span>
+            <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; color:rgba(255,248,244,0.5); letter-spacing:0.05em;">bici <strong style="color:var(--orange);">Buffalo</strong> per ora!</span>
+          </div>
+        </div>
+
+        <!-- BOTTOM: CTA su sfondo arancione -->
+        <div style="position:relative; z-index:2; margin-top:auto; padding-top:0.8rem;">
+          <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank">
+            <span style="font-size:0.9rem; font-weight:900; letter-spacing:0.15em;">DONA ORA</span>
+            <span style="font-size:0.42rem; font-weight:800; letter-spacing:0.25em; color:rgba(255,248,244,0.6);">LINK IN BIO</span>
+          </a>
+        </div>
+
+        <div class="close-hashtags">#InBiciPerIlMondo · #WorldBicycleRelief</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TIP -->
+<div class="tip">
+  <strong>Come funziona — passo per passo:</strong><br><br>
+
+  <strong>1. Ogni mattina, prima di partire:</strong><br>
+  Apri questo file nel browser. Inserisci il numero del giorno (es. 3), la città da cui parti, la città di arrivo e i km della tappa. Il numero di km totali percorsi si aggiorna man mano che procedi.<br><br>
+
+  <strong>2. Scegli il formato:</strong><br>
+  
+
+  <strong>3. Fai uno screenshot di ogni slide:</strong><br>
+  Hai 3 slide — apertura, foto/video, chiusura. Fai uno screenshot di ognuna.<br><br>
+
+  <strong>4. Aggiungi la tua foto:</strong><br>
+  Apri Canva (gratuito), CapCut o qualsiasi app di editing. Importa lo screenshot della slide "Foto/Video" e sostituisci l'area tratteggiata con la tua foto o video del giorno.<br><br>
+
+  <strong>5. Pubblica:</strong><br>
+  Carica le 3 slide in sequenza su Instagram come storia o post multiplo.<br><br>
+
+  <strong>Hashtag consigliati:</strong><br>
+  #InBiciPerIlMondo #UnaBiciPerIlMondo #WorldBicycleRelief #BuffaloBicycle #MilanoPalermoBici #Ciclismo
+</div>
+
+<!-- Hidden inputs (usati dagli script) -->
+<div style="display:none">
+  <input type="number" id="dayNum" value="1">
+  <input type="text" id="fromCity" value="Milano">
+  <input type="text" id="toCity" value="Bologna">
+  <input type="number" id="kmDay" value="85">
+  <input type="number" id="kmTot" value="85">
+  <input type="number" id="dislivello" value="500">
+  <input type="number" id="dislivelloTot" value="500">
+</div>
+
+<!-- ADM PANEL -->
+<div id="adm-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:9999; align-items:center; justify-content:center; overflow-y:auto; padding:2rem 0;">
+  <div style="background:#1A1A1A; border:2px solid #F05A28; border-radius:8px; padding:2.5rem; width:420px; max-width:92vw;">
+    <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#F05A28; margin-bottom:2rem;">⚙️ Dati tappa del giorno</div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Tappa</label>
+        <input id="adm-day" type="number" min="1" max="30" value="1"
+          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.5); color:#F05A28; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
+      </div>
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Km tappa</label>
+        <input id="adm-km" type="number" min="0" value="85"
+          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Da</label>
+        <input id="adm-from" type="text" value="Milano"
+          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.95rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
+      </div>
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">A</label>
+        <input id="adm-to" type="text" value="Bologna"
+          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.95rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:0.5rem;">
+      <div>
+        <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Dislivello tappa (m)</label>
+        <input id="adm-dis" type="number" min="0" value="500"
+          style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none;">
+      </div>
+      <div style="display:flex; flex-direction:column; justify-content:flex-end; gap:0.3rem; padding-bottom:0.2rem;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase;">Km tot. calcolati</div>
+        <div id="adm-kmtot-display" style="font-family:'Barlow Condensed',sans-serif; font-size:1.5rem; font-weight:700; color:rgba(240,90,40,0.7);">85 km</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase;">Dis. tot. calcolato</div>
+        <div id="adm-distot-display" style="font-family:'Barlow Condensed',sans-serif; font-size:1.5rem; font-weight:700; color:rgba(240,90,40,0.7);">500 m</div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+      <button onclick="admSave()" style="flex:1; background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:none; border-radius:4px; cursor:pointer;">Salva e aggiorna</button>
+      <button onclick="admClose()" style="flex:1; background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Annulla</button>
+    </div>
+    <div id="adm-msg" style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:#F05A28; margin-top:1rem; text-align:center; min-height:1rem;"></div>
+    
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+// ---- AUTH CHECK ----
+(function() {
+  const AUTH_DURATION = 20 * 60 * 1000;
+  const ts = localStorage.getItem('auth-ts');
+  if (!ts || (Date.now() - parseInt(ts)) >= AUTH_DURATION) {
+    window.location.href = 'index.html';
+  }
+})();
+
+// ---- GITHUB CONFIG ----
+const GH_OWNER = 'dannybag';
+const GH_REPO  = 'inbiciperilmondo';
+const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/data.json`;
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+// Leggi data.json da GitHub
+async function loadFromGitHub() {
+  try {
+    const token = localStorage.getItem('gh-token') || '';
+    const headers = { 'Accept': 'application/vnd.github.v3+json' };
+    if (token) headers['Authorization'] = `token ${token}`;
+    const res = await fetch(GH_API + '?t=' + Date.now(), { headers, cache: 'no-store' });
+    if (!res.ok) throw new Error();
+    const meta = await res.json();
+    const data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(meta.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
+    if (data.tappa && data.tappa.day > 0) {
+      populateFromTappa(data.tappa, data.tappe || [], data.fundraising || null);
+    }
+  } catch(e) {
+    console.log('GitHub load failed, using defaults');
+  }
+}
+
+function populateFromTappa(tappa, tappeList, fundraising) {
+  document.getElementById('dayNum').value    = tappa.day || 1;
+  document.getElementById('fromCity').value  = tappa.from || 'Milano';
+  document.getElementById('toCity').value    = tappa.to || '';
+  document.getElementById('kmDay').value     = tappa.km || 0;
+  document.getElementById('dislivello').value = tappa.dislivello || 0;
+  document.getElementById('kmTot').value     = tappa.totKm || 0;
+  document.getElementById('dislivelloTot').value = tappa.totDis || 0;
+  // Mini barra raccolta fondi
+  if (fundraising) {
+    const raised = fundraising.raised || 0;
+    const goal   = fundraising.goal   || 1700;
+    const pct    = Math.min(100, Math.round(raised / goal * 100));
+    const fill   = document.getElementById('close-bar-fill');
+    const pctEl  = document.getElementById('close-raised-pct');
+    const amtEl  = document.getElementById('close-raised-amt');
+    const bikes  = Math.floor(raised / 147);
+    if (fill)  fill.style.width = pct + '%';
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (amtEl) amtEl.textContent = '€' + raised;
+    const bikesEl = document.getElementById('close-bikes-num');
+    if (bikesEl) bikesEl.textContent = bikes;
+  }
+  update();
+}
+
+function update() {
+  const day = parseInt(document.getElementById('dayNum').value) || 1;
+  const from = document.getElementById('fromCity').value || '—';
+  const to = document.getElementById('toCity').value || '—';
+  const km = parseInt(document.getElementById('kmDay').value) || 0;
+  const dislivello = parseInt(document.getElementById('dislivello').value) || 0;
+  const tot = parseInt(document.getElementById('kmTot').value) || 0;
+  const disTot = parseInt(document.getElementById('dislivelloTot').value) || 0;
+  const pct = Math.min(100, Math.round(tot / 1700 * 100));
+  const dayStr = pad(day);
+  const route = `${from} → ${to}`;
+  const kmStr = `${km} km`;
+
+  // Frasi chiusura
+  const closeMsgs = ["Ancora\nin sella!", "Le gambe\ngirano!", "Una Buffalo\nin più!", "Non mi\nfermo!", "Palermo\nsi avvicina!"];
+  const closeMsg = closeMsgs[(day - 1) % closeMsgs.length];
+
+  // Story
+  document.getElementById('s-day-num').textContent = dayStr;
+  document.getElementById('s-from-to').textContent = route;
+  document.getElementById('s-km').textContent = `${kmStr} · ↑${dislivello}m`;
+  document.getElementById('s-badge').textContent = `TAPPA ${dayStr}`;
+  // Non cambia la frase automaticamente - viene gestita dai bottoni 💬 per slide
+  const photoMsgLocal = document.getElementById('s-caption')?.textContent || '';
+  document.getElementById('s-prog').style.width = `${pct}%`;
+  document.getElementById('s-close-day').textContent = dayStr;
+  document.getElementById('s-close-sub').innerHTML = `Oggi: ${document.getElementById('kmDay').value} km · ↑${document.getElementById('dislivello').value}m<br>Totale: ${tot} km · ↑${disTot}m`;
+  document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = closeMsg.replace('\n', '<br>');
+
+  // Aggiorna anche le slide extra con la stessa frase
+  document.querySelectorAll('[id^="s-badge-extra"]').forEach(el => el.textContent = `TAPPA ${dayStr}`);
+  document.querySelectorAll('[id^="s-prog-extra"]').forEach(el => el.style.width = `${pct}%`);
+
+  // Post
+  if (document.getElementById('p-day-num')) {
+    document.getElementById('p-day-num').textContent = dayStr;
+    document.getElementById('p-from-to').textContent = route;
+    document.getElementById('p-km').textContent = `${kmStr} · ↑${dislivello}m`;
+    document.getElementById('p-badge').textContent = `TAPPA ${dayStr}`;
+    document.getElementById('p-caption').textContent = photoMsgLocal;
+    document.getElementById('p-prog').style.width = `${pct}%`;
+    document.getElementById('p-close-day').textContent = dayStr;
+    document.getElementById('p-close-sub').innerHTML = `${tot} km · ↑${disTot}m`;
+    document.querySelectorAll('.slide-close .close-msg')[1].innerHTML = closeMsg.replace('\n', '<br>');
+  }
+}
+
+function admOpen() {
+  document.getElementById('adm-day').value  = document.getElementById('dayNum').value;
+  document.getElementById('adm-from').value = document.getElementById('fromCity').value;
+  document.getElementById('adm-to').value   = document.getElementById('toCity').value;
+  document.getElementById('adm-km').value   = document.getElementById('kmDay').value;
+  document.getElementById('adm-dis').value  = document.getElementById('dislivello').value;
+  admRefreshTotals();
+  document.getElementById('adm-msg').textContent = '';
+  document.getElementById('adm-overlay').style.display = 'flex';
+}
+
+function admRefreshTotals() {
+  document.getElementById('adm-kmtot-display').textContent = document.getElementById('kmTot').value + ' km';
+  document.getElementById('adm-distot-display').textContent = document.getElementById('dislivelloTot').value + ' m';
+}
+
+function admSave() {
+  const day  = parseInt(document.getElementById('adm-day').value) || 1;
+  const km   = parseInt(document.getElementById('adm-km').value)  || 0;
+  const dis  = parseInt(document.getElementById('adm-dis').value) || 0;
+  const from = document.getElementById('adm-from').value || 'Milano';
+  const to   = document.getElementById('adm-to').value   || '';
+  document.getElementById('dayNum').value    = day;
+  document.getElementById('fromCity').value  = from;
+  document.getElementById('toCity').value    = to;
+  document.getElementById('kmDay').value     = km;
+  document.getElementById('dislivello').value = dis;
+  update();
+  document.getElementById('adm-msg').textContent = '✓ Aggiornato!';
+  setTimeout(() => admClose(), 800);
+}
+
+function admClose() {
+  document.getElementById('adm-overlay').style.display = 'none';
+}
+
+document.getElementById('adm-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('adm-overlay')) admClose();
+});
+
+// Download slides
+async function downloadSlides() {
+  const btn = document.getElementById('downloadBtn');
+  btn.textContent = 'Generando...';
+  btn.disabled = true;
+  const day = document.getElementById('dayNum').value || '01';
+
+  // Apertura + foto fissa
+  const slides = [
+    { id: 'wrapStory',  name: `giorno${pad(day)}_01_apertura` },
+    { id: 'wrapStory2', name: `giorno${pad(day)}_02_foto` },
+  ];
+  // Extra dinamiche
+  let n = 3;
+  for (let i = 1; i <= extraSlideCount; i++) {
+    if (document.getElementById('wrapExtra'+i)) {
+      slides.push({ id: 'wrapExtra'+i, name: `giorno${pad(day)}_0${n}_extra${i}` });
+      n++;
+    }
+  }
+  slides.push({ id: 'wrapStory3', name: `giorno${pad(day)}_0${n}_chiusura` });
+
+  for (const slide of slides) {
+    const wrap = document.getElementById(slide.id);
+    if (!wrap) continue;
+    const wasHidden = wrap.style.display === 'none';
+    if (wasHidden) wrap.style.display = 'flex';
+    // Nascondi tutti i bottoni di controllo
+    wrap.querySelectorAll('button, [id*="Controls"]').forEach(el => { el._wasVisible = el.style.display; el.style.display = 'none'; });
+    const el = wrap.querySelector('.frame-story');
+    if (el) {
+      try {
+        const canvas = await html2canvas(el, { scale: 4, useCORS: true, backgroundColor: null, logging: false });
+        const link = document.createElement('a');
+        link.download = `WBR_${slide.name}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        await new Promise(r => setTimeout(r, 400));
+      } catch(e) { console.error(e); }
+    }
+    wrap.querySelectorAll('button, [id*="Controls"]').forEach(el => { if (el._wasVisible !== undefined) el.style.display = el._wasVisible; });
+    if (wasHidden) wrap.style.display = 'none';
+  }
+
+  btn.textContent = '⬇ Scarica slides';
+  btn.disabled = false;
+}
+
+
+// ---- PHOTO SLIDE 1 (opzionale) ----
+let openScale = 1, openX = 0, openY = 0, openDragStart = null;
+
+function applyOpenTransform() {
+  const img = document.getElementById('openPhotoPreview');
+  img.style.transform = `translate(calc(-50% + ${openX}px), calc(-50% + ${openY}px)) scale(${openScale})`;
+}
+
+function zoomOpenPhoto(factor) {
+  openScale = Math.min(15, Math.max(0.1, openScale * factor));
+  applyOpenTransform();
+}
+
+function removeOpenPhoto() {
+  const img = document.getElementById('openPhotoPreview');
+  const hint = document.getElementById('openPhotoHint');
+  const controls = document.getElementById('openPhotoControls');
+  img.src = ''; img.style.display = 'none';
+  hint.style.display = 'flex';
+  controls.style.display = 'none';
+  openScale = 1; openX = 0; openY = 0;
+}
+
+function loadOpenPhoto(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = document.getElementById('openPhotoPreview');
+    const hint = document.getElementById('openPhotoHint');
+    const controls = document.getElementById('openPhotoControls');
+    const container = document.getElementById('openPhotoArea');
+    img.onload = () => {
+      const cw = container.offsetWidth || 270;
+      const ch = container.offsetHeight || 160;
+      openScale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+      openX = 0; openY = 0;
+      applyOpenTransform();
+    };
+    img.src = e.target.result;
+    img.style.cssText = 'display:block; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;';
+    hint.style.display = 'none';
+    controls.style.display = 'flex';
+    // Touch
+    img.addEventListener('touchstart', (ev) => { if(ev.touches.length===1) openDragStart={x:ev.touches[0].clientX-openX,y:ev.touches[0].clientY-openY}; }, {passive:true});
+    img.addEventListener('touchmove', (ev) => { ev.preventDefault(); if(ev.touches.length===1&&openDragStart){openX=ev.touches[0].clientX-openDragStart.x;openY=ev.touches[0].clientY-openDragStart.y;applyOpenTransform();} }, {passive:false});
+    img.addEventListener('touchend', () => { openDragStart=null; });
+    // Mouse
+    img.addEventListener('mousedown', (ev) => { openDragStart={x:ev.clientX-openX,y:ev.clientY-openY}; img.style.cursor='grabbing'; });
+    document.addEventListener('mousemove', (ev) => { if(!openDragStart)return; openX=ev.clientX-openDragStart.x; openY=ev.clientY-openDragStart.y; applyOpenTransform(); });
+    document.addEventListener('mouseup', () => { openDragStart=null; if(document.getElementById('openPhotoPreview')) document.getElementById('openPhotoPreview').style.cursor='grab'; });
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+// ---- CAPTION DRAG ----
+function makeDraggable(el, containerId) {
+  let drag = null;
+  const getContainer = () => document.getElementById(containerId) || el.parentElement;
+
+  const start = (x, y) => {
+    const r = el.getBoundingClientRect();
+    drag = { ox: x - r.left, oy: y - r.top };
+    el.style.cursor = 'grabbing';
+  };
+  const move = (x, y) => {
+    if (!drag) return;
+    const c = getContainer().getBoundingClientRect();
+    let nx = x - c.left - drag.ox;
+    let ny = y - c.top  - drag.oy;
+    nx = Math.max(0, Math.min(nx, c.width  - el.offsetWidth));
+    ny = Math.max(0, Math.min(ny, c.height - el.offsetHeight));
+    el.style.left   = (nx / c.width  * 100) + '%';
+    el.style.top    = (ny / c.height * 100) + '%';
+    el.style.bottom = 'auto';
+    el.style.right  = 'auto';
+  };
+  const end = () => { drag = null; el.style.cursor = 'grab'; };
+
+  el.addEventListener('mousedown',  e => { e.stopPropagation(); start(e.clientX, e.clientY); });
+  document.addEventListener('mousemove', e => move(e.clientX, e.clientY));
+  document.addEventListener('mouseup',   end);
+  el.addEventListener('touchstart', e => { e.stopPropagation(); start(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+  el.addEventListener('touchmove',  e => { e.stopPropagation(); move(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+  el.addEventListener('touchend',   end);
+}
+
+// Attiva drag sulla caption della slide 2
+document.addEventListener('DOMContentLoaded', () => {
+  const cap = document.getElementById('s-caption');
+  if (cap) makeDraggable(cap, 'mediaPlaceholder');
+});
+
+// ---- PANNELLO STILE ----
+const FONTS = [
+  { name: 'Bebas Neue',       label: 'BEBAS NEUE',       style: "'Bebas Neue', sans-serif" },
+  { name: 'Barlow Condensed', label: 'Barlow Condensed', style: "'Barlow Condensed', sans-serif" },
+  { name: 'Anton',            label: 'ANTON',             style: "'Anton', sans-serif" },
+  { name: 'Racing Sans One',  label: 'Racing Sans',       style: "'Racing Sans One', cursive" },
+  { name: 'Russo One',        label: 'RUSSO ONE',         style: "'Russo One', sans-serif" },
+  { name: 'Outfit',           label: 'Outfit Clean',      style: "'Outfit', sans-serif" },
+  { name: 'Pacifico',         label: 'Pacifico fun',      style: "'Pacifico', cursive" },
+  { name: 'Permanent Marker', label: 'Marker!',           style: "'Permanent Marker', cursive" },
+];
+
+const COLORS = [
+  { label:'Bianco',    val:'#FFFFFF' },
+  { label:'Arancione', val:'#F05A28' },
+  { label:'Nero',      val:'#0A0A0A' },
+  { label:'Giallo',    val:'#FFD600' },
+  { label:'Azzurro',   val:'#29B6F6' },
+  { label:'Verde',     val:'#66BB6A' },
+  { label:'Rosso',     val:'#EF5350' },
+  { label:'Rosa',      val:'#EC407A' },
+  { label:'Viola',     val:'#AB47BC' },
+  { label:'Beige',     val:'#FFF8F4' },
+];
+
+const BG_COLORS = [
+  { label:'Nessuno',   val:'transparent' },
+  { label:'Nero 60%',  val:'rgba(0,0,0,0.6)' },
+  { label:'Nero 90%',  val:'rgba(0,0,0,0.9)' },
+  { label:'Bianco 70%',val:'rgba(255,255,255,0.7)' },
+  { label:'Arancione', val:'rgba(240,90,40,0.85)' },
+  { label:'Giallo',    val:'rgba(255,214,0,0.85)' },
+];
+
+const EMOJIS = ['🚴','🚵','🏔️','🌄','🌅','🛣️','⛰️','🌿','☀️','🌊','💪','🔥','❤️','🧡','💛','💚','💙','⭐','✨','🏅','🎯','🤟','👊','🙏','📍','📸','🇮🇹','🌍','🐃','🦓'];
+
+let styleTargetId = 's-caption';
+
+function buildStylePanel() {
+  // Font grid
+  const fg = document.getElementById('font-grid');
+  fg.innerHTML = FONTS.map((f, i) => `
+    <button class="font-btn" style="font-family:${f.style}" data-font-idx="${i}" onclick="applyFontByIdx(this)">
+      ${f.label}
+    </button>`).join('');
+
+  // Color grid
+  const cg = document.getElementById('color-grid');
+  cg.innerHTML = COLORS.map(c => `
+    <div class="color-swatch" style="background:${c.val}; ${c.val==='#FFFFFF'?'border-color:#555':''}"
+      title="${c.label}" onclick="applyColor('${c.val}')"></div>`).join('');
+
+  // BG grid
+  const bg = document.getElementById('bg-grid');
+  bg.innerHTML = BG_COLORS.map(c => `
+    <button onclick="applyBg('${c.val}')"
+      style="background:${c.val==='transparent'?'#2A2A2A':c.val}; border:1px solid rgba(255,255,255,0.15); color:${c.val.includes('255,255,255')?'#000':'#fff'}; font-family:'IBM Plex Mono',monospace; font-size:0.5rem; padding:0.3rem 0.5rem; border-radius:3px; cursor:pointer; letter-spacing:0.08em;">
+      ${c.label}
+    </button>`).join('');
+
+  // Emoji grid
+  const eg = document.getElementById('emoji-grid');
+  eg.innerHTML = EMOJIS.map(e => `
+    <span style="cursor:pointer; padding:0.1rem;" onclick="insertEmoji('${e}')" title="Inserisci">${e}</span>`).join('');
+}
+
+function openStylePanel(captionId) {
+  if (captionId) {
+    styleTargetId = captionId;
+    const el = document.getElementById(captionId);
+    document.getElementById('style-target-label').textContent = el ? `"${el.textContent.slice(0,30)}..."` : '';
+  }
+  buildStylePanel();
+  document.getElementById('style-overlay').style.display = 'flex';
+}
+
+function closeStylePanel() {
+  document.getElementById('style-overlay').style.display = 'none';
+}
+
+function getTarget() {
+  return styleTargetId ? document.getElementById(styleTargetId) : null;
+}
+
+function applyFontByIdx(btn) {
+  const idx = parseInt(btn.dataset.fontIdx);
+  const fontFamily = FONTS[idx].style;
+  applyFont(fontFamily, btn);
+}
+
+function applyFont(fontFamily, btn) {
+  const el = getTarget();
+  if (!el) { console.warn('No target'); return; }
+  el.style.fontFamily = fontFamily;
+  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+function applyFontSize(size) {
+  const el = getTarget(); if (!el) return;
+  el.style.fontSize = size;
+}
+
+function applyColor(color) {
+  const el = getTarget(); if (!el) return;
+  el.style.color = color;
+}
+
+function applyBg(bg) {
+  const el = getTarget(); if (!el) return;
+  el.style.background = bg;
+  el.style.padding = bg === 'transparent' ? '0' : '0.2rem 0.5rem';
+  el.style.borderRadius = bg === 'transparent' ? '0' : '3px';
+}
+
+function insertEmoji(emoji) {
+  const el = getTarget(); if (!el) return;
+  el.textContent += emoji;
+}
+
+document.getElementById('style-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('style-overlay')) closeStylePanel();
+});
+
+// ---- GESTIONE FRASI ----
+let photoMsgs = [
+  "Ogni km conta.",
+  "La strada chiama.",
+  "Si pedala!",
+  "Testa bassa e gambe girare.",
+  "Il vento in faccia? Meglio così.",
+  "Un passo alla volta... in bici.",
+  "Non guardo indietro.",
+  "Il Sud si avvicina.",
+  "Asfalto e silenzio.",
+  "Questa è la mia risposta."
+];
+let currentPhrase = photoMsgs[0];
+
+let usedPhraseSet = new Set();
+let phraseQueue = [];
+
+function shufflePhrases() {
+  phraseQueue = [...photoMsgs];
+  for (let i = phraseQueue.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [phraseQueue[i], phraseQueue[j]] = [phraseQueue[j], phraseQueue[i]];
+  }
+}
+
+function getNextPhrase() {
+  if (phraseQueue.length === 0) shufflePhrases();
+  return phraseQueue.shift();
+}
+
+let targetCaptionId = 's-caption';
+
+function applyPhrase(phrase) {
+  currentPhrase = phrase;
+  const el = document.getElementById(targetCaptionId);
+  if (el) el.textContent = phrase;
+}
+
+function randomPhrase() {
+  // Prende dalla coda senza consumarla se possibile
+  const p = getNextPhrase();
+  document.getElementById('phrase-current').value = p;
+  applyPhrase(p);
+}
+
+function applyCurrentPhrase() {
+  const val = document.getElementById('phrase-current').value.trim();
+  if (val) applyPhrase(val);
+}
+
+function addPhrase() {
+  const val = document.getElementById('phrase-new').value.trim();
+  if (!val) return;
+  photoMsgs.push(val);
+  document.getElementById('phrase-new').value = '';
+  renderPhraseList();
+}
+
+function removePhrase(idx) {
+  photoMsgs.splice(idx, 1);
+  renderPhraseList();
+}
+
+function renderPhraseList() {
+  const list = document.getElementById('phrase-list');
+  const count = document.getElementById('phrase-count');
+  count.textContent = `(${photoMsgs.length})`;
+  list.innerHTML = photoMsgs.map((p, i) => `
+    <div style="display:flex; align-items:center; gap:0.5rem; padding:0.4rem 0; border-bottom:1px solid rgba(255,248,244,0.06);">
+      <button onclick="applyPhrase('${p.replace(/'/g,"\\'")}'); document.getElementById('phrase-current').value='${p.replace(/'/g,"\\'")}'"
+        style="flex:1; text-align:left; background:transparent; border:none; color:rgba(255,248,244,0.7); font-family:'Barlow',sans-serif; font-size:0.8rem; cursor:pointer; padding:0;">${p}</button>
+      <button onclick="removePhrase(${i})" style="background:transparent; border:none; color:rgba(255,248,244,0.2); font-size:0.8rem; cursor:pointer; padding:0 0.3rem;">✕</button>
+    </div>`).join('');
+}
+
+function openPhrasePanel(captionId) {
+  if (captionId) targetCaptionId = captionId;
+  const el = document.getElementById(targetCaptionId);
+  document.getElementById('phrase-current').value = el ? el.textContent : currentPhrase;
+  renderPhraseList();
+  document.getElementById('phrase-overlay').style.display = 'flex';
+}
+
+function closePhrasePanel() {
+  document.getElementById('phrase-overlay').style.display = 'none';
+}
+
+document.getElementById('phrase-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('phrase-overlay')) closePhrasePanel();
+});
+
+// ---- DYNAMIC PHOTO SLIDES ----
+let extraSlideCount = 0;
+
+function addPhotoSlide() {
+  extraSlideCount++;
+  const id = 'wrapExtra' + extraSlideCount;
+  const photoId = 'photoPreviewExtra' + extraSlideCount;
+  const hintId = 'mediaHintExtra' + extraSlideCount;
+  const controlsId = 'photoControlsExtra' + extraSlideCount;
+  const inputId = 'photoInputExtra' + extraSlideCount;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'frame-wrap';
+  wrap.id = id;
+  wrap.style.position = 'relative';
+
+  wrap.innerHTML = `
+    <div style="position:absolute; top:-1rem; right:0; z-index:10;">
+      <button onclick="removeExtraSlide('${id}')"
+        style="background:rgba(0,0,0,0.6); color:rgba(255,255,255,0.5); border:none; border-radius:50%; width:1.8rem; height:1.8rem; font-size:0.9rem; cursor:pointer;">✕</button>
+    </div>
+    <div class="frame-name">Slide extra ${extraSlideCount}</div>
+    <div class="frame-story">
+      <div class="slide-media">
+        <div class="media-placeholder" id="placeholder_${id}" style="cursor:pointer; position:absolute; inset:0; overflow:hidden;">
+          <input type="file" id="${inputId}" accept="image/*" style="display:none" onchange="loadExtraPhoto(this,'${photoId}','${hintId}','${controlsId}','placeholder_${id}')">
+          <div id="${hintId}" onclick="document.getElementById('${inputId}').click()" style="display:flex; flex-direction:column; align-items:center; gap:0.3rem; cursor:pointer; width:100%; height:100%; justify-content:center;">
+            <div class="media-icon">📷</div>
+            <div class="media-hint">Tocca per caricare<br>la tua foto</div>
+          </div>
+          <img id="${photoId}" style="display:none; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;">
+          <div id="${controlsId}" style="display:none; position:absolute; bottom:0.4rem; right:0.4rem; z-index:10; flex-direction:column; gap:0.3rem;">
+            <button onclick="zoomExtraPhoto('${photoId}',1.3)" style="width:2rem; height:2rem; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; font-size:1rem; cursor:pointer; line-height:1;">+</button>
+            <button onclick="zoomExtraPhoto('${photoId}',0.77)" style="width:2rem; height:2rem; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; font-size:1rem; cursor:pointer; line-height:1;">−</button>
+            <button onclick="document.getElementById('${inputId}').click()" style="width:2rem; height:2rem; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:50%; font-size:0.7rem; cursor:pointer; line-height:1;">📷</button>
+            <button onclick="removeExtraPhotoImg('${photoId}','${hintId}','${controlsId}')" style="width:2rem; height:2rem; background:rgba(0,0,0,0.6); color:rgba(255,255,255,0.5); border:none; border-radius:50%; font-size:0.8rem; cursor:pointer; line-height:1;">✕</button>
+          </div>
+        </div>
+        <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
+          <div class="media-day-badge" id="s-badge-extra${extraSlideCount}">TAPPA 01</div>
+          <div class="media-tag" style="color:var(--orange);">Una Bici per il Mondo</div>
+        </div>
+        <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="position:absolute; bottom:3rem; left:1rem; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
+        <button onclick="openPhrasePanel('s-caption-extra${extraSlideCount}')" style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; background:rgba(240,90,40,0.8); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.5rem; cursor:pointer;">💬 frase</button>
+        <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
+          <div class="media-progress"><div class="media-progress-fill" id="s-prog-extra${extraSlideCount}" style="width:5%"></div></div>
+        </div>
+      </div>
+    </div>`;
+
+  // Insert before wrapStory3 (closing slide)
+  const container = document.getElementById('framesContainer');
+  const closing = document.getElementById('wrapStory3');
+  container.insertBefore(wrap, closing);
+
+  // Attiva drag sulla caption della nuova slide
+  setTimeout(() => {
+    const cap = document.getElementById('s-caption-extra' + extraSlideCount);
+    if (cap) makeDraggable(cap, 'placeholder_' + id);
+  }, 100);
+
+  // Sync data from current slide
+  const badge = document.getElementById('s-badge');
+  const caption = document.getElementById('s-caption');
+  const prog = document.getElementById('s-prog');
+  if (badge)   document.getElementById('s-badge-extra'+extraSlideCount).textContent = badge.textContent;
+  if (prog)    document.getElementById('s-prog-extra'+extraSlideCount).style.width = prog.style.width;
+  // Frase sempre nuova - non copiare dalla slide 2
+  document.getElementById('s-caption-extra'+extraSlideCount).textContent = getNextPhrase();
+}
+
+function removeExtraSlide(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+// Per-slide photo state
+const extraPhotoState = {};
+
+function loadExtraPhoto(input, photoId, hintId, controlsId, containerId) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = document.getElementById(photoId);
+    const hint = document.getElementById(hintId);
+    const controls = document.getElementById(controlsId);
+    const container = document.getElementById(containerId);
+    extraPhotoState[photoId] = { scale: 1, x: 0, y: 0, drag: null };
+    img.onload = () => {
+      const s = extraPhotoState[photoId];
+      s.scale = Math.max(container.offsetWidth / img.naturalWidth, container.offsetHeight / img.naturalHeight);
+      applyExtraTransform(photoId);
+    };
+    img.src = e.target.result;
+    img.style.cssText = 'display:block; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;';
+    hint.style.display = 'none';
+    controls.style.display = 'flex';
+    img.addEventListener('touchstart', (ev) => { if(ev.touches.length===1){ const s=extraPhotoState[photoId]; s.drag={x:ev.touches[0].clientX-s.x,y:ev.touches[0].clientY-s.y}; }}, {passive:true});
+    img.addEventListener('touchmove', (ev) => { ev.preventDefault(); const s=extraPhotoState[photoId]; if(ev.touches.length===1&&s.drag){s.x=ev.touches[0].clientX-s.drag.x;s.y=ev.touches[0].clientY-s.drag.y;applyExtraTransform(photoId);} }, {passive:false});
+    img.addEventListener('touchend', () => { extraPhotoState[photoId].drag=null; });
+    img.addEventListener('mousedown', (ev) => { const s=extraPhotoState[photoId]; s.drag={x:ev.clientX-s.x,y:ev.clientY-s.y}; img.style.cursor='grabbing'; });
+    document.addEventListener('mousemove', (ev) => { const s=extraPhotoState[photoId]; if(!s||!s.drag)return; s.x=ev.clientX-s.drag.x;s.y=ev.clientY-s.drag.y;applyExtraTransform(photoId); });
+    document.addEventListener('mouseup', () => { if(extraPhotoState[photoId]) extraPhotoState[photoId].drag=null; img.style.cursor='grab'; });
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function applyExtraTransform(photoId) {
+  const s = extraPhotoState[photoId];
+  const img = document.getElementById(photoId);
+  if (img && s) img.style.transform = `translate(calc(-50% + ${s.x}px), calc(-50% + ${s.y}px)) scale(${s.scale})`;
+}
+
+function zoomExtraPhoto(photoId, factor) {
+  const s = extraPhotoState[photoId];
+  if (!s) return;
+  s.scale = Math.min(15, Math.max(0.1, s.scale * factor));
+  applyExtraTransform(photoId);
+}
+
+function removeExtraPhotoImg(photoId, hintId, controlsId) {
+  const img = document.getElementById(photoId);
+  if (img) { img.src=''; img.style.display='none'; }
+  const hint = document.getElementById(hintId);
+  if (hint) hint.style.display='flex';
+  const controls = document.getElementById(controlsId);
+  if (controls) controls.style.display='none';
+  delete extraPhotoState[photoId];
+}
+
+// ---- PHOTO SLIDE 2 ----
+let photoScale = 1;
+let photoX = 0, photoY = 0;
+let dragStart = null;
+
+function applyPhotoTransform() {
+  const img = document.getElementById('photoPreview');
+  img.style.transform = `translate(calc(-50% + ${photoX}px), calc(-50% + ${photoY}px)) scale(${photoScale})`;
+}
+
+function zoomPhoto(factor) {
+  photoScale = Math.min(15, Math.max(0.1, photoScale * factor));
+  applyPhotoTransform();
+}
+
+function removePhoto() {
+  const img = document.getElementById('photoPreview');
+  const hint = document.getElementById('mediaHint');
+  const controls = document.getElementById('photoControls');
+  img.src = ''; img.style.display = 'none';
+  hint.style.display = 'flex';
+  controls.style.display = 'none';
+  photoScale = 1; photoX = 0; photoY = 0;
+}
+
+function loadPhoto(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = document.getElementById('photoPreview');
+    const hint = document.getElementById('mediaHint');
+    const controls = document.getElementById('photoControls');
+    const container = document.getElementById('mediaPlaceholder');
+
+    img.onload = () => {
+      // Calcola scala iniziale per coprire il frame (come cover)
+      const cw = container.offsetWidth  || 270;
+      const ch = container.offsetHeight || 480;
+      const scaleX = cw / img.naturalWidth;
+      const scaleY = ch / img.naturalHeight;
+      photoScale = Math.max(scaleX, scaleY);
+      photoX = 0; photoY = 0;
+      applyPhotoTransform();
+    };
+
+    img.src = e.target.result;
+    img.style.cssText = `
+      display:block;
+      position:absolute;
+      top:50%; left:50%;
+      max-width:none;
+      width:auto; height:auto;
+      cursor:grab;
+    `;
+    hint.style.display = 'none';
+    controls.style.display = 'flex';
+
+    // Touch drag
+    const onTouchStart = (ev) => {
+      if (ev.touches.length === 1)
+        dragStart = { x: ev.touches[0].clientX - photoX, y: ev.touches[0].clientY - photoY };
+    };
+    const onTouchMove = (ev) => {
+      ev.preventDefault();
+      if (ev.touches.length === 1 && dragStart) {
+        photoX = ev.touches[0].clientX - dragStart.x;
+        photoY = ev.touches[0].clientY - dragStart.y;
+        applyPhotoTransform();
+      }
+    };
+    const onTouchEnd = () => { dragStart = null; };
+
+    // Mouse drag
+    const onMouseDown = (ev) => {
+      dragStart = { x: ev.clientX - photoX, y: ev.clientY - photoY };
+      img.style.cursor = 'grabbing';
+    };
+    const onMouseMove = (ev) => {
+      if (!dragStart) return;
+      photoX = ev.clientX - dragStart.x;
+      photoY = ev.clientY - dragStart.y;
+      applyPhotoTransform();
+    };
+    const onMouseUp = () => {
+      dragStart = null;
+      img.style.cursor = 'grab';
+    };
+
+    img.removeEventListener('touchstart', onTouchStart);
+    img.removeEventListener('touchmove', onTouchMove);
+    img.removeEventListener('touchend', onTouchEnd);
+    img.removeEventListener('mousedown', onMouseDown);
+
+    img.addEventListener('touchstart', onTouchStart, { passive: true });
+    img.addEventListener('touchmove', onTouchMove, { passive: false });
+    img.addEventListener('touchend', onTouchEnd);
+    img.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+shufflePhrases();
+// Assegna frase iniziale alla slide 2
+const cap2 = document.getElementById('s-caption');
+if (cap2) cap2.textContent = getNextPhrase();
+loadFromGitHub();
+</script>
+</body>
+</html>
+
+
+</body>
+</html>
