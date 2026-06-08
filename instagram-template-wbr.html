@@ -1116,121 +1116,95 @@ function loadOpenPhoto(input) {
 
 // ---- CAPTION TRANSFORM (drag + rotate + scale) ----
 const captionState = {};
+const isMobile = window.matchMedia('(hover: none)').matches;
 
 function initCaption(textEl) {
   const id = textEl.id;
 
-  // Crea wrapper attorno al testo
   const wrapper = document.createElement('div');
   wrapper.className = 'cap-wrapper';
   wrapper.id = 'wrap_' + id;
   textEl.parentNode.insertBefore(wrapper, textEl);
   wrapper.appendChild(textEl);
 
-  // Handle rotazione e scala - fuori dal contenteditable
-  const rotH = document.createElement('div');
-  rotH.className = 'cap-handle cap-rot-handle';
-  rotH.innerHTML = '↻';
-  // Mostra handle solo su desktop
-  const isMobile = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  captionState[id] = { x: 0, y: 0, rot: 0, scale: 1 };
+
+  let rotH = null, scaH = null;
   if (!isMobile) {
-    const scaH = document.createElement('div');
-    scaH.className = 'cap-handle cap-scale-handle';
-    scaH.innerHTML = '⤡';
+    rotH = document.createElement('div');
+    rotH.className = 'cap-handle cap-rot-handle';
+    rotH.textContent = '↻';
     wrapper.appendChild(rotH);
+    scaH = document.createElement('div');
+    scaH.className = 'cap-handle cap-scale-handle';
+    scaH.textContent = '⤡';
     wrapper.appendChild(scaH);
   }
 
-  captionState[id] = { x: 0, y: 0, rot: 0, scale: 1 };
   applyTransform(id);
 
-  // ---- MOUSE drag ----
+  // MOUSE
   let mode = null, ms = null;
-
   wrapper.addEventListener('mousedown', e => {
-    if (e.target === rotH || e.target === scaH) return;
+    if ((rotH && e.target === rotH) || (scaH && e.target === scaH)) return;
     e.stopPropagation();
     mode = 'move';
     ms = { mx: e.clientX, my: e.clientY, sx: captionState[id].x, sy: captionState[id].y };
   });
-
-  rotH.addEventListener('mousedown', e => {
-    e.stopPropagation();
-    mode = 'rotate';
+  if (rotH) rotH.addEventListener('mousedown', e => {
+    e.stopPropagation(); mode = 'rotate';
     const r = wrapper.getBoundingClientRect();
-    ms = { cx: r.left + r.width/2, cy: r.top + r.height/2, sr: captionState[id].rot,
-           startA: Math.atan2(e.clientY - (r.top + r.height/2), e.clientX - (r.left + r.width/2)) * 180/Math.PI };
+    const cx = r.left+r.width/2, cy = r.top+r.height/2;
+    ms = { cx, cy, sr: captionState[id].rot, startA: Math.atan2(e.clientY-cy, e.clientX-cx)*180/Math.PI };
   });
-
-  scaH.addEventListener('mousedown', e => {
-    e.stopPropagation();
-    mode = 'scale';
+  if (scaH) scaH.addEventListener('mousedown', e => {
+    e.stopPropagation(); mode = 'scale';
     ms = { my: e.clientY, ss: captionState[id].scale };
   });
-
   document.addEventListener('mousemove', e => {
-    if (!mode) return;
+    if (!mode || !ms) return;
     const s = captionState[id];
-    if (mode === 'move') {
-      s.x = ms.sx + (e.clientX - ms.mx);
-      s.y = ms.sy + (e.clientY - ms.my);
-    } else if (mode === 'rotate') {
-      const a = Math.atan2(e.clientY - ms.cy, e.clientX - ms.cx) * 180/Math.PI;
-      s.rot = ms.sr + (a - ms.startA);
-    } else if (mode === 'scale') {
-      const dy = ms.my - e.clientY;
-      s.scale = Math.max(0.3, Math.min(5, ms.ss + dy * 0.015));
-    }
+    if (mode==='move')   { s.x = ms.sx+(e.clientX-ms.mx); s.y = ms.sy+(e.clientY-ms.my); }
+    if (mode==='rotate') { const a=Math.atan2(e.clientY-ms.cy,e.clientX-ms.cx)*180/Math.PI; s.rot=ms.sr+(a-ms.startA); }
+    if (mode==='scale')  { s.scale=Math.max(0.3,Math.min(5,ms.ss+(ms.my-e.clientY)*0.015)); }
     applyTransform(id);
   });
-  document.addEventListener('mouseup', () => { mode = null; ms = null; });
+  document.addEventListener('mouseup', () => { mode=null; ms=null; });
 
-  // ---- TOUCH ----
+  // TOUCH
   let prevT = null;
-
-  wrapper.addEventListener('touchstart', e => {
-    e.stopPropagation();
-    prevT = snapshotTouches(e.touches);
-  }, { passive: true });
-
+  wrapper.addEventListener('touchstart', e => { e.stopPropagation(); prevT=snap(e.touches); }, {passive:true});
   wrapper.addEventListener('touchmove', e => {
-    e.preventDefault(); e.stopPropagation();
-    if (!prevT) return;
-    const cur = snapshotTouches(e.touches);
-    const s = captionState[id];
-
-    if (cur.length === 1 && prevT.length === 1) {
-      s.x += cur[0].x - prevT[0].x;
-      s.y += cur[0].y - prevT[0].y;
-    } else if (cur.length >= 2 && prevT.length >= 2) {
-      const dPrev = Math.hypot(prevT[1].x-prevT[0].x, prevT[1].y-prevT[0].y) || 1;
-      const dCur  = Math.hypot(cur[1].x-cur[0].x,   cur[1].y-cur[0].y);
-      const aPrev = Math.atan2(prevT[1].y-prevT[0].y, prevT[1].x-prevT[0].x) * 180/Math.PI;
-      const aCur  = Math.atan2(cur[1].y-cur[0].y,   cur[1].x-cur[0].x)   * 180/Math.PI;
-      s.scale = Math.max(0.3, Math.min(5, s.scale * (dCur/dPrev)));
-      s.rot  += aCur - aPrev;
-      s.x += ((cur[0].x+cur[1].x)/2) - ((prevT[0].x+prevT[1].x)/2);
-      s.y += ((cur[0].y+cur[1].y)/2) - ((prevT[0].y+prevT[1].y)/2);
+    e.preventDefault();
+    if (!prevT||!prevT.length) return;
+    const cur=snap(e.touches), s=captionState[id];
+    if (cur.length===1&&prevT.length===1) {
+      s.x+=cur[0].x-prevT[0].x; s.y+=cur[0].y-prevT[0].y;
+    } else if (cur.length>=2&&prevT.length>=2) {
+      const dP=Math.hypot(prevT[1].x-prevT[0].x,prevT[1].y-prevT[0].y)||1;
+      const dC=Math.hypot(cur[1].x-cur[0].x,cur[1].y-cur[0].y);
+      const aP=Math.atan2(prevT[1].y-prevT[0].y,prevT[1].x-prevT[0].x)*180/Math.PI;
+      const aC=Math.atan2(cur[1].y-cur[0].y,cur[1].x-cur[0].x)*180/Math.PI;
+      s.scale=Math.max(0.3,Math.min(5,s.scale*dC/dP));
+      s.rot+=aC-aP;
+      s.x+=(cur[0].x+cur[1].x)/2-(prevT[0].x+prevT[1].x)/2;
+      s.y+=(cur[0].y+cur[1].y)/2-(prevT[0].y+prevT[1].y)/2;
     }
-    prevT = cur;
-    applyTransform(id);
-  }, { passive: false });
-
-  wrapper.addEventListener('touchend', e => { prevT = snapshotTouches(e.touches); }, { passive: true });
+    prevT=cur; applyTransform(id);
+  }, {passive:false});
+  wrapper.addEventListener('touchend', e => { prevT=snap(e.touches); }, {passive:true});
 }
 
-function snapshotTouches(list) {
-  return Array.from(list).map(t => ({ x: t.clientX, y: t.clientY }));
-}
+function snap(list) { return Array.from(list).map(t=>({x:t.clientX,y:t.clientY})); }
 
 function applyTransform(id) {
-  const s = captionState[id];
-  const w = document.getElementById('wrap_' + id);
-  if (!w || !s) return;
-  w.style.transform = `translate(calc(-50% + ${s.x}px), ${s.y}px) rotate(${s.rot}deg) scale(${s.scale})`;
+  const s=captionState[id], w=document.getElementById('wrap_'+id);
+  if (!w||!s) return;
+  w.style.transform=`translate(calc(-50% + ${s.x}px), ${s.y}px) rotate(${s.rot}deg) scale(${s.scale})`;
 }
 
 function makeDraggable(el) { initCaption(el); }
+
 
 
 // Attiva drag sulla caption della slide 2
