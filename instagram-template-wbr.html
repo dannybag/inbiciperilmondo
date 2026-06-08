@@ -334,6 +334,7 @@
     left: 50%; top: 60%;
     transform: translate(-50%, -50%);
     display: inline-block;
+    white-space: nowrap;
     cursor: grab;
     z-index: 5;
     touch-action: none;
@@ -355,6 +356,7 @@
   }
   .cap-rot-handle   { top: -1rem; right: -1rem; }
   .cap-scale-handle { bottom: -1rem; right: -1rem; cursor: nwse-resize; }
+  @media (pointer: coarse) { .cap-handle { display: none !important; } }
 
   .size-btn {
     background: #2A2A2A;
@@ -399,6 +401,7 @@
     pointer-events: none;
   }
   .media-caption {
+    white-space: nowrap;
     font-size: 1.05rem;
     color: var(--cream);
     line-height: 1.2;
