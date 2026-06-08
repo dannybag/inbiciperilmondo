@@ -567,16 +567,13 @@
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.4rem;" id="font-grid"></div>
     </div>
 
-    <!-- DIMENSIONE -->
+    <!-- ALLINEAMENTO -->
     <div style="margin-bottom:1.2rem;">
-      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Dimensione</div>
-      <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
-        <button onclick="applyFontSize('0.7rem')"  class="size-btn">XS</button>
-        <button onclick="applyFontSize('0.9rem')"  class="size-btn">S</button>
-        <button onclick="applyFontSize('1.05rem')" class="size-btn">M ✓</button>
-        <button onclick="applyFontSize('1.3rem')"  class="size-btn">L</button>
-        <button onclick="applyFontSize('1.7rem')"  class="size-btn">XL</button>
-        <button onclick="applyFontSize('2.2rem')"  class="size-btn">XXL</button>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Allineamento</div>
+      <div style="display:flex; gap:0.4rem;">
+        <button onclick="applyAlign('left')"   class="size-btn" style="flex:1; font-size:1rem;">⬅</button>
+        <button onclick="applyAlign('center')" class="size-btn" style="flex:1; font-size:1rem;">↔</button>
+        <button onclick="applyAlign('right')"  class="size-btn" style="flex:1; font-size:1rem;">➡</button>
       </div>
     </div>
 
@@ -1307,6 +1304,11 @@ function applyFont(fontFamily, btn) {
   el.style.fontFamily = fontFamily;
   document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
+}
+
+function applyAlign(align) {
+  const el = getTarget(); if (!el) return;
+  el.style.textAlign = align;
 }
 
 function applyFontSize(size) {
