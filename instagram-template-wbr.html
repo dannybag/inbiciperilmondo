@@ -331,8 +331,7 @@
   }
   .cap-wrapper {
     position: absolute;
-    left: 50%; bottom: 3.5rem;
-    transform: translateX(-50%);
+    left: 0.8rem; bottom: 2rem;
     display: inline-block;
     white-space: nowrap;
     cursor: grab;
@@ -405,10 +404,7 @@
     color: var(--cream);
     line-height: 1.2;
     letter-spacing: 0.05em;
-    position: absolute;
-    bottom: 3rem;
-    left: 1rem;
-    right: 1rem;
+    display: inline-block;
     cursor: grab;
     user-select: none;
     touch-action: none;
@@ -710,7 +706,7 @@
           <div class="media-tag" style="color:var(--orange);">Una Bici per il Mondo</div>
         </div>
         <!-- Caption trascinabile + bottone frase -->
-        <div class="media-caption" id="s-caption" contenteditable="true" style="position:absolute; bottom:2rem; left:0.8rem; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare">Ogni km conta.</div>
+        <div class="media-caption" id="s-caption" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare">Ogni km conta.</div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
           <button onclick="openPhrasePanel('s-caption'); styleTargetId='s-caption';" style="background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
           <button onclick="styleTargetId='s-caption'; openStylePanel('s-caption');" style="background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
@@ -1118,7 +1114,7 @@ function loadOpenPhoto(input) {
 
 // ---- CAPTION TRANSFORM (drag + rotate + scale) ----
 const captionState = {};
-const isMobile = window.matchMedia('(hover: none)').matches;
+const isMobile = ('ontouchstart' in window && navigator.maxTouchPoints > 0) || window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
 function initCaption(textEl) {
   const id = textEl.id;
@@ -1202,7 +1198,7 @@ function snap(list) { return Array.from(list).map(t=>({x:t.clientX,y:t.clientY})
 function applyTransform(id) {
   const s=captionState[id], w=document.getElementById('wrap_'+id);
   if (!w||!s) return;
-  w.style.transform=`translate(calc(-50% + ${s.x}px), ${s.y}px) rotate(${s.rot}deg) scale(${s.scale})`;
+  w.style.transform=`translate(${s.x}px, ${s.y}px) rotate(${s.rot}deg) scale(${s.scale})`;
 }
 
 function makeDraggable(el) { initCaption(el); }
@@ -1473,7 +1469,7 @@ function addPhotoSlide() {
           <div class="media-day-badge" id="s-badge-extra${extraSlideCount}">TAPPA 01</div>
           <div class="media-tag" style="color:var(--orange);">Una Bici per il Mondo</div>
         </div>
-        <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="position:absolute; bottom:2rem; left:0.8rem; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
+        <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
           <button onclick="openPhrasePanel('s-caption-extra${extraSlideCount}'); styleTargetId='s-caption-extra${extraSlideCount}';" style="background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
           <button onclick="styleTargetId='s-caption-extra${extraSlideCount}'; openStylePanel('s-caption-extra${extraSlideCount}');" style="background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
