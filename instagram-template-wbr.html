@@ -1165,8 +1165,8 @@ let styleTargetId = 's-caption';
 function buildStylePanel() {
   // Font grid
   const fg = document.getElementById('font-grid');
-  fg.innerHTML = FONTS.map(f => `
-    <button class="font-btn" style="font-family:${f.style}" onclick="applyFont('${f.style}', this)">
+  fg.innerHTML = FONTS.map((f, i) => `
+    <button class="font-btn" style="font-family:${f.style}" data-font-idx="${i}" onclick="applyFontByIdx(this)">
       ${f.label}
     </button>`).join('');
 
@@ -1206,6 +1206,12 @@ function closeStylePanel() {
 
 function getTarget() {
   return styleTargetId ? document.getElementById(styleTargetId) : null;
+}
+
+function applyFontByIdx(btn) {
+  const idx = parseInt(btn.dataset.fontIdx);
+  const fontFamily = FONTS[idx].style;
+  applyFont(fontFamily, btn);
 }
 
 function applyFont(fontFamily, btn) {
