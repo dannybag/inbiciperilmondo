@@ -569,7 +569,10 @@
 
     <!-- TESTO FISSO -->
     <div style="margin-bottom:1.2rem;">
-      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; margin-bottom:0.6rem;">Seleziona testo fisso <span style="color:rgba(255,248,244,0.2);">poi scegli colore sotto</span></div>
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.6rem;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase;">Testo fisso <span style="color:rgba(255,248,244,0.2);">→ poi scegli colore</span></div>
+        <button onclick="applyColorAll()" style="background:var(--orange); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.6rem; cursor:pointer;">Tutti ▶</button>
+      </div>
       <div style="display:flex; flex-wrap:wrap; gap:0.4rem;" id="fixed-text-grid"></div>
     </div>
 
@@ -667,7 +670,7 @@
         </div>
 
         <!-- TOP OVERLAY: logo -->
-        <div class="open-tag" style="position:absolute; top:1rem; left:1.2rem; z-index:2;">
+        <div class="open-tag" id="s-open-tag" style="position:absolute; top:1rem; left:1.2rem; z-index:2;">
           <img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="" style="height:3rem; width:auto; vertical-align:middle; margin-right:0.6rem;"> Una Bici per il Mondo
         </div>
 
@@ -681,6 +684,7 @@
 
         <div class="open-bar"></div>
         <div class="open-hashtag">#InBiciPerIlMondo</div>
+        <button onclick="openStylePanel(null,'wrapStory')" style="position:absolute; bottom:0.4rem; right:0.4rem; z-index:5; background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
       </div>
     </div>
   </div>
@@ -706,13 +710,13 @@
         </div>
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge">TAPPA 01</div>
-          <div class="media-tag" style="color:var(--orange);">Una Bici per il Mondo</div>
+          <div class="media-tag" id="s-media-tag" style="color:var(--orange);">Una Bici per il Mondo</div>
         </div>
         <!-- Caption trascinabile + bottone frase -->
         <div class="media-caption" id="s-caption" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare">Ogni km conta.</div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
           <button onclick="openPhrasePanel('s-caption'); styleTargetId='s-caption';" style="background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
-          <button onclick="styleTargetId='s-caption'; openStylePanel('s-caption');" style="background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
+          <button onclick="styleTargetId='s-caption'; openStylePanel('s-caption','wrapStory2');" style="background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
         </div>
         <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
           <div class="media-progress">
@@ -737,7 +741,7 @@
 
         <!-- MESSAGGIO -->
         <div style="position:relative; z-index:2;">
-          <div class="close-msg">Le gambe<br>girano ancora.</div>
+          <div class="close-msg" id="s-close-msg">Le gambe<br>girano ancora.</div>
           <div class="close-sub" id="s-close-sub">Oggi: 85 km · ↑320m<br>Totale: 266 km · ↑450m</div>
         </div>
 
@@ -769,6 +773,7 @@
         </div>
 
         <div class="close-hashtags">#InBiciPerIlMondo · #WorldBicycleRelief</div>
+        <button onclick="openStylePanel(null,'wrapStory3')" style="position:absolute; bottom:2rem; right:0.4rem; z-index:5; background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
       </div>
     </div>
   </div>
@@ -1251,18 +1256,53 @@ const BG_COLORS = [
 const EMOJIS = ['🚴','🚵','🏔️','🌄','🌅','🛣️','⛰️','🌿','☀️','🌊','💪','🔥','❤️','🧡','💛','💚','💙','⭐','✨','🏅','🎯','🤟','👊','🙏','📍','📸','🇮🇹','🌍','🐃','🦓'];
 
 let styleTargetId = 's-caption';
+let currentSlideWrapId = 'wrapStory2';
+let lastAppliedColor = '#FFFFFF';
 
-function buildStylePanel() {
-  // Fixed text grid
-  const FIXED_TEXTS = [
-    { id: 's-from-to',   label: 'Rotta' },
-    { id: 's-day-num',   label: 'N° Tappa' },
-    { id: 's-km',        label: 'Km info' },
+const SLIDE_FIXED = {
+  'wrapStory':  [
+    { id: 's-open-tag', label: 'Una Bici' },
+    { id: 's-day-num',  label: 'N° Tappa' },
+    { id: 's-from-to',  label: 'Rotta' },
+    { id: 's-km',       label: 'Km' },
+  ],
+  'wrapStory2': [
+    { id: 's-media-tag', label: 'Una Bici' },
     { id: 's-badge',     label: 'Badge' },
     { id: 's-caption',   label: 'Frase' },
-  ];
+  ],
+  'wrapStory3': [
+    { id: 's-close-msg', label: 'Messaggio' },
+    { id: 's-close-sub', label: 'Stats' },
+  ],
+};
+
+function getSlideFixed(slideId) {
+  if (SLIDE_FIXED[slideId]) return SLIDE_FIXED[slideId];
+  const m = slideId && slideId.match(/wrapExtra(\d+)/);
+  if (m) {
+    const n = m[1];
+    return [
+      { id: 's-media-tag-extra'+n, label: 'Una Bici' },
+      { id: 's-badge-extra'+n,     label: 'Badge' },
+      { id: 's-caption-extra'+n,   label: 'Frase' },
+    ];
+  }
+  return SLIDE_FIXED['wrapStory2'];
+}
+
+function applyColorAll() {
+  getSlideFixed(currentSlideWrapId).forEach(f => {
+    const el = document.getElementById(f.id);
+    if (el) el.style.color = lastAppliedColor;
+  });
+}
+
+function buildStylePanel() {
+  // Fixed text grid - per slide corrente
+  const slideTexts = getSlideFixed(currentSlideWrapId);
   const ftg = document.getElementById('fixed-text-grid');
-  ftg.innerHTML = FIXED_TEXTS.map(f => `
+  ftg.innerHTML = slideTexts.map(f => `
     <button onclick="styleTargetId='${f.id}'; highlightFixed('${f.id}', this)"
       style="background:#2A2A2A; border:1px solid rgba(255,248,244,0.15); color:rgba(255,248,244,0.7); font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; border-radius:3px; cursor:pointer;">
       ${f.label}
@@ -1295,11 +1335,12 @@ function buildStylePanel() {
     <span style="cursor:pointer; padding:0.1rem;" onclick="insertEmoji('${e}')" title="Inserisci">${e}</span>`).join('');
 }
 
-function openStylePanel(captionId) {
+function openStylePanel(captionId, slideWrapId) {
+  if (slideWrapId) currentSlideWrapId = slideWrapId;
   if (captionId) {
     styleTargetId = captionId;
     const el = document.getElementById(captionId);
-    document.getElementById('style-target-label').textContent = el ? `"${el.textContent.slice(0,30)}..."` : '';
+    document.getElementById('style-target-label').textContent = el ? '"'+el.textContent.slice(0,25)+'..."' : '';
   }
   buildStylePanel();
   document.getElementById('style-overlay').style.display = 'flex';
@@ -1344,6 +1385,7 @@ function applyFontSize(size) {
 }
 
 function applyColor(color) {
+  lastAppliedColor = color;
   const el = getTarget(); if (!el) return;
   el.style.color = color;
 }
@@ -1501,7 +1543,7 @@ function addPhotoSlide() {
         <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
           <button onclick="openPhrasePanel('s-caption-extra${extraSlideCount}'); styleTargetId='s-caption-extra${extraSlideCount}';" style="background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
-          <button onclick="styleTargetId='s-caption-extra${extraSlideCount}'; openStylePanel('s-caption-extra${extraSlideCount}');" style="background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
+          <button onclick="styleTargetId='s-caption-extra${extraSlideCount}'; openStylePanel('s-caption-extra${extraSlideCount}','wrapExtra${extraSlideCount}');" style="background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
         </div>
         <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
           <div class="media-progress"><div class="media-progress-fill" id="s-prog-extra${extraSlideCount}" style="width:5%"></div></div>
