@@ -225,13 +225,13 @@
   }
   .open-day-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 7rem;
+    font-size: 3.2rem;
     line-height: 0.9;
     color: var(--orange);
     padding: 0 1.2rem;
     letter-spacing: -0.02em;
   }
-  .frame-story .open-day-num { font-size: 6rem; }
+  .frame-story .open-day-num { font-size: 2.8rem; }
   .open-route { display: none; }
   .open-from-to {
     font-family: 'Bebas Neue', sans-serif;
@@ -688,10 +688,10 @@
 
         <!-- BOTTOM OVERLAY: tappa info -->
         <div style="position:absolute; bottom:0; left:0; right:0; z-index:2; padding:2.5rem 1.2rem 1.2rem; background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);">
-          <div class="open-day-label">Tappa</div>
-          <div class="open-day-num" id="s-day-num">01</div>
-          <div class="open-from-to" id="s-from-to">Milano → Bologna</div>
-          <div class="open-km" id="s-km">85 km · ↑500m</div>
+          <div class="open-day-label" id="s-day-label">Lun</div>
+          <div class="open-day-num" id="s-day-num">01 Gen</div>
+          <div class="open-from-to" id="s-from-to">Attività</div>
+          <div class="open-km" id="s-km">08:00 · 85 km · ↑500m</div>
         </div>
 
         <div class="open-bar"></div>
@@ -721,7 +721,7 @@
           </div>
         </div>
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
-          <div class="media-day-badge" id="s-badge">TAPPA 01</div>
+          <div class="media-day-badge" id="s-badge">01 Gen</div>
           <div class="media-tag" id="s-media-tag" style="color:var(--orange);">@dannybag</div>
         </div>
         <!-- Caption trascinabile + bottone frase -->
@@ -898,10 +898,10 @@ async function stravaLoadActivities() {
     btn.onclick = () => {
       // Salva in localStorage — nessun tocco a data.json
       const tappa = {
-        day:  (parseInt(localStorage.getItem('daily-tappa-count') || '0') + 1),
-        from: act.name.split('→')[0]?.trim() || act.name,
-        to:   act.name.split('→')[1]?.trim() || '',
-        km, dislivello: dis
+        name:       act.name,
+        km,
+        dislivello: dis,
+        start_date: act.start_date_local || act.start_date
       };
       localStorage.setItem('daily-tappa', JSON.stringify(tappa));
       applyDailyTappa(tappa, act.name);
@@ -913,20 +913,47 @@ async function stravaLoadActivities() {
 }
 
 function applyDailyTappa(tappa, actName) {
-  const day = tappa.day || 1;
-  const dayStr = String(day).padStart(2, '0');
-  const from = tappa.from || actName || '—';
-  const to   = tappa.to   || '';
-  const km   = tappa.km   || 0;
-  const dis  = tappa.dislivello || 0;
-  const route = to ? `${from} → ${to}` : from;
+  const km  = tappa.km  || 0;
+  const dis = tappa.dislivello || 0;
+  const name = tappa.name || actName || 'Attività';
 
-  document.getElementById('dayNum').value     = day;
-  document.getElementById('fromCity').value   = from;
-  document.getElementById('toCity').value     = to;
+  // Formatta data e ora da ISO string
+  const GIORNI  = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+  const MESI    = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+  let dateStr = '—', timeStr = '—', dayOfWeek = '';
+  if (tappa.start_date) {
+    const d = new Date(tappa.start_date);
+    dayOfWeek = GIORNI[d.getDay()];
+    dateStr = `${String(d.getDate()).padStart(2,'0')} ${MESI[d.getMonth()]}`;
+    timeStr = `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  }
+
   document.getElementById('kmDay').value      = km;
   document.getElementById('dislivello').value = dis;
-  update();
+
+  // Aggiorna slide direttamente
+  const label = document.getElementById('s-day-label');
+  const dayEl = document.getElementById('s-day-num');
+  const fromEl = document.getElementById('s-from-to');
+  const kmEl  = document.getElementById('s-km');
+  const badge = document.getElementById('s-badge');
+
+  if (label) label.textContent = dayOfWeek;
+  if (dayEl)  dayEl.textContent = dateStr;
+  if (fromEl) fromEl.textContent = name;
+  if (kmEl)   kmEl.textContent = `${timeStr} · ${km} km · ↑${dis}m`;
+  if (badge)  badge.textContent = dateStr;
+
+  // Extra slides
+  document.querySelectorAll('[id^="s-badge-extra"]').forEach(el => el.textContent = dateStr);
+
+  // Aggiorna caption slide 2 con frase random
+  const cap2 = document.getElementById('s-caption');
+  if (cap2 && (!cap2.textContent || cap2.textContent === cap2.dataset.auto)) {
+    const p = getNextPhrase();
+    cap2.textContent = p;
+    cap2.dataset.auto = p;
+  }
 }
 
 // Gestione callback OAuth Strava
@@ -1025,10 +1052,7 @@ function update() {
   const closeMsg = closeMsgs[(day - 1) % closeMsgs.length];
 
   // Story
-  document.getElementById('s-day-num').textContent = dayStr;
-  document.getElementById('s-from-to').textContent = route;
-  document.getElementById('s-km').textContent = `${kmStr} · ↑${dislivello}m`;
-  document.getElementById('s-badge').textContent = `TAPPA ${dayStr}`;
+  // Daily: aggiornato da applyDailyTappa, non da update()
   // Non cambia la frase automaticamente - viene gestita dai bottoni 💬 per slide
   const photoMsgLocal = document.getElementById('s-caption')?.textContent || '';
   document.getElementById('s-prog').style.width = `${pct}%`;
@@ -1037,7 +1061,7 @@ function update() {
   document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = closeMsg.replace('\n', '<br>');
 
   // Aggiorna anche le slide extra con la stessa frase
-  document.querySelectorAll('[id^="s-badge-extra"]').forEach(el => el.textContent = `TAPPA ${dayStr}`);
+  // Daily: badge extra aggiornato da applyDailyTappa
   document.querySelectorAll('[id^="s-prog-extra"]').forEach(el => el.style.width = `${pct}%`);
 
   // Post
