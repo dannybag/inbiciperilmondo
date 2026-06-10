@@ -1361,14 +1361,14 @@ let lastAppliedColor = '#FFFFFF';
 
 const SLIDE_FIXED = {
   'wrapStory':  [
-    { id: 's-open-tag', label: 'Una Bici' },
-    { id: 's-day-num',  label: 'N° Tappa' },
-    { id: 's-from-to',  label: 'Rotta' },
-    { id: 's-km',       label: 'Km' },
+    { id: 's-open-tag', label: '@dannybag' },
+    { id: 's-day-num',  label: 'Data' },
+    { id: 's-from-to',  label: 'Attività' },
+    { id: 's-km',       label: 'Km info' },
   ],
   'wrapStory2': [
-    { id: 's-media-tag', label: 'Una Bici' },
-    { id: 's-badge',     label: 'Badge' },
+    { id: 's-media-tag', label: '@dannybag' },
+    { id: 's-badge',     label: 'Data badge' },
     { id: 's-caption',   label: 'Frase' },
   ],
   
@@ -1380,8 +1380,8 @@ function getSlideFixed(slideId) {
   if (m) {
     const n = m[1];
     return [
-      { id: 's-media-tag-extra'+n, label: 'Una Bici' },
-      { id: 's-badge-extra'+n,     label: 'Badge' },
+      { id: 's-media-tag-extra'+n, label: '@dannybag' },
+      { id: 's-badge-extra'+n,     label: 'Data badge' },
       { id: 's-caption-extra'+n,   label: 'Frase' },
     ];
   }
