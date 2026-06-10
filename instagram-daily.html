@@ -691,7 +691,7 @@
           <div class="open-day-label" id="s-day-label">Lun</div>
           <div class="open-day-num" id="s-day-num">01 Gen</div>
           <div class="open-from-to" id="s-from-to">Attività</div>
-          <div class="open-km" id="s-km">08:00 · 85 km · ↑500m</div>
+          <div class="open-km" id="s-km">85 km · ↑500m</div>
         </div>
 
         <div class="open-bar"></div>
@@ -940,7 +940,7 @@ function applyDailyTappa(tappa, actName) {
   if (label) label.textContent = dayOfWeek;
   if (dayEl)  dayEl.textContent = dateStr;
   if (fromEl) fromEl.textContent = name;
-  if (kmEl)   kmEl.textContent = `${timeStr} · ${km} km · ↑${dis}m`;
+  if (kmEl)   kmEl.textContent = `${km} km · ↑${dis}m`;
   if (badge)  badge.textContent = dateStr;
 
   // Extra slides
