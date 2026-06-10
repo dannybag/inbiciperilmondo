@@ -837,8 +837,7 @@
   const AUTH_DURATION = 20 * 60 * 1000;
   const ts = localStorage.getItem('auth-ts');
   if (!ts || (Date.now() - parseInt(ts)) >= AUTH_DURATION) {
-    // No redirect in daily version
-    console.log('Auth expired');
+    window.location.href = 'index.html';
   }
 })();
 
