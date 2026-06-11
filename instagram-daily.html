@@ -1888,7 +1888,7 @@ function saveSession(manual) {
     ['s-day-num','s-day-label','s-from-to','s-km','s-badge','s-media-tag','s-open-tag'].forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
-      data.texts[id] = el.textContent.trim();
+      data.texts[id] = el.innerHTML;
       data.styles[id] = el.style.cssText;
     });
 
@@ -1898,11 +1898,14 @@ function saveSession(manual) {
       const img = document.getElementById(id);
       const compressed = compressImg(img);
       if (compressed) {
+        const _img = document.getElementById(id);
         data.photos[id] = {
           src: compressed,
-          x: id==='photoPreview'?photoX:openX,
-          y: id==='photoPreview'?photoY:openY,
-          sc: id==='photoPreview'?photoScale:openScale
+          x:  id==='photoPreview'?photoX:openX,
+          y:  id==='photoPreview'?photoY:openY,
+          sc: id==='photoPreview'?photoScale:openScale,
+          nw: _img ? _img.naturalWidth  : 0,
+          nh: _img ? _img.naturalHeight : 0
         };
         photosSaved++;
       } else if (img && img.src && img.src.startsWith('data:')) {
@@ -1957,12 +1960,13 @@ async function restoreSession() {
     if (!p || !p.src) return;
     const img = document.getElementById(imgId);
     if (!img) return;
-    const tx = 'translate(calc(-50% + '+p.x+'px), calc(-50% + '+p.y+'px)) scale('+p.sc+')';
-    img.src   = p.src;
-    img.style.cssText = 'display:block;position:absolute;top:50%;left:50%;max-width:none;width:auto;height:auto;cursor:grab;transform:'+tx+';';
-    // Aggiorna variabili globali di posizione
-    if (imgId === 'photoPreview')     { photoX=p.x; photoY=p.y; photoScale=p.sc; }
-    else if (imgId === 'openPhotoPreview') { openX=p.x;  openY=p.y;  openScale=p.sc; }
+    img.src = p.src;
+    img.onload = () => {
+      const tx = 'translate(calc(-50% + '+p.x+'px), calc(-50% + '+p.y+'px)) scale('+p.sc+')';
+      img.style.cssText = 'display:block;position:absolute;top:50%;left:50%;max-width:none;width:auto;height:auto;cursor:grab;transform:'+tx+';';
+      if (imgId === 'photoPreview')          { photoX=p.x; photoY=p.y; photoScale=p.sc; }
+      else if (imgId === 'openPhotoPreview') { openX=p.x;  openY=p.y;  openScale=p.sc; }
+    };
     const hint = document.getElementById(imgId.replace('Preview','Hint'));
     const ctrl = document.getElementById(imgId.replace('Preview','Controls'));
     if (hint) hint.style.display = 'none';
@@ -1997,7 +2001,13 @@ window.addEventListener('beforeunload', () => saveSession(false));
 window.addEventListener('pagehide', () => saveSession(false));
 document.addEventListener('visibilitychange', () => { if (document.visibilityState==='hidden') saveSession(false); });
 setInterval(() => saveSession(false), 20000);
-window.addEventListener('load', () => setTimeout(restoreSession, 700));
+// Restore - si attiva sia su load che su DOMContentLoaded (fallback)
+if (document.readyState === 'complete') {
+  setTimeout(restoreSession, 800);
+} else {
+  window.addEventListener('load', () => setTimeout(restoreSession, 800));
+  document.addEventListener('DOMContentLoaded', () => setTimeout(restoreSession, 1200));
+}
 
 </script>
 </body>
