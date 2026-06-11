@@ -1840,139 +1840,145 @@ update();
 // ---- SESSION PERSISTENCE ----
 const SESSION_KEY = 'ig-session-daily';
 
-function saveSession() {
-  const session = {
-    extraCount: extraSlideCount,
-    slides: {}
-  };
+// Mappa foto per slide (src compresso)
+const sessionPhotos = {};
 
-  // Salva stato di ogni slide
-  const allSlideIds = ['wrapStory', 'wrapStory2'];
-  for (let i = 1; i <= extraSlideCount; i++) allSlideIds.push('wrapExtra' + i);
+function showToast(msg, color) {
+  let t = document.getElementById('session-toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'session-toast';
+    t.style.cssText = 'position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); background:#1A1A1A; border:1px solid rgba(240,90,40,0.5); color:#FFF8F4; font-family:IBM Plex Mono,monospace; font-size:0.6rem; letter-spacing:0.1em; padding:0.5rem 1rem; border-radius:4px; z-index:99999; opacity:0; transition:opacity 0.3s; pointer-events:none;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.borderColor = color || 'rgba(240,90,40,0.5)';
+  t.style.opacity = '1';
+  setTimeout(() => t.style.opacity = '0', 3000);
+}
 
-  allSlideIds.forEach(slideId => {
-    const wrap = document.getElementById(slideId);
-    if (!wrap) return;
-    session.slides[slideId] = {};
-
-    // Captions
-    wrap.querySelectorAll('[id^="s-caption"], [id^="s-from-to"], [id^="s-km"]').forEach(el => {
-      session.slides[slideId][el.id] = {
-        text: el.textContent,
-        style: el.style.cssText,
-        transform: captionState[el.id] || null
-      };
-    });
-
-    // Badge, tag, day elements
-    ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag'].forEach(id => {
-      const el = document.getElementById(id) || wrap.querySelector('#' + id);
-      if (el) session.slides[slideId][id] = { style: el.style.cssText };
-    });
-
-    // Extra slide IDs
-    const suffix = slideId.replace('wrapExtra', '');
-    if (suffix !== slideId) {
-      ['s-badge-extra','s-media-tag-extra','s-caption-extra'].forEach(base => {
-        const el = document.getElementById(base + suffix);
-        if (el) session.slides[slideId][base+suffix] = {
-          text: el.textContent,
-          style: el.style.cssText,
-          transform: captionState[el.id] || null
-        };
-      });
-    }
-
-    // Foto (salva come JPEG compresso se possibile)
-    const img = wrap.querySelector('img[id^="photoPreview"], img[id^="openPhotoPreview"]');
-    if (img && img.src && img.src.startsWith('data:')) {
-      try {
-        const canvas = document.createElement('canvas');
-        const maxDim = 800;
-        const scale = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
-        canvas.width = Math.round(img.naturalWidth * scale);
-        canvas.height = Math.round(img.naturalHeight * scale);
-        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-        const compressed = canvas.toDataURL('image/jpeg', 0.6);
-        if (compressed.length < 3_000_000) {
-          session.slides[slideId].photo = {
-            src: compressed,
-            imgId: img.id,
-            photoState: img.id.includes('open') ? { x: openX, y: openY, scale: openScale } : { x: photoX, y: photoY, scale: photoScale }
-          };
-        }
-      } catch(e) {}
-    }
-  });
-
+function tryCompressPhoto(img, slideId) {
+  if (!img || !img.src || !img.src.startsWith('data:')) return;
   try {
-    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    const canvas = document.createElement('canvas');
+    const maxDim = 900;
+    const sc = Math.min(1, maxDim / Math.max(img.naturalWidth || 1, img.naturalHeight || 1));
+    canvas.width = Math.round((img.naturalWidth || 900) * sc);
+    canvas.height = Math.round((img.naturalHeight || 900) * sc);
+    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+    const compressed = canvas.toDataURL('image/jpeg', 0.65);
+    if (compressed.length > 3_500_000) {
+      showToast('⚠ Foto troppo grande per la cache — andrà persa se chiudi', '#FF4444');
+      sessionPhotos[slideId] = null;
+    } else {
+      sessionPhotos[slideId] = { src: compressed, imgId: img.id };
+      if (img.id === 'photoPreview')     sessionPhotos[slideId].state = { x: photoX, y: photoY, scale: photoScale };
+      if (img.id === 'openPhotoPreview') sessionPhotos[slideId].state = { x: openX,  y: openY,  scale: openScale  };
+    }
+  } catch(e) { sessionPhotos[slideId] = null; }
+}
+
+function saveSession() {
+  try {
+    const data = { extraCount: extraSlideCount, items: {}, photos: {} };
+
+    // Testi e stili
+    document.querySelectorAll('.media-caption[id], [id^="s-day"], [id^="s-from"], [id^="s-km"], [id^="s-badge"], [id^="s-media-tag"], [id^="s-open-tag"]').forEach(el => {
+      if (!el.id) return;
+      data.items[el.id] = { text: el.textContent || '', style: el.style.cssText || '' };
+      if (captionState[el.id]) data.items[el.id].transform = { ...captionState[el.id] };
+    });
+
+    // Foto compresse
+    Object.entries(sessionPhotos).forEach(([slideId, photo]) => {
+      if (photo) data.photos[slideId] = photo;
+    });
+
+    localStorage.setItem(SESSION_KEY, JSON.stringify(data));
   } catch(e) {
-    console.warn('Session save failed (storage full?):', e);
+    // Prova senza foto
+    try {
+      const data = { extraCount: extraSlideCount, items: {} };
+      document.querySelectorAll('.media-caption[id], [id^="s-day"], [id^="s-from"], [id^="s-km"], [id^="s-badge"], [id^="s-media-tag"], [id^="s-open-tag"]').forEach(el => {
+        if (!el.id) return;
+        data.items[el.id] = { text: el.textContent || '', style: el.style.cssText || '' };
+        if (captionState[el.id]) data.items[el.id].transform = { ...captionState[el.id] };
+      });
+      localStorage.setItem(SESSION_KEY, JSON.stringify(data));
+      showToast('⚠ Foto non salvata (storage pieno)', '#FF8C00');
+    } catch(e2) { console.warn('Save failed:', e2); }
   }
 }
 
 async function restoreSession() {
   const raw = localStorage.getItem(SESSION_KEY);
   if (!raw) return;
-  let session;
-  try { session = JSON.parse(raw); } catch(e) { return; }
+  try {
+    const data = JSON.parse(raw);
 
-  // Ricrea slide extra
-  for (let i = 1; i <= (session.extraCount || 0); i++) {
-    if (!document.getElementById('wrapExtra' + i)) addPhotoSlide();
-  }
+    for (let i = 0; i < (data.extraCount || 0); i++) addPhotoSlide();
+    await new Promise(r => setTimeout(r, 500));
 
-  await new Promise(r => setTimeout(r, 100)); // attendi DOM
-
-  // Ripristina stati
-  Object.entries(session.slides || {}).forEach(([slideId, data]) => {
-    Object.entries(data).forEach(([elId, state]) => {
-      if (elId === 'photo') {
-        // Ripristina foto
-        const img = document.getElementById(state.imgId);
-        const hint = document.getElementById(state.imgId.replace('Preview','Hint'));
-        const controls = document.getElementById(state.imgId.replace('Preview','Controls'));
-        if (img && state.src) {
-          img.src = state.src;
-          img.style.display = 'block';
-          if (hint) hint.style.display = 'none';
-          if (controls) controls.style.display = 'flex';
-          if (state.imgId === 'photoPreview') {
-            photoX = state.photoState.x; photoY = state.photoState.y; photoScale = state.photoState.scale;
-            applyPhotoTransform();
-          } else if (state.imgId === 'openPhotoPreview') {
-            openX = state.photoState.x; openY = state.photoState.y; openScale = state.photoState.scale;
-            applyOpenTransform();
-          }
-        }
-        return;
-      }
-      const el = document.getElementById(elId);
+    // Testi e stili
+    Object.entries(data.items || {}).forEach(([id, state]) => {
+      const el = document.getElementById(id);
       if (!el) return;
-      if (state.text !== undefined) el.textContent = state.text;
+      if (state.text) el.textContent = state.text;
       if (state.style) el.style.cssText = state.style;
-      if (state.transform && captionState[elId]) {
-        captionState[elId] = state.transform;
-        applyTransform(elId);
-      }
+      if (state.transform && captionState[id]) { Object.assign(captionState[id], state.transform); applyTransform(id); }
     });
-  });
+
+    // Foto
+    Object.entries(data.photos || {}).forEach(([slideId, photo]) => {
+      if (!photo) return;
+      const img = document.getElementById(photo.imgId);
+      const hint = document.getElementById(photo.imgId.replace('Preview','Hint'));
+      const controls = document.getElementById(photo.imgId.replace('Preview','Controls'));
+      if (!img) return;
+      img.onload = () => {
+        if (photo.state) {
+          if (photo.imgId === 'photoPreview')     { photoX=photo.state.x; photoY=photo.state.y; photoScale=photo.state.scale; applyPhotoTransform(); }
+          if (photo.imgId === 'openPhotoPreview') { openX=photo.state.x; openY=photo.state.y; openScale=photo.state.scale; applyOpenTransform(); }
+        }
+        sessionPhotos[slideId] = photo;
+      };
+      img.src = photo.src;
+      img.style.display = 'block';
+      if (hint) hint.style.display = 'none';
+      if (controls) controls.style.display = 'flex';
+    });
+
+    showToast('✓ Sessione ripristinata');
+  } catch(e) { console.warn('Restore failed:', e); }
 }
 
-// Auto-save ogni 30s e prima di chiudere
-setInterval(saveSession, 30000);
-window.addEventListener('beforeunload', saveSession);
-
-// Bottone reset sessione
 function clearSession() {
-  if (confirm('Cancella sessione salvata e ricomincia da capo?')) {
+  if (confirm('Cancella sessione salvata e ricomincia?')) {
     localStorage.removeItem(SESSION_KEY);
     location.reload();
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => { setTimeout(restoreSession, 200); });
+// Aggancia compress foto al caricamento
+const _origLoadPhoto = loadPhoto;
+loadPhoto = function(input) {
+  _origLoadPhoto(input);
+  setTimeout(() => tryCompressPhoto(document.getElementById('photoPreview'), 'wrapStory2'), 500);
+};
+const _origLoadOpenPhoto = loadOpenPhoto;
+loadOpenPhoto = function(input) {
+  _origLoadOpenPhoto(input);
+  setTimeout(() => tryCompressPhoto(document.getElementById('openPhotoPreview'), 'wrapStory'), 500);
+};
+
+// Auto-save ogni 20s + chiusura
+setInterval(saveSession, 20000);
+window.addEventListener('beforeunload', saveSession);
+window.addEventListener('pagehide', saveSession);        // iOS Safari
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveSession(); });
+
+// Ripristino
+window.addEventListener('load', () => setTimeout(restoreSession, 600));
 
 </script>
 </body>
