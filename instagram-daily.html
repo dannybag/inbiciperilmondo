@@ -1922,8 +1922,9 @@ function saveSession(manual) {
 
 async function restoreSession() {
   let data;
-  try { data = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch(e) {}
-  if (!data || data.v !== 2) return;
+  try { data = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch(e) { showToast('✗ Parse error: '+e.message,'#f00'); return; }
+  if (!data) { showToast('Nessun dato salvato'); return; }
+  if (data.v !== 2) { showToast('⚠ Versione incompatibile: v='+data.v,'#FF8C00'); return; }
 
   // Slide extra
   for (let i = extraSlideCount; i < (data.extra||0); i++) addPhotoSlide();
@@ -1962,8 +1963,9 @@ async function restoreSession() {
     if (ctrl) ctrl.style.display = 'flex';
   });
 
-  const n = Object.keys(data.texts||{}).length;
-  if (n > 0) showToast('✓ Sessione ripristinata', '#F05A28', 3000);
+  const nt = Object.keys(data.texts||{}).length;
+  const np = Object.keys(data.photos||{}).length;
+  showToast('✓ Ripristinato: '+nt+' testi, '+np+' foto', '#F05A28', 4000);
 }
 
 function clearSession() {
