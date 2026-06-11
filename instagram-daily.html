@@ -1321,6 +1321,7 @@ function makeDraggable(el) { initCaption(el); }
 document.addEventListener('DOMContentLoaded', () => {
   const cap = document.getElementById('s-caption');
   if (cap) makeDraggable(cap);
+  setTimeout(attachAutoSave, 300);
 });
 
 // ---- PANNELLO STILE ----
@@ -1661,6 +1662,8 @@ function addPhotoSlide() {
   setTimeout(() => {
     const cap = document.getElementById('s-caption-extra' + extraSlideCount);
     if (cap) makeDraggable(cap);
+    attachAutoSave();
+    saveSession(false);
   }, 100);
 
   // Sync data from current slide
@@ -1928,7 +1931,7 @@ function saveSession(manual) {
   }
 }
 
-async function restoreSession() {
+async function restoreSession() { // returns promise implicitly
   let data;
   try { data = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch(e) { showToast('✗ Parse error: '+e.message,'#f00'); return; }
   if (!data) { showToast('Nessun dato salvato'); return; }
@@ -2001,12 +2004,15 @@ window.addEventListener('beforeunload', () => saveSession(false));
 window.addEventListener('pagehide', () => saveSession(false));
 document.addEventListener('visibilitychange', () => { if (document.visibilityState==='hidden') saveSession(false); });
 setInterval(() => saveSession(false), 20000);
-// Restore - si attiva sia su load che su DOMContentLoaded (fallback)
+// Restore + attachAutoSave
+function initSession() {
+  restoreSession().then(() => attachAutoSave());
+}
+
 if (document.readyState === 'complete') {
-  setTimeout(restoreSession, 800);
+  setTimeout(initSession, 800);
 } else {
-  window.addEventListener('load', () => setTimeout(restoreSession, 800));
-  document.addEventListener('DOMContentLoaded', () => setTimeout(restoreSession, 1200));
+  window.addEventListener('load', () => setTimeout(initSession, 800));
 }
 
 </script>
