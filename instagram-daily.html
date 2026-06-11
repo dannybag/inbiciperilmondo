@@ -560,6 +560,7 @@
 
 <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
   <button onclick="clearSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Cancella sessione">↺</button>
+  <button onclick="saveSession(true)" style="background:transparent; color:rgba(255,248,244,0.35); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;" title="Salva sessione">💾</button>
   <button id="downloadBtn" onclick="downloadSlides()"
     style="background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 2rem; border:none; border-radius:3px; cursor:pointer;">
     ⬇ Scarica slides
@@ -1841,84 +1842,144 @@ if (cap2) cap2.textContent = getNextPhrase();
 update();
 // ---- SESSION PERSISTENCE ----
 const SESSION_KEY = 'ig-session-daily';
+const sessionPhotos = {};  // { imgId: compressedDataURL }
 
-function showToast(msg, color) {
-  let t = document.getElementById('session-toast');
+function showToast(msg, color, dur) {
+  let t = document.getElementById('_toast');
   if (!t) {
     t = document.createElement('div');
-    t.id = 'session-toast';
-    t.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#1A1A1A;border:1px solid rgba(240,90,40,0.5);color:#FFF8F4;font-family:IBM Plex Mono,monospace;font-size:0.6rem;letter-spacing:0.1em;padding:0.5rem 1rem;border-radius:4px;z-index:99999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;';
+    t.id = '_toast';
+    t.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#111;border-radius:5px;color:#fff;font-family:monospace;font-size:0.65rem;padding:0.5rem 1.2rem;z-index:99999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;border:1px solid rgba(255,255,255,0.15);';
     document.body.appendChild(t);
   }
   t.textContent = msg;
-  t.style.borderColor = color || 'rgba(240,90,40,0.5)';
+  t.style.borderColor = color || 'rgba(240,90,40,0.6)';
   t.style.opacity = '1';
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.style.opacity = '0', 3500);
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.style.opacity = '0', dur || 3000);
 }
 
-function saveSession() {
+function compressImg(img) {
+  if (!img || !img.src || !img.src.startsWith('data:')) return null;
   try {
-    const data = { v: 1, extraCount: extraSlideCount, items: {} };
-    document.querySelectorAll('[id^="s-caption"],[id^="s-day"],[id^="s-from-to"],[id^="s-km"],[id^="s-badge"],[id^="s-media-tag"],[id^="s-open-tag"]').forEach(el => {
-      if (!el.id) return;
-      const entry = { text: el.textContent.trim(), style: el.style.cssText };
-      if (captionState[el.id]) entry.t = { ...captionState[el.id] };
-      data.items[el.id] = entry;
+    const MAX = 1200;
+    const c = document.createElement('canvas');
+    const sc = Math.min(1, MAX / Math.max(img.naturalWidth, img.naturalHeight));
+    c.width  = Math.round(img.naturalWidth  * sc);
+    c.height = Math.round(img.naturalHeight * sc);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    const out = c.toDataURL('image/jpeg', 0.7);
+    return out.length < 4_000_000 ? out : null;
+  } catch(e) { return null; }
+}
+
+function saveSession(manual) {
+  try {
+    const data = { v:2, extra: extraSlideCount, texts:{}, styles:{}, transforms:{}, photos:{} };
+
+    // Testi editabili
+    document.querySelectorAll('[contenteditable][id]').forEach(el => {
+      data.texts[el.id] = el.textContent;
+      data.styles[el.id] = el.style.cssText;
+      if (captionState[el.id]) data.transforms[el.id] = {...captionState[el.id]};
     });
+
+    // Stili elementi fissi
+    ['s-day-num','s-day-label','s-from-to','s-km','s-badge','s-media-tag','s-open-tag'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) data.styles[id] = el.style.cssText;
+    });
+
+    // Foto
+    let photosSaved = 0, photosSkipped = 0;
+    ['photoPreview','openPhotoPreview'].forEach(id => {
+      const img = document.getElementById(id);
+      const compressed = compressImg(img);
+      if (compressed) {
+        data.photos[id] = {
+          src: compressed,
+          x: id==='photoPreview'?photoX:openX,
+          y: id==='photoPreview'?photoY:openY,
+          sc: id==='photoPreview'?photoScale:openScale
+        };
+        photosSaved++;
+      } else if (img && img.src && img.src.startsWith('data:')) {
+        photosSkipped++;
+      }
+    });
+
     localStorage.setItem(SESSION_KEY, JSON.stringify(data));
-  } catch(e) { console.warn('saveSession error:', e); }
+
+    if (manual) {
+      let msg = '✓ Salvato';
+      if (photosSaved)   msg += ' · ' + photosSaved + ' foto';
+      if (photosSkipped) msg += ' · ⚠ ' + photosSkipped + ' foto troppo grande';
+      showToast(msg, '#F05A28', 4000);
+    }
+  } catch(e) {
+    if (manual) showToast('✗ Errore: ' + e.message, '#FF4444');
+    console.error('saveSession:', e);
+  }
 }
 
 async function restoreSession() {
-  let raw;
-  try { raw = localStorage.getItem(SESSION_KEY); } catch(e) { return; }
-  if (!raw) return;
   let data;
-  try { data = JSON.parse(raw); } catch(e) { return; }
-  if (!data || data.v !== 1) return;
+  try { data = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch(e) {}
+  if (!data || data.v !== 2) return;
 
-  // Ricrea slide extra
-  const extra = parseInt(data.extraCount) || 0;
-  for (let i = extraSlideCount; i < extra; i++) addPhotoSlide();
+  // Slide extra
+  for (let i = extraSlideCount; i < (data.extra||0); i++) addPhotoSlide();
   await new Promise(r => setTimeout(r, 400));
 
-  // Ripristina testi e stili
-  let restored = 0;
-  Object.entries(data.items || {}).forEach(([id, entry]) => {
+  // Testi
+  Object.entries(data.texts||{}).forEach(([id, text]) => {
     const el = document.getElementById(id);
-    if (!el) return;
-    if (entry.text) el.textContent = entry.text;
-    if (entry.style) el.style.cssText = entry.style;
-    if (entry.t && captionState[id]) { Object.assign(captionState[id], entry.t); applyTransform(id); }
-    restored++;
+    if (el) el.textContent = text;
   });
 
-  if (restored > 0) showToast('✓ Sessione ripristinata (' + restored + ' elementi)');
+  // Stili
+  Object.entries(data.styles||{}).forEach(([id, style]) => {
+    const el = document.getElementById(id);
+    if (el && style) el.style.cssText = style;
+  });
+
+  // Trasformazioni
+  Object.entries(data.transforms||{}).forEach(([id, t]) => {
+    if (captionState[id]) { Object.assign(captionState[id], t); applyTransform(id); }
+  });
+
+  // Foto
+  Object.entries(data.photos||{}).forEach(([imgId, p]) => {
+    const img = document.getElementById(imgId);
+    if (!img) return;
+    img.onload = () => {
+      if (imgId === 'photoPreview') { photoX=p.x; photoY=p.y; photoScale=p.sc; applyPhotoTransform(); }
+      else { openX=p.x; openY=p.y; openScale=p.sc; applyOpenTransform(); }
+    };
+    img.src = p.src;
+    img.style.cssText = 'display:block;position:absolute;top:50%;left:50%;max-width:none;width:auto;height:auto;cursor:grab;';
+    const hint = document.getElementById(imgId.replace('Preview','Hint'));
+    const ctrl = document.getElementById(imgId.replace('Preview','Controls'));
+    if (hint) hint.style.display = 'none';
+    if (ctrl) ctrl.style.display = 'flex';
+  });
+
+  const n = Object.keys(data.texts||{}).length;
+  if (n > 0) showToast('✓ Sessione ripristinata', '#F05A28', 3000);
 }
 
 function clearSession() {
-  if (confirm('Cancella sessione salvata e ricomincia?')) {
+  if (confirm('Cancella sessione e ricomincia?')) {
     localStorage.removeItem(SESSION_KEY);
     location.reload();
   }
 }
 
-// Avviso foto non salvata
-function warnPhotoNotSaved() {
-  showToast('⚠ Le foto non vengono salvate nella cache', '#FF8C00');
-}
-
-// Salva su chiusura (tutti i metodi per max compatibilità)
-window.addEventListener('beforeunload', saveSession);
-window.addEventListener('pagehide', saveSession);
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden') saveSession();
-});
-setInterval(saveSession, 20000);
-
-// Ripristino all'avvio
-window.addEventListener('load', () => setTimeout(restoreSession, 600));
+window.addEventListener('beforeunload', () => saveSession(false));
+window.addEventListener('pagehide', () => saveSession(false));
+document.addEventListener('visibilitychange', () => { if (document.visibilityState==='hidden') saveSession(false); });
+setInterval(() => saveSession(false), 20000);
+window.addEventListener('load', () => setTimeout(restoreSession, 700));
 
 </script>
 </body>
