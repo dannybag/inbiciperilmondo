@@ -560,6 +560,8 @@
 
 <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
   <button onclick="clearSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Cancella sessione">↺</button>
+  <button onclick="debugSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Debug sessione">🔍</button>
+  <button onclick="restoreSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Ripristina ora">⏮</button>
   <button onclick="saveSession(true)" style="background:transparent; color:rgba(255,248,244,0.35); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;" title="Salva sessione">💾</button>
   <button id="downloadBtn" onclick="downloadSlides()"
     style="background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 2rem; border:none; border-radius:3px; cursor:pointer;">
@@ -1970,6 +1972,18 @@ async function restoreSession() {
   const nt = Object.keys(data.texts||{}).length;
   const np = Object.keys(data.photos||{}).length;
   showToast('✓ Ripristinato: '+nt+' testi, '+np+' foto', '#F05A28', 4000);
+}
+
+function debugSession() {
+  const raw = localStorage.getItem(SESSION_KEY);
+  if (!raw) { showToast('localStorage VUOTO', '#FF4444', 5000); return; }
+  try {
+    const d = JSON.parse(raw);
+    const texts  = Object.keys(d.texts||{}).length;
+    const photos = Object.keys(d.photos||{}).length;
+    const styles = Object.keys(d.styles||{}).length;
+    showToast('v:'+d.v+' | testi:'+texts+' | foto:'+photos+' | stili:'+styles+' | extra:'+d.extra, '#29B6F6', 6000);
+  } catch(e) { showToast('Parse error: '+e.message, '#FF4444', 5000); }
 }
 
 function clearSession() {
