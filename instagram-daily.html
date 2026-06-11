@@ -1210,7 +1210,6 @@ function loadOpenPhoto(input) {
     img.style.cssText = 'display:block; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;';
     hint.style.display = 'none';
     controls.style.display = 'flex';
-    if (typeof warnPhotoNotSaved === 'function') warnPhotoNotSaved();
     // Touch
     img.addEventListener('touchstart', (ev) => { if(ev.touches.length===1) openDragStart={x:ev.touches[0].clientX-openX,y:ev.touches[0].clientY-openY}; }, {passive:true});
     img.addEventListener('touchmove', (ev) => { ev.preventDefault(); if(ev.touches.length===1&&openDragStart){openX=ev.touches[0].clientX-openDragStart.x;openY=ev.touches[0].clientY-openDragStart.y;applyOpenTransform();} }, {passive:false});
@@ -1698,7 +1697,6 @@ function loadExtraPhoto(input, photoId, hintId, controlsId, containerId) {
     img.style.cssText = 'display:block; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;';
     hint.style.display = 'none';
     controls.style.display = 'flex';
-    if (typeof warnPhotoNotSaved === 'function') warnPhotoNotSaved();
     img.addEventListener('touchstart', (ev) => { if(ev.touches.length===1){ const s=extraPhotoState[photoId]; s.drag={x:ev.touches[0].clientX-s.x,y:ev.touches[0].clientY-s.y}; }}, {passive:true});
     img.addEventListener('touchmove', (ev) => { ev.preventDefault(); const s=extraPhotoState[photoId]; if(ev.touches.length===1&&s.drag){s.x=ev.touches[0].clientX-s.drag.x;s.y=ev.touches[0].clientY-s.drag.y;applyExtraTransform(photoId);} }, {passive:false});
     img.addEventListener('touchend', () => { extraPhotoState[photoId].drag=null; });
@@ -1841,8 +1839,8 @@ const cap2 = document.getElementById('s-caption');
 if (cap2) cap2.textContent = getNextPhrase();
 update();
 // ---- SESSION PERSISTENCE ----
-const SESSION_KEY = 'ig-session-daily';
-const sessionPhotos = {};  // { imgId: compressedDataURL }
+var SESSION_KEY = 'ig-session-daily';
+var sessionPhotos = {};  // { imgId: compressedDataURL }
 
 function showToast(msg, color, dur) {
   let t = document.getElementById('_toast');
