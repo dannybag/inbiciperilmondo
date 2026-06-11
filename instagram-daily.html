@@ -559,6 +559,7 @@
 
 
 <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
+  <button onclick="clearSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Cancella sessione">↺</button>
   <button id="downloadBtn" onclick="downloadSlides()"
     style="background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 2rem; border:none; border-radius:3px; cursor:pointer;">
     ⬇ Scarica slides
@@ -1836,6 +1837,143 @@ shufflePhrases();
 const cap2 = document.getElementById('s-caption');
 if (cap2) cap2.textContent = getNextPhrase();
 update();
+// ---- SESSION PERSISTENCE ----
+const SESSION_KEY = 'ig-session-daily';
+
+function saveSession() {
+  const session = {
+    extraCount: extraSlideCount,
+    slides: {}
+  };
+
+  // Salva stato di ogni slide
+  const allSlideIds = ['wrapStory', 'wrapStory2'];
+  for (let i = 1; i <= extraSlideCount; i++) allSlideIds.push('wrapExtra' + i);
+
+  allSlideIds.forEach(slideId => {
+    const wrap = document.getElementById(slideId);
+    if (!wrap) return;
+    session.slides[slideId] = {};
+
+    // Captions
+    wrap.querySelectorAll('[id^="s-caption"], [id^="s-from-to"], [id^="s-km"]').forEach(el => {
+      session.slides[slideId][el.id] = {
+        text: el.textContent,
+        style: el.style.cssText,
+        transform: captionState[el.id] || null
+      };
+    });
+
+    // Badge, tag, day elements
+    ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag'].forEach(id => {
+      const el = document.getElementById(id) || wrap.querySelector('#' + id);
+      if (el) session.slides[slideId][id] = { style: el.style.cssText };
+    });
+
+    // Extra slide IDs
+    const suffix = slideId.replace('wrapExtra', '');
+    if (suffix !== slideId) {
+      ['s-badge-extra','s-media-tag-extra','s-caption-extra'].forEach(base => {
+        const el = document.getElementById(base + suffix);
+        if (el) session.slides[slideId][base+suffix] = {
+          text: el.textContent,
+          style: el.style.cssText,
+          transform: captionState[el.id] || null
+        };
+      });
+    }
+
+    // Foto (salva come JPEG compresso se possibile)
+    const img = wrap.querySelector('img[id^="photoPreview"], img[id^="openPhotoPreview"]');
+    if (img && img.src && img.src.startsWith('data:')) {
+      try {
+        const canvas = document.createElement('canvas');
+        const maxDim = 800;
+        const scale = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
+        canvas.width = Math.round(img.naturalWidth * scale);
+        canvas.height = Math.round(img.naturalHeight * scale);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        const compressed = canvas.toDataURL('image/jpeg', 0.6);
+        if (compressed.length < 3_000_000) {
+          session.slides[slideId].photo = {
+            src: compressed,
+            imgId: img.id,
+            photoState: img.id.includes('open') ? { x: openX, y: openY, scale: openScale } : { x: photoX, y: photoY, scale: photoScale }
+          };
+        }
+      } catch(e) {}
+    }
+  });
+
+  try {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+  } catch(e) {
+    console.warn('Session save failed (storage full?):', e);
+  }
+}
+
+async function restoreSession() {
+  const raw = localStorage.getItem(SESSION_KEY);
+  if (!raw) return;
+  let session;
+  try { session = JSON.parse(raw); } catch(e) { return; }
+
+  // Ricrea slide extra
+  for (let i = 1; i <= (session.extraCount || 0); i++) {
+    if (!document.getElementById('wrapExtra' + i)) addPhotoSlide();
+  }
+
+  await new Promise(r => setTimeout(r, 100)); // attendi DOM
+
+  // Ripristina stati
+  Object.entries(session.slides || {}).forEach(([slideId, data]) => {
+    Object.entries(data).forEach(([elId, state]) => {
+      if (elId === 'photo') {
+        // Ripristina foto
+        const img = document.getElementById(state.imgId);
+        const hint = document.getElementById(state.imgId.replace('Preview','Hint'));
+        const controls = document.getElementById(state.imgId.replace('Preview','Controls'));
+        if (img && state.src) {
+          img.src = state.src;
+          img.style.display = 'block';
+          if (hint) hint.style.display = 'none';
+          if (controls) controls.style.display = 'flex';
+          if (state.imgId === 'photoPreview') {
+            photoX = state.photoState.x; photoY = state.photoState.y; photoScale = state.photoState.scale;
+            applyPhotoTransform();
+          } else if (state.imgId === 'openPhotoPreview') {
+            openX = state.photoState.x; openY = state.photoState.y; openScale = state.photoState.scale;
+            applyOpenTransform();
+          }
+        }
+        return;
+      }
+      const el = document.getElementById(elId);
+      if (!el) return;
+      if (state.text !== undefined) el.textContent = state.text;
+      if (state.style) el.style.cssText = state.style;
+      if (state.transform && captionState[elId]) {
+        captionState[elId] = state.transform;
+        applyTransform(elId);
+      }
+    });
+  });
+}
+
+// Auto-save ogni 30s e prima di chiudere
+setInterval(saveSession, 30000);
+window.addEventListener('beforeunload', saveSession);
+
+// Bottone reset sessione
+function clearSession() {
+  if (confirm('Cancella sessione salvata e ricomincia da capo?')) {
+    localStorage.removeItem(SESSION_KEY);
+    location.reload();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => { setTimeout(restoreSession, 200); });
+
 </script>
 </body>
 </html>
