@@ -297,7 +297,7 @@ function render(tappe) {
     totDis += t.dislivello||0;
     let dateStr = t.day ? 'Tappa '+t.day : '—';
     if(t.date){ const d=new Date(t.date); dateStr=String(d.getDate()).padStart(2,'0')+' '+MESI[d.getMonth()]; }
-    const label = (t.from&&t.to) ? t.from+' → '+t.to : (t.name || t.from || '—');
+    const label = (t.from&&t.to) ? `<strong>${t.from} → ${t.to}</strong>` : (t.from ? `<strong>${t.from}</strong>` : '—');
     return `<div class="tappa-row">
       <span class="tappa-num">${i+1}</span>
       <span class="tappa-date">${dateStr}</span>
