@@ -4,24 +4,7 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 1,
-    "from": "Bergamo ",
-    "to": "Bergamo Santini",
-    "km": 53,
-    "dislivello": 815,
-    "updated": "2026-06-15T22:29:32.239Z",
-    "totKm": 53,
-    "totDis": 815,
-    "tappe": 1
+    "day": 0
   },
-  "tappe": [
-    {
-      "day": 1,
-      "from": "Bergamo ",
-      "to": "Bergamo Santini",
-      "km": 53,
-      "dislivello": 815,
-      "updated": "2026-06-15T22:29:32.239Z"
-    }
-  ]
+  "tappe": []
 }
