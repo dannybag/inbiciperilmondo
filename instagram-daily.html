@@ -228,7 +228,6 @@
     font-size: 3.2rem;
     line-height: 0.9;
     color: var(--orange);
-    padding: 0 1.2rem;
     letter-spacing: -0.02em;
   }
   .frame-story .open-day-num { font-size: 2.8rem; }
@@ -237,7 +236,6 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.8rem;
     color: var(--cream);
-    padding: 0 1.2rem;
     margin-top: 0.2rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -250,7 +248,6 @@
     font-size: 0.8rem;
     font-weight: 600;
     color: rgba(255,248,244,0.55);
-    padding: 0.4rem 1.2rem 1.2rem;
     letter-spacing: 0.1em;
   }
   .open-bar {
@@ -693,7 +690,7 @@
             <span style="font-family:'IBM Plex Mono',monospace; font-size:0.45rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.2);">📷 tocca per foto</span>
           </div>
           <img id="openPhotoPreview" src="" style="display:none; position:absolute; top:50%; left:50%; cursor:grab; max-width:none; width:auto; height:auto;">
-          <div id="openPhotoControls" style="display:none; position:absolute; top:0.3rem; right:0.3rem; z-index:10; flex-direction:column; gap:0.3rem;">
+          <div id="openPhotoControls" style="display:none; position:absolute; bottom:2rem; left:0.3rem; z-index:10; flex-direction:row; gap:0.3rem;">
             <button onclick="event.stopPropagation(); zoomOpenPhoto(1.3)" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; font-size:0.9rem; cursor:pointer; line-height:1;">+</button>
             <button onclick="event.stopPropagation(); zoomOpenPhoto(0.77)" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; font-size:0.9rem; cursor:pointer; line-height:1;">−</button>
             <button onclick="event.stopPropagation(); openRot-=15; applyOpenTransform();" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; font-size:0.75rem; cursor:pointer; line-height:1;">↺</button>
@@ -707,7 +704,7 @@
         <div id="s-open-tag" contenteditable="true" style="position:absolute; top:0.8rem; left:1.2rem; z-index:2; font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:800; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); cursor:grab; outline:none;">@dannybag</div>
 
         <!-- Gruppo info slide 1 - draggabile in un sol colpo -->
-        <div id="s-info-group" style="position:absolute; bottom:2rem; left:1.2rem; z-index:3; cursor:grab; padding:1rem 1rem 0.8rem; background:linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 100%); border-radius:4px;">
+        <div id="s-info-group" style="position:absolute; bottom:2rem; left:1.2rem; z-index:3; cursor:grab; padding:0.8rem 1rem 0.6rem; background:linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 100%); border-radius:4px; text-align:left;">
           <div class="open-day-label" id="s-day-label" contenteditable="true" style="outline:none; font-family:inherit;">Lun</div>
           <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; font-family:inherit;">01 Gen</div>
           <div class="open-from-to" id="s-from-to" contenteditable="true" style="outline:none; font-family:inherit; display:none;"></div>
@@ -1945,48 +1942,35 @@ function loadPhoto(input) {
     hint.style.display = 'none';
     controls.style.display = 'flex';
 
-    // Touch drag
-    const onTouchStart = (ev) => {
-      if (ev.touches.length === 1)
-        dragStart = { x: ev.touches[0].clientX - photoX, y: ev.touches[0].clientY - photoY };
-    };
-    const onTouchMove = (ev) => {
-      ev.preventDefault();
-      if (ev.touches.length === 1 && dragStart) {
-        photoX = ev.touches[0].clientX - dragStart.x;
-        photoY = ev.touches[0].clientY - dragStart.y;
-        applyPhotoTransform();
-      }
-    };
-    const onTouchEnd = () => { dragStart = null; };
-
-    // Mouse drag
-    const onMouseDown = (ev) => {
-      dragStart = { x: ev.clientX - photoX, y: ev.clientY - photoY };
-      img.style.cursor = 'grabbing';
-    };
-    const onMouseMove = (ev) => {
-      if (!dragStart) return;
-      photoX = ev.clientX - dragStart.x;
-      photoY = ev.clientY - dragStart.y;
-      applyPhotoTransform();
-    };
-    const onMouseUp = () => {
-      dragStart = null;
-      img.style.cursor = 'grab';
-    };
-
-    img.removeEventListener('touchstart', onTouchStart);
-    img.removeEventListener('touchmove', onTouchMove);
-    img.removeEventListener('touchend', onTouchEnd);
-    img.removeEventListener('mousedown', onMouseDown);
-
-    img.addEventListener('touchstart', onTouchStart, { passive: true });
-    img.addEventListener('touchmove', onTouchMove, { passive: false });
-    img.addEventListener('touchend', onTouchEnd);
-    img.addEventListener('mousedown', onMouseDown);
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+    if (!img._drag2) {
+      img._drag2 = true;
+      let _pt = null;
+      img.addEventListener('touchstart', (ev) => {
+        _pt = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+      }, {passive:true});
+      img.addEventListener('touchmove', (ev) => {
+        ev.preventDefault();
+        const cur = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+        if (!_pt || !_pt.length) { _pt=cur; return; }
+        if (cur.length===1 && _pt.length===1) {
+          photoX+=cur[0].x-_pt[0].x; photoY+=cur[0].y-_pt[0].y;
+        } else if (cur.length>=2 && _pt.length>=2) {
+          const dP=Math.hypot(_pt[1].x-_pt[0].x,_pt[1].y-_pt[0].y)||1;
+          const dC=Math.hypot(cur[1].x-cur[0].x,cur[1].y-cur[0].y);
+          const aP=Math.atan2(_pt[1].y-_pt[0].y,_pt[1].x-_pt[0].x)*180/Math.PI;
+          const aC=Math.atan2(cur[1].y-cur[0].y,cur[1].x-cur[0].x)*180/Math.PI;
+          photoScale=Math.max(0.1,Math.min(15,photoScale*dC/dP));
+          photoRot+=aC-aP;
+          photoX+=(cur[0].x+cur[1].x)/2-(_pt[0].x+_pt[1].x)/2;
+          photoY+=(cur[0].y+cur[1].y)/2-(_pt[0].y+_pt[1].y)/2;
+        }
+        _pt=cur; applyPhotoTransform();
+      }, {passive:false});
+      img.addEventListener('touchend', (ev) => { _pt=Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY})); }, {passive:true});
+      img.addEventListener('mousedown', (ev) => { dragStart={x:ev.clientX-photoX,y:ev.clientY-photoY}; img.style.cursor='grabbing'; });
+      document.addEventListener('mousemove', (ev) => { if(!dragStart)return; photoX=ev.clientX-dragStart.x; photoY=ev.clientY-dragStart.y; applyPhotoTransform(); });
+      document.addEventListener('mouseup', () => { dragStart=null; img.style.cursor='grab'; });
+    }
   };
   reader.readAsDataURL(input.files[0]);
 }
