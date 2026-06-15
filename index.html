@@ -1179,6 +1179,7 @@
       btn.onclick = () => {
         document.getElementById('tap-km').value  = km;
         document.getElementById('tap-dis').value = dis;
+        window._tapStravaSelected = { name: act.name, polyline: act.map?.summary_polyline || '', date: act.start_date_local };
         tapRefresh();
         picker.style.display = 'none';
         if (msgEl) msgEl.textContent = `✓ ${act.name} · ${km} km · ↑${dis}m`;
@@ -1432,7 +1433,13 @@
 
     // Aggiorna array locale (sostituisce o aggiunge)
     _tappeList = _tappeList.filter(t => t.day !== day);
-    _tappeList.push({ day, from, to, km, dislivello: dis, updated: new Date().toISOString() });
+    const sel = window._tapStravaSelected || {};
+    _tappeList.push({ day, from, to, km, dislivello: dis,
+      name:     sel.name     || '',
+      polyline: sel.polyline || '',
+      date:     sel.date     || new Date().toISOString(),
+      updated:  new Date().toISOString()
+    });
     _tappeList.sort((a,b) => a.day - b.day);
 
     // Ricalcola totali dall'array completo
