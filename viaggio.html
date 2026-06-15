@@ -60,7 +60,24 @@
   }
 
   /* MAP */
-  #map { height:50vh; width:100%; background:#0A0A0A; }
+  .map-list-wrap {
+    display: flex;
+    align-items: stretch;
+  }
+  #map {
+    width: 50%;
+    height: 50vh;
+    background: #0A0A0A;
+    flex-shrink: 0;
+  }
+  .tappe-panel {
+    width: 50%;
+    height: 50vh;
+    overflow-y: auto;
+    background: #0F0F0F;
+    padding: 1.2rem 2vw;
+    border-left: 1px solid rgba(240,90,40,0.15);
+  }
 
 
   /* TAPPE */
@@ -109,11 +126,12 @@
 
   .empty { text-align:center; padding:3rem; font-family:var(--mono); font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.2); text-transform:uppercase; }
 
-  @media(max-width:600px) {
+  @media(max-width:768px) {
     .stats-bar { gap:1rem; }
     .stat-value { font-size:1.5rem; }
-    #map { height:40vh; }
-    .tappa-tot { display:none; }
+    .map-list-wrap { flex-direction:column; }
+    #map { width:100%; height:40vh; }
+    .tappe-panel { width:100%; height:auto; border-left:none; border-top:1px solid rgba(240,90,40,0.15); }
   }
 </style>
 </head>
@@ -157,17 +175,18 @@
   </div>
 </div>
 
-<div id="map"></div>
+<div class="map-list-wrap">
+  <div id="map"></div>
+  <div class="tappe-panel">
+    <div class="section-label" style="margin-bottom:0.8rem;">Tappe percorse</div>
+    <div id="tappe-list"><div class="empty">Nessuna tappa ancora</div></div>
+  </div>
+</div>
 
 <div id="debug-bar" style="background:#111; border-top:1px solid rgba(240,90,40,0.2); padding:0.5rem 5vw; font-family:IBM Plex Mono,monospace; font-size:0.55rem; color:rgba(255,248,244,0.3); display:flex; gap:1.5rem; flex-wrap:wrap;">
   <span id="dbg-tappe">tappe: —</span>
   <span id="dbg-polyline">polyline: —</span>
   <span id="dbg-first">prima tappa: —</span>
-</div>
-<div class="tappe-section">
-  <div class="section-label">Tappe percorse</div>
-
-  <div id="tappe-list"><div class="empty">Nessuna tappa ancora</div></div>
 </div>
 
 <script>
@@ -297,11 +316,11 @@ function render(tappe) {
     totDis += t.dislivello||0;
     let dateStr = t.day ? 'Tappa '+t.day : '—';
     if(t.date){ const d=new Date(t.date); dateStr=String(d.getDate()).padStart(2,'0')+' '+MESI[d.getMonth()]; }
-    const label = (t.from&&t.to) ? `<strong>${t.from} → ${t.to}</strong>` : (t.from ? `<strong>${t.from}</strong>` : '—');
+    const label = (t.from&&t.to) ? `${t.from} → ${t.to}` : (t.from || '—');
     return `<div class="tappa-row">
       <span class="tappa-num">${i+1}</span>
       <span class="tappa-date">${dateStr}</span>
-      <span class="tappa-info">${label} <span style="font-family:var(--mono);font-size:0.7rem;font-weight:400;color:rgba(255,248,244,0.5);margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0} m</span></span>
+      <span class="tappa-info" style="font-size:1rem;">${label} <span style="font-family:var(--mono);font-size:0.7rem;color:rgba(255,248,244,0.5);margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0} m</span></span>
     </div>`;
   }).join('');
 
@@ -332,6 +351,7 @@ async function load() {
 }
 
 initMap();
+setTimeout(() => map.invalidateSize(), 100);
 load();
 </script>
 </body>
