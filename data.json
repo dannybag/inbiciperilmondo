@@ -5,23 +5,23 @@
   },
   "tappa": {
     "day": 1,
-    "from": "Milano",
-    "to": "Parma",
-    "km": 81,
-    "dislivello": 1075,
-    "updated": "2026-06-10T08:19:19.630Z",
-    "totKm": 81,
-    "totDis": 1075,
+    "from": "Parma",
+    "to": "",
+    "km": 20,
+    "dislivello": 36,
+    "updated": "2026-06-15T19:21:25.611Z",
+    "totKm": 20,
+    "totDis": 36,
     "tappe": 1
   },
   "tappe": [
     {
       "day": 1,
-      "from": "Milano",
-      "to": "Parma",
-      "km": 81,
-      "dislivello": 1075,
-      "updated": "2026-06-10T08:19:19.630Z"
+      "from": "Parma",
+      "to": "",
+      "km": 20,
+      "dislivello": 36,
+      "updated": "2026-06-15T19:21:25.611Z"
     }
   ]
 }
