@@ -554,6 +554,10 @@
     style="background:#FC4C02; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.6rem 1.2rem; border:none; border-radius:3px; cursor:pointer;">
     ⚡ Leggi da Strava
   </button>
+  <button onclick="resetData()"
+    style="background:transparent; color:rgba(255,248,244,0.5); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.6rem 1rem; border:1px solid rgba(255,248,244,0.2); border-radius:3px; cursor:pointer;">
+    🔄 Reset data
+  </button>
   <button onclick="stravaConnect()"
     style="background:transparent; color:rgba(255,248,244,0.35); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.6rem 1rem; border:1px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;">
     Connetti Strava
@@ -2026,6 +2030,31 @@ function debugSession() {
     var d = JSON.parse(raw);
     showToast('v:'+d.v+' testi:'+Object.keys(d.texts||{}).length+' foto:'+Object.keys(d.photos||{}).length+' extra:'+d.extra, '#29B6F6', 6000);
   } catch(e) { showToast('Errore: '+e.message,'#f44',5000); }
+}
+
+function resetData() {
+  // Cancella traccia salvata
+  localStorage.removeItem('daily-tappa');
+
+  // Aggiorna data a oggi
+  var GIORNI = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+  var MESI   = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+  var now    = new Date();
+  var dayEl  = document.getElementById('s-day-label');
+  var numEl  = document.getElementById('s-day-num');
+  var fromEl = document.getElementById('s-from-to');
+  var kmEl   = document.getElementById('s-km');
+  var msg    = document.getElementById('strava-msg');
+
+  if (dayEl)  dayEl.textContent  = GIORNI[now.getDay()];
+  if (numEl)  numEl.textContent  = String(now.getDate()).padStart(2,'0') + ' ' + MESI[now.getMonth()];
+  if (fromEl) fromEl.textContent = 'Attività';
+  if (kmEl)   kmEl.textContent   = '— km · ↑—m';
+  if (msg)    msg.textContent    = 'Reset effettuato · Seleziona traccia da Strava';
+
+  // Chiudi picker se aperto
+  var picker = document.getElementById('strava-picker');
+  if (picker) picker.style.display = 'none';
 }
 
 function resetDaily() {
