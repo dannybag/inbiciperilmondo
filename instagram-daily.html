@@ -241,8 +241,10 @@
     text-transform: uppercase;
     line-height: 1;
     border-left: 3px solid var(--orange);
-    white-space: normal;
-    word-break: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
     padding-left: 0.4rem;
   }
   .frame-story .open-from-to { font-size: 1.5rem; }
@@ -1282,7 +1284,7 @@ function loadOpenPhoto(input) {
       const cw = container.offsetWidth || 270;
       const ch = container.offsetHeight || 160;
       openScale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight);
-      openX = 0; openY = -Math.round(ch * 0.12); openRot = 0;  // leggermente in alto
+      openX = 0; openY = -60; openRot = 0;  // spostata in alto
       applyOpenTransform();
     };
     img.src = e.target.result;
