@@ -189,24 +189,73 @@ function decodePolyline(enc) {
   return pts;
 }
 
-function renderMap(tappe) {
-  routeLayer.clearLayers();
-  const all=[];
-  tappe.forEach((t,i)=>{
-    if(!t.polyline) return;
-    const pts=decodePolyline(t.polyline);
-    if(!pts.length) return;
-    L.polyline(pts,{color:'#F05A28',weight:3,opacity:0.85})
-     .bindTooltip(`<b>${i+1}.</b> ${t.name||t.from||''}<br>${t.km} km · ↑${t.dislivello||0}m`,{sticky:true})
-     .addTo(routeLayer);
-    // Marker numerato
-    L.marker(pts[0],{icon:L.divIcon({
-      html:`<div style="background:#F05A28;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:0.65rem;width:1.3rem;height:1.3rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1.5px solid #fff;">${i+1}</div>`,
-      className:'',iconSize:[21,21],iconAnchor:[10,10]
-    })}).addTo(routeLayer);
-    all.push(...pts);
+// Geocode città via Nominatim
+const geoCache = {};
+async function geocode(city) {
+  if(!city) return null;
+  const key = city.toLowerCase().trim();
+  if(geoCache[key]) return geoCache[key];
+  try {
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city+', Italy')}&format=json&limit=1`, {
+      headers: { 'Accept-Language': 'it' }
+    });
+    const d = await res.json();
+    if(d&&d[0]) { const p=[parseFloat(d[0].lat),parseFloat(d[0].lon)]; geoCache[key]=p; return p; }
+  } catch(e){}
+  return null;
+}
+
+function numIcon(n, last=false) {
+  return L.divIcon({
+    html: last
+      ? `<div style="background:#fff;color:#F05A28;font-family:'Bebas Neue',sans-serif;font-size:0.75rem;width:1.8rem;height:1.8rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2.5px solid #F05A28;box-shadow:0 0 8px rgba(240,90,40,0.6);">📍</div>`
+      : `<div style="background:#F05A28;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:0.6rem;width:1.3rem;height:1.3rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);">${n}</div>`,
+    className:'', iconSize: last?[28,28]:[21,21], iconAnchor: last?[14,14]:[10,10]
   });
-  if(all.length) map.fitBounds(L.latLngBounds(all),{padding:[30,30]});
+}
+
+async function renderMap(tappe) {
+  routeLayer.clearLayers();
+  if(!tappe.length) return;
+
+  const all=[];
+  let lastPt = null;
+
+  for(let i=0; i<tappe.length; i++) {
+    const t = tappe[i];
+    const isLast = i === tappe.length-1;
+    const tip = `<b>${i+1}.</b> ${t.name||t.from||''}<br>${t.from||''} → ${t.to||''}<br>${t.km} km · ↑${t.dislivello||0}m`;
+
+    if(t.polyline) {
+      const pts = decodePolyline(t.polyline);
+      if(pts.length) {
+        L.polyline(pts, {color:'#F05A28', weight:3.5, opacity: isLast?1:0.7})
+         .bindTooltip(tip, {sticky:true}).addTo(routeLayer);
+        L.marker(pts[0], {icon:numIcon(i+1)}).addTo(routeLayer);
+        all.push(...pts);
+        lastPt = pts[pts.length-1];
+      }
+    } else {
+      // Fallback: geocode from→to
+      const fromPt = i===0 ? await geocode(t.from) : lastPt;
+      const toPt   = await geocode(t.to || t.from);
+      if(fromPt && toPt) {
+        L.polyline([fromPt, toPt], {color:'#F05A28', weight:2.5, opacity:0.5, dashArray:'6,6'})
+         .bindTooltip(tip, {sticky:true}).addTo(routeLayer);
+        L.marker(fromPt, {icon:numIcon(i+1)}).addTo(routeLayer);
+        all.push(fromPt, toPt);
+        lastPt = toPt;
+      }
+    }
+  }
+
+  // Marker "Sono qui" sull'ultimo punto
+  if(lastPt) {
+    L.marker(lastPt, {icon:numIcon('', true), zIndexOffset:1000})
+     .bindTooltip('📍 Sono qui', {permanent:false}).addTo(routeLayer);
+  }
+
+  if(all.length) map.fitBounds(L.latLngBounds(all), {padding:[40,40]});
 }
 
 // ---- RENDER ----
@@ -250,7 +299,7 @@ function render(tappe) {
     </div>`;
   }).join('');
 
-  renderMap(tappe);
+  renderMap(tappe);  // async
 }
 
 // ---- LOAD ----
