@@ -705,8 +705,8 @@
         <div id="s-info-group" style="position:absolute; bottom:2rem; left:1.2rem; z-index:3; cursor:grab; padding:1rem 1rem 0.8rem; background:linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 100%); border-radius:4px;">
           <div class="open-day-label" id="s-day-label" contenteditable="true" style="outline:none; font-family:inherit;">Lun</div>
           <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; font-family:inherit;">01 Gen</div>
-          <div class="open-from-to" id="s-from-to" contenteditable="true" style="outline:none; font-family:inherit;">Attività</div>
-          <div class="open-km" id="s-km" contenteditable="true" style="outline:none; font-family:inherit;">85 km · ↑500m</div>
+          <div class="open-from-to" id="s-from-to" contenteditable="true" style="outline:none; font-family:inherit; display:none;"></div>
+          <div class="open-km" id="s-km" contenteditable="true" style="outline:none; font-family:inherit; display:none;"></div>
         </div>
         <div id="s-hashtag" contenteditable="true" style="position:absolute; bottom:0.5rem; right:0.8rem; z-index:3; cursor:grab; outline:none; font-family:'IBM Plex Mono',monospace; font-size:0.55rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.4);">#DannyBag</div>
 
@@ -956,8 +956,8 @@ function applyDailyTappa(tappa, actName) {
 
   if (label) label.textContent = dayOfWeek;
   if (dayEl)  dayEl.textContent = dateStr;
-  if (fromEl) fromEl.textContent = name;
-  if (kmEl)   kmEl.textContent = `${km} km · ↑${dis}m`;
+  if (fromEl) { fromEl.textContent = name; fromEl.style.display = ''; }
+  if (kmEl)   { kmEl.textContent = `${km} km · ↑${dis}m`; kmEl.style.display = ''; }
   if (badge)  badge.textContent = dateStr;
 
   // Extra slides
@@ -2033,10 +2033,8 @@ function debugSession() {
 }
 
 function resetData() {
-  // Cancella traccia salvata
   localStorage.removeItem('daily-tappa');
 
-  // Aggiorna data a oggi
   var GIORNI = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
   var MESI   = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
   var now    = new Date();
@@ -2048,11 +2046,10 @@ function resetData() {
 
   if (dayEl)  dayEl.textContent  = GIORNI[now.getDay()];
   if (numEl)  numEl.textContent  = String(now.getDate()).padStart(2,'0') + ' ' + MESI[now.getMonth()];
-  if (fromEl) fromEl.textContent = 'Attività';
-  if (kmEl)   kmEl.textContent   = '— km · ↑—m';
-  if (msg)    msg.textContent    = 'Reset effettuato · Seleziona traccia da Strava';
+  if (fromEl) { fromEl.textContent = ''; fromEl.style.display = 'none'; }
+  if (kmEl)   { kmEl.textContent   = ''; kmEl.style.display   = 'none'; }
+  if (msg)    msg.textContent    = 'Seleziona traccia da Strava';
 
-  // Chiudi picker se aperto
   var picker = document.getElementById('strava-picker');
   if (picker) picker.style.display = 'none';
 }
