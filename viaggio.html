@@ -297,16 +297,11 @@ function render(tappe) {
     totDis += t.dislivello||0;
     let dateStr = t.day ? 'Tappa '+t.day : '—';
     if(t.date){ const d=new Date(t.date); dateStr=String(d.getDate()).padStart(2,'0')+' '+MESI[d.getMonth()]; }
-    const name  = t.name || '';
-    const route = (t.from&&t.to) ? t.from+' → '+t.to : (t.from||'');
+    const label = (t.from&&t.to) ? t.from+' → '+t.to : (t.name || t.from || '—');
     return `<div class="tappa-row">
       <span class="tappa-num">${i+1}</span>
       <span class="tappa-date">${dateStr}</span>
-      <span class="tappa-info">
-        ${name ? `<span>${name}</span><span class="sep">·</span>` : ''}
-        <span class="route">${route}</span>
-      </span>
-      <span class="tappa-km" style="margin-left:0.2rem;">${t.km||0} km</span><span class="sep" style="color:rgba(255,248,244,0.2); margin:0 0.2rem;">·</span><span class="tappa-dis">↑${t.dislivello||0} m</span>
+      <span class="tappa-info">${label} <span style="font-family:var(--mono);font-size:0.7rem;font-weight:400;color:rgba(255,248,244,0.5);margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0} m</span></span>
     </div>`;
   }).join('');
 
