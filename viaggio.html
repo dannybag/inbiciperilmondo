@@ -159,9 +159,14 @@
 
 <div id="map"></div>
 
+<div id="debug-bar" style="background:#111; border-top:1px solid rgba(240,90,40,0.2); padding:0.5rem 5vw; font-family:IBM Plex Mono,monospace; font-size:0.55rem; color:rgba(255,248,244,0.3); display:flex; gap:1.5rem; flex-wrap:wrap;">
+  <span id="dbg-tappe">tappe: —</span>
+  <span id="dbg-polyline">polyline: —</span>
+  <span id="dbg-first">prima tappa: —</span>
+</div>
 <div class="tappe-section">
   <div class="section-label">Tappe percorse</div>
-  <div style="font-family:var(--mono); font-size:0.5rem; letter-spacing:0.1em; color:rgba(255,248,244,0.2); margin-bottom:1rem; text-transform:uppercase;">Mappa: ▬ traccia GPS reale &nbsp;·&nbsp; ╌ percorso approssimativo (reinserisci da TAP per la traccia reale)</div>
+
   <div id="tappe-list"><div class="empty">Nessuna tappa ancora</div></div>
 </div>
 
@@ -256,7 +261,15 @@ async function renderMap(tappe) {
      .bindTooltip('📍 Sono qui', {permanent:false}).addTo(routeLayer);
   }
 
-  if(all.length) map.fitBounds(L.latLngBounds(all), {padding:[40,40]});
+  if(all.length) {
+    map.fitBounds(L.latLngBounds(all), {padding:[40,40]});
+  } else {
+    // Nessun dato - mostra solo Milano come punto di partenza
+    const milano = [45.4642, 9.1900];
+    map.setView(milano, 7);
+    L.marker(milano, {icon:numIcon(0,false)})
+     .bindTooltip('Milano · Punto di partenza', {sticky:true}).addTo(routeLayer);
+  }
 }
 
 // ---- RENDER ----
@@ -293,13 +306,14 @@ function render(tappe) {
         ${name ? `<span>${name}</span><span class="sep">·</span>` : ''}
         <span class="route">${route}</span>
       </span>
-      <span class="tappa-km">${t.km||0} km</span>
-      <span class="sep" style="color:rgba(255,248,244,0.2);">·</span>
-      <span class="tappa-dis">↑${t.dislivello||0} m</span>
-      <span class="tappa-tot">Tot. ${totKm} km</span>
+      <span class="tappa-km" style="margin-left:0.2rem;">${t.km||0} km</span><span class="sep" style="color:rgba(255,248,244,0.2); margin:0 0.2rem;">·</span><span class="tappa-dis">↑${t.dislivello||0} m</span>
     </div>`;
   }).join('');
 
+  // Debug
+  document.getElementById('dbg-tappe').textContent    = 'tappe: ' + tappe.length;
+  document.getElementById('dbg-polyline').textContent = 'con polyline: ' + tappe.filter(t=>t.polyline&&t.polyline.length>0).length;
+  document.getElementById('dbg-first').textContent    = tappe[0] ? 'prima: ' + (tappe[0].from||'?') + '→' + (tappe[0].to||'?') + ' poly:' + (tappe[0].polyline?.length||0) : 'nessuna';
   renderMap(tappe);  // async
 }
 
