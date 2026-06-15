@@ -61,7 +61,7 @@
 
   /* MAP */
   #map { height:50vh; width:100%; background:#0A0A0A; }
-  .leaflet-tile-pane { filter:grayscale(20%) brightness(0.8); }
+
 
   /* TAPPE */
   .tappe-section { padding:2rem 5vw; }
@@ -161,6 +161,7 @@
 
 <div class="tappe-section">
   <div class="section-label">Tappe percorse</div>
+  <div style="font-family:var(--mono); font-size:0.5rem; letter-spacing:0.1em; color:rgba(255,248,244,0.2); margin-bottom:1rem; text-transform:uppercase;">Mappa: ▬ traccia GPS reale &nbsp;·&nbsp; ╌ percorso approssimativo (reinserisci da TAP per la traccia reale)</div>
   <div id="tappe-list"><div class="empty">Nessuna tappa ancora</div></div>
 </div>
 
@@ -172,8 +173,8 @@ let map, routeLayer;
 // ---- MAP ----
 function initMap() {
   map = L.map('map').setView([44.5, 11.3], 6);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution:'© OpenStreetMap', maxZoom:18
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    attribution:'© Esri © OpenStreetMap', maxZoom:18
   }).addTo(map);
   routeLayer = L.layerGroup().addTo(map);
 }
@@ -208,7 +209,7 @@ async function geocode(city) {
 function numIcon(n, last=false) {
   return L.divIcon({
     html: last
-      ? `<div style="background:#fff;color:#F05A28;font-family:'Bebas Neue',sans-serif;font-size:0.75rem;width:1.8rem;height:1.8rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2.5px solid #F05A28;box-shadow:0 0 8px rgba(240,90,40,0.6);">📍</div>`
+      ? `<div style="background:#F05A28;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:0.5rem;font-weight:700;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #fff;box-shadow:0 0 12px rgba(240,90,40,0.8);letter-spacing:0;">QUI</div>`
       : `<div style="background:#F05A28;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:0.6rem;width:1.3rem;height:1.3rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);">${n}</div>`,
     className:'', iconSize: last?[28,28]:[21,21], iconAnchor: last?[14,14]:[10,10]
   });
@@ -229,8 +230,8 @@ async function renderMap(tappe) {
     if(t.polyline) {
       const pts = decodePolyline(t.polyline);
       if(pts.length) {
-        L.polyline(pts, {color:'#F05A28', weight:3.5, opacity: isLast?1:0.7})
-         .bindTooltip(tip, {sticky:true}).addTo(routeLayer);
+        L.polyline(pts, {color:'#F05A28', weight:4, opacity: isLast?1:0.75})
+         .bindTooltip(tip+'<br><span style="opacity:0.5;font-size:0.7em">📡 traccia GPS</span>', {sticky:true}).addTo(routeLayer);
         L.marker(pts[0], {icon:numIcon(i+1)}).addTo(routeLayer);
         all.push(...pts);
         lastPt = pts[pts.length-1];
@@ -240,8 +241,8 @@ async function renderMap(tappe) {
       const fromPt = i===0 ? await geocode(t.from) : lastPt;
       const toPt   = await geocode(t.to || t.from);
       if(fromPt && toPt) {
-        L.polyline([fromPt, toPt], {color:'#F05A28', weight:2.5, opacity:0.5, dashArray:'6,6'})
-         .bindTooltip(tip, {sticky:true}).addTo(routeLayer);
+        L.polyline([fromPt, toPt], {color:'rgba(240,90,40,0.4)', weight:2, opacity:0.6, dashArray:'8,8'})
+         .bindTooltip(tip+'<br><span style="opacity:0.5;font-size:0.7em">～ percorso approssimativo</span>', {sticky:true}).addTo(routeLayer);
         L.marker(fromPt, {icon:numIcon(i+1)}).addTo(routeLayer);
         all.push(fromPt, toPt);
         lastPt = toPt;
