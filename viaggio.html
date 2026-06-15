@@ -385,7 +385,7 @@
 // ---- CONFIG ----
 const GH_OWNER = 'dannybag';
 const GH_REPO  = 'inbiciperilmondo';
-const GH_FILE  = 'tappe.json';
+const GH_FILE  = 'data.json';
 const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
 const TOTAL_KM  = 1700;
 
@@ -514,8 +514,11 @@ async function loadFromGitHub() {
     const d = await res.json();
     ghSha = d.sha;
     const raw = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
-    tappe = raw.tappe || [];
-    if (raw.updated) document.getElementById('last-update').textContent = 'Aggiornato: ' + new Date(raw.updated).toLocaleString('it-IT');
+    tappe = (raw.tappe || []).filter(t => t.km > 0);
+    if (tappe.length) {
+      const last = tappe[tappe.length-1];
+      document.getElementById('last-update').textContent = 'Ultima tappa: ' + (last.name || last.from || '') + ' · ' + new Date(last.date || '').toLocaleDateString('it-IT');
+    }
     render();
   } catch(e) { console.error(e); render(); }
 }
@@ -523,7 +526,18 @@ async function loadFromGitHub() {
 async function saveToGitHub() {
   const token = getToken();
   if (!token) { alert('Inserisci il token GitHub prima di salvare.'); openPanel('token-panel'); return; }
-  const payload = { tappe, updated: new Date().toISOString() };
+  // Leggi struttura esistente e aggiorna solo tappe[]
+  let existing = { fundraising: { raised: 0, goal: 1700 }, tappa: {}, tappe: [] };
+  try {
+    const res0 = await fetch(GH_API + '?t=' + Date.now(), { headers: { Authorization: `token ${token}` }, cache: 'no-store' });
+    if (res0.ok) {
+      const d0 = await res0.json();
+      ghSha = d0.sha;
+      existing = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d0.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
+    }
+  } catch(e) {}
+  existing.tappe = tappe;
+  const payload = existing;
   const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
   const body = { message: 'Aggiorna tappe ' + new Date().toISOString().slice(0,10), content };
   if (ghSha) body.sha = ghSha;

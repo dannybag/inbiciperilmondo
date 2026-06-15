@@ -768,7 +768,8 @@
   <!-- SEZIONE 1: Tappa del giorno -->
   <div class="live-section">
     <div class="live-label">Tappa del giorno</div>
-    <div class="live-row">
+    <div class="live-row" style="flex-wrap:wrap; gap:0.3rem 0.6rem;">
+      <span class="live-route" id="tappa-name" style="color:rgba(255,248,244,0.7); font-weight:600;"></span>
       <span class="live-route" id="tappa-route">—</span>
       <span class="live-sep">·</span>
       <span class="live-stat"><span id="tappa-km">—</span></span>
@@ -1294,6 +1295,7 @@
     }
     if (el('tappa-section')) el('tappa-section').style.display = 'block';
     if (el('tappa-day-num')) el('tappa-day-num').textContent = t.day;
+    if (el('tappa-name'))    el('tappa-name').textContent    = t.name || '';
     if (el('tappa-route'))   el('tappa-route').textContent   = t.from && t.to ? t.from + ' → ' + t.to : '';
     if (el('tappa-km'))      el('tappa-km').textContent      = t.km + ' km';
     if (el('tappa-dis'))     el('tappa-dis').textContent     = '↑' + t.dislivello + ' m';
