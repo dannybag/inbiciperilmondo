@@ -687,7 +687,7 @@
       <div class="slide-open">
 
         <!-- FOTO OPZIONALE - full frame -->
-        <div id="openPhotoArea" style="position:absolute; top:2.5rem; bottom:4.5rem; left:0.4rem; right:0.4rem; overflow:hidden; border-radius:4px;">
+        <div id="openPhotoArea" style="position:absolute; top:2rem; bottom:4.5rem; left:0.4rem; right:0.4rem; overflow:hidden; border-radius:4px;">
           <input type="file" id="openPhotoInput" accept="image/*" style="display:none" onchange="loadOpenPhoto(this)">
           <div id="openPhotoHint" onclick="document.getElementById('openPhotoInput').click()" style="position:absolute; inset:0; cursor:pointer; display:flex; align-items:center; justify-content:center;">
             <span style="font-family:'IBM Plex Mono',monospace; font-size:0.45rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.2);">📷 tocca per foto</span>
@@ -1027,6 +1027,7 @@ function loadDefaultOpenPhoto() {
   img.style.cssText = 'display:block;position:absolute;top:50%;left:50%;max-width:none;width:auto;height:auto;cursor:grab;';
   if (hint) hint.style.display = 'none';
   if (controls) controls.style.display = 'flex';
+  setupOpenPhotoDrag();
 }
 
 // ---- GITHUB CONFIG (solo per WBR, non usato in daily) ----
@@ -1236,6 +1237,39 @@ function removeOpenPhoto() {
   openScale = 1; openX = 0; openY = 0; openRot = 0;
 }
 
+function setupOpenPhotoDrag() {
+  const img = document.getElementById('openPhotoPreview');
+  if (!img || img._dragSetup) return;
+  img._dragSetup = true;
+
+  var _prevT = null;
+  img.addEventListener('touchstart', (ev) => {
+    _prevT = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+  }, {passive:true});
+  img.addEventListener('touchmove', (ev) => {
+    ev.preventDefault();
+    var cur = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+    if (!_prevT) { _prevT=cur; return; }
+    if (cur.length===1 && _prevT.length===1) {
+      openX+=cur[0].x-_prevT[0].x; openY+=cur[0].y-_prevT[0].y;
+    } else if (cur.length>=2 && _prevT.length>=2) {
+      var dP=Math.hypot(_prevT[1].x-_prevT[0].x,_prevT[1].y-_prevT[0].y)||1;
+      var dC=Math.hypot(cur[1].x-cur[0].x,cur[1].y-cur[0].y);
+      var aP=Math.atan2(_prevT[1].y-_prevT[0].y,_prevT[1].x-_prevT[0].x)*180/Math.PI;
+      var aC=Math.atan2(cur[1].y-cur[0].y,cur[1].x-cur[0].x)*180/Math.PI;
+      openScale=Math.max(0.1,Math.min(15,openScale*dC/dP));
+      openRot+=aC-aP;
+      openX+=(cur[0].x+cur[1].x)/2-(_prevT[0].x+_prevT[1].x)/2;
+      openY+=(cur[0].y+cur[1].y)/2-(_prevT[0].y+_prevT[1].y)/2;
+    }
+    _prevT=cur; applyOpenTransform();
+  }, {passive:false});
+  img.addEventListener('touchend', () => { _prevT=null; });
+  img.addEventListener('mousedown', (ev) => { openDragStart={x:ev.clientX-openX,y:ev.clientY-openY}; img.style.cursor='grabbing'; });
+  document.addEventListener('mousemove', (ev) => { if(!openDragStart)return; openX=ev.clientX-openDragStart.x; openY=ev.clientY-openDragStart.y; applyOpenTransform(); });
+  document.addEventListener('mouseup', () => { openDragStart=null; if(document.getElementById('openPhotoPreview')) document.getElementById('openPhotoPreview').style.cursor='grab'; });
+}
+
 function loadOpenPhoto(input) {
   if (!input.files || !input.files[0]) return;
   const reader = new FileReader();
@@ -1247,22 +1281,15 @@ function loadOpenPhoto(input) {
     img.onload = () => {
       const cw = container.offsetWidth || 270;
       const ch = container.offsetHeight || 160;
-      openScale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
-      openX = 0; openY = 0;
+      openScale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight);
+      openX = 0; openY = 0; openRot = 0;
       applyOpenTransform();
     };
     img.src = e.target.result;
     img.style.cssText = 'display:block; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;';
     hint.style.display = 'none';
     controls.style.display = 'flex';
-    // Touch
-    img.addEventListener('touchstart', (ev) => { if(ev.touches.length===1) openDragStart={x:ev.touches[0].clientX-openX,y:ev.touches[0].clientY-openY}; }, {passive:true});
-    img.addEventListener('touchmove', (ev) => { ev.preventDefault(); if(ev.touches.length===1&&openDragStart){openX=ev.touches[0].clientX-openDragStart.x;openY=ev.touches[0].clientY-openDragStart.y;applyOpenTransform();} }, {passive:false});
-    img.addEventListener('touchend', () => { openDragStart=null; });
-    // Mouse
-    img.addEventListener('mousedown', (ev) => { openDragStart={x:ev.clientX-openX,y:ev.clientY-openY}; img.style.cursor='grabbing'; });
-    document.addEventListener('mousemove', (ev) => { if(!openDragStart)return; openX=ev.clientX-openDragStart.x; openY=ev.clientY-openDragStart.y; applyOpenTransform(); });
-    document.addEventListener('mouseup', () => { openDragStart=null; if(document.getElementById('openPhotoPreview')) document.getElementById('openPhotoPreview').style.cursor='grab'; });
+    setupOpenPhotoDrag();
   };
   reader.readAsDataURL(input.files[0]);
 }
