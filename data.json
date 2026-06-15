@@ -4,24 +4,7 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 1,
-    "from": "Milano",
-    "to": "Siziano",
-    "km": 20,
-    "dislivello": 36,
-    "updated": "2026-06-15T22:12:44.670Z",
-    "totKm": 20,
-    "totDis": 36,
-    "tappe": 1
+    "day": 0
   },
-  "tappe": [
-    {
-      "day": 1,
-      "from": "Milano",
-      "to": "Siziano",
-      "km": 20,
-      "dislivello": 36,
-      "updated": "2026-06-15T22:12:44.670Z"
-    }
-  ]
+  "tappe": []
 }
