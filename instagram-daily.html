@@ -576,6 +576,9 @@
     style="background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 2rem; border:none; border-radius:3px; cursor:pointer;">
     ⬇ Scarica slides
   </button>
+  <button onclick="addHashtag()" style="background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 1.2rem; border:2px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;">
+    # Hashtag
+  </button>
   <button onclick="addPhotoSlide()"
     style="background:transparent; color:#F05A28; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 1.5rem; border:2px solid #F05A28; border-radius:3px; cursor:pointer;">
     + Slide foto
@@ -699,7 +702,7 @@
         </div>
 
         <!-- TOP OVERLAY: handle -->
-        <div id="s-open-tag" style="position:absolute; top:0.8rem; left:1.2rem; z-index:2; font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:800; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange);">@dannybag</div>
+        <div id="s-open-tag" contenteditable="true" style="position:absolute; top:0.8rem; left:1.2rem; z-index:2; font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:800; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); cursor:grab; outline:none;">@dannybag</div>
 
         <!-- Gruppo info slide 1 - draggabile in un sol colpo -->
         <div id="s-info-group" style="position:absolute; bottom:2rem; left:1.2rem; z-index:3; cursor:grab; padding:1rem 1rem 0.8rem; background:linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 100%); border-radius:4px;">
@@ -739,7 +742,7 @@
         </div>
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge">01 Gen</div>
-          <div class="media-tag" id="s-media-tag" style="color:var(--orange);">@dannybag</div>
+          <div class="media-tag" id="s-media-tag" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none;">@dannybag</div>
         </div>
         <!-- Caption trascinabile + bottone frase -->
         <div class="media-caption" id="s-caption" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare">Ogni km conta.</div>
@@ -959,6 +962,7 @@ function applyDailyTappa(tappa, actName) {
   if (fromEl) { fromEl.textContent = name; fromEl.style.display = ''; }
   if (kmEl)   { kmEl.textContent = `${km} km · ↑${dis}m`; kmEl.style.display = ''; }
   if (badge)  badge.textContent = dateStr;
+  document.querySelectorAll('[id^="s-badge-extra"]').forEach(function(el) { el.textContent = dateStr; });
 
   // Extra slides
   document.querySelectorAll('[id^="s-badge-extra"]').forEach(el => el.textContent = dateStr);
@@ -1359,12 +1363,40 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cap) makeDraggable(cap);
   setTimeout(attachAutoSave, 300);
   setTimeout(loadDefaultOpenPhoto, 200);
-  // Gruppo info draggabile come unità singola
+  // Gruppo info draggabile
   var infoGroup = document.getElementById('s-info-group');
   if (infoGroup) makeDraggable(infoGroup);
-  // Hashtag draggabile separatamente
+  // Handle @dannybag slide 1 - draggabile
+  var openTag = document.getElementById('s-open-tag');
+  if (openTag) makeDraggable(openTag);
+  // Media tag slide 2 - draggabile
+  var mediaTag = document.getElementById('s-media-tag');
+  if (mediaTag) makeDraggable(mediaTag);
+  // Hashtag slide 1 - draggabile
   var htag = document.getElementById('s-hashtag');
   if (htag) makeDraggable(htag);
+
+  // Sync handle: quando modifichi su una slide, aggiorna tutte le altre
+  function syncHandles(srcId) {
+    var src = document.getElementById(srcId);
+    if (!src) return;
+    src.addEventListener('input', function() {
+      var val = src.textContent;
+      var targets = ['s-open-tag','s-media-tag'];
+      targets.forEach(function(id) {
+        if (id !== srcId) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = val;
+        }
+      });
+      // Extra slides
+      document.querySelectorAll('[id^="s-media-tag-extra"]').forEach(function(el) {
+        el.textContent = val;
+      });
+    });
+  }
+  syncHandles('s-open-tag');
+  syncHandles('s-media-tag');
 });
 
 // ---- PANNELLO STILE ----
@@ -2032,6 +2064,25 @@ function debugSession() {
   } catch(e) { showToast('Errore: '+e.message,'#f44',5000); }
 }
 
+function addHashtag() {
+  var text = prompt('Testo hashtag:', '#DannyBag');
+  if (!text) return;
+  var slideIds = ['wrapStory','wrapStory2'];
+  for (var i=1; i<=extraSlideCount; i++) slideIds.push('wrapExtra'+i);
+  slideIds.forEach(function(slideId) {
+    var wrap = document.getElementById(slideId);
+    if (!wrap) return;
+    var frame = wrap.querySelector('.frame-story');
+    if (!frame) return;
+    var el = document.createElement('div');
+    el.contentEditable = 'true';
+    el.textContent = text;
+    el.style.cssText = 'position:absolute; bottom:1.5rem; right:0.8rem; z-index:5; cursor:grab; outline:none; font-family:IBM Plex Mono,monospace; font-size:0.55rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.4);';
+    var slide = frame.querySelector('.slide-open, .slide-media');
+    if (slide) { slide.appendChild(el); makeDraggable(el); }
+  });
+}
+
 function resetData() {
   localStorage.removeItem('daily-tappa');
 
@@ -2044,11 +2095,17 @@ function resetData() {
   var kmEl   = document.getElementById('s-km');
   var msg    = document.getElementById('strava-msg');
 
+  var dateStr = String(now.getDate()).padStart(2,'0') + ' ' + MESI[now.getMonth()];
   if (dayEl)  dayEl.textContent  = GIORNI[now.getDay()];
-  if (numEl)  numEl.textContent  = String(now.getDate()).padStart(2,'0') + ' ' + MESI[now.getMonth()];
+  if (numEl)  numEl.textContent  = dateStr;
   if (fromEl) { fromEl.textContent = ''; fromEl.style.display = 'none'; }
   if (kmEl)   { kmEl.textContent   = ''; kmEl.style.display   = 'none'; }
   if (msg)    msg.textContent    = 'Seleziona traccia da Strava';
+
+  // Aggiorna badge data su TUTTE le slide
+  var badge = document.getElementById('s-badge');
+  if (badge) badge.textContent = dateStr;
+  document.querySelectorAll('[id^="s-badge-extra"]').forEach(function(el) { el.textContent = dateStr; });
 
   var picker = document.getElementById('strava-picker');
   if (picker) picker.style.display = 'none';
