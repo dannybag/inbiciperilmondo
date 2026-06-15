@@ -1376,27 +1376,30 @@ document.addEventListener('DOMContentLoaded', () => {
   var htag = document.getElementById('s-hashtag');
   if (htag) makeDraggable(htag);
 
-  // Sync handle: quando modifichi su una slide, aggiorna tutte le altre
+  // Rendi draggabili gli handle delle slide
+  var h2 = document.getElementById('s-handle-2');
+  if (h2) makeDraggable(h2);
+
+  // Sync tutti gli handle (open-tag, media-tag, handle-2, handle-extraN)
   function syncHandles(srcId) {
     var src = document.getElementById(srcId);
     if (!src) return;
     src.addEventListener('input', function() {
       var val = src.textContent;
-      var targets = ['s-open-tag','s-media-tag'];
-      targets.forEach(function(id) {
+      ['s-open-tag','s-media-tag','s-handle-2'].forEach(function(id) {
         if (id !== srcId) {
           var el = document.getElementById(id);
           if (el) el.textContent = val;
         }
       });
-      // Extra slides
-      document.querySelectorAll('[id^="s-media-tag-extra"]').forEach(function(el) {
+      document.querySelectorAll('[id^="s-media-tag-extra"],[id^="s-handle-extra"]').forEach(function(el) {
         el.textContent = val;
       });
     });
   }
   syncHandles('s-open-tag');
   syncHandles('s-media-tag');
+  syncHandles('s-handle-2');
 });
 
 // ---- PANNELLO STILE ----
@@ -1721,7 +1724,8 @@ function addPhotoSlide() {
         </div>
         <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
-          <button onclick="openPhrasePanel('s-caption-extra${extraSlideCount}'); styleTargetId='s-caption-extra${extraSlideCount}';" style="background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
+          <div class="slide-handle" id="s-handle-extra${extraSlideCount}" contenteditable="true" style="position:absolute; bottom:0.5rem; right:0.8rem; z-index:5; cursor:grab; outline:none; font-family:'IBM Plex Mono',monospace; font-size:0.55rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.35);">@dannybag</div>
+        <button onclick="openPhrasePanel('s-caption-extra${extraSlideCount}'); styleTargetId='s-caption-extra${extraSlideCount}';" style="background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
           <button onclick="styleTargetId='s-caption-extra${extraSlideCount}'; openStylePanel('s-caption-extra${extraSlideCount}','wrapExtra${extraSlideCount}');" style="background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
         </div>
         <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
@@ -1738,6 +1742,8 @@ function addPhotoSlide() {
   setTimeout(() => {
     const cap = document.getElementById('s-caption-extra' + extraSlideCount);
     if (cap) makeDraggable(cap);
+    var exH = document.getElementById('s-handle-extra'+extraSlideCount);
+    if (exH) { makeDraggable(exH); syncHandles('s-handle-extra'+extraSlideCount); }
     attachAutoSave();
     markDirty();
   }, 100);
