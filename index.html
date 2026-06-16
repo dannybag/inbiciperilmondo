@@ -788,11 +788,44 @@
       <span class="live-stat"><span id="cnt-dis">—</span></span>
     </div>
     <div style="margin-top:0.8rem;">
-      <a href="viaggio.html" target="_blank" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); text-decoration:none; border:1px solid rgba(240,90,40,0.4); padding:0.4rem 1rem; border-radius:3px; white-space:nowrap;">🗺 Guarda il Viaggio →</a>
+      <button onclick="toggleViaggio()" id="viaggio-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:transparent; border:1px solid rgba(240,90,40,0.4); padding:0.4rem 1rem; border-radius:3px; cursor:pointer; white-space:nowrap;">🗺 Guarda il Viaggio <span id="viaggio-arrow">↓</span></button>
     </div>
   </div>
 
 </div>
+
+<!-- IL VIAGGIO - sezione espandibile -->
+<div id="viaggio-section" style="display:none; overflow:hidden;">
+  <link rel="stylesheet" id="leaflet-css" href="">
+  <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 1rem;">
+    <!-- Stats -->
+    <div style="display:flex; gap:2rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+      <div><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--orange); line-height:1;" id="v-km">0</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Km percorsi</div></div>
+      <div><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--orange); line-height:1;" id="v-dis">0</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Dislivello ↑ m</div></div>
+      <div style="margin-left:auto;"><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:rgba(255,248,244,0.3); line-height:1;" id="v-pct">0%</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Del percorso</div></div>
+    </div>
+    <!-- Progress -->
+    <div style="background:#2A2A2A; height:6px; border-radius:3px; margin-bottom:0.4rem; overflow:hidden;"><div id="v-prog" style="height:100%; background:var(--orange); width:0%; transition:width 1s;"></div></div>
+    <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:rgba(255,248,244,0.3); margin-bottom:1.5rem;"><span>Milano</span><span id="v-prog-label"></span><span>Palermo</span></div>
+    <!-- Map + List -->
+    <div id="v-map-wrap" style="display:flex; gap:0;">
+      <div id="v-map" style="width:50%; height:45vh; background:#111; flex-shrink:0;"></div>
+      <div style="width:50%; height:45vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(240,90,40,0.15);">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:0.8rem;">Tappe percorse</div>
+        <div id="v-list"></div>
+      </div>
+    </div>
+    <!-- Mobile: stack -->
+    <style>
+      @media(max-width:768px) {
+        #v-map-wrap { flex-direction:column !important; }
+        #v-map { width:100% !important; height:35vh !important; }
+        #v-map-wrap > div:last-child { width:100% !important; height:auto !important; border-left:none !important; border-top:1px solid rgba(240,90,40,0.15); }
+      }
+    </style>
+  </div>
+</div>
+
 
 <!-- PROGRESS BAR -->
 <div class="progress-section">
@@ -1252,6 +1285,109 @@
       openAdm1();
     }
   }
+
+  // ---- IL VIAGGIO INLINE ----
+  let _viaggioMap = null;
+  let _viaggioOpen = false;
+
+  function decodePolyline(enc) {
+    const pts=[]; let i=0,lat=0,lng=0;
+    while(i<enc.length){
+      let b,s=0,r=0; do{b=enc.charCodeAt(i++)-63;r|=(b&0x1f)<<s;s+=5;}while(b>=0x20);
+      lat+=(r&1)?~(r>>1):(r>>1); s=0;r=0;
+      do{b=enc.charCodeAt(i++)-63;r|=(b&0x1f)<<s;s+=5;}while(b>=0x20);
+      lng+=(r&1)?~(r>>1):(r>>1); pts.push([lat/1e5,lng/1e5]);
+    }
+    return pts;
+  }
+
+  async function geocodeCity(city) {
+    if(!city) return null;
+    try {
+      const r = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city+', Italy')}&format=json&limit=1`);
+      const d = await r.json();
+      if(d&&d[0]) return [parseFloat(d[0].lat),parseFloat(d[0].lon)];
+    } catch(e){}
+    return null;
+  }
+
+  async function renderViaggioMap(tappe) {
+    if(_viaggioMap) { _viaggioMap.remove(); _viaggioMap=null; }
+    _viaggioMap = L.map('v-map').setView([44.5,11.3],6);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{
+      attribution:'© Esri', maxZoom:18
+    }).addTo(_viaggioMap);
+    const layer = L.layerGroup().addTo(_viaggioMap);
+    const all=[]; let lastPt=null;
+    for(let i=0;i<tappe.length;i++){
+      const t=tappe[i];
+      const tip=`<b>${i+1}.</b> ${t.from||''} → ${t.to||''}<br>${t.km} km · ↑${t.dislivello||0}m`;
+      if(t.polyline){
+        const pts=decodePolyline(t.polyline);
+        if(pts.length){
+          L.polyline(pts,{color:'#F05A28',weight:4,opacity:i===tappe.length-1?1:0.75}).bindTooltip(tip,{sticky:true}).addTo(layer);
+          L.marker(pts[0],{icon:L.divIcon({html:`<div style="background:#F05A28;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:0.6rem;width:1.2rem;height:1.2rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1.5px solid #fff;">${i+1}</div>`,className:'',iconSize:[20,20],iconAnchor:[10,10]})}).addTo(layer);
+          all.push(...pts); lastPt=pts[pts.length-1];
+        }
+      } else {
+        const fp = i===0 ? await geocodeCity(t.from) : lastPt;
+        const tp = await geocodeCity(t.to||t.from);
+        if(fp&&tp){ L.polyline([fp,tp],{color:'#F05A28',weight:2,opacity:0.5,dashArray:'8,8'}).bindTooltip(tip,{sticky:true}).addTo(layer); all.push(fp,tp); lastPt=tp; }
+      }
+    }
+    if(lastPt) L.marker(lastPt,{icon:L.divIcon({html:`<div style="background:#F05A28;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:0.45rem;font-weight:700;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #fff;box-shadow:0 0 10px rgba(240,90,40,0.8);">QUI</div>`,className:'',iconSize:[32,32],iconAnchor:[16,16]}),zIndexOffset:1000}).addTo(layer);
+    if(all.length) _viaggioMap.fitBounds(L.latLngBounds(all),{padding:[30,30]});
+  }
+
+  function renderViaggioList(tappe) {
+    const list = document.getElementById('v-list');
+    const MESI=['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+    if(!tappe.length){ list.innerHTML='<div style="font-family:var(--mono);font-size:0.6rem;color:rgba(255,255,255,0.2);text-transform:uppercase;letter-spacing:0.1em;">Nessuna tappa ancora</div>'; return; }
+    list.innerHTML = tappe.map((t,i)=>{
+      const date = t.date ? (d=>String(d.getDate()).padStart(2,'0')+' '+MESI[d.getMonth()])(new Date(t.date)) : (t.day?'Tappa '+t.day:'—');
+      const route = (t.from&&t.to)?t.from+' → '+t.to:(t.from||'—');
+      return `<div style="display:flex;align-items:baseline;gap:0.6rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);flex-wrap:wrap;">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--orange);min-width:1.5rem;">${i+1}</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:rgba(255,255,255,0.35);min-width:3.5rem;">${date}</span>
+        <span style="flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:600;">${route} <span style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;font-weight:400;color:rgba(255,255,255,0.45);">${t.km||0} km · ↑${t.dislivello||0} m</span></span>
+      </div>`;
+    }).join('');
+  }
+
+  function renderViaggioStats(tappe) {
+    const km  = tappe.reduce((s,t)=>s+(t.km||0),0);
+    const dis = tappe.reduce((s,t)=>s+(t.dislivello||0),0);
+    const pct = Math.min(100,Math.round(km/1700*100));
+    document.getElementById('v-km').textContent  = km.toLocaleString('it-IT');
+    document.getElementById('v-dis').textContent = dis.toLocaleString('it-IT');
+    document.getElementById('v-pct').textContent = pct+'%';
+    document.getElementById('v-prog').style.width = pct+'%';
+    document.getElementById('v-prog-label').textContent = pct>0?km+' / 1.700 km':'';
+  }
+
+  async function openViaggio() {
+    const tappe = (_tappeList||[]).filter(t=>t.km>0);
+    renderViaggioStats(tappe);
+    renderViaggioList(tappe);
+    // Load Leaflet if not yet loaded
+    if(!window.L) {
+      await new Promise(res=>{
+        const css=document.createElement('link'); css.rel='stylesheet'; css.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'; document.head.appendChild(css);
+        const s=document.createElement('script'); s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'; s.onload=res; document.head.appendChild(s);
+      });
+    }
+    setTimeout(()=>renderViaggioMap(tappe),100);
+  }
+
+  function toggleViaggio() {
+    const sec = document.getElementById('viaggio-section');
+    const arrow = document.getElementById('viaggio-arrow');
+    _viaggioOpen = !_viaggioOpen;
+    sec.style.display = _viaggioOpen ? 'block' : 'none';
+    arrow.textContent = _viaggioOpen ? '↑' : '↓';
+    if(_viaggioOpen) openViaggio();
+  }
+
   handleStravaCallback();
 
   // Totali precedenti caricati da GitHub al load
