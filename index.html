@@ -1294,6 +1294,38 @@
     reader.readAsText(input.files[0]);
   }
 
+
+  async function selectMainActivity(i) {
+    const act   = window._stravaActsMain[i];
+    const token = window._stravaTokenMain;
+    const msgEl = window._stravaMsgEl;
+    const km    = Math.round(act.distance / 1000);
+    const dis   = Math.round(act.total_elevation_gain);
+    document.getElementById('tap-km').value  = km;
+    document.getElementById('tap-dis').value = dis;
+    if (msgEl) msgEl.textContent = '⏳ Carico traccia GPS...';
+    let polyline = act.map?.summary_polyline || '';
+    if (!polyline) {
+      try {
+        const det = await fetch(`https://www.strava.com/api/v3/activities/${act.id}`, { headers: { 'Authorization': `Bearer ${token}` } });
+        const d = await det.json();
+        polyline = d.map?.polyline || d.map?.summary_polyline || '';
+      } catch(e) {}
+    }
+    if (!polyline) {
+      try {
+        const str = await fetch(`https://www.strava.com/api/v3/activities/${act.id}/streams?keys=latlng&key_by_type=true`, { headers: { 'Authorization': `Bearer ${token}` } });
+        const sd = await str.json();
+        const pts = sd?.latlng?.data || [];
+        if (pts.length) polyline = encodePolyline(pts);
+      } catch(e) {}
+    }
+    window._tapStravaSelected = { name: act.name, polyline, date: act.start_date_local };
+    tapRefresh();
+    document.getElementById('strava-picker').style.display = 'none';
+    if (msgEl) msgEl.textContent = `✓ ${act.name} · ${km} km · ↑${dis}m · GPS: ${polyline.length > 0 ? '✓' : '✗'}`;
+  }
+
   async function stravaFetchLatest(msgEl) {
     if (msgEl) msgEl.textContent = 'Caricamento attività...';
     const token = await stravaGetToken();
@@ -1304,54 +1336,22 @@
     const acts = await res.json();
     if (!acts || acts.length === 0) { if (msgEl) msgEl.textContent = '✗ Nessuna attività trovata'; return; }
     if (msgEl) msgEl.textContent = '';
-    // Mostra lista attività
+    window._stravaActsMain = acts;
+    window._stravaTokenMain = token;
+    window._stravaMsgEl = msgEl;
+    // Mostra lista attività con indici
     const picker = document.getElementById('strava-picker');
-    picker.innerHTML = '';
     picker.style.display = 'block';
-    acts.forEach(act => {
+    picker.innerHTML = acts.map((act, i) => {
       const km  = Math.round(act.distance / 1000);
       const dis = Math.round(act.total_elevation_gain);
       const date = new Date(act.start_date_local).toLocaleDateString('it-IT', { day:'2-digit', month:'short' });
-      const btn = document.createElement('button');
-      btn.style.cssText = 'display:block; width:100%; text-align:left; background:#2A2A2A; border:1px solid rgba(240,90,40,0.2); color:#FFF8F4; font-family:\'Barlow\',sans-serif; font-size:0.8rem; padding:0.5rem 0.7rem; border-radius:4px; cursor:pointer; margin-bottom:0.4rem;';
-      btn.innerHTML = `<span style="color:#FC4C02; font-weight:700;">${date}</span> &nbsp;${act.name}<br><span style="font-family:\'IBM Plex Mono\',monospace; font-size:0.6rem; color:rgba(255,248,244,0.4);">${km} km · ↑${dis}m</span>`;
-      btn.onclick = async () => {
-        document.getElementById('tap-km').value  = km;
-        document.getElementById('tap-dis').value = dis;
-        if (msgEl) msgEl.textContent = `⏳ Carico traccia GPS...`;
-
-        let polyline = act.map?.summary_polyline || '';
-
-        // Se polyline vuoto prova dettaglio completo
-        if (!polyline) {
-          try {
-            const det = await fetch(`https://www.strava.com/api/v3/activities/${act.id}`, {
-              headers: { 'Authorization': `Bearer ${token}` }
-            });
-            const d = await det.json();
-            polyline = d.map?.polyline || d.map?.summary_polyline || '';
-          } catch(e) {}
-        }
-
-        // Se ancora vuoto usa streams API (bypassa privacy zone)
-        if (!polyline) {
-          try {
-            const str = await fetch(`https://www.strava.com/api/v3/activities/${act.id}/streams?keys=latlng&key_by_type=true`, {
-              headers: { 'Authorization': `Bearer ${token}` }
-            });
-            const sd = await str.json();
-            const pts = sd?.latlng?.data || [];
-            if (pts.length) polyline = encodePolyline(pts);
-          } catch(e) {}
-        }
-
-        window._tapStravaSelected = { name: act.name, polyline, date: act.start_date_local };
-        tapRefresh();
-        picker.style.display = 'none';
-        if (msgEl) msgEl.textContent = `✓ ${act.name} · ${km} km · ↑${dis}m · GPS: ${polyline.length > 0 ? '✓' : '✗ non disponibile'}`;
-      };
-      picker.appendChild(btn);
-    });
+      return `<button type="button" onclick="selectMainActivity(${i})"
+        style="display:block;width:100%;text-align:left;background:#2A2A2A;border:1px solid rgba(240,90,40,0.2);color:#FFF8F4;font-family:'Barlow',sans-serif;font-size:0.8rem;padding:0.5rem 0.7rem;border-radius:4px;cursor:pointer;margin-bottom:0.4rem;">
+        <span style="color:#FC4C02;font-weight:700;">${date}</span> &nbsp;${act.name}<br>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:rgba(255,248,244,0.4);">${km} km · ↑${dis}m</span>
+      </button>`;
+    }).join('');
   }
 
   // Gestione callback OAuth Strava
