@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 2,
-    "from": "Siziano ",
-    "to": "",
-    "km": 0,
-    "dislivello": 0,
-    "name": "Greenlands Varese 102 \"alone\"",
-    "polyline": "yopuGizgu@a~@`C_OzKqDuCaOjNuMzAaIyGeKm@uCdFuGmAmd@zSgVeAyFhKw@~j@mIvPzGkL~@sK_HfQoXcb@rFuToPnEcM{Mi]pOwCoLqCvBe@rLoE|BkCpIqKrFd@nReo@zI{CeCCRwC~OsG|BqC`Nc`@y@yCvFmU_TaRlDcDjHaK|DGtGiE~BlGfGyBlGxL`@AvD{Fl@_HzPqz@xGeAlEyHlDyP`BFpCyNrOeYpL{^YkNnHkB_Ee\\eImFdSwSmCqAyQd@oPbMuXmBiZtGgErCsAgCaBPwJsPzIfDYd@sG{EcCgQtLck@gQoi@`Et@nEwBFeRgOgQoBeThS_HpReEjZmJzPbByOoHeIEkGsT}E_TyXqDoTPmTiO_DmC`CfRaNuGqM_NyFr@g`@mOgi@}QuKyVk_@mIam@nCeCXqIeF_@cCxGfCxk@hLxg@iNoT{AuKoHcHuHiEqAnCvJnPsPA|ChFAtPtLzGdItQjBvTzEpGwBze@eEl^mZm]aElH`A|EvPvOnBpS|KxIh@l`@iDdDoA{DiMgAxFsA_BmDqb@`B_MfM}BbLwWnUw_Aed@{DsNsJ_IiHyAmG`FoJgZpDwYfCfEdWo@rGdJpBzShQCzCqQgG_CbNcMpFqWxC~@yCxDfEaCf@mFwGcLzFmOl@aLiBsBhBpBcAjMaEoEyO|@}VzXwLbB_JoInEa]yBwUoHiHcTuEbVcThCeMvEp@zCoFpInD|@mR~OnMhYKpb@|HdE_PnCxDtEiImEuNvAkI~EwBnAqTrZfFzFrNJaRvDkH_H_BiBoWyU|AyBgGqIj@wHqLeSmn@}W{VmRrHqIyAbFbk@wC|NeDzGjDzMkFUgOuf@?oHjCaCBst@xDcPo@yE_ArAzC{AzOnGpSjQ~`@ZfXfKdDHdGoQtG}@rNbJsIiHxKnGjAhFbTy@rSwYxNnMzBLe@aInDZvh@xPc@`XlC~`@bTnj@s@tJpTzRnD|[xDjEd@xG|DvA[wB`C}AdAr@vBwM`GvDxBuQl]ePlEuJrCZeAeFnDcA_A}EkJmGhHcOrB_LiD{DxC_FriAOvgBtVZkHkHaG|CaUbP{FoV_T`O_H\\iEmZ}Fur@yf@uH{XpFyCjNaQ~^wGlKjHhi@pApAsA_CaVhh@lTZ{Fhe@qK~AvS}EvKld@bkAxi@jHx]|QnAuA{CqY~^aFzSjH`PmK|_@sFnXyAjKrE|Om[|BIxBhC~BrHfp@|\\sC|O|V`gA{GjErS|g@w@`Kn_@qNlGgFnCgG`UwClEdNda@mGlOl_A`BeDnEaCdGNzOtQ`AhQn_@aH\\rDoCfL|w@d@UbN",
-    "date": "2026-06-07T08:49:01Z",
-    "updated": "2026-06-16T22:37:29.107Z",
+    "day": 1,
+    "from": "Milano",
+    "to": "Siziano ",
+    "km": 20,
+    "dislivello": 36,
+    "name": "Milano - Siziano",
+    "polyline": "ycmtGargw@Ks@BSd@iAHa@Dw@DOFI~EGzAFtBGPQ@MBaACoAB]FIHAlBEdADNE`@}@fBgDv@iBb@w@LKVEt@BJEVO`@i@\\MzAI`OInMCd@FjAj@XHTEf@_@JC|AJrJ?zAEJCRSJA`BAl@J~@h@PXVn@r@vBhCnHfBnEb@dB|CjIRp@^~BNlABr@P^ZBHPt@dD|@rDJL\\DLErA{@LC~@TPR?n@I`BQ^_A|AGPEf@Df@dA`Gf@jDhA`GHLJDd@Kp@]TADDbA|Dt@bCb@rCVz@Zv@Lx@@|@WzADz@HVPDLCp@[dAw@h@KtBv@zAf@JFFNF^NnBBTFPLLXRjBp@ZELGx@{@XObDo@tCe@hB@j@CvDq@JDHXLhCHz@HPHLNB`NaCz@Cj@Rb@`@R^v@rBf@`A^h@f@h@XLJG\\BRM|AiEFOl@SnA_Bt@q@v@g@|Ao@hD{@XQvAWJIJ[HErC[d@JLAnDo@rAg@vE{@LAd@JLAVMx@@lAQdQqCrKoB`CSJG^]ZI~@@n@KhEs@z@c@dAQt@B~Dm@~CEjFs@lCk@~@?`@Y\\OtEuAhHkArAc@hEm@`JyA~Eo@vJcBnBWjAWxF}@lDa@nDm@lA]xAm@bBeAjBwAh@Yl@O~@El@FfDhAVNd@b@jA~AVJtE?nAFzFj@t@P~ABtLbApAP|BRJ?LIPJRAnBTx@Zd@DxAd@fIfB`Ct@|HnBv@n@XBv@CxBn@fCd@rANt@X`@|@NDJCVULE\\?tEjA~AVZ@r@b@`Br@dJxErAbAjDtDj@dAlAzDt@~AbCdD~DzDb@l@\\n@Vt@Hd@fAdID|@G`BF`@FLVNb@@TOp@y@l@_@vEwAdAOt@DbARjKhClAd@`Av@jArA|FfH`EjFPb@D|@FRHNLHv@ZVVxObWz@bA`Ar@fAd@ZHhAJ`BI~@^t@CXF|CbBJ?VQN]p@aDz@gDvAmGJOJILCLBn@h@dKtK~D~DJJLBNAHIdAcCtC}FlFkL~FaMh@s@VUJCx@LZNlIbJ`GxGf@p@Vd@l@jCPZJJXHd@ETSTs@J}BLw@Tq@vAaDhN}Yf@sA`@wAVyAJeAVqEV_AX_@|C_BzKkEzSaIfEgBpC_ArBi@jH_Bl@Cn@FLEh@e@\\OvImBxAW\\FHLBPEPGL_EjEkBdAmHhCe@XWVaAhB",
+    "date": "2026-06-09T11:10:36Z",
+    "updated": "2026-06-16T08:20:41.765Z",
     "totKm": 20,
     "totDis": 36,
-    "tappe": 2
+    "tappe": 1
   },
   "tappe": [
     {
@@ -28,17 +28,6 @@
       "polyline": "ycmtGargw@Ks@BSd@iAHa@Dw@DOFI~EGzAFtBGPQ@MBaACoAB]FIHAlBEdADNE`@}@fBgDv@iBb@w@LKVEt@BJEVO`@i@\\MzAI`OInMCd@FjAj@XHTEf@_@JC|AJrJ?zAEJCRSJA`BAl@J~@h@PXVn@r@vBhCnHfBnEb@dB|CjIRp@^~BNlABr@P^ZBHPt@dD|@rDJL\\DLErA{@LC~@TPR?n@I`BQ^_A|AGPEf@Df@dA`Gf@jDhA`GHLJDd@Kp@]TADDbA|Dt@bCb@rCVz@Zv@Lx@@|@WzADz@HVPDLCp@[dAw@h@KtBv@zAf@JFFNF^NnBBTFPLLXRjBp@ZELGx@{@XObDo@tCe@hB@j@CvDq@JDHXLhCHz@HPHLNB`NaCz@Cj@Rb@`@R^v@rBf@`A^h@f@h@XLJG\\BRM|AiEFOl@SnA_Bt@q@v@g@|Ao@hD{@XQvAWJIJ[HErC[d@JLAnDo@rAg@vE{@LAd@JLAVMx@@lAQdQqCrKoB`CSJG^]ZI~@@n@KhEs@z@c@dAQt@B~Dm@~CEjFs@lCk@~@?`@Y\\OtEuAhHkArAc@hEm@`JyA~Eo@vJcBnBWjAWxF}@lDa@nDm@lA]xAm@bBeAjBwAh@Yl@O~@El@FfDhAVNd@b@jA~AVJtE?nAFzFj@t@P~ABtLbApAP|BRJ?LIPJRAnBTx@Zd@DxAd@fIfB`Ct@|HnBv@n@XBv@CxBn@fCd@rANt@X`@|@NDJCVULE\\?tEjA~AVZ@r@b@`Br@dJxErAbAjDtDj@dAlAzDt@~AbCdD~DzDb@l@\\n@Vt@Hd@fAdID|@G`BF`@FLVNb@@TOp@y@l@_@vEwAdAOt@DbARjKhClAd@`Av@jArA|FfH`EjFPb@D|@FRHNLHv@ZVVxObWz@bA`Ar@fAd@ZHhAJ`BI~@^t@CXF|CbBJ?VQN]p@aDz@gDvAmGJOJILCLBn@h@dKtK~D~DJJLBNAHIdAcCtC}FlFkL~FaMh@s@VUJCx@LZNlIbJ`GxGf@p@Vd@l@jCPZJJXHd@ETSTs@J}BLw@Tq@vAaDhN}Yf@sA`@wAVyAJeAVqEV_AX_@|C_BzKkEzSaIfEgBpC_ArBi@jH_Bl@Cn@FLEh@e@\\OvImBxAW\\FHLBPEPGL_EjEkBdAmHhCe@XWVaAhB",
       "date": "2026-06-09T11:10:36Z",
       "updated": "2026-06-16T08:20:41.765Z"
-    },
-    {
-      "day": 2,
-      "from": "Siziano ",
-      "to": "",
-      "km": 0,
-      "dislivello": 0,
-      "name": "Greenlands Varese 102 \"alone\"",
-      "polyline": "yopuGizgu@a~@`C_OzKqDuCaOjNuMzAaIyGeKm@uCdFuGmAmd@zSgVeAyFhKw@~j@mIvPzGkL~@sK_HfQoXcb@rFuToPnEcM{Mi]pOwCoLqCvBe@rLoE|BkCpIqKrFd@nReo@zI{CeCCRwC~OsG|BqC`Nc`@y@yCvFmU_TaRlDcDjHaK|DGtGiE~BlGfGyBlGxL`@AvD{Fl@_HzPqz@xGeAlEyHlDyP`BFpCyNrOeYpL{^YkNnHkB_Ee\\eImFdSwSmCqAyQd@oPbMuXmBiZtGgErCsAgCaBPwJsPzIfDYd@sG{EcCgQtLck@gQoi@`Et@nEwBFeRgOgQoBeThS_HpReEjZmJzPbByOoHeIEkGsT}E_TyXqDoTPmTiO_DmC`CfRaNuGqM_NyFr@g`@mOgi@}QuKyVk_@mIam@nCeCXqIeF_@cCxGfCxk@hLxg@iNoT{AuKoHcHuHiEqAnCvJnPsPA|ChFAtPtLzGdItQjBvTzEpGwBze@eEl^mZm]aElH`A|EvPvOnBpS|KxIh@l`@iDdDoA{DiMgAxFsA_BmDqb@`B_MfM}BbLwWnUw_Aed@{DsNsJ_IiHyAmG`FoJgZpDwYfCfEdWo@rGdJpBzShQCzCqQgG_CbNcMpFqWxC~@yCxDfEaCf@mFwGcLzFmOl@aLiBsBhBpBcAjMaEoEyO|@}VzXwLbB_JoInEa]yBwUoHiHcTuEbVcThCeMvEp@zCoFpInD|@mR~OnMhYKpb@|HdE_PnCxDtEiImEuNvAkI~EwBnAqTrZfFzFrNJaRvDkH_H_BiBoWyU|AyBgGqIj@wHqLeSmn@}W{VmRrHqIyAbFbk@wC|NeDzGjDzMkFUgOuf@?oHjCaCBst@xDcPo@yE_ArAzC{AzOnGpSjQ~`@ZfXfKdDHdGoQtG}@rNbJsIiHxKnGjAhFbTy@rSwYxNnMzBLe@aInDZvh@xPc@`XlC~`@bTnj@s@tJpTzRnD|[xDjEd@xG|DvA[wB`C}AdAr@vBwM`GvDxBuQl]ePlEuJrCZeAeFnDcA_A}EkJmGhHcOrB_LiD{DxC_FriAOvgBtVZkHkHaG|CaUbP{FoV_T`O_H\\iEmZ}Fur@yf@uH{XpFyCjNaQ~^wGlKjHhi@pApAsA_CaVhh@lTZ{Fhe@qK~AvS}EvKld@bkAxi@jHx]|QnAuA{CqY~^aFzSjH`PmK|_@sFnXyAjKrE|Om[|BIxBhC~BrHfp@|\\sC|O|V`gA{GjErS|g@w@`Kn_@qNlGgFnCgG`UwClEdNda@mGlOl_A`BeDnEaCdGNzOtQ`AhQn_@aH\\rDoCfL|w@d@UbN",
-      "date": "2026-06-07T08:49:01Z",
-      "updated": "2026-06-16T22:37:29.107Z"
     }
   ]
 }
