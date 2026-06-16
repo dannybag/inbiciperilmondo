@@ -183,6 +183,11 @@
   </div>
 </div>
 
+<div style="background:#0A0A0A; padding:0.4rem 5vw; display:flex; gap:1.5rem; font-family:IBM Plex Mono,monospace; font-size:0.52rem; color:rgba(255,248,244,0.35); border-bottom:1px solid rgba(255,255,255,0.05);">
+  <span>▬ <span style="color:#F05A28;">percorso fatto</span></span>
+  <span>╌ <span style="color:#4FC3F7;">prossima tappa</span></span>
+  <span>● <span style="color:#fff;">QUI</span></span>
+</div>
 <div id="debug-bar" style="background:#111; border-top:1px solid rgba(240,90,40,0.2); padding:0.5rem 5vw; font-family:IBM Plex Mono,monospace; font-size:0.55rem; color:rgba(255,248,244,0.3); display:flex; gap:1.5rem; flex-wrap:wrap;">
   <span id="dbg-tappe">tappe: —</span>
   <span id="dbg-polyline">polyline: —</span>
@@ -239,7 +244,7 @@ function numIcon(n, last=false) {
   });
 }
 
-async function renderMap(tappe) {
+async function renderMap(tappe, nextStage) {
   routeLayer.clearLayers();
   if(!tappe.length) return;
 
@@ -292,7 +297,7 @@ async function renderMap(tappe) {
 }
 
 // ---- RENDER ----
-function render(tappe) {
+function render(tappe, nextStage) {
   const n   = tappe.length;
   const km  = tappe.reduce((s,t)=>s+(t.km||0),0);
   const dis = tappe.reduce((s,t)=>s+(t.dislivello||0),0);
@@ -328,7 +333,7 @@ function render(tappe) {
   document.getElementById('dbg-tappe').textContent    = 'tappe: ' + tappe.length;
   document.getElementById('dbg-polyline').textContent = 'con polyline: ' + tappe.filter(t=>t.polyline&&t.polyline.length>0).length;
   document.getElementById('dbg-first').textContent    = tappe[0] ? 'prima: ' + (tappe[0].from||'?') + '→' + (tappe[0].to||'?') + ' poly:' + (tappe[0].polyline?.length||0) : 'nessuna';
-  renderMap(tappe);  // async
+  renderMap(tappe, nextStage);  // async
 }
 
 // ---- LOAD ----
@@ -341,13 +346,15 @@ async function load() {
       Uint8Array.from(atob(d.content.replace(/\n/g,'')),c=>c.charCodeAt(0))
     ));
     const tappe = (raw.tappe||[]).filter(t=>t.km>0);
+    const nextStage = raw.next_stage || null;
+    window._nextStage = nextStage;
     if(tappe.length){
       const last = tappe[tappe.length-1];
       document.getElementById('last-update').textContent =
         'Ultimo aggiornamento: '+(last.date ? new Date(last.date).toLocaleDateString('it-IT') : 'Tappa '+last.day);
     }
-    render(tappe);
-  } catch(e){ console.error(e); render([]); }
+    render(tappe, raw.next_stage||null);
+  } catch(e){ console.error(e); render([], null); }
 }
 
 initMap();

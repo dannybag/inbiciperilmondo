@@ -1143,7 +1143,20 @@
       </div>
 
 
-      <div style="display:flex; gap:1rem;">
+      <!-- PROSSIMA TAPPA -->
+      <div style="margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid rgba(240,90,40,0.2);">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.35); margin-bottom:0.7rem;">Prossima tappa</div>
+        <input type="file" id="tap-next-gpx" accept=".gpx" onchange="loadNextGPX(this)" style="display:none;">
+        <div style="display:flex; gap:0.5rem;">
+          <button onclick="stravaPickNext()" style="flex:1; background:transparent; color:rgba(240,90,40,0.7); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem; border:1px solid rgba(240,90,40,0.35); border-radius:4px; cursor:pointer;">⚡ Da Strava</button>
+          <button onclick="document.getElementById('tap-next-gpx').click()" style="flex:1; background:transparent; color:rgba(255,248,244,0.45); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem; border:1px solid rgba(255,248,244,0.2); border-radius:4px; cursor:pointer;">📂 GPX</button>
+          <button onclick="clearNextStage()" style="flex:0 0 auto; background:transparent; color:rgba(255,248,244,0.2); font-family:'IBM Plex Mono',monospace; font-size:0.65rem; padding:0.45rem 0.6rem; border:1px solid rgba(255,248,244,0.1); border-radius:4px; cursor:pointer;" title="Rimuovi prossima tappa">✕</button>
+        </div>
+        <div id="tap-next-msg" style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; color:rgba(255,248,244,0.4); margin-top:0.4rem; min-height:1rem;"></div>
+        <div id="strava-next-picker" style="display:none; max-height:180px; overflow-y:auto; margin-top:0.5rem; background:#111; border:1px solid rgba(240,90,40,0.2); border-radius:4px; padding:0.3rem;"></div>
+      </div>
+
+      <div style="display:flex; gap:1rem; margin-top:1.2rem;">
         <button onclick="tapSave()" style="flex:1; background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:none; border-radius:4px; cursor:pointer;">Salva</button>
         <button onclick="tapClose()" style="flex:1; background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">Annulla</button>
       </div>
@@ -1683,6 +1696,82 @@
     tapShowForm(null);
     document.getElementById('tap-overlay').style.display = 'flex';
   }
+
+  // ---- PROSSIMA TAPPA ----
+  var _nextStage = null;
+
+  function loadNextGPX(input) {
+    if (!input.files || !input.files[0]) return;
+    const msg = document.getElementById('tap-next-msg');
+    const reader = new FileReader();
+    reader.onload = e => {
+      const parsed = parseGPX(e.target.result);
+      if (!parsed) { msg.textContent = '✗ GPX non valido'; return; }
+      _nextStage = { name: parsed.name, polyline: encodePolylineFromPts(parsed.pts), km: parsed.km, dis: parsed.dis };
+      msg.textContent = `✓ ${parsed.name || 'prossima tappa'} · ${parsed.km} km · ↑${parsed.dis}m`;
+      input.value = '';
+    };
+    reader.readAsText(input.files[0]);
+  }
+
+  async function stravaPickNext() {
+    const msg = document.getElementById('tap-next-msg');
+    const picker = document.getElementById('strava-next-picker');
+    msg.textContent = 'Caricamento attività...';
+    const token = await stravaGetToken();
+    if (!token) { msg.textContent = '✗ Strava non connesso'; return; }
+    const res = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=40', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    const acts = await res.json();
+    if (!acts || !acts.length) { msg.textContent = '✗ Nessuna attività'; return; }
+    msg.textContent = 'Seleziona la prossima tappa';
+    picker.style.display = 'block';
+    picker.innerHTML = acts.map((a, i) => {
+      const km = Math.round(a.distance/1000);
+      const dis = Math.round(a.total_elevation_gain);
+      const date = new Date(a.start_date_local).toLocaleDateString('it-IT', {day:'2-digit',month:'short'});
+      return `<button style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.05);color:#FFF8F4;font-family:'Barlow',sans-serif;font-size:0.8rem;padding:0.45rem 0.6rem;cursor:pointer;"
+        onmouseover="this.style.background='rgba(240,90,40,0.08)'" onmouseout="this.style.background='transparent'"
+        onclick="selectNextFromStrava(${i})">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:#F05A28;">${date}</span>
+        &nbsp;${a.name}<br>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:rgba(255,255,255,0.35);">${km} km · ↑${dis}m</span>
+      </button>`;
+    }).join('');
+    window._stravaActsNext = acts;
+  }
+
+  async function selectNextFromStrava(idx) {
+    const msg = document.getElementById('tap-next-msg');
+    const picker = document.getElementById('strava-next-picker');
+    const act = window._stravaActsNext[idx];
+    msg.textContent = '⏳ Carico traccia GPS...';
+    picker.style.display = 'none';
+    const token = await stravaGetToken();
+    let polyline = act.map?.summary_polyline || '';
+    if (!polyline) {
+      try {
+        const r = await fetch(`https://www.strava.com/api/v3/activities/${act.id}/streams?keys=latlng&key_by_type=true`, { headers: { Authorization: `Bearer ${token}` } });
+        const sd = await r.json();
+        const pts = sd?.latlng?.data || [];
+        if (pts.length) polyline = encodePolyline(pts);
+      } catch(e) {}
+    }
+    _nextStage = { name: act.name, polyline, km: Math.round(act.distance/1000), dis: Math.round(act.total_elevation_gain), date: act.start_date_local };
+    msg.textContent = `✓ ${act.name} · ${_nextStage.km} km · GPS: ${polyline.length>0?'✓':'✗'}`;
+  }
+
+  async function clearNextStage() {
+    _nextStage = null;
+    document.getElementById('tap-next-msg').textContent = 'Prossima tappa rimossa';
+    // Save to GitHub
+    const data = JSON.parse(JSON.stringify(window._currentData || {}));
+    data.next_stage = null;
+    const token = localStorage.getItem('gh-token');
+    if (token) await saveToGitHub(data, token, document.getElementById('tap-msg'));
+  }
+
   function tapClose() { document.getElementById('tap-overlay').style.display = 'none'; }
 
   function tapRefresh() {
