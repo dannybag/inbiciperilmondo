@@ -1301,8 +1301,6 @@
     const msgEl = window._stravaMsgEl;
     const km    = Math.round(act.distance / 1000);
     const dis   = Math.round(act.total_elevation_gain);
-    document.getElementById('tap-km').value  = km;
-    document.getElementById('tap-dis').value = dis;
     if (msgEl) msgEl.textContent = '⏳ Carico traccia GPS...';
     let polyline = act.map?.summary_polyline || '';
     if (!polyline) {
@@ -1320,7 +1318,7 @@
         if (pts.length) polyline = encodePolyline(pts);
       } catch(e) {}
     }
-    window._tapStravaSelected = { name: act.name, polyline, date: act.start_date_local };
+    window._tapStravaSelected = { name: act.name, polyline, date: act.start_date_local, km, dis };
     tapRefresh();
     document.getElementById('strava-picker').style.display = 'none';
     if (msgEl) msgEl.textContent = `✓ ${act.name} · ${km} km · ↑${dis}m · GPS: ${polyline.length > 0 ? '✓' : '✗'}`;
@@ -1805,9 +1803,10 @@
   }
 
   async function tapSave() {
+    const sel  = window._tapStravaSelected || {};
     const day  = parseInt(document.getElementById('tap-day').value)  || 1;
-    const km   = parseInt(document.getElementById('tap-km').value)   || 0;
-    const dis  = parseInt(document.getElementById('tap-dis').value)  || 0;
+    const km   = sel.km  || parseInt(document.getElementById('tap-km').value)  || 0;
+    const dis  = sel.dis || parseInt(document.getElementById('tap-dis').value) || 0;
     const from = document.getElementById('tap-from').value || 'Milano';
     const to   = document.getElementById('tap-to').value   || '';
     const msg  = document.getElementById('tap-msg');
