@@ -1147,10 +1147,11 @@
       <div style="margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid rgba(240,90,40,0.2);">
         <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.35); margin-bottom:0.7rem;">Prossima tappa</div>
         <input type="file" id="tap-next-gpx" accept=".gpx" onchange="loadNextGPX(this)" style="display:none;">
-        <div style="display:flex; gap:0.5rem;">
-          <button onclick="stravaPickNext()" style="flex:1; background:transparent; color:rgba(240,90,40,0.7); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem; border:1px solid rgba(240,90,40,0.35); border-radius:4px; cursor:pointer;">⚡ Da Strava</button>
-          <button onclick="document.getElementById('tap-next-gpx').click()" style="flex:1; background:transparent; color:rgba(255,248,244,0.45); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem; border:1px solid rgba(255,248,244,0.2); border-radius:4px; cursor:pointer;">📂 GPX</button>
-          <button onclick="clearNextStage()" style="flex:0 0 auto; background:transparent; color:rgba(255,248,244,0.2); font-family:'IBM Plex Mono',monospace; font-size:0.65rem; padding:0.45rem 0.6rem; border:1px solid rgba(255,248,244,0.1); border-radius:4px; cursor:pointer;" title="Rimuovi prossima tappa">✕</button>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <button onclick="stravaPickNext()" style="flex:1; min-width:80px; background:transparent; color:rgba(240,90,40,0.7); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem; border:1px solid rgba(240,90,40,0.35); border-radius:4px; cursor:pointer;">⚡ Strava</button>
+          <button onclick="document.getElementById('tap-next-gpx').click()" style="flex:1; min-width:60px; background:transparent; color:rgba(255,248,244,0.45); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem; border:1px solid rgba(255,248,244,0.2); border-radius:4px; cursor:pointer;">📂 GPX</button>
+          <button onclick="saveNextStage()" style="flex:1; min-width:80px; background:rgba(79,195,247,0.15); color:#4FC3F7; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem; border:1px solid rgba(79,195,247,0.4); border-radius:4px; cursor:pointer;">💾 Salva</button>
+          <button onclick="clearNextStage()" style="flex:0 0 auto; background:transparent; color:rgba(255,248,244,0.2); font-family:'IBM Plex Mono',monospace; font-size:0.65rem; padding:0.45rem 0.6rem; border:1px solid rgba(255,248,244,0.1); border-radius:4px; cursor:pointer;" title="Rimuovi">✕</button>
         </div>
         <div id="tap-next-msg" style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; color:rgba(255,248,244,0.4); margin-top:0.4rem; min-height:1rem;"></div>
         <div id="strava-next-picker" style="display:none; max-height:180px; overflow-y:auto; margin-top:0.5rem; background:#111; border:1px solid rgba(240,90,40,0.2); border-radius:4px; padding:0.3rem;"></div>
@@ -1762,14 +1763,31 @@
     msg.textContent = `✓ ${act.name} · ${_nextStage.km} km · GPS: ${polyline.length>0?'✓':'✗'}`;
   }
 
+
+  async function saveNextStage() {
+    if (!_nextStage) { document.getElementById('tap-next-msg').textContent = '✗ Nessuna prossima tappa selezionata'; return; }
+    const token = localStorage.getItem('gh-token');
+    if (!token) { document.getElementById('tap-next-msg').textContent = '✗ Token GitHub mancante'; return; }
+    document.getElementById('tap-next-msg').textContent = 'Salvataggio...';
+    // Read current data.json and update only next_stage
+    try {
+      const res = await fetch(GH_API + '?t=' + Date.now(), {
+        headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' },
+        cache: 'no-store'
+      });
+      const d = await res.json();
+      const raw = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
+      raw.next_stage = _nextStage;
+      await saveToGitHub(raw, token, document.getElementById('tap-next-msg'));
+      document.getElementById('tap-next-msg').textContent = `✓ Prossima tappa salvata · ${_nextStage.km||0} km`;
+    } catch(e) {
+      document.getElementById('tap-next-msg').textContent = '✗ Errore: ' + e.message;
+    }
+  }
+
   async function clearNextStage() {
     _nextStage = null;
-    document.getElementById('tap-next-msg').textContent = 'Prossima tappa rimossa';
-    // Save to GitHub
-    const data = JSON.parse(JSON.stringify(window._currentData || {}));
-    data.next_stage = null;
-    const token = localStorage.getItem('gh-token');
-    if (token) await saveToGitHub(data, token, document.getElementById('tap-msg'));
+    document.getElementById('tap-next-msg').textContent = 'Rimosso - clicca 💾 Salva per confermare';
   }
 
   function tapClose() { document.getElementById('tap-overlay').style.display = 'none'; }
