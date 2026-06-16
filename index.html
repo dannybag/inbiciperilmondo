@@ -1126,7 +1126,7 @@
       </div>
       <div id="strava-picker" style="display:none; max-height:200px; overflow-y:auto; margin-bottom:0.8rem;"></div>
 
-      <div style="display:flex; gap:0.6rem; margin-bottom:1rem;">
+      <div style="display:flex; gap:0.6rem; margin-bottom:0.5rem;">
         <button onclick="stravaFetchLatest(document.getElementById('tap-msg'))"
           style="flex:1; background:#FC4C02; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.5rem; border:none; border-radius:4px; cursor:pointer;">
           ⚡ Leggi da Strava
@@ -1134,6 +1134,14 @@
         <button onclick="stravaConnect()"
           style="flex:0 0 auto; background:transparent; color:rgba(255,248,244,0.3); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; padding:0.5rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">
           Connetti
+        </button>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label style="display:block; font-family:'IBM Plex Mono',monospace; font-size:0.52rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,248,244,0.3); margin-bottom:0.4rem;">Oppure carica file GPX</label>
+        <input type="file" id="tap-gpx-input" accept=".gpx" onchange="loadGPX(this)" style="display:none;">
+        <button onclick="document.getElementById('tap-gpx-input').click()"
+          style="width:100%; background:transparent; color:rgba(255,248,244,0.45); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.5rem; border:1px solid rgba(255,248,244,0.2); border-radius:4px; cursor:pointer;">
+          📂 Carica GPX
         </button>
       </div>
 
@@ -1208,6 +1216,70 @@
       pLat = lat; pLng = lng;
     }
     return out;
+  }
+
+
+  function parseGPX(xml) {
+    const doc = new DOMParser().parseFromString(xml, 'text/xml');
+    // Nome traccia
+    const nameEl = doc.querySelector('trk > name') || doc.querySelector('name');
+    const name = nameEl ? nameEl.textContent.trim() : '';
+    // Punti GPS
+    const pts = Array.from(doc.querySelectorAll('trkpt')).map(pt => [
+      parseFloat(pt.getAttribute('lat')),
+      parseFloat(pt.getAttribute('lon'))
+    ]).filter(p => !isNaN(p[0]) && !isNaN(p[1]));
+    if (!pts.length) return null;
+    // Calcola distanza approssimativa
+    let dist = 0;
+    for (let i = 1; i < pts.length; i++) {
+      const R = 6371;
+      const dLat = (pts[i][0]-pts[i-1][0]) * Math.PI/180;
+      const dLng = (pts[i][1]-pts[i-1][1]) * Math.PI/180;
+      const a = Math.sin(dLat/2)**2 + Math.cos(pts[i-1][0]*Math.PI/180)*Math.cos(pts[i][0]*Math.PI/180)*Math.sin(dLng/2)**2;
+      dist += R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+    // Dislivello
+    const eles = Array.from(doc.querySelectorAll('ele')).map(e => parseFloat(e.textContent));
+    let dis = 0;
+    for (let i = 1; i < eles.length; i++) if (eles[i] > eles[i-1]) dis += eles[i]-eles[i-1];
+    return { name, pts, km: Math.round(dist), dis: Math.round(dis) };
+  }
+
+  function encodePolylineFromPts(pts) {
+    function enc(v) {
+      v = Math.round(v * 1e5);
+      v = v < 0 ? ~(v << 1) : (v << 1);
+      let r = '';
+      while (v >= 0x20) { r += String.fromCharCode((0x20|(v&0x1f))+63); v >>= 5; }
+      return r + String.fromCharCode(v+63);
+    }
+    let out='', pLat=0, pLng=0;
+    for (const [lat,lng] of pts) { out+=enc(lat-pLat)+enc(lng-pLng); pLat=lat; pLng=lng; }
+    return out;
+  }
+
+  function loadGPX(input) {
+    if (!input.files || !input.files[0]) return;
+    const msg = document.getElementById('tap-msg');
+    const reader = new FileReader();
+    reader.onload = e => {
+      const parsed = parseGPX(e.target.result);
+      if (!parsed) { msg.textContent = '✗ File GPX non valido o senza traccia'; return; }
+      const polyline = encodePolylineFromPts(parsed.pts);
+      window._tapStravaSelected = {
+        name:     parsed.name,
+        polyline,
+        date:     new Date().toISOString()
+      };
+      // Pre-compila km e dis
+      document.getElementById('tap-km').value  = parsed.km;
+      document.getElementById('tap-dis').value = parsed.dis;
+      tapRefresh();
+      msg.textContent = `✓ GPX: ${parsed.name || 'traccia caricata'} · ${parsed.km} km · ↑${parsed.dis}m · ${parsed.pts.length} punti GPS`;
+      input.value = '';
+    };
+    reader.readAsText(input.files[0]);
   }
 
   async function stravaFetchLatest(msgEl) {
@@ -1352,7 +1424,7 @@
       return `<div style="display:flex;align-items:center;gap:0.5rem;padding:0.55rem 0;border-bottom:1px solid rgba(255,255,255,0.05);">
         <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--orange);min-width:1.4rem;flex-shrink:0;">${i+1}</span>
         <span style="font-family:'IBM Plex Mono',monospace;font-size:0.52rem;color:rgba(255,248,244,0.5);min-width:3.2rem;flex-shrink:0;">${date}</span>
-        <span style="flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:600;color:#FFF8F4;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${route}</span>
+        <span style="flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:600;color:#FFF8F4;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.name?`<span style='font-size:0.75rem;color:rgba(255,248,244,0.5);display:block;line-height:1;'>${t.name}</span>`:''}${route}</span>
         <span style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:rgba(255,248,244,0.7);text-align:right;white-space:nowrap;min-width:3.5rem;flex-shrink:0;">${t.km||0} km</span>
         <span style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:rgba(255,248,244,0.5);text-align:right;white-space:nowrap;min-width:3.5rem;flex-shrink:0;">↑${t.dislivello||0} m</span>
       </div>`;
