@@ -809,7 +809,10 @@
     <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:rgba(255,248,244,0.3); margin-bottom:1.5rem;"><span>Milano</span><span id="v-prog-label"></span><span>Palermo</span></div>
     <!-- Map + List -->
     <div id="v-map-wrap" style="display:flex; gap:0;">
-      <div id="v-map" style="width:50%; height:45vh; background:#111; flex-shrink:0;"></div>
+      <div style="position:relative; width:50%; flex-shrink:0;" id="v-map-container">
+        <div id="v-map" style="width:100%; height:45vh; background:#111;"></div>
+        <button onclick="expandMap()" id="v-expand-btn" title="Espandi mappa" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(240,90,40,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
+      </div>
       <div style="width:50%; height:45vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(240,90,40,0.15);">
         <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:0.8rem;">Tappe percorse</div>
         <div id="v-list"></div>
@@ -1346,10 +1349,12 @@
     list.innerHTML = tappe.map((t,i)=>{
       const date = t.date ? (d=>String(d.getDate()).padStart(2,'0')+' '+MESI[d.getMonth()])(new Date(t.date)) : (t.day?'Tappa '+t.day:'—');
       const route = (t.from&&t.to)?t.from+' → '+t.to:(t.from||'—');
-      return `<div style="display:flex;align-items:baseline;gap:0.6rem;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);flex-wrap:wrap;">
-        <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--orange);min-width:1.5rem;">${i+1}</span>
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:rgba(255,255,255,0.35);min-width:3.5rem;">${date}</span>
-        <span style="flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:600;">${route} <span style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;font-weight:400;color:rgba(255,255,255,0.45);">${t.km||0} km · ↑${t.dislivello||0} m</span></span>
+      return `<div style="display:flex;align-items:center;gap:0.5rem;padding:0.55rem 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--orange);min-width:1.4rem;flex-shrink:0;">${i+1}</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.52rem;color:rgba(255,248,244,0.5);min-width:3.2rem;flex-shrink:0;">${date}</span>
+        <span style="flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:600;color:#FFF8F4;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${route}</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:rgba(255,248,244,0.7);text-align:right;white-space:nowrap;min-width:3.5rem;flex-shrink:0;">${t.km||0} km</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:rgba(255,248,244,0.5);text-align:right;white-space:nowrap;min-width:3.5rem;flex-shrink:0;">↑${t.dislivello||0} m</span>
       </div>`;
     }).join('');
   }
@@ -1377,6 +1382,28 @@
       });
     }
     setTimeout(()=>renderViaggioMap(tappe),100);
+  }
+
+  let _mapExpanded = false;
+  function expandMap() {
+    const mapEl   = document.getElementById('v-map');
+    const wrap    = document.getElementById('v-map-container');
+    const listEl  = wrap.nextElementSibling;
+    const btn     = document.getElementById('v-expand-btn');
+    _mapExpanded  = !_mapExpanded;
+    if (_mapExpanded) {
+      wrap.style.width    = '100%';
+      wrap.style.position = 'relative';
+      mapEl.style.height  = '70vh';
+      if (listEl) listEl.style.display = 'none';
+      btn.textContent = '⤡ Riduci';
+    } else {
+      wrap.style.width   = '50%';
+      mapEl.style.height = '45vh';
+      if (listEl) listEl.style.display = '';
+      btn.textContent = '⤢ Espandi';
+    }
+    setTimeout(() => _viaggioMap && _viaggioMap.invalidateSize(), 50);
   }
 
   function toggleViaggio() {
