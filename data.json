@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 2,
-    "from": "Bergamo",
-    "to": "Santini",
-    "km": 53,
-    "dislivello": 815,
-    "name": "Santini Inner Terrain Gravel",
-    "polyline": "epyuGu}_z@b@Q?mGeSqAsI|HkCtFoI}RuByAyFbFuLm]_OjHgUuQgMbFs@xAyTpA_EfDoAbElH`Gj@jBe@dFkIdBmCrFHzGaGjAoJ|Jp@bFtCr@y@i@GfB}AH{@xF}GJOzArBxBi@|CgEnDo@a@{AlEkDpAuAt@NhJe@rAkJEu@xEoAj@cCkCaAPsK}LyKzLcLh@{KjKkIbEgQaCqFyIoAEuBbD{@EaPeX_JcJkEuJkI{@uMnBF|BbBpCKzGaE~LuCvA`B`JpIxJpCxIqBjB}By@{L^sEmAaAtCyAg@jA~D[pAnR~LbHzHC|FzBtCThCq@nMhFnGhDxAiPy@ChD|B`FpC`BjBfDdExMGlH~H|J~F~PuF`GoHle@yf@pe@J`AhCzA{BWeAhAdEvHpAfL}G|BmMNoEtCgArKpBdQ{CrEgBc@_@v@fBhA|DkCpEt@kJrDcDSuD_E_C_LsB}@m\\zBwCbAiBlEiHqAmA`EdBdD]pHoAlFCqB]ZmBfN}CnAkFjJuArGeB~Ai@nH}AbCd@tBo@vFcPpN{EjAKrE_BzDeEIcEuBwH`EyLlBaEtB}AwAo@dDnBnGiAlHuDbDeChFkGrAsD`MwG\\wDaB_@lBaBX}A`CgQbFiChCgA|P}CbG{O|AeJhFgH`PiIda@|@vBtAKrAuDbAQ`BqHpEmJtA?rB~ClGnDvAQ_@gC`DoGxEeGvD@rCwMpFZbDqAz@tCzCeKjGsFBu@s@l@t@_Ac@cCeAc@n@DjAfEzNoTxLuDoAqDTcBbNy@lE}@lCcE|B_M~@{B~AdAe@nCZhA~E_AnByHrDwCjEItAsC|K_KdDwFdLyAlAsLjBaHvJ}MvJmZ~GiH|Cz@tDeClMSzHsJrMoGVeBw@{EpEaCnO@vT~Cj@f@bBdMfOsBvCmBv@xAdKZzAlE`JnDdAoCbBgAnF~A|HkA~JtApO~JhEx@vCxC`FpJhPxLvGxBZdAq@pClBBjMbIgBSjBxGj^kK`@oD`C_EfBqHfB_fACs`@`@qBi@iCB}TqKyB{B{RuAqDyHKuAa^jYgUvAyYWqDxB~DqC}N`@kDgBcBSsDqCwD|DpC^vCbCnAHvEj@yF{A_Ce@aEsBkBqDcJtBj@}CwTvLuLg@iFsEeL|FaKo@cBLyF`CcEFkEdBgDcBt@~E}LAyEaH~LxAqHKmDr@oAMuJp@w@`Cj@xA{A~DdF~A@bA{ApJrFlOwZvD_BB}@sAaAsB_G}C}RkBaW}DiCjAgBdHrDd@vCA~Mr@lE~FrMvErAhl@er@vPzTbH_NvAOl@qBpDaDhSj@DdC",
-    "date": "2026-06-13T10:25:30Z",
-    "updated": "2026-06-16T23:15:32.319Z",
-    "totKm": 73,
-    "totDis": 851,
-    "tappe": 2
+    "day": 3,
+    "from": "Santini",
+    "to": "",
+    "km": 67,
+    "dislivello": 1139,
+    "name": "Piemonte Gravel tappa 3",
+    "polyline": "a_~nGg~dp@|SwIhF}KzI{EhFuNh@hHbHlK|AzI`IfNnBnJnHcL|JlH|J~AlNdUkAsCzBu@~GtGp@`OvBfD}@pGeCxEPzErFrCrFCpQcFgFpGaCpMuIzQgE|FcGMkF|NqF`@yAbEeE`D_B~FoSh`@tCdLdAR`AzDvEtFxIpYfDpE`HpS`EhHeDkFpBxFpAnNxA|CpCbYLuDRxDT_FDk[j@wA|A?EXiCmI`AqGbCFvFlEnOnAzAbBtErYxBfFfEjBzK`O|EfC`GrH`Spf@bHxIqJd@sC|HoFzFHzMcCqEEtKzCxJoEsBjFvVlAfAaErDfEIcF|DxDc@{EhCkG{BBxKmN|PoTvo@gDlGyEfSg@dQZ~NzGbd@NfG`GnBcAbWtCE_DnA]lGdA`FdAF?jNsDr@qApWqO|GyP~OsFrImDgFgNbPoF|DyB]e@cCrAwFLiHsGg]dDfA`DlI`Ai@yAoRsDcEZ}CiBi@a@mD{Du@gHiJO}A_CGiXyQ_FaFa@wCqU{TUmCw@FEbBoEoAwIn@cFcG}DC|AaELqL`B\\vDeEdAkDmCcIjBsQgAsHeGaCuJ`CyGqLk@cKqEoCwJlCiJ{A}Hp@sGcDeCkDuMgDuFzAiD{@cFvI_LNm@mAkDx@GuAtCyD~BaJgC?qInHuHhBgCzD~@~CtA}AxBh@@pA|@]A~@bE@@sBKnAeHnIiDnBkDbMuJsIy@sG{HdJgAnCwIf@ySfHeCsAi@bEgEjEyGLoBzMuExGgIvCqItK{@fDiHbA]tBmEhEc`@lF_K^zA|LGvGpKnGvArCkBk@UpAxBy@JhCE_Au@r@hAhKg@Zt@A~@kEdB`SrPpHzJMfLsCrRnFrJEnFpHjK_A`KfEl@fOtA|EhOrG|CbF|E[iEfJpEfBuMnEI~SuBpQeG~I}E|P_HxJsGbT^zOzDr\\tNzM|AvDgMbImXb^tC~AcC~Cq@~H|Bbc@bAaIpEkHxHy@vG~@|B`Af@|Cj@`MiBnKyDfApAjHmB`Pw@kKm@Dg@nKrArOGjQmOjBWlAoAcA_ZhCm@iEgQh@mH}HwM{@iC~Ecs@rHiJe@sZnTLdHeIxH_Fe@eNlIcXx@iHjCsF`Hg^aAeZyKyMt@iKlBAfQwYbAPtQwEtDcBqBb@zDuCmGaAqIs\\zJeJk@aB{YyRat@yCiTmC_GoHm_@kAwCwA]ik@rZjAvJqX|OkEpXkDtCQvBqGtLgOtCaHrDz@lRgRpMcLg@oInAuBcLyEbBkFhIzAvGqB~AoDrLyEfIuKzFuh@~g@lJ|e@oBbRmAd@oOoH}~Aj_BoHwNiCdA}EkAfAwDbE}ASkA",
+    "date": "2026-04-12T08:00:26Z",
+    "updated": "2026-06-16T23:16:33.118Z",
+    "totKm": 140,
+    "totDis": 1990,
+    "tappe": 3
   },
   "tappe": [
     {
@@ -39,6 +39,17 @@
       "polyline": "epyuGu}_z@b@Q?mGeSqAsI|HkCtFoI}RuByAyFbFuLm]_OjHgUuQgMbFs@xAyTpA_EfDoAbElH`Gj@jBe@dFkIdBmCrFHzGaGjAoJ|Jp@bFtCr@y@i@GfB}AH{@xF}GJOzArBxBi@|CgEnDo@a@{AlEkDpAuAt@NhJe@rAkJEu@xEoAj@cCkCaAPsK}LyKzLcLh@{KjKkIbEgQaCqFyIoAEuBbD{@EaPeX_JcJkEuJkI{@uMnBF|BbBpCKzGaE~LuCvA`B`JpIxJpCxIqBjB}By@{L^sEmAaAtCyAg@jA~D[pAnR~LbHzHC|FzBtCThCq@nMhFnGhDxAiPy@ChD|B`FpC`BjBfDdExMGlH~H|J~F~PuF`GoHle@yf@pe@J`AhCzA{BWeAhAdEvHpAfL}G|BmMNoEtCgArKpBdQ{CrEgBc@_@v@fBhA|DkCpEt@kJrDcDSuD_E_C_LsB}@m\\zBwCbAiBlEiHqAmA`EdBdD]pHoAlFCqB]ZmBfN}CnAkFjJuArGeB~Ai@nH}AbCd@tBo@vFcPpN{EjAKrE_BzDeEIcEuBwH`EyLlBaEtB}AwAo@dDnBnGiAlHuDbDeChFkGrAsD`MwG\\wDaB_@lBaBX}A`CgQbFiChCgA|P}CbG{O|AeJhFgH`PiIda@|@vBtAKrAuDbAQ`BqHpEmJtA?rB~ClGnDvAQ_@gC`DoGxEeGvD@rCwMpFZbDqAz@tCzCeKjGsFBu@s@l@t@_Ac@cCeAc@n@DjAfEzNoTxLuDoAqDTcBbNy@lE}@lCcE|B_M~@{B~AdAe@nCZhA~E_AnByHrDwCjEItAsC|K_KdDwFdLyAlAsLjBaHvJ}MvJmZ~GiH|Cz@tDeClMSzHsJrMoGVeBw@{EpEaCnO@vT~Cj@f@bBdMfOsBvCmBv@xAdKZzAlE`JnDdAoCbBgAnF~A|HkA~JtApO~JhEx@vCxC`FpJhPxLvGxBZdAq@pClBBjMbIgBSjBxGj^kK`@oD`C_EfBqHfB_fACs`@`@qBi@iCB}TqKyB{B{RuAqDyHKuAa^jYgUvAyYWqDxB~DqC}N`@kDgBcBSsDqCwD|DpC^vCbCnAHvEj@yF{A_Ce@aEsBkBqDcJtBj@}CwTvLuLg@iFsEeL|FaKo@cBLyF`CcEFkEdBgDcBt@~E}LAyEaH~LxAqHKmDr@oAMuJp@w@`Cj@xA{A~DdF~A@bA{ApJrFlOwZvD_BB}@sAaAsB_G}C}RkBaW}DiCjAgBdHrDd@vCA~Mr@lE~FrMvErAhl@er@vPzTbH_NvAOl@qBpDaDhSj@DdC",
       "date": "2026-06-13T10:25:30Z",
       "updated": "2026-06-16T23:15:32.319Z"
+    },
+    {
+      "day": 3,
+      "from": "Santini",
+      "to": "",
+      "km": 67,
+      "dislivello": 1139,
+      "name": "Piemonte Gravel tappa 3",
+      "polyline": "a_~nGg~dp@|SwIhF}KzI{EhFuNh@hHbHlK|AzI`IfNnBnJnHcL|JlH|J~AlNdUkAsCzBu@~GtGp@`OvBfD}@pGeCxEPzErFrCrFCpQcFgFpGaCpMuIzQgE|FcGMkF|NqF`@yAbEeE`D_B~FoSh`@tCdLdAR`AzDvEtFxIpYfDpE`HpS`EhHeDkFpBxFpAnNxA|CpCbYLuDRxDT_FDk[j@wA|A?EXiCmI`AqGbCFvFlEnOnAzAbBtErYxBfFfEjBzK`O|EfC`GrH`Spf@bHxIqJd@sC|HoFzFHzMcCqEEtKzCxJoEsBjFvVlAfAaErDfEIcF|DxDc@{EhCkG{BBxKmN|PoTvo@gDlGyEfSg@dQZ~NzGbd@NfG`GnBcAbWtCE_DnA]lGdA`FdAF?jNsDr@qApWqO|GyP~OsFrImDgFgNbPoF|DyB]e@cCrAwFLiHsGg]dDfA`DlI`Ai@yAoRsDcEZ}CiBi@a@mD{Du@gHiJO}A_CGiXyQ_FaFa@wCqU{TUmCw@FEbBoEoAwIn@cFcG}DC|AaELqL`B\\vDeEdAkDmCcIjBsQgAsHeGaCuJ`CyGqLk@cKqEoCwJlCiJ{A}Hp@sGcDeCkDuMgDuFzAiD{@cFvI_LNm@mAkDx@GuAtCyD~BaJgC?qInHuHhBgCzD~@~CtA}AxBh@@pA|@]A~@bE@@sBKnAeHnIiDnBkDbMuJsIy@sG{HdJgAnCwIf@ySfHeCsAi@bEgEjEyGLoBzMuExGgIvCqItK{@fDiHbA]tBmEhEc`@lF_K^zA|LGvGpKnGvArCkBk@UpAxBy@JhCE_Au@r@hAhKg@Zt@A~@kEdB`SrPpHzJMfLsCrRnFrJEnFpHjK_A`KfEl@fOtA|EhOrG|CbF|E[iEfJpEfBuMnEI~SuBpQeG~I}E|P_HxJsGbT^zOzDr\\tNzM|AvDgMbImXb^tC~AcC~Cq@~H|Bbc@bAaIpEkHxHy@vG~@|B`Af@|Cj@`MiBnKyDfApAjHmB`Pw@kKm@Dg@nKrArOGjQmOjBWlAoAcA_ZhCm@iEgQh@mH}HwM{@iC~Ecs@rHiJe@sZnTLdHeIxH_Fe@eNlIcXx@iHjCsF`Hg^aAeZyKyMt@iKlBAfQwYbAPtQwEtDcBqBb@zDuCmGaAqIs\\zJeJk@aB{YyRat@yCiTmC_GoHm_@kAwCwA]ik@rZjAvJqX|OkEpXkDtCQvBqGtLgOtCaHrDz@lRgRpMcLg@oInAuBcLyEbBkFhIzAvGqB~AoDrLyEfIuKzFuh@~g@lJ|e@oBbRmAd@oOoH}~Aj_BoHwNiCdA}EkAfAwDbE}ASkA",
+      "date": "2026-04-12T08:00:26Z",
+      "updated": "2026-06-16T23:16:33.118Z"
     }
   ]
 }
