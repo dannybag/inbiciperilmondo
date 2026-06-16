@@ -1812,11 +1812,26 @@
     const to   = document.getElementById('tap-to').value   || '';
     const msg  = document.getElementById('tap-msg');
 
-    // DEBUG — mostra valori prima di salvare
-    msg.textContent = `DEBUG → day:${day} km:${km} dis:${dis} from:${from} to:${to} strava:${window._tapStravaSelected?.name||'no'}`;
-    msg.style.color = '#FF4444';
-    await new Promise(r => setTimeout(r, 8000));
-    msg.style.color = '';
+    // DEBUG — pannello fisso fino a dismiss
+    let dbgDiv = document.getElementById('_tapDebug');
+    if (!dbgDiv) {
+      dbgDiv = document.createElement('div');
+      dbgDiv.id = '_tapDebug';
+      dbgDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#000;color:#0f0;font-family:monospace;font-size:0.8rem;padding:1rem;z-index:99999;white-space:pre;border-bottom:3px solid red;';
+      dbgDiv.onclick = () => dbgDiv.remove();
+      document.body.appendChild(dbgDiv);
+    }
+    dbgDiv.textContent =
+      `=== TAP DEBUG (tocca per chiudere) ===\n` +
+      `day    : ${day}\n` +
+      `km     : ${km}  (tap-km raw: "${document.getElementById('tap-km').value}")\n` +
+      `dis    : ${dis}\n` +
+      `from   : ${from}\n` +
+      `to     : ${to}\n` +
+      `strava : ${window._tapStravaSelected ? window._tapStravaSelected.name : 'non impostato'}\n` +
+      `poly   : ${window._tapStravaSelected ? (window._tapStravaSelected.polyline?.length||0)+' chars' : '—'}`;
+    // NON procedere — debug only
+    return;
     const token = (document.getElementById('tap-token').value.trim()) || localStorage.getItem('gh-token') || '';
     if (token) localStorage.setItem('gh-token', token);
     if (!token) { msg.textContent = '✗ Inserisci il token GitHub'; return; }
