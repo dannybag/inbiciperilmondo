@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 4,
-    "from": "Cassina de Pecchi",
-    "to": "",
-    "km": 72,
-    "dislivello": 224,
-    "name": "Giro in bici a vela!",
-    "polyline": "obmtGufgw@t@|@s@zAtG|C`YpSvN~Kn@pB~Ax@rDb}BfAjJhLjj@NzDSjRl@^@nAr~@~MzvB~cAjqCzwAraBlu@fh@|UzoAvo@pDxBtDlEf@Wf`BpmB|BnD|CxJhC|@xDfCdB^h@`AdAu@rw@fEpCSpTaGzKkHdEkAzEeArKDtB[tbJeeChDuAnJ_HjD}AeSoyAcIr@eHi[g@sFPgDuAi@ep@cF_AmMd@}F{@gR~@iDn@@fAlA`@Ud@}G~AwHUqGgA{J_CeMqHsYyBsZs@s@kI|Bu@WwI}t@oLvDiXrMkB{KQyJg@wFyR~Ew@a@}@iLmBoRdCmBbCyJzBoGp@eEbCwAxAmB`HuMTqASeJPqAnAw@dGu@XeGuBeYk@_PqUgAs@UWi@n@a_@z@cNk@qI_Viy@_DuAwGeAuAmDgJrD{IbBm@K]sCUIuG~BuE_RuMdHc\\lKaTj@uDAm@a@mGcMBs@nB_DkBiFi@}DdCs@rGoDvD}CTgAqDyT@gIgKc^tNaMHg@mJaWIgD_@kAuCuBkHaKqJi^eGeNy@@n@cAKk@om@q~@}ByAGwAeCcDKuAsLuQkBeAaDnFc[fYeJfKoRtOgMrG}BqJuDcHjFuToMgRmEcM}NuWc@OyANkLyYkC{R{BcFm@cCFa@`CmBVm@MmPuCuKyBmEs@mEeBeByBwEaFwL_BiIuSyq@o@G_KhJiDbB_MvLiAhCiAdAg@zCgBXIrEqAlEk@p@yCfAoCtFgCrBqC|DyBzFyAbGuFlM_GdDoBjDyAtGc@nHlArl@oXdL}@GuAz@cIpBaHtIqRnBiAf@{GdH{DEHxFu@`Ws@IsCiDmD_AqDwCkC`Jr@lBAl@kLnLoJdFyEpCeKp@]vCpBxOz@rNc@vAgBnBx@vDDpCjEtNxC|SQpCcBxA}FxCiIvGiLdHuOzHkPdQ}FdOwIjMiEbAhAzE@dC[xBsDxKQzCNtCOf@}@SNaHeAiF{AcCeAaFgEoD}@MaBxAuDtFsJxGaAIaC{FuHfBgBhAiEdHaB`IyBgAq@jCFp@fEtBRh@yEzQiD@CgQkD}HwAw@_Az@qC`Hc@H_@{@a@?e@`CgCtEq@d@uBo@gF|AmAoABkAWy@{DcCEt@n@jC}BeAiANYf@OhDkBfBd@pGl@dAqAzAaCT{JcD}Ge@aFkAnFePdBgDrBiArBoGGuAZ{DyAkAyJvCeA|CgAh@gEhLeAc@cAxAoDl@y@r@kj@tOaBjAKlCkBxE}AbBqJn@aB@wAGiBeAaC~@{j@d@_@pBA~[",
-    "date": "2026-05-12T10:07:26Z",
-    "updated": "2026-06-16T00:38:13.811Z",
-    "totKm": 170,
-    "totDis": 527,
-    "tappe": 4
+    "day": 5,
+    "from": "Varese",
+    "to": "Olgiate",
+    "km": 81,
+    "dislivello": 1075,
+    "name": "Greenlandsl Varese 2026",
+    "polyline": "ab{uGsodu@iMEud@fJ{CyBwDfQqFlAaCfMyH~CeWqDwC|FcTsSkNp@uE~CsBzF{JrDI|GeEtBzCv@dBxEA|CsBpB|HoAzB`CIlCwFfAuGrPoODy\\|IeLgAsJtJiQhBBrCwNnOmYvLmTdBwJsByKpGxCeCmXmBuKgGwFhS}SsCiAwQh@wP~LsXqBaZxCeBzB}A{B@tGyA_Cu@jAaFiA{D}J~HVaHwEwBwP`Mc`@oLoBkCeGUoTn@uSrCrAhEuCNeGwBsIoKmQyBwLfI{FpIsGjQuE~[gHlI_ArESeF~B}GaEsIyBWAaGqT}E}SsXkDwQHcWuAwAwAdDiIyBQyBmCzBfEaGbLsE}G}MyMmFx@_`@sOsi@sHsGkHcCyVc_@gCwOJqGmEwS`CqBj@gJsFa@{BdH`C`k@`Kh]l@`JyNeUwAyKwH_HgCHaDiEkAvCzJdPoMoBeBhB`DrFAvPvL|GxHfQlB|T`FvGuBre@iExM|@~BiAxH_Ew@cUsYsBhEwDqCwBoFyIqDaEwHXcRaQq\\C{TsEeTjEeQzCdDlEyHuDeKXiJ|FaEa@oI|BwJpZpFjDnMdCp@m@oRrDmHsGoAoCcNjAoFoLkP~HsCcDcJeGwk@eB?uIkOzEmGb@}FlJo@jK~HrABrA|AQjCdQqAj@}DzChBrPqVnNlMxBJm@qGnA_@|XlEhRzJi@xUnCvb@fT~j@w@rJlOjKbDtFnDn[~DxEd@pGvDxA_@cBnBcBf@bC`BSuAoE`DkI|F~D`AmUS~FtAqCt]sPrD}IbDFgAwEpDuA}@cEsJyG~G_NRiHfBkCcDyElEaHdDgJ]qEfF}EnEtIaAfGyBhBlCfFpOuCdIpCf[uAzhB`WTeI{GiFxDeO_@yDbPmFmIeL_L_HvNeG|@sEvJTba@dR`NlCxEdHlh@d]tQpAvFvCjE~GzOn@a@_NsIuO~KoFzJ[fFmE}IeDkPk_@`WlBpXjK|DnEdAuAgDoWpAwAt\\eEpDhDlN~BrOaKz_@wFzHpBvOkE~JlEdR}[nDvCcBjBt@Yz@kAcAtBnDrDfp@r\\qCzO|V~fA}A|CyDv@vGrTvJhRgAlMb`@_QlGgF@iE~KmCnLy@hCvJj@`AVcBGfCfa@mGtBzRjGpTjCtW~B}@H{DbMiA~LlQnC`Qp_@}GTrD{D|IfGlBhWsAbZjBhMaCxT`B`LcGnEz@hCrRo@vBeDVyJuBiNlHi{@qEe^fC_OzKsDuCiOlNoMxAg@eCsGuCaKm@yCdFaAuBsEb@}d@dT}UkA{FbLYve@]eCq@rHcEdHoJmRwM{NxFcOGqDyPjEqLoMo]hOcBeLsBPyB`OsEpCwBjI}InE",
+    "date": "2026-05-17T08:31:41Z",
+    "updated": "2026-06-16T00:38:45.084Z",
+    "totKm": 251,
+    "totDis": 1602,
+    "tappe": 5
   },
   "tappe": [
     {
@@ -61,6 +61,17 @@
       "polyline": "obmtGufgw@t@|@s@zAtG|C`YpSvN~Kn@pB~Ax@rDb}BfAjJhLjj@NzDSjRl@^@nAr~@~MzvB~cAjqCzwAraBlu@fh@|UzoAvo@pDxBtDlEf@Wf`BpmB|BnD|CxJhC|@xDfCdB^h@`AdAu@rw@fEpCSpTaGzKkHdEkAzEeArKDtB[tbJeeChDuAnJ_HjD}AeSoyAcIr@eHi[g@sFPgDuAi@ep@cF_AmMd@}F{@gR~@iDn@@fAlA`@Ud@}G~AwHUqGgA{J_CeMqHsYyBsZs@s@kI|Bu@WwI}t@oLvDiXrMkB{KQyJg@wFyR~Ew@a@}@iLmBoRdCmBbCyJzBoGp@eEbCwAxAmB`HuMTqASeJPqAnAw@dGu@XeGuBeYk@_PqUgAs@UWi@n@a_@z@cNk@qI_Viy@_DuAwGeAuAmDgJrD{IbBm@K]sCUIuG~BuE_RuMdHc\\lKaTj@uDAm@a@mGcMBs@nB_DkBiFi@}DdCs@rGoDvD}CTgAqDyT@gIgKc^tNaMHg@mJaWIgD_@kAuCuBkHaKqJi^eGeNy@@n@cAKk@om@q~@}ByAGwAeCcDKuAsLuQkBeAaDnFc[fYeJfKoRtOgMrG}BqJuDcHjFuToMgRmEcM}NuWc@OyANkLyYkC{R{BcFm@cCFa@`CmBVm@MmPuCuKyBmEs@mEeBeByBwEaFwL_BiIuSyq@o@G_KhJiDbB_MvLiAhCiAdAg@zCgBXIrEqAlEk@p@yCfAoCtFgCrBqC|DyBzFyAbGuFlM_GdDoBjDyAtGc@nHlArl@oXdL}@GuAz@cIpBaHtIqRnBiAf@{GdH{DEHxFu@`Ws@IsCiDmD_AqDwCkC`Jr@lBAl@kLnLoJdFyEpCeKp@]vCpBxOz@rNc@vAgBnBx@vDDpCjEtNxC|SQpCcBxA}FxCiIvGiLdHuOzHkPdQ}FdOwIjMiEbAhAzE@dC[xBsDxKQzCNtCOf@}@SNaHeAiF{AcCeAaFgEoD}@MaBxAuDtFsJxGaAIaC{FuHfBgBhAiEdHaB`IyBgAq@jCFp@fEtBRh@yEzQiD@CgQkD}HwAw@_Az@qC`Hc@H_@{@a@?e@`CgCtEq@d@uBo@gF|AmAoABkAWy@{DcCEt@n@jC}BeAiANYf@OhDkBfBd@pGl@dAqAzAaCT{JcD}Ge@aFkAnFePdBgDrBiArBoGGuAZ{DyAkAyJvCeA|CgAh@gEhLeAc@cAxAoDl@y@r@kj@tOaBjAKlCkBxE}AbBqJn@aB@wAGiBeAaC~@{j@d@_@pBA~[",
       "date": "2026-05-12T10:07:26Z",
       "updated": "2026-06-16T00:38:13.811Z"
+    },
+    {
+      "day": 5,
+      "from": "Varese",
+      "to": "Olgiate",
+      "km": 81,
+      "dislivello": 1075,
+      "name": "Greenlandsl Varese 2026",
+      "polyline": "ab{uGsodu@iMEud@fJ{CyBwDfQqFlAaCfMyH~CeWqDwC|FcTsSkNp@uE~CsBzF{JrDI|GeEtBzCv@dBxEA|CsBpB|HoAzB`CIlCwFfAuGrPoODy\\|IeLgAsJtJiQhBBrCwNnOmYvLmTdBwJsByKpGxCeCmXmBuKgGwFhS}SsCiAwQh@wP~LsXqBaZxCeBzB}A{B@tGyA_Cu@jAaFiA{D}J~HVaHwEwBwP`Mc`@oLoBkCeGUoTn@uSrCrAhEuCNeGwBsIoKmQyBwLfI{FpIsGjQuE~[gHlI_ArESeF~B}GaEsIyBWAaGqT}E}SsXkDwQHcWuAwAwAdDiIyBQyBmCzBfEaGbLsE}G}MyMmFx@_`@sOsi@sHsGkHcCyVc_@gCwOJqGmEwS`CqBj@gJsFa@{BdH`C`k@`Kh]l@`JyNeUwAyKwH_HgCHaDiEkAvCzJdPoMoBeBhB`DrFAvPvL|GxHfQlB|T`FvGuBre@iExM|@~BiAxH_Ew@cUsYsBhEwDqCwBoFyIqDaEwHXcRaQq\\C{TsEeTjEeQzCdDlEyHuDeKXiJ|FaEa@oI|BwJpZpFjDnMdCp@m@oRrDmHsGoAoCcNjAoFoLkP~HsCcDcJeGwk@eB?uIkOzEmGb@}FlJo@jK~HrABrA|AQjCdQqAj@}DzChBrPqVnNlMxBJm@qGnA_@|XlEhRzJi@xUnCvb@fT~j@w@rJlOjKbDtFnDn[~DxEd@pGvDxA_@cBnBcBf@bC`BSuAoE`DkI|F~D`AmUS~FtAqCt]sPrD}IbDFgAwEpDuA}@cEsJyG~G_NRiHfBkCcDyElEaHdDgJ]qEfF}EnEtIaAfGyBhBlCfFpOuCdIpCf[uAzhB`WTeI{GiFxDeO_@yDbPmFmIeL_L_HvNeG|@sEvJTba@dR`NlCxEdHlh@d]tQpAvFvCjE~GzOn@a@_NsIuO~KoFzJ[fFmE}IeDkPk_@`WlBpXjK|DnEdAuAgDoWpAwAt\\eEpDhDlN~BrOaKz_@wFzHpBvOkE~JlEdR}[nDvCcBjBt@Yz@kAcAtBnDrDfp@r\\qCzO|V~fA}A|CyDv@vGrTvJhRgAlMb`@_QlGgF@iE~KmCnLy@hCvJj@`AVcBGfCfa@mGtBzRjGpTjCtW~B}@H{DbMiA~LlQnC`Qp_@}GTrD{D|IfGlBhWsAbZjBhMaCxT`B`LcGnEz@hCrRo@vBeDVyJuBiNlHi{@qEe^fC_OzKsDuCiOlNoMxAg@eCsGuCaKm@yCdFaAuBsEb@}d@dT}UkA{FbLYve@]eCq@rHcEdHoJmRwM{NxFcOGqDyPjEqLoMo]hOcBeLsBPyB`OsEpCwBjI}InE",
+      "date": "2026-05-17T08:31:41Z",
+      "updated": "2026-06-16T00:38:45.084Z"
     }
   ]
 }
