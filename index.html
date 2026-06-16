@@ -1419,10 +1419,10 @@
     list.innerHTML = tappe.map((t,i)=>{
       const date = t.date ? (d=>String(d.getDate()).padStart(2,'0')+' '+MESI[d.getMonth()])(new Date(t.date)) : (t.day?'Tappa '+t.day:'—');
       const route = (t.from&&t.to)?t.from+' → '+t.to:(t.from||'—');
-      return `<div style="display:flex;align-items:center;gap:0.5rem;padding:0.55rem 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+      return `<div style="display:flex;align-items:baseline;gap:0.4rem;padding:0.55rem 0;border-bottom:1px solid rgba(255,255,255,0.05);flex-wrap:wrap;">
         <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--orange);min-width:1.4rem;flex-shrink:0;">${i+1}</span>
         <span style="font-family:'IBM Plex Mono',monospace;font-size:0.52rem;color:rgba(255,248,244,0.5);min-width:3.2rem;flex-shrink:0;">${date}</span>
-        <span style="flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:600;color:#FFF8F4;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.name?`<span style='font-size:0.75rem;color:rgba(255,248,244,0.5);display:block;line-height:1;'>${t.name}</span>`:''}${route}</span>
+        <span style="flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:600;color:#FFF8F4;min-width:0;word-break:break-word;">${t.name?`<span style='font-size:0.75rem;color:rgba(255,248,244,0.5);display:block;line-height:1.2;margin-bottom:0.1rem;'>${t.name}</span>`:''}${route}</span>
         <span style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:rgba(255,248,244,0.7);text-align:right;white-space:nowrap;min-width:3.5rem;flex-shrink:0;">${t.km||0} km</span>
         <span style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:rgba(255,248,244,0.5);text-align:right;white-space:nowrap;min-width:3.5rem;flex-shrink:0;">↑${t.dislivello||0} m</span>
       </div>`;
