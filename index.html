@@ -1814,7 +1814,9 @@
 
     // DEBUG — mostra valori prima di salvare
     msg.textContent = `DEBUG → day:${day} km:${km} dis:${dis} from:${from} to:${to} strava:${window._tapStravaSelected?.name||'no'}`;
-    await new Promise(r => setTimeout(r, 2000));
+    msg.style.color = '#FF4444';
+    await new Promise(r => setTimeout(r, 8000));
+    msg.style.color = '';
     const token = (document.getElementById('tap-token').value.trim()) || localStorage.getItem('gh-token') || '';
     if (token) localStorage.setItem('gh-token', token);
     if (!token) { msg.textContent = '✗ Inserisci il token GitHub'; return; }
