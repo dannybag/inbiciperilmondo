@@ -1145,7 +1145,7 @@
 
       <!-- PROSSIMA TAPPA -->
       <div style="margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid rgba(240,90,40,0.2);">
-        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.35); margin-bottom:0.7rem;">Prossima tappa</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.7rem;">→ Prossima tappa</div>
         <input type="file" id="tap-next-gpx" accept=".gpx" onchange="loadNextGPX(this)" style="display:none;">
         <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
           <button onclick="stravaPickNext()" style="flex:1; min-width:80px; background:transparent; color:rgba(240,90,40,0.7); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem; border:1px solid rgba(240,90,40,0.35); border-radius:4px; cursor:pointer;">⚡ Strava</button>
@@ -1812,26 +1812,7 @@
     const to   = document.getElementById('tap-to').value   || '';
     const msg  = document.getElementById('tap-msg');
 
-    // DEBUG — pannello fisso fino a dismiss
-    let dbgDiv = document.getElementById('_tapDebug');
-    if (!dbgDiv) {
-      dbgDiv = document.createElement('div');
-      dbgDiv.id = '_tapDebug';
-      dbgDiv.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#000;color:#0f0;font-family:monospace;font-size:0.8rem;padding:1rem;z-index:99999;white-space:pre;border-bottom:3px solid red;';
-      dbgDiv.onclick = () => dbgDiv.remove();
-      document.body.appendChild(dbgDiv);
-    }
-    dbgDiv.textContent =
-      `=== TAP DEBUG (tocca per chiudere) ===\n` +
-      `day    : ${day}\n` +
-      `km     : ${km}  (tap-km raw: "${document.getElementById('tap-km').value}")\n` +
-      `dis    : ${dis}\n` +
-      `from   : ${from}\n` +
-      `to     : ${to}\n` +
-      `strava : ${window._tapStravaSelected ? window._tapStravaSelected.name : 'non impostato'}\n` +
-      `poly   : ${window._tapStravaSelected ? (window._tapStravaSelected.polyline?.length||0)+' chars' : '—'}`;
-    // NON procedere — debug only
-    return;
+
     const token = (document.getElementById('tap-token').value.trim()) || localStorage.getItem('gh-token') || '';
     if (token) localStorage.setItem('gh-token', token);
     if (!token) { msg.textContent = '✗ Inserisci il token GitHub'; return; }
