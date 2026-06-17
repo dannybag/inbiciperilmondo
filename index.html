@@ -826,6 +826,13 @@
         #v-map-wrap > div:last-child { width:100% !important; height:auto !important; border-left:none !important; border-top:1px solid rgba(240,90,40,0.15); }
       }
     </style>
+
+    <!-- PROSSIMA TAPPA - mappa separata -->
+    <div id="v-next-block" style="display:none; margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(79,195,247,0.2);">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.3rem;">→ Prossima tappa</div>
+      <div id="v-next-title" style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:#FFF8F4; margin-bottom:0.8rem;"></div>
+      <div id="v-next-map" style="width:100%; height:35vh; background:#111; border-radius:4px;"></div>
+    </div>
   </div>
 </div>
 
@@ -1143,18 +1150,13 @@
       </div>
 
 
-      <!-- PROSSIMA TAPPA -->
-      <div style="margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid rgba(240,90,40,0.2);">
-        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.7rem;">→ Prossima tappa</div>
-        <input type="file" id="tap-next-gpx" accept=".gpx" onchange="loadNextGPX(this)" style="display:none;">
-        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-          <button onclick="stravaPickNext()" style="flex:1; min-width:80px; background:transparent; color:rgba(240,90,40,0.7); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem; border:1px solid rgba(240,90,40,0.35); border-radius:4px; cursor:pointer;">⚡ Strava</button>
-          <button onclick="document.getElementById('tap-next-gpx').click()" style="flex:1; min-width:60px; background:transparent; color:rgba(255,248,244,0.45); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem; border:1px solid rgba(255,248,244,0.2); border-radius:4px; cursor:pointer;">📂 GPX</button>
-          <button onclick="saveNextStage()" style="flex:1; min-width:80px; background:rgba(79,195,247,0.15); color:#4FC3F7; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem; border:1px solid rgba(79,195,247,0.4); border-radius:4px; cursor:pointer;">💾 Salva</button>
-          <button onclick="clearNextStage()" style="flex:0 0 auto; background:transparent; color:rgba(255,248,244,0.2); font-family:'IBM Plex Mono',monospace; font-size:0.65rem; padding:0.45rem 0.6rem; border:1px solid rgba(255,248,244,0.1); border-radius:4px; cursor:pointer;" title="Rimuovi">✕</button>
-        </div>
-        <div id="tap-next-msg" style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; color:rgba(255,248,244,0.4); margin-top:0.4rem; min-height:1rem;"></div>
-        <div id="strava-next-picker" style="display:none; max-height:180px; overflow-y:auto; margin-top:0.5rem; background:#111; border:1px solid rgba(240,90,40,0.2); border-radius:4px; padding:0.3rem;"></div>
+      <!-- TOGGLE: tappa attuale vs prossima -->
+      <div style="margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid rgba(240,90,40,0.2); display:flex; align-items:center; gap:0.6rem;">
+        <input type="checkbox" id="tap-is-next" onchange="tapToggleNext()" style="width:1.1rem; height:1.1rem; accent-color:#4FC3F7; cursor:pointer;">
+        <label for="tap-is-next" style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:#4FC3F7; cursor:pointer;">→ Salva come prossima tappa (non ancora percorsa)</label>
+      </div>
+      <div id="tap-next-clear-row" style="display:none; margin-top:0.5rem;">
+        <button onclick="tapClearNext()" style="background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; padding:0.4rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">✕ Rimuovi prossima tappa salvata</button>
       </div>
 
       <div style="display:flex; gap:1rem; margin-top:1.2rem;">
@@ -1460,7 +1462,40 @@
       });
     }
     setTimeout(()=>renderViaggioMap(tappe),100);
+    setTimeout(()=>renderNextStageMap(),150);
   }
+
+  // ---- PROSSIMA TAPPA - mappa indipendente ----
+  let _nextStageMap = null;
+
+  function renderNextStageMap() {
+    const block = document.getElementById('v-next-block');
+    const ns = window._nextStage; // popolato da loadFromGitHub
+
+    if (!ns || (!ns.polyline && !ns.name)) {
+      block.style.display = 'none';
+      return;
+    }
+    block.style.display = 'block';
+    document.getElementById('v-next-title').textContent = ns.name || (ns.km ? ns.km+' km' : 'Tappa');
+
+    if (_nextStageMap) { _nextStageMap.remove(); _nextStageMap = null; }
+    _nextStageMap = L.map('v-next-map').setView([44.5,11.3], 6);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution:'© Esri', maxZoom:18
+    }).addTo(_nextStageMap);
+
+    if (ns.polyline) {
+      const pts = decodePolyline(ns.polyline);
+      if (pts.length) {
+        L.polyline(pts, { color:'#4FC3F7', weight:4, opacity:0.9 }).addTo(_nextStageMap);
+        L.marker(pts[0], { icon: L.divIcon({ html:'<div style="background:#4FC3F7;color:#000;font-family:IBM Plex Mono,monospace;font-size:0.5rem;font-weight:700;width:1.6rem;height:1.6rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #fff;">A</div>', className:'', iconSize:[26,26], iconAnchor:[13,13] }) }).addTo(_nextStageMap);
+        L.marker(pts[pts.length-1], { icon: L.divIcon({ html:'<div style="background:#4FC3F7;color:#000;font-family:IBM Plex Mono,monospace;font-size:0.5rem;font-weight:700;width:1.6rem;height:1.6rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #fff;">B</div>', className:'', iconSize:[26,26], iconAnchor:[13,13] }) }).addTo(_nextStageMap);
+        _nextStageMap.fitBounds(L.latLngBounds(pts), { padding:[30,30] });
+      }
+    }
+  }
+
 
   let _mapExpanded = false;
   function expandMap() {
@@ -1513,6 +1548,7 @@
       // Compatibilità: usa tappe[] se esiste, altrimenti usa tappa legacy
       if (data.tappe && data.tappe.length > 0) {
         _tappeList = data.tappe;
+        window._nextStage = data.next_stage || null;
         const tots = tapCalcTotals(_tappeList);
         _prev = { totKm: tots.totKm, totDis: tots.totDis, tappe: tots.tappe };
       } else if (data.tappa && data.tappa.day > 0) {
@@ -1654,6 +1690,10 @@
       document.getElementById('tap-to').value   = '';
     }
     document.getElementById('tap-msg').textContent = '';
+    document.getElementById('tap-is-next').checked = false;
+    tapToggleNext();
+    document.getElementById('tap-next-clear-row').style.display = window._nextStage ? 'block' : 'none';
+    window._tapStravaSelected = null;
     tapRefresh();
   }
 
@@ -1692,78 +1732,19 @@
     document.getElementById('tap-overlay').style.display = 'flex';
   }
 
-  // ---- PROSSIMA TAPPA ----
-  var _nextStage = null;
-
-  function loadNextGPX(input) {
-    if (!input.files || !input.files[0]) return;
-    const msg = document.getElementById('tap-next-msg');
-    const reader = new FileReader();
-    reader.onload = e => {
-      const parsed = parseGPX(e.target.result);
-      if (!parsed) { msg.textContent = '✗ GPX non valido'; return; }
-      _nextStage = { name: parsed.name, polyline: encodePolylineFromPts(parsed.pts), km: parsed.km, dis: parsed.dis };
-      msg.textContent = `✓ ${parsed.name || 'prossima tappa'} · ${parsed.km} km · ↑${parsed.dis}m`;
-      input.value = '';
-    };
-    reader.readAsText(input.files[0]);
+  // ---- TOGGLE PROSSIMA TAPPA ----
+  function tapToggleNext() {
+    const isNext = document.getElementById('tap-is-next').checked;
+    const dayField = document.getElementById('tap-day').closest('div');
+    // Nascondi/mostra campo giorno (non serve per la prossima tappa)
+    if (dayField) dayField.style.opacity = isNext ? '0.3' : '1';
   }
 
-  async function stravaPickNext() {
-    const msg = document.getElementById('tap-next-msg');
-    const picker = document.getElementById('strava-next-picker');
-    msg.textContent = 'Caricamento attività...';
-    const token = await stravaGetToken();
-    if (!token) { msg.textContent = '✗ Strava non connesso'; return; }
-    const res = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=40', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    const acts = await res.json();
-    if (!acts || !acts.length) { msg.textContent = '✗ Nessuna attività'; return; }
-    msg.textContent = 'Seleziona la prossima tappa';
-    picker.style.display = 'block';
-    picker.innerHTML = acts.map((a, i) => {
-      const km = Math.round(a.distance/1000);
-      const dis = Math.round(a.total_elevation_gain);
-      const date = new Date(a.start_date_local).toLocaleDateString('it-IT', {day:'2-digit',month:'short'});
-      return `<button style="display:block;width:100%;text-align:left;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.05);color:#FFF8F4;font-family:'Barlow',sans-serif;font-size:0.8rem;padding:0.45rem 0.6rem;cursor:pointer;"
-        onmouseover="this.style.background='rgba(240,90,40,0.08)'" onmouseout="this.style.background='transparent'"
-        onclick="selectNextFromStrava(${i})">
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:#F05A28;">${date}</span>
-        &nbsp;${a.name}<br>
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:rgba(255,255,255,0.35);">${km} km · ↑${dis}m</span>
-      </button>`;
-    }).join('');
-    window._stravaActsNext = acts;
-  }
-
-  async function selectNextFromStrava(idx) {
-    const msg = document.getElementById('tap-next-msg');
-    const picker = document.getElementById('strava-next-picker');
-    const act = window._stravaActsNext[idx];
-    msg.textContent = '⏳ Carico traccia GPS...';
-    picker.style.display = 'none';
-    const token = await stravaGetToken();
-    let polyline = act.map?.summary_polyline || '';
-    if (!polyline) {
-      try {
-        const r = await fetch(`https://www.strava.com/api/v3/activities/${act.id}/streams?keys=latlng&key_by_type=true`, { headers: { Authorization: `Bearer ${token}` } });
-        const sd = await r.json();
-        const pts = sd?.latlng?.data || [];
-        if (pts.length) polyline = encodePolyline(pts);
-      } catch(e) {}
-    }
-    _nextStage = { name: act.name, polyline, km: Math.round(act.distance/1000), dis: Math.round(act.total_elevation_gain), date: act.start_date_local };
-    msg.textContent = `✓ ${act.name} · ${_nextStage.km} km · GPS: ${polyline.length>0?'✓':'✗'}`;
-  }
-
-
-  async function saveNextStage() {
-    if (!_nextStage) { document.getElementById('tap-next-msg').textContent = '✗ Nessuna prossima tappa selezionata'; return; }
+  async function tapClearNext() {
     const token = localStorage.getItem('gh-token');
-    if (!token) { document.getElementById('tap-next-msg').textContent = '✗ Token GitHub mancante'; return; }
-    document.getElementById('tap-next-msg').textContent = 'Salvataggio...';
-    // Read current data.json and update only next_stage
+    if (!token) { alert('Token GitHub mancante'); return; }
+    const msg = document.getElementById('tap-msg');
+    msg.textContent = 'Rimozione...';
     try {
       const res = await fetch(GH_API + '?t=' + Date.now(), {
         headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' },
@@ -1771,17 +1752,14 @@
       });
       const d = await res.json();
       const raw = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
-      raw.next_stage = _nextStage;
-      await saveToGitHub(raw, token, document.getElementById('tap-next-msg'));
-      document.getElementById('tap-next-msg').textContent = `✓ Prossima tappa salvata · ${_nextStage.km||0} km`;
-    } catch(e) {
-      document.getElementById('tap-next-msg').textContent = '✗ Errore: ' + e.message;
-    }
-  }
-
-  async function clearNextStage() {
-    _nextStage = null;
-    document.getElementById('tap-next-msg').textContent = 'Rimosso - clicca 💾 Salva per confermare';
+      raw.next_stage = null;
+      const ok = await saveToGitHub(raw, token, msg);
+      if (ok) {
+        window._nextStage = null;
+        document.getElementById('tap-next-clear-row').style.display = 'none';
+        msg.textContent = '✓ Prossima tappa rimossa';
+      }
+    } catch(e) { msg.textContent = '✗ Errore: ' + e.message; }
   }
 
   function tapClose() { document.getElementById('tap-overlay').style.display = 'none'; }
@@ -1805,6 +1783,38 @@
     const from = document.getElementById('tap-from').value || 'Milano';
     const to   = document.getElementById('tap-to').value   || '';
     const msg  = document.getElementById('tap-msg');
+    const isNext = document.getElementById('tap-is-next').checked;
+
+    // ---- RAMO: salva come PROSSIMA TAPPA ----
+    if (isNext) {
+      const sel = window._tapStravaSelected || {};
+      const token = localStorage.getItem('gh-token') || document.getElementById('tap-token').value.trim();
+      if (!token) { msg.textContent = '✗ Token GitHub mancante'; return; }
+      localStorage.setItem('gh-token', token);
+      msg.textContent = 'Salvataggio prossima tappa...';
+      try {
+        const res = await fetch(GH_API + '?t=' + Date.now(), {
+          headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' },
+          cache: 'no-store'
+        });
+        const d = await res.json();
+        const raw = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
+        raw.next_stage = {
+          name:     sel.name || '',
+          polyline: sel.polyline || '',
+          from, to, km, dis,
+          date: new Date().toISOString()
+        };
+        const ok = await saveToGitHub(raw, token, msg);
+        if (ok) {
+          window._nextStage = raw.next_stage;
+          msg.textContent = `✓ Prossima tappa salvata · ${km} km`;
+          setTimeout(() => tapClose(), 1200);
+        }
+      } catch(e) { msg.textContent = '✗ Errore: ' + e.message; }
+      return;
+    }
+    // ---- fine ramo prossima tappa, prosegue come tappa normale ----
 
 
     const token = (document.getElementById('tap-token').value.trim()) || localStorage.getItem('gh-token') || '';
