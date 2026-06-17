@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 1,
-    "from": "Bologna",
+    "day": 2,
+    "from": "Milano",
     "to": "",
-    "km": 53,
-    "dislivello": 815,
-    "name": "Santini Inner Terrain Gravel",
-    "polyline": "epyuGu}_z@b@Q?mGeSqAsI|HkCtFoI}RuByAyFbFuLm]_OjHgUuQgMbFs@xAyTpA_EfDoAbElH`Gj@jBe@dFkIdBmCrFHzGaGjAoJ|Jp@bFtCr@y@i@GfB}AH{@xF}GJOzArBxBi@|CgEnDo@a@{AlEkDpAuAt@NhJe@rAkJEu@xEoAj@cCkCaAPsK}LyKzLcLh@{KjKkIbEgQaCqFyIoAEuBbD{@EaPeX_JcJkEuJkI{@uMnBF|BbBpCKzGaE~LuCvA`B`JpIxJpCxIqBjB}By@{L^sEmAaAtCyAg@jA~D[pAnR~LbHzHC|FzBtCThCq@nMhFnGhDxAiPy@ChD|B`FpC`BjBfDdExMGlH~H|J~F~PuF`GoHle@yf@pe@J`AhCzA{BWeAhAdEvHpAfL}G|BmMNoEtCgArKpBdQ{CrEgBc@_@v@fBhA|DkCpEt@kJrDcDSuD_E_C_LsB}@m\\zBwCbAiBlEiHqAmA`EdBdD]pHoAlFCqB]ZmBfN}CnAkFjJuArGeB~Ai@nH}AbCd@tBo@vFcPpN{EjAKrE_BzDeEIcEuBwH`EyLlBaEtB}AwAo@dDnBnGiAlHuDbDeChFkGrAsD`MwG\\wDaB_@lBaBX}A`CgQbFiChCgA|P}CbG{O|AeJhFgH`PiIda@|@vBtAKrAuDbAQ`BqHpEmJtA?rB~ClGnDvAQ_@gC`DoGxEeGvD@rCwMpFZbDqAz@tCzCeKjGsFBu@s@l@t@_Ac@cCeAc@n@DjAfEzNoTxLuDoAqDTcBbNy@lE}@lCcE|B_M~@{B~AdAe@nCZhA~E_AnByHrDwCjEItAsC|K_KdDwFdLyAlAsLjBaHvJ}MvJmZ~GiH|Cz@tDeClMSzHsJrMoGVeBw@{EpEaCnO@vT~Cj@f@bBdMfOsBvCmBv@xAdKZzAlE`JnDdAoCbBgAnF~A|HkA~JtApO~JhEx@vCxC`FpJhPxLvGxBZdAq@pClBBjMbIgBSjBxGj^kK`@oD`C_EfBqHfB_fACs`@`@qBi@iCB}TqKyB{B{RuAqDyHKuAa^jYgUvAyYWqDxB~DqC}N`@kDgBcBSsDqCwD|DpC^vCbCnAHvEj@yF{A_Ce@aEsBkBqDcJtBj@}CwTvLuLg@iFsEeL|FaKo@cBLyF`CcEFkEdBgDcBt@~E}LAyEaH~LxAqHKmDr@oAMuJp@w@`Cj@xA{A~DdF~A@bA{ApJrFlOwZvD_BB}@sAaAsB_G}C}RkBaW}DiCjAgBdHrDd@vCA~Mr@lE~FrMvErAhl@er@vPzTbH_NvAOl@qBpDaDhSj@DdC",
-    "date": "2026-06-13T10:25:30Z",
-    "updated": "2026-06-17T21:45:17.544Z",
-    "totKm": 53,
-    "totDis": 815,
-    "tappe": 1
+    "km": 107,
+    "dislivello": 292,
+    "name": "Milano - Bergamo (Santini) - Milano",
+    "polyline": "_emtGuegw@_OoBqnCxAiS?}EoBwAx@agCgsDiFoFwBuGmFka@wNtA}KmMqJcCeEkKn@uKjAq@QeIbHop@gBsqA~DwWy@}SeJoSiAu^cFyU_CydCyGc]OmN|Aya@W}n@lCsSgDy|@`@wcAi@IAoKkHab@FeH}Bc\\_Do\\u@kFyDiK]_EmD{GeCu]oLsZkGaZlAu@pB}HyDm@aCsDmG_]oY}dAh@wDsDeE}b@e_Bu@{FGai@bDuu@v_@{vB_Cs[vGu^dBoUtMc|@?sIuC_Y|OyaAAuEeNiGgy@wNsNeFw^bDsNxIsH~@{JtLiHBaQoMkHuJmIk@yOmGeP{BaRsQqAyCMuDxCuPmNSwE{Bt@_Zc@mHaCR_KuAmNkPQsD{BkGsOg[`B}M{AqBcNuEaFyG{UqGoMoHiSvEgXaDeN{FeJcJsAkGuAg@yKg@m@lAoE\\aYfK{CxBiNiEcJ_HcMwCi[rEBkL{GiD_JpDaQxAqPgJcB{K_GuHiIsC_CoHyGqDgZa\\gGaFuGgBmHmGlIaiARm^_ViInAgU}KgDmCuA}JeWgg@iz@yQfG_G}QaW}d@wEjA_MuT_F{RqHsHeD{G[iCqIcRNgDoAeDtLut@oVac@mXgVe@sKsIsRj@mDyLmj@pCsHpAInF_H~Rn@BxFoAl@fAYNeGsS}AoI`IyClHrLhi@u@fE|IhQDhLxYbXzQf]pOxRqItXyBhUt@n@c@vFgBdCxCnFjAtFnCrEpHvF`EnSjJ|PnABBvB~EcAbWfe@`GtQlQsGpI~Lt\\|l@vF|P~GhBo@pI]js@PnAzC~ArAn\\qE|ZjI~KbU`QdV|NrS~UxGnDxBrHnIlCfGzHzAxKrPpJdQwA~IqDzGdD@nLb[uEhMxCfJ`HtMzDne@cRpLj@pAf@dAzFnJlJfPvGtVhC~RoEhMbH~UvGzErGvN`FpAjBaBvMtOl[nC`M~MhPvNxAb@tJm@zVpFfCvM@wChQvAxHnR`RbP|BbPjGtH^xH|JlQvMfHMnJsLpH{@rN{Il^cD|NdFjx@xNdObGBnEaPraA~C~[EdF}Mh}@uAvSgH|_@~BrTCpFo_@rvBeDzu@Lbh@p@nG`c@j_BnDxDm@nDnY~dAfGr\\`C~DjEbA|FhRcEtPrNja@hAhXdDhGl@`FbDxH`G|c@|Czi@nGz`@c@plAlDv~@mCxSR~r@{A`^l@nT|FlW~BpdC`F`VdAt]fJ`T|@tRaErYhBbpAeHxp@PjIkAdAw@fIhEtMnJ`C~KpM`L{BjB~@jFxa@`BxErIzK",
+    "date": "2026-06-17T08:01:06Z",
+    "updated": "2026-06-17T21:45:30.727Z",
+    "totKm": 160,
+    "totDis": 1107,
+    "tappe": 2
   },
   "tappe": [
     {
@@ -28,6 +28,17 @@
       "polyline": "epyuGu}_z@b@Q?mGeSqAsI|HkCtFoI}RuByAyFbFuLm]_OjHgUuQgMbFs@xAyTpA_EfDoAbElH`Gj@jBe@dFkIdBmCrFHzGaGjAoJ|Jp@bFtCr@y@i@GfB}AH{@xF}GJOzArBxBi@|CgEnDo@a@{AlEkDpAuAt@NhJe@rAkJEu@xEoAj@cCkCaAPsK}LyKzLcLh@{KjKkIbEgQaCqFyIoAEuBbD{@EaPeX_JcJkEuJkI{@uMnBF|BbBpCKzGaE~LuCvA`B`JpIxJpCxIqBjB}By@{L^sEmAaAtCyAg@jA~D[pAnR~LbHzHC|FzBtCThCq@nMhFnGhDxAiPy@ChD|B`FpC`BjBfDdExMGlH~H|J~F~PuF`GoHle@yf@pe@J`AhCzA{BWeAhAdEvHpAfL}G|BmMNoEtCgArKpBdQ{CrEgBc@_@v@fBhA|DkCpEt@kJrDcDSuD_E_C_LsB}@m\\zBwCbAiBlEiHqAmA`EdBdD]pHoAlFCqB]ZmBfN}CnAkFjJuArGeB~Ai@nH}AbCd@tBo@vFcPpN{EjAKrE_BzDeEIcEuBwH`EyLlBaEtB}AwAo@dDnBnGiAlHuDbDeChFkGrAsD`MwG\\wDaB_@lBaBX}A`CgQbFiChCgA|P}CbG{O|AeJhFgH`PiIda@|@vBtAKrAuDbAQ`BqHpEmJtA?rB~ClGnDvAQ_@gC`DoGxEeGvD@rCwMpFZbDqAz@tCzCeKjGsFBu@s@l@t@_Ac@cCeAc@n@DjAfEzNoTxLuDoAqDTcBbNy@lE}@lCcE|B_M~@{B~AdAe@nCZhA~E_AnByHrDwCjEItAsC|K_KdDwFdLyAlAsLjBaHvJ}MvJmZ~GiH|Cz@tDeClMSzHsJrMoGVeBw@{EpEaCnO@vT~Cj@f@bBdMfOsBvCmBv@xAdKZzAlE`JnDdAoCbBgAnF~A|HkA~JtApO~JhEx@vCxC`FpJhPxLvGxBZdAq@pClBBjMbIgBSjBxGj^kK`@oD`C_EfBqHfB_fACs`@`@qBi@iCB}TqKyB{B{RuAqDyHKuAa^jYgUvAyYWqDxB~DqC}N`@kDgBcBSsDqCwD|DpC^vCbCnAHvEj@yF{A_Ce@aEsBkBqDcJtBj@}CwTvLuLg@iFsEeL|FaKo@cBLyF`CcEFkEdBgDcBt@~E}LAyEaH~LxAqHKmDr@oAMuJp@w@`Cj@xA{A~DdF~A@bA{ApJrFlOwZvD_BB}@sAaAsB_G}C}RkBaW}DiCjAgBdHrDd@vCA~Mr@lE~FrMvErAhl@er@vPzTbH_NvAOl@qBpDaDhSj@DdC",
       "date": "2026-06-13T10:25:30Z",
       "updated": "2026-06-17T21:45:17.544Z"
+    },
+    {
+      "day": 2,
+      "from": "Milano",
+      "to": "",
+      "km": 107,
+      "dislivello": 292,
+      "name": "Milano - Bergamo (Santini) - Milano",
+      "polyline": "_emtGuegw@_OoBqnCxAiS?}EoBwAx@agCgsDiFoFwBuGmFka@wNtA}KmMqJcCeEkKn@uKjAq@QeIbHop@gBsqA~DwWy@}SeJoSiAu^cFyU_CydCyGc]OmN|Aya@W}n@lCsSgDy|@`@wcAi@IAoKkHab@FeH}Bc\\_Do\\u@kFyDiK]_EmD{GeCu]oLsZkGaZlAu@pB}HyDm@aCsDmG_]oY}dAh@wDsDeE}b@e_Bu@{FGai@bDuu@v_@{vB_Cs[vGu^dBoUtMc|@?sIuC_Y|OyaAAuEeNiGgy@wNsNeFw^bDsNxIsH~@{JtLiHBaQoMkHuJmIk@yOmGeP{BaRsQqAyCMuDxCuPmNSwE{Bt@_Zc@mHaCR_KuAmNkPQsD{BkGsOg[`B}M{AqBcNuEaFyG{UqGoMoHiSvEgXaDeN{FeJcJsAkGuAg@yKg@m@lAoE\\aYfK{CxBiNiEcJ_HcMwCi[rEBkL{GiD_JpDaQxAqPgJcB{K_GuHiIsC_CoHyGqDgZa\\gGaFuGgBmHmGlIaiARm^_ViInAgU}KgDmCuA}JeWgg@iz@yQfG_G}QaW}d@wEjA_MuT_F{RqHsHeD{G[iCqIcRNgDoAeDtLut@oVac@mXgVe@sKsIsRj@mDyLmj@pCsHpAInF_H~Rn@BxFoAl@fAYNeGsS}AoI`IyClHrLhi@u@fE|IhQDhLxYbXzQf]pOxRqItXyBhUt@n@c@vFgBdCxCnFjAtFnCrEpHvF`EnSjJ|PnABBvB~EcAbWfe@`GtQlQsGpI~Lt\\|l@vF|P~GhBo@pI]js@PnAzC~ArAn\\qE|ZjI~KbU`QdV|NrS~UxGnDxBrHnIlCfGzHzAxKrPpJdQwA~IqDzGdD@nLb[uEhMxCfJ`HtMzDne@cRpLj@pAf@dAzFnJlJfPvGtVhC~RoEhMbH~UvGzErGvN`FpAjBaBvMtOl[nC`M~MhPvNxAb@tJm@zVpFfCvM@wChQvAxHnR`RbP|BbPjGtH^xH|JlQvMfHMnJsLpH{@rN{Il^cD|NdFjx@xNdObGBnEaPraA~C~[EdF}Mh}@uAvSgH|_@~BrTCpFo_@rvBeDzu@Lbh@p@nG`c@j_BnDxDm@nDnY~dAfGr\\`C~DjEbA|FhRcEtPrNja@hAhXdDhGl@`FbDxH`G|c@|Czi@nGz`@c@plAlDv~@mCxSR~r@{A`^l@nT|FlW~BpdC`F`VdAt]fJ`T|@tRaErYhBbpAeHxp@PjIkAdAw@fIhEtMnJ`C~KpM`L{BjB~@jFxa@`BxErIzK",
+      "date": "2026-06-17T08:01:06Z",
+      "updated": "2026-06-17T21:45:30.727Z"
     }
   ]
 }
