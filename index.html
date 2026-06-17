@@ -822,7 +822,8 @@
     <style>
       @media(max-width:768px) {
         #v-map-wrap { flex-direction:column !important; }
-        #v-map { width:100% !important; height:35vh !important; }
+        #v-map-container { width:100% !important; }
+        #v-map { height:35vh !important; }
         #v-map-wrap > div:last-child { width:100% !important; height:auto !important; border-left:none !important; border-top:1px solid rgba(240,90,40,0.15); }
       }
     </style>
@@ -843,7 +844,7 @@
     <style>
       @media(max-width:768px) {
         #v-next-wrap { flex-direction:column !important; }
-        #v-next-wrap > div:first-child { width:100% !important; height:35vh !important; }
+        #v-next-map-container { width:100% !important; height:35vh !important; }
         #v-next-wrap > div:last-child { width:100% !important; height:auto !important; border-left:none !important; border-top:1px solid rgba(79,195,247,0.15); }
       }
     </style>
@@ -1521,16 +1522,16 @@
     const wrap    = document.getElementById('v-map-container');
     const listEl  = wrap.nextElementSibling;
     const btn     = document.getElementById('v-expand-btn');
+    const isMobile = window.innerWidth <= 768;
     _mapExpanded  = !_mapExpanded;
     if (_mapExpanded) {
-      wrap.style.width    = '100%';
-      wrap.style.position = 'relative';
-      mapEl.style.height  = '70vh';
-      if (listEl) listEl.style.display = 'none';
+      if (!isMobile) { wrap.style.width = '100%'; wrap.style.position = 'relative'; }
+      mapEl.style.height  = isMobile ? '60vh' : '70vh';
+      if (listEl && !isMobile) listEl.style.display = 'none';
       btn.textContent = '⤡ Riduci';
     } else {
-      wrap.style.width   = '50%';
-      mapEl.style.height = '45vh';
+      if (!isMobile) wrap.style.width = '50%';
+      mapEl.style.height = isMobile ? '35vh' : '45vh';
       if (listEl) listEl.style.display = '';
       btn.textContent = '⤢ Espandi';
     }
@@ -1543,15 +1544,16 @@
     const wrap   = document.getElementById('v-next-map-container');
     const infoEl = wrap.nextElementSibling;
     const btn    = document.getElementById('v-next-expand-btn');
+    const isMobile = window.innerWidth <= 768;
     _nextMapExpanded = !_nextMapExpanded;
     if (_nextMapExpanded) {
-      wrap.style.width = '100%';
-      mapEl.style.height = '60vh';
-      if (infoEl) infoEl.style.display = 'none';
+      if (!isMobile) wrap.style.width = '100%';
+      mapEl.style.height = isMobile ? '50vh' : '60vh';
+      if (infoEl && !isMobile) infoEl.style.display = 'none';
       btn.textContent = '⤡ Riduci';
     } else {
-      wrap.style.width = '50%';
-      mapEl.style.height = '100%';
+      if (!isMobile) wrap.style.width = '50%';
+      mapEl.style.height = isMobile ? '35vh' : '100%';
       if (infoEl) infoEl.style.display = '';
       btn.textContent = '⤢ Espandi';
     }
