@@ -836,7 +836,7 @@
         </div>
         <div style="width:50%; height:45vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(79,195,247,0.15); display:flex; flex-direction:column; justify-content:center;">
           <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.8rem;">→ Prossima tappa</div>
-          <div id="v-next-title" style="display:flex; align-items:baseline; gap:0.4rem; flex-wrap:wrap;"></div>
+          <div id="v-next-title" style="display:flex; flex-direction:column; gap:0.3rem;"></div>
         </div>
       </div>
     </div>
@@ -1493,9 +1493,9 @@
     block.style.display = 'block';
     const route = (ns.from && ns.to) ? `${ns.from} → ${ns.to}` : (ns.name || '—');
     document.getElementById('v-next-title').innerHTML =
-      `<span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:0.95rem; font-weight:600; color:#FFF8F4; min-width:0; word-break:break-word;">${ns.name?`<span style='font-size:0.75rem;color:rgba(255,248,244,0.5);display:block;line-height:1.2;margin-bottom:0.1rem;'>${ns.name}</span>`:''}${route}</span>
-       <span style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:#4FC3F7; text-align:right; white-space:nowrap; min-width:3.5rem; flex-shrink:0;">${ns.km||0} km</span>
-       <span style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:rgba(79,195,247,0.6); text-align:right; white-space:nowrap; min-width:3.5rem; flex-shrink:0;">↑${ns.dis||0} m</span>`;
+      (ns.name ? `<div style="font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; color:rgba(255,248,244,0.5);">${ns.name}</div>` : '') +
+      `<div style="font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:#FFF8F4;">${route}</div>
+       <div style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:#4FC3F7; margin-top:0.2rem;">${ns.km||0} km &nbsp;·&nbsp; ↑${ns.dis||0} m</div>`;
 
     if (_nextStageMap) { _nextStageMap.remove(); _nextStageMap = null; }
     _nextStageMap = L.map('v-next-map').setView([44.5,11.3], 6);
