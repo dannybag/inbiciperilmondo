@@ -40,5 +40,14 @@
       "date": "2026-05-31T08:44:04Z",
       "updated": "2026-06-17T21:37:40.590Z"
     }
-  ]
+  ],
+  "next_stage": {
+    "name": "Oltrepo - Alta Valtidone",
+    "polyline": "gabrGinpw@fNwIrBtBi@aDfBsBdXzRdBaAnFhEvBgCzKhH`GaEvU~CbPcGtCwEjCfBfEoCnEeOxGhB|@kNaC`EmEkBpIyGpKtDh]]bMoArExF|H`BtF`KrDv@lBqF`GcGdEaA`GvDlDq@qAoEXoDlAiCpEi@|Iq`@lMmBlFgLtClG~Fj@lKdGrWaC~HbCtBqG`F`J?rExYbBfE_MjGhA|G_TxAa@nBfChD{GeEwQuCmAGyBtHyBrNhDvBaB_DqVoG_Pt@aMfI{@r^sd@pUoJzMfGnKq@~@kFwGmPr@eAjIbBxJ{CbB_DnDjAlDmBnBlEpCj@fHuGvCxCj@vHjCs@xDmQmC}Bu@{DlH}OqAuJ_EfFg@yK{AkDxHiOo@_Ej@mDh[eNtLm@nXcN|BiDAsGtF{G|BrAdEoDn^cCnJ_EtBuEvJoHr@~@aBnENrCsCnEdAjAjC}B[hCjEJ`B}EnKkJhHjDjFeK|IoClImI\\|FeFvGx@~Cc@tN~CbMyDxE~@bD_CbDl@tErRgBvCpWdCzEhMnH|A|C~DQ~AmEbGgBxCcHtGfDpD_FdEpFvB?pDrGhCaCfI`AD|FvCpE`Gk@xEtC|VaPCjGfDhKfHsTdJeHZ{EwB}F\\uAhEjG`G`XpCuLXaJnCqFw@{J|CrAtB~InCvBiAzF`BjNwHni@x@tKgD|IwFhGTdMiArFv@jHeDbMdEzJaBjAGpCqBiDL`EsBiBYfGi@kD_@xBiDqA`AjDuGaBdBlC_Dc@UrFgF{A`BbK{EaEhAdNyB{EkGmBmBh@pAlAFbEeCcCuGhDoDzHR|DgCrHcNpQ}EbSmAdHc@tMuHtJJzJuJjMjE|UhBzR|DnK|JtH~CC|L}IfAaE|MZrBhEfI[qEtEmJtTmHj`@wMv\\w@vKkDfIwCbAC{DkHpDfBfKoDcCgDl@~CtEDlJ_CHM_F}@HoHnTvO|DWfGkX~JuGaFy@hD_Gp@kFrL}VjB}BvC}JPoa@pHmC~CuIbAkJpMaAlHuJtXsLzIuDrLeFjLgZpLiDnFUiCgGvEkE}AcHwQ_F}@yAeE}DaCsN@}DjUuBrBq]qCzA{Cs@a@tD_YlG{VW}XmUqKwH}IqGi@uKsMyNFaI}D}RyN_JoMk@wDeIzPaQ|HiLbK_^dBeWyOuMsBcCzG_KzKmEvMkJwMkJkHwVwAcAeFnBqEt@yLuAcDT_GwCmAsAwE}EzKaAhGiBtAgDmAkHiPeP}QiCcUpA_FoDgAsDsIyGuB}HxFsF_Fz@rNfFhUsAdIqCbCgOoEFsApGTcJuH_E_@w@_HyKpFmHwImO`C_f@gC}[cg@}K}XcRuHi]g}@oK`KaEp@",
+    "from": "Parma",
+    "to": "Bologna",
+    "km": 67,
+    "dis": 1409,
+    "date": "2026-06-17T21:38:28.697Z"
+  }
 }
