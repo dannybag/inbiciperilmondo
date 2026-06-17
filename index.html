@@ -827,12 +827,25 @@
       }
     </style>
 
-    <!-- PROSSIMA TAPPA - mappa separata -->
-    <div id="v-next-block" style="display:none; margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(79,195,247,0.2);">
-      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.3rem;">→ Prossima tappa</div>
-      <div id="v-next-title" style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:#FFF8F4; margin-bottom:0.8rem;"></div>
-      <div id="v-next-map" style="width:100%; height:35vh; background:#111; border-radius:4px;"></div>
+    <!-- PROSSIMA TAPPA - stesso layout di Tappe percorse -->
+    <div id="v-next-block" style="display:none; margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid rgba(79,195,247,0.2);">
+      <div id="v-next-wrap" style="display:flex; gap:0;">
+        <div style="width:50%; height:35vh; flex-shrink:0;">
+          <div id="v-next-map" style="width:100%; height:100%; background:#111;"></div>
+        </div>
+        <div style="width:50%; height:35vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(79,195,247,0.15); display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.8rem;">→ Prossima tappa</div>
+          <div id="v-next-title" style="font-size:1rem; font-family:'Barlow Condensed',sans-serif; font-weight:600; color:#FFF8F4;"></div>
+        </div>
+      </div>
     </div>
+    <style>
+      @media(max-width:768px) {
+        #v-next-wrap { flex-direction:column !important; }
+        #v-next-wrap > div:first-child { width:100% !important; height:30vh !important; }
+        #v-next-wrap > div:last-child { width:100% !important; height:auto !important; border-left:none !important; border-top:1px solid rgba(79,195,247,0.15); }
+      }
+    </style>
   </div>
 </div>
 
@@ -1477,7 +1490,9 @@
       return;
     }
     block.style.display = 'block';
-    document.getElementById('v-next-title').textContent = ns.name || (ns.km ? ns.km+' km' : 'Tappa');
+    const route = (ns.from && ns.to) ? `${ns.from} → ${ns.to}` : (ns.name || '—');
+    document.getElementById('v-next-title').innerHTML =
+      `${route} <span style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:rgba(255,248,244,0.5); font-weight:400;">${ns.km||0} km · ↑${ns.dis||0} m</span>`;
 
     if (_nextStageMap) { _nextStageMap.remove(); _nextStageMap = null; }
     _nextStageMap = L.map('v-next-map').setView([44.5,11.3], 6);
