@@ -29,5 +29,14 @@
       "date": "2026-06-09T11:10:36Z",
       "updated": "2026-06-16T08:20:41.765Z"
     }
-  ]
+  ],
+  "next_stage": {
+    "name": "100 km del Passatore 2022 - Wikiloc",
+    "polyline": "mjdjGmvucAi@tMcA|AIkJuAiEcNuOuEwJkTeUwIaUbDoF}S_RbB}Lq@aKkSyo@cMkHwLWeIvDuH~LiAqA`CkIaAaD}SxHwKq@sEmE_CiQ|@gDhDiA|AaC~AuGoCyIqAeQ`EqFyFnAy@`LeOvUkDK}CrC_Bk@`@uWgDkY`AaJmDoD]eD|Age@eEeTgHkKoR{EaDuFaKbBkFuJyG}BcGj@qFqCqC`@oDqBeGyNFkEgFkB_D_HcLeKuKh@mA_EwHqIuEoBsDgEsCa@wDbAoNuKuHaDkEcDkDuIsEoDcKiBiIxCaJiDgIyG{GtA_IsHaGB{FcCcDqEqGVyEcDyMvKyHn@oCvEkJwC_RmRaWoAuHzDmG^eGyC{OuAmGwJkH}Dk@yF{BqDsFgAmDoE_MuFoGVqHkIwE}@eCqGwJZiGmJ}R~@K{HrFeBeDqDkC]}GbN{GxCsGr@uHuBqBhBoE|MoBxAmSBcGyA}H|BgLBqIxBcEwBmJY{BlBeDtLoFbDsFEeDtCuMoLsIZsGbDkLmAuJrKkBZwEaC_A\\eBtR_CrCwCN_NgG_Dq^d@cIyBuMmIyOuMkPuEUyDaCsAuHuGmMMmHzIyc@fK}WnByStAsTcIaNcDyCyYz@iNmH}D_@yEaJiQqKoDyGaEG_CaHiK_IwRiCiXkSqDI{JkHeVmIeG_IcH}DwLcC}K_@mH{EoKcKoO{YsZud@eFgBiGtAuBmCuD[aK_OMwJkT{L_HkQ}OsUk[mXsDyGkBySuEPgCqNoD_H}Lm@aBgFwCcBoDBwCeFdCkIQmDaMcCeFuIkDwAAsIaDeBt@wCiJuC[}DkC}AyCyGeBi@kAwM{B{AgDyHeCXbBkEsBoGmClA}DvNh@~Ew@bBhBx@kD]eCtCpA_IoB{C`C}FsCHKkAjByLkBLsCmCiJ~CaAoB~BmHmBoBiI{@sA|ASwDnAeDpGoAnAyAQsBkCD{CyEwFu@k@iALyDdBs@wAqE`@_KpGcI`DdFItChA_@NwCcD}K\\yD_BgMn@yL~DaHeB_@cA_MkACiBeEMwOgCh@g@}BtAcGrDOaAkIbCi@fCaPfDiExCEtB}DbEcBgA_HdBmEQkAkF_BgChCiFdA_EzJ{A}MCiWdJc^fAmObJeFrCqJrCsDo@gGfFeCjAgCcAqL`B{Hg@}BuFkB{@sBaFjDkCoBrFwL}@cF~BeI`@{RoAwIpCaJmHeG_MaVo[hBwI_A}D|CwIwGoK|BkDaJkGvFoFiCkFjBgAcCIcJkEOy@oEmIiE{BmFqF{AaAiEgEsFoCi@oDmEj@oHsCaWhCsDq@wVtBsEVyE{AqPuA_BdCqP}Ae]vAqGfHkHx@yCq@kAkIFkCoBz@{S_HoJgBoZcGoLaByUu{@i}@}AaIkLcDwGiW}PcReL}WaVgR}CmIH}KoDmMs]c[gNyg@}G}MoFwW_\\aaAg`@a^mJ{OiFqLoGs\\kHmCcJh@uK{MyT`@cGdDaIuE}Cx@uIUgEiHuC}@yCPkGrDoESqJiLqGy@oYoLoUuBwO}IkDgGaDgAkEgGgZjXk\\jJ}F_AcDyCoPdAiRnDyLyLkI{BuCkUcFoIcE}AoKSaVcEqQg]sOyLsFOuFeEqSuj@qQwOeTo`@oGi\\uTck@gKyBmC}Jr@{CeJ}Jt@_Po@uRwLce@kP_XoP}BkQaS]wHcIk_@wG}JkL{Zm@eKkHaSmDca@sMy\\gGy`@w^kd@yd@ka@qDoMkEqHmSeU{C{IeGkDmh@a}@u\\ee@odAauBoHmJ}CsMkEcI{CuCoSQgGoFgc@ohDeNcZ",
+    "from": "Milano",
+    "to": "Parma",
+    "km": 99,
+    "dis": 1330,
+    "date": "2026-06-17T15:24:00.986Z"
+  }
 }
