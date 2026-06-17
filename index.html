@@ -830,12 +830,13 @@
     <!-- PROSSIMA TAPPA - stesso layout di Tappe percorse -->
     <div id="v-next-block" style="display:none; margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid rgba(79,195,247,0.2);">
       <div id="v-next-wrap" style="display:flex; gap:0;">
-        <div style="width:50%; height:35vh; flex-shrink:0;">
+        <div style="position:relative; width:50%; height:35vh; flex-shrink:0;" id="v-next-map-container">
           <div id="v-next-map" style="width:100%; height:100%; background:#111;"></div>
+          <button onclick="expandNextMap()" id="v-next-expand-btn" title="Espandi mappa" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(79,195,247,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
         </div>
         <div style="width:50%; height:35vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(79,195,247,0.15); display:flex; flex-direction:column; justify-content:center;">
           <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.8rem;">→ Prossima tappa</div>
-          <div id="v-next-title" style="font-size:1rem; font-family:'Barlow Condensed',sans-serif; font-weight:600; color:#FFF8F4;"></div>
+          <div id="v-next-title" style="display:flex; align-items:baseline; gap:0.4rem; flex-wrap:wrap;"></div>
         </div>
       </div>
     </div>
@@ -1492,7 +1493,9 @@
     block.style.display = 'block';
     const route = (ns.from && ns.to) ? `${ns.from} → ${ns.to}` : (ns.name || '—');
     document.getElementById('v-next-title').innerHTML =
-      `${route} <span style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:rgba(255,248,244,0.5); font-weight:400;">${ns.km||0} km · ↑${ns.dis||0} m</span>`;
+      `<span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:0.95rem; font-weight:600; color:#FFF8F4; min-width:0; word-break:break-word;">${ns.name?`<span style='font-size:0.75rem;color:rgba(255,248,244,0.5);display:block;line-height:1.2;margin-bottom:0.1rem;'>${ns.name}</span>`:''}${route}</span>
+       <span style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:#4FC3F7; text-align:right; white-space:nowrap; min-width:3.5rem; flex-shrink:0;">${ns.km||0} km</span>
+       <span style="font-family:'IBM Plex Mono',monospace; font-size:0.62rem; color:rgba(79,195,247,0.6); text-align:right; white-space:nowrap; min-width:3.5rem; flex-shrink:0;">↑${ns.dis||0} m</span>`;
 
     if (_nextStageMap) { _nextStageMap.remove(); _nextStageMap = null; }
     _nextStageMap = L.map('v-next-map').setView([44.5,11.3], 6);
@@ -1532,6 +1535,27 @@
       btn.textContent = '⤢ Espandi';
     }
     setTimeout(() => _viaggioMap && _viaggioMap.invalidateSize(), 50);
+  }
+
+  let _nextMapExpanded = false;
+  function expandNextMap() {
+    const mapEl  = document.getElementById('v-next-map');
+    const wrap   = document.getElementById('v-next-map-container');
+    const infoEl = wrap.nextElementSibling;
+    const btn    = document.getElementById('v-next-expand-btn');
+    _nextMapExpanded = !_nextMapExpanded;
+    if (_nextMapExpanded) {
+      wrap.style.width = '100%';
+      mapEl.style.height = '60vh';
+      if (infoEl) infoEl.style.display = 'none';
+      btn.textContent = '⤡ Riduci';
+    } else {
+      wrap.style.width = '50%';
+      mapEl.style.height = '100%';
+      if (infoEl) infoEl.style.display = '';
+      btn.textContent = '⤢ Espandi';
+    }
+    setTimeout(() => _nextStageMap && _nextStageMap.invalidateSize(), 50);
   }
 
   function toggleViaggio() {
