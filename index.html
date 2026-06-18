@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="https://dannybag.github.io/inbiciperilmondo/img/BikeIconBW.png">
-<link rel="apple-touch-icon" href="https://dannybag.github.io/inbiciperilmondo/img/BikeIconBW.png">
-<link rel="shortcut icon" href="https://dannybag.github.io/inbiciperilmondo/img/BikeIconBW.png">
+<link rel="icon" type="image/png" href="img/BikeIconBW.png">
+<link rel="apple-touch-icon" href="https://mipa.dannybag.org/img/BikeIconBW.png">
+<link rel="shortcut icon" href="img/BikeIconBW.png">
 <link rel="manifest" href="manifest.json">
 <title>Una Bici per il Mondo · Milano → Palermo</title>
 <style>
@@ -862,7 +862,7 @@
   </div>
   <div class="progress-track">
     <div class="progress-fill" style="width:0%"></div>
-    <div class="progress-bike"><img src="https://dannybag.github.io/inbiciperilmondo/img/DB_ICO_TRASP.png" alt="bici" style="height:1.8rem; width:auto; display:block;"></div>
+    <div class="progress-bike"><img src="https://mipa.dannybag.org/img/DB_ICO_TRASP.png" alt="bici" style="height:1.8rem; width:auto; display:block;"></div>
   </div>
   <div class="progress-footer">
     <span class="progress-pct">0% raggiunto</span>
@@ -1206,7 +1206,7 @@
   const _si = [57,60,60,57,64,64];
   const _ss = [63,57,106,104,109,59,107,60,105,56,58,64,60,108,109,62,105,104,60,59,107,58,57,104,105,104,56,58,56,58,60,62,109,109,63,62,109,62,107,57];
   const _dec = (a) => a.map(c => String.fromCharCode(c - 7)).join('');
-  const STRAVA_REDIRECT = 'https://dannybag.github.io/inbiciperilmondo/index.html';
+  const STRAVA_REDIRECT = 'https://mipa.dannybag.org/index.html';
 
   function stravaConnect() {
     const url = `https://www.strava.com/oauth/authorize?client_id=${_dec(_si)}&response_type=code&redirect_uri=${encodeURIComponent(STRAVA_REDIRECT)}&approval_prompt=force&scope=activity:read_all`;
