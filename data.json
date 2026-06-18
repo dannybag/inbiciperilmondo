@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 2,
-    "from": "Pavia",
-    "to": "Alta Valtidone",
-    "km": 66,
-    "dislivello": 1431,
-    "name": "Oltrepo",
-    "polyline": "{_qqGkoww@iAYv@mF_HwPn@_AzI|AvJ}CxAwCpDhApDqBlBpEpCf@fHuGnCrC`ArIxEeFxAaMoCgBu@uDpH{PsAaJwDjFk@uK}AgDzHwOs@}Dj@iD|QyFnHmFlMw@hMyIpIaCvBaDDcHrFuG`CvAxDqDbWsBcWlByDpDiA_Ax@x@wImk@wByEyEsB}@gGaRmXgIoi@gHmMoFcWuDuHYwHhE{PdFkh@LgH{BoJ_AsNxC{LtAJx@dMnDtG~F_Jj@_H~C_JzQ_NjIeCBzF{AjE`AnBfTaCtBcQdGzC`DuIxDtCxTou@`TySnIdKzKdY~K|`@pAvKzCxFlOtMjJl@`JtJ~ETfGxFdFA~J~LmAbCsDJjJtSdEzAwApIpAvFaArEkDxDz@bCbEdB{CzGjA~E|DnBvFaAtJ{DzAwCwASOrBeErCkVzU_CtPbD~E|hAlkJmHgAjApHuBcCiEbAiFpIQlG}B~GgNvQcC`OaBlCRxC}AbCi@dN}GzHA|K_I~HeAjGzEzRTnKjF|PbLnJ`DO|L_J`AyDxMZfB`EpI@cEfDiBpHiC|FkCfD_Hl_@yMd]{@nKkDnIqClAIaEoHpDhBhKwCgC}Dj@|ClEFtJ_CHGqE{@MwH~TvOvD_@tGcXrJwGaF{@jDuFd@qF|LyVlBcApC{LTqGfE{XfBwCbD_It@yJvMaAlHyJbY}LbJgD`L_FdLq[xMiExN_GvG_JzR}B|ZgQz]cEAcG|QoA~LyEdR|@rD{BpLy@vVvCfW~KbXx@~GwOuB_VPiBdCr@fH{D}@wDlE}GuHeC}LR|A?qBx@\\aA[FeBbHaXxHqKBcFyBuF~@mLkB}FfB_HpDka@m@qGl@}UrBiE_AyObBiKwAqPjCsBNkCc@_DaG_HcAiOeH`AoC{AsHnPcIyCsB{CiCbG_DpC}E{B}BzCeDq@aJjQqB\\qEtIa@xImDi@PbC}D`CkOvTCvS}AfE{G~Hp@dKcEvNmAeP{PiLWqH~A{DGwHg@oCkB_AK_F}BdATuDuCnAwAsEaCpCrF_i@sMeJgG`As@fCTyA_BR]yAdBkDj@eIwEkEg@wJvEmLrDuo@Vm^nFiRl@gIyV_PgMkBiCfHuJhKkE~M_M}O{GaFqKuCjKcIhKqAqJqJqHxAcAkA~BmLkBm[vBxP~ClFxAeAsBu]Ckn@lBqH_@sFhOIxW~EwAkLuDoB`A_EgCuBrBw@xDqFJgGyCq@_@}BnHq@vAkH~GIvAgEiC{QXiGgBiVlLyOfK{GvGRnEeMvFvAxH{T~DrBtCmHaEyPsCgAGaC|HwBxE`CbKg@qC}UyG_Qn@cMjH]`_@ee@rUqJxBIdJbGlPD",
-    "date": "2026-05-31T08:44:04Z",
-    "updated": "2026-06-18T22:21:08.038Z",
-    "totKm": 151,
-    "totDis": 1684,
-    "tappe": 2
+    "day": 1,
+    "from": "Milano",
+    "to": "",
+    "km": 85,
+    "dislivello": 253,
+    "name": "Z4 - Terre Natali - Z4",
+    "polyline": "ccmtG}ggw@bAjBsDdJpz@pp@dDdpBrNfu@GvWp@hB~e@|He@pT^b_@V|BjE~@dA~`A~GrShWfb@lErD`@tGbFdPvP|U|SeL`Jv[p\\gW|PyC|Iv@dDlQjBv\\t@tVKrx@hB|RhZ|]|B[~LwKdWqGdf@aBvDtADjJgZbHh@xGiFhAr@rJpHr@`OmPxJwExAvUl\\`y@zEyFxAhArG}G`EZ]qB`AaCdLmBnJiFKeDjFwDeBqCqKtGeBBpBsRdK{IjKkDE{JhVgMpESzBhEhCuFtFvBpAqFzFuGlCeKdHkKvHkC~DsHdJpMl@aE~MyQmAgHt@wCvC\\bEkHmI}GmoAko@eCiCbD_GOiBmPaJgDcUZjAZoBlH_DtJyDrDxAtDmD~MfJxFcFgLyGuJNuCkJxAyFqUqc@dKcPIoAn[s[gCiQ[aF_FkCyJnAcDk]d@yC{@eDnAk@bAaMmA}i@tA{I|F{Nr@wG~Lc@dq@{|@tBdBtE_BnDcGpTlWfGwKxEvFoGxOfN|Sum@vq@TrCcF|DnFbP~FmE`CArY|Y~J{ZtKiBvCjI~ChJkBhFrBiEo@xD|EpFxBGdH_Mlh@`f@fGsF|LjKXlKe@ud@tF_BbBeHjQQdElXn@xNpN^tEeGOcD|Kyg@aA{OsEhA_CqBkFcVpDqRfEkDp@yIw@{CfE}m@s@aKxLgH~EuIfD{Bk@_H}IpAcOycApR}Kh@zAnIkBp@jD~PsGe@uG~BeCcAyNz@sJhMyNa@uGrEaK}F{LrBoEiCuIw@cLuAgCeCvA_PlMdGjTq_Axj@aHgj@kOk`@sFzBwBgHuDmAHkDuC{@}P|YuVvUoT}[u[dUoG}Og\\rQ|CnWcBjAkDw@eG_Tcw@jXyEwf@rA_De@cYgEyMaCoRgGuJ{NkIkB_L`AqBgI_WwGpAyJwVaFlByQo@gNcTsJwWnLmU`MwIgBuLgAqNd@kBzQkTve@c^gOmXab@`NmH|IgRjBiJpI{DIk@z^mPaKeCvIp@bDsLrLcQnJeK|@]lCnDd_@eC~E`L`n@]nCqBjA`FCdFtYc@|j@uW~F}JlSqDtZmFfMBdEuBs@mOzRaWdJoExEgAcr@{B}HgB_@DcIaFqPsF}DaTnReEcGyKnD{DrGeBhIwBcA}@dD~EdEnAmAtAzAyCg@oEvQaHdC`B}B@wPmDoIyAg@kExIoBe@mEpJaJp@_MoEk@pEoBtBxAbIcBdBs\\{Eq@u@`FgO|E{FzByGNeG{AqAwJxC{InR_Ak@cBrBks@`T}BlJyBtBmMp@et@Jc@zm@",
+    "date": "2026-06-11T07:53:06Z",
+    "updated": "2026-06-18T22:27:03.100Z",
+    "totKm": 85,
+    "totDis": 253,
+    "tappe": 1
   },
   "tappe": [
     {
@@ -28,17 +28,6 @@
       "polyline": "ccmtG}ggw@bAjBsDdJpz@pp@dDdpBrNfu@GvWp@hB~e@|He@pT^b_@V|BjE~@dA~`A~GrShWfb@lErD`@tGbFdPvP|U|SeL`Jv[p\\gW|PyC|Iv@dDlQjBv\\t@tVKrx@hB|RhZ|]|B[~LwKdWqGdf@aBvDtADjJgZbHh@xGiFhAr@rJpHr@`OmPxJwExAvUl\\`y@zEyFxAhArG}G`EZ]qB`AaCdLmBnJiFKeDjFwDeBqCqKtGeBBpBsRdK{IjKkDE{JhVgMpESzBhEhCuFtFvBpAqFzFuGlCeKdHkKvHkC~DsHdJpMl@aE~MyQmAgHt@wCvC\\bEkHmI}GmoAko@eCiCbD_GOiBmPaJgDcUZjAZoBlH_DtJyDrDxAtDmD~MfJxFcFgLyGuJNuCkJxAyFqUqc@dKcPIoAn[s[gCiQ[aF_FkCyJnAcDk]d@yC{@eDnAk@bAaMmA}i@tA{I|F{Nr@wG~Lc@dq@{|@tBdBtE_BnDcGpTlWfGwKxEvFoGxOfN|Sum@vq@TrCcF|DnFbP~FmE`CArY|Y~J{ZtKiBvCjI~ChJkBhFrBiEo@xD|EpFxBGdH_Mlh@`f@fGsF|LjKXlKe@ud@tF_BbBeHjQQdElXn@xNpN^tEeGOcD|Kyg@aA{OsEhA_CqBkFcVpDqRfEkDp@yIw@{CfE}m@s@aKxLgH~EuIfD{Bk@_H}IpAcOycApR}Kh@zAnIkBp@jD~PsGe@uG~BeCcAyNz@sJhMyNa@uGrEaK}F{LrBoEiCuIw@cLuAgCeCvA_PlMdGjTq_Axj@aHgj@kOk`@sFzBwBgHuDmAHkDuC{@}P|YuVvUoT}[u[dUoG}Og\\rQ|CnWcBjAkDw@eG_Tcw@jXyEwf@rA_De@cYgEyMaCoRgGuJ{NkIkB_L`AqBgI_WwGpAyJwVaFlByQo@gNcTsJwWnLmU`MwIgBuLgAqNd@kBzQkTve@c^gOmXab@`NmH|IgRjBiJpI{DIk@z^mPaKeCvIp@bDsLrLcQnJeK|@]lCnDd_@eC~E`L`n@]nCqBjA`FCdFtYc@|j@uW~F}JlSqDtZmFfMBdEuBs@mOzRaWdJoExEgAcr@{B}HgB_@DcIaFqPsF}DaTnReEcGyKnD{DrGeBhIwBcA}@dD~EdEnAmAtAzAyCg@oEvQaHdC`B}B@wPmDoIyAg@kExIoBe@mEpJaJp@_MoEk@pEoBtBxAbIcBdBs\\{Eq@u@`FgO|E{FzByGNeG{AqAwJxC{InR_Ak@cBrBks@`T}BlJyBtBmMp@et@Jc@zm@",
       "date": "2026-06-11T07:53:06Z",
       "updated": "2026-06-18T22:27:03.100Z"
-    },
-    {
-      "day": 2,
-      "from": "Pavia",
-      "to": "Alta Valtidone",
-      "km": 66,
-      "dislivello": 1431,
-      "name": "Oltrepo",
-      "polyline": "{_qqGkoww@iAYv@mF_HwPn@_AzI|AvJ}CxAwCpDhApDqBlBpEpCf@fHuGnCrC`ArIxEeFxAaMoCgBu@uDpH{PsAaJwDjFk@uK}AgDzHwOs@}Dj@iD|QyFnHmFlMw@hMyIpIaCvBaDDcHrFuG`CvAxDqDbWsBcWlByDpDiA_Ax@x@wImk@wByEyEsB}@gGaRmXgIoi@gHmMoFcWuDuHYwHhE{PdFkh@LgH{BoJ_AsNxC{LtAJx@dMnDtG~F_Jj@_H~C_JzQ_NjIeCBzF{AjE`AnBfTaCtBcQdGzC`DuIxDtCxTou@`TySnIdKzKdY~K|`@pAvKzCxFlOtMjJl@`JtJ~ETfGxFdFA~J~LmAbCsDJjJtSdEzAwApIpAvFaArEkDxDz@bCbEdB{CzGjA~E|DnBvFaAtJ{DzAwCwASOrBeErCkVzU_CtPbD~E|hAlkJmHgAjApHuBcCiEbAiFpIQlG}B~GgNvQcC`OaBlCRxC}AbCi@dN}GzHA|K_I~HeAjGzEzRTnKjF|PbLnJ`DO|L_J`AyDxMZfB`EpI@cEfDiBpHiC|FkCfD_Hl_@yMd]{@nKkDnIqClAIaEoHpDhBhKwCgC}Dj@|ClEFtJ_CHGqE{@MwH~TvOvD_@tGcXrJwGaF{@jDuFd@qF|LyVlBcApC{LTqGfE{XfBwCbD_It@yJvMaAlHyJbY}LbJgD`L_FdLq[xMiExN_GvG_JzR}B|ZgQz]cEAcG|QoA~LyEdR|@rD{BpLy@vVvCfW~KbXx@~GwOuB_VPiBdCr@fH{D}@wDlE}GuHeC}LR|A?qBx@\\aA[FeBbHaXxHqKBcFyBuF~@mLkB}FfB_HpDka@m@qGl@}UrBiE_AyObBiKwAqPjCsBNkCc@_DaG_HcAiOeH`AoC{AsHnPcIyCsB{CiCbG_DpC}E{B}BzCeDq@aJjQqB\\qEtIa@xImDi@PbC}D`CkOvTCvS}AfE{G~Hp@dKcEvNmAeP{PiLWqH~A{DGwHg@oCkB_AK_F}BdATuDuCnAwAsEaCpCrF_i@sMeJgG`As@fCTyA_BR]yAdBkDj@eIwEkEg@wJvEmLrDuo@Vm^nFiRl@gIyV_PgMkBiCfHuJhKkE~M_M}O{GaFqKuCjKcIhKqAqJqJqHxAcAkA~BmLkBm[vBxP~ClFxAeAsBu]Ckn@lBqH_@sFhOIxW~EwAkLuDoB`A_EgCuBrBw@xDqFJgGyCq@_@}BnHq@vAkH~GIvAgEiC{QXiGgBiVlLyOfK{GvGRnEeMvFvAxH{T~DrBtCmHaEyPsCgAGaC|HwBxE`CbKg@qC}UyG_Qn@cMjH]`_@ee@rUqJxBIdJbGlPD",
-      "date": "2026-05-31T08:44:04Z",
-      "updated": "2026-06-18T22:21:08.038Z"
     }
   ]
 }
