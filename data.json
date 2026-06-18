@@ -4,30 +4,7 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 1,
-    "from": "Milano",
-    "to": "",
-    "km": 85,
-    "dislivello": 253,
-    "name": "Z4 - Terre Natali - Z4",
-    "polyline": "ccmtG}ggw@bAjBsDdJpz@pp@dDdpBrNfu@GvWp@hB~e@|He@pT^b_@V|BjE~@dA~`A~GrShWfb@lErD`@tGbFdPvP|U|SeL`Jv[p\\gW|PyC|Iv@dDlQjBv\\t@tVKrx@hB|RhZ|]|B[~LwKdWqGdf@aBvDtADjJgZbHh@xGiFhAr@rJpHr@`OmPxJwExAvUl\\`y@zEyFxAhArG}G`EZ]qB`AaCdLmBnJiFKeDjFwDeBqCqKtGeBBpBsRdK{IjKkDE{JhVgMpESzBhEhCuFtFvBpAqFzFuGlCeKdHkKvHkC~DsHdJpMl@aE~MyQmAgHt@wCvC\\bEkHmI}GmoAko@eCiCbD_GOiBmPaJgDcUZjAZoBlH_DtJyDrDxAtDmD~MfJxFcFgLyGuJNuCkJxAyFqUqc@dKcPIoAn[s[gCiQ[aF_FkCyJnAcDk]d@yC{@eDnAk@bAaMmA}i@tA{I|F{Nr@wG~Lc@dq@{|@tBdBtE_BnDcGpTlWfGwKxEvFoGxOfN|Sum@vq@TrCcF|DnFbP~FmE`CArY|Y~J{ZtKiBvCjI~ChJkBhFrBiEo@xD|EpFxBGdH_Mlh@`f@fGsF|LjKXlKe@ud@tF_BbBeHjQQdElXn@xNpN^tEeGOcD|Kyg@aA{OsEhA_CqBkFcVpDqRfEkDp@yIw@{CfE}m@s@aKxLgH~EuIfD{Bk@_H}IpAcOycApR}Kh@zAnIkBp@jD~PsGe@uG~BeCcAyNz@sJhMyNa@uGrEaK}F{LrBoEiCuIw@cLuAgCeCvA_PlMdGjTq_Axj@aHgj@kOk`@sFzBwBgHuDmAHkDuC{@}P|YuVvUoT}[u[dUoG}Og\\rQ|CnWcBjAkDw@eG_Tcw@jXyEwf@rA_De@cYgEyMaCoRgGuJ{NkIkB_L`AqBgI_WwGpAyJwVaFlByQo@gNcTsJwWnLmU`MwIgBuLgAqNd@kBzQkTve@c^gOmXab@`NmH|IgRjBiJpI{DIk@z^mPaKeCvIp@bDsLrLcQnJeK|@]lCnDd_@eC~E`L`n@]nCqBjA`FCdFtYc@|j@uW~F}JlSqDtZmFfMBdEuBs@mOzRaWdJoExEgAcr@{B}HgB_@DcIaFqPsF}DaTnReEcGyKnD{DrGeBhIwBcA}@dD~EdEnAmAtAzAyCg@oEvQaHdC`B}B@wPmDoIyAg@kExIoBe@mEpJaJp@_MoEk@pEoBtBxAbIcBdBs\\{Eq@u@`FgO|E{FzByGNeG{AqAwJxC{InR_Ak@cBrBks@`T}BlJyBtBmMp@et@Jc@zm@",
-    "date": "2026-06-11T07:53:06Z",
-    "updated": "2026-06-18T22:27:03.100Z",
-    "totKm": 85,
-    "totDis": 253,
-    "tappe": 1
+    "day": 0
   },
-  "tappe": [
-    {
-      "day": 1,
-      "from": "Milano",
-      "to": "",
-      "km": 85,
-      "dislivello": 253,
-      "name": "Z4 - Terre Natali - Z4",
-      "polyline": "ccmtG}ggw@bAjBsDdJpz@pp@dDdpBrNfu@GvWp@hB~e@|He@pT^b_@V|BjE~@dA~`A~GrShWfb@lErD`@tGbFdPvP|U|SeL`Jv[p\\gW|PyC|Iv@dDlQjBv\\t@tVKrx@hB|RhZ|]|B[~LwKdWqGdf@aBvDtADjJgZbHh@xGiFhAr@rJpHr@`OmPxJwExAvUl\\`y@zEyFxAhArG}G`EZ]qB`AaCdLmBnJiFKeDjFwDeBqCqKtGeBBpBsRdK{IjKkDE{JhVgMpESzBhEhCuFtFvBpAqFzFuGlCeKdHkKvHkC~DsHdJpMl@aE~MyQmAgHt@wCvC\\bEkHmI}GmoAko@eCiCbD_GOiBmPaJgDcUZjAZoBlH_DtJyDrDxAtDmD~MfJxFcFgLyGuJNuCkJxAyFqUqc@dKcPIoAn[s[gCiQ[aF_FkCyJnAcDk]d@yC{@eDnAk@bAaMmA}i@tA{I|F{Nr@wG~Lc@dq@{|@tBdBtE_BnDcGpTlWfGwKxEvFoGxOfN|Sum@vq@TrCcF|DnFbP~FmE`CArY|Y~J{ZtKiBvCjI~ChJkBhFrBiEo@xD|EpFxBGdH_Mlh@`f@fGsF|LjKXlKe@ud@tF_BbBeHjQQdElXn@xNpN^tEeGOcD|Kyg@aA{OsEhA_CqBkFcVpDqRfEkDp@yIw@{CfE}m@s@aKxLgH~EuIfD{Bk@_H}IpAcOycApR}Kh@zAnIkBp@jD~PsGe@uG~BeCcAyNz@sJhMyNa@uGrEaK}F{LrBoEiCuIw@cLuAgCeCvA_PlMdGjTq_Axj@aHgj@kOk`@sFzBwBgHuDmAHkDuC{@}P|YuVvUoT}[u[dUoG}Og\\rQ|CnWcBjAkDw@eG_Tcw@jXyEwf@rA_De@cYgEyMaCoRgGuJ{NkIkB_L`AqBgI_WwGpAyJwVaFlByQo@gNcTsJwWnLmU`MwIgBuLgAqNd@kBzQkTve@c^gOmXab@`NmH|IgRjBiJpI{DIk@z^mPaKeCvIp@bDsLrLcQnJeK|@]lCnDd_@eC~E`L`n@]nCqBjA`FCdFtYc@|j@uW~F}JlSqDtZmFfMBdEuBs@mOzRaWdJoExEgAcr@{B}HgB_@DcIaFqPsF}DaTnReEcGyKnD{DrGeBhIwBcA}@dD~EdEnAmAtAzAyCg@oEvQaHdC`B}B@wPmDoIyAg@kExIoBe@mEpJaJp@_MoEk@pEoBtBxAbIcBdBs\\{Eq@u@`FgO|E{FzByGNeG{AqAwJxC{InR_Ak@cBrBks@`T}BlJyBtBmMp@et@Jc@zm@",
-      "date": "2026-06-11T07:53:06Z",
-      "updated": "2026-06-18T22:27:03.100Z"
-    }
-  ]
+  "tappe": []
 }
