@@ -879,7 +879,8 @@
 (function() {
   const AUTH_DURATION = 20 * 60 * 1000;
   const ts = localStorage.getItem('auth-ts');
-  if (!ts || (Date.now() - parseInt(ts)) >= AUTH_DURATION) {
+  const hasStravaCode = new URLSearchParams(window.location.search).has('code');
+  if (!hasStravaCode && (!ts || (Date.now() - parseInt(ts)) >= AUTH_DURATION)) {
     window.location.href = 'index.html';
   }
 })();
