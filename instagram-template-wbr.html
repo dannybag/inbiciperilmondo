@@ -682,6 +682,7 @@
         <div id="s-info-group" style="position:absolute; bottom:0; left:0; right:0; z-index:2; padding:2.5rem 1.2rem 1.2rem; background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%); cursor:grab;">
           <div class="open-day-label">Tappa</div>
           <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; cursor:text;">01</div>
+          <div id="s-date" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; font-weight:600; letter-spacing:0.05em; color:rgba(255,248,244,0.6); margin-top:0.2rem;"></div>
           <div class="open-from-to" id="s-from-to">Milano → Bologna</div>
           <div class="open-km" id="s-km">85 km · ↑500m</div>
         </div>
@@ -716,6 +717,7 @@
         </div>
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge">TAPPA 01</div>
+          <div id="s-date-2" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;"></div>
           <div class="media-tag" id="s-media-tag" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none; display:flex; align-items:center; gap:0.4rem;"><img src="https://mipa.dannybag.org/img/OrangBike2.png" alt="" style="height:2.5rem; width:auto; vertical-align:middle; margin-right:0.5rem;">Una Bici per il Mondo</div>
         </div>
         <!-- Caption trascinabile + bottone frase -->
@@ -921,6 +923,35 @@ function pad(n) { return String(n).padStart(2, '0'); }
 
 
 // Sincronizza giorno/data: modifica manuale su s-day-num si propaga a badge e extra
+
+// ---- DATA CALENDARIO (editabile, separata dal numero tappa) ----
+function defaultDateStr() {
+  var MESI = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+  var d = new Date();
+  return String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
+}
+
+function initDateFields() {
+  var d1 = document.getElementById('s-date');
+  var d2 = document.getElementById('s-date-2');
+  var def = defaultDateStr();
+  if (d1 && !d1.textContent) d1.textContent = def;
+  if (d2 && !d2.textContent) d2.textContent = def;
+}
+
+function syncDateField(srcId) {
+  var src = document.getElementById(srcId);
+  if (!src || src._synced) return;
+  src._synced = true;
+  src.addEventListener('input', function() {
+    var val = src.textContent;
+    ['s-date','s-date-2'].forEach(function(id) {
+      if (id !== srcId) { var el = document.getElementById(id); if (el) el.textContent = val; }
+    });
+    document.querySelectorAll('[id^="s-date-extra"]').forEach(function(el) { el.textContent = val; });
+  });
+}
+
 function syncDayFromMain() {
   var src = document.getElementById('s-day-num');
   if (!src || src._synced) return;
@@ -1327,6 +1358,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Default image
   setTimeout(loadDefaultOpenPhoto, 200);
   syncDayFromMain();
+  initDateFields();
+  syncDateField('s-date');
+  syncDateField('s-date-2');
   // Drag s-open-tag, s-media-tag, s-info-group, s-handle-2
   var openTag = document.getElementById('s-open-tag'); if (openTag) simpleDrag(openTag);
   var mediaTag = document.getElementById('s-media-tag'); if (mediaTag) simpleDrag(mediaTag);
@@ -1668,6 +1702,7 @@ function addPhotoSlide() {
         </div>
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge-extra${extraSlideCount}">TAPPA 01</div>
+          <div id="s-date-extra${extraSlideCount}" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;">${document.getElementById('s-date-2')?.textContent || ''}</div>
           <div class="media-tag" style="color:var(--orange); display:flex; align-items:center; gap:0.4rem;"><img src="https://mipa.dannybag.org/img/OrangBike2.png" alt="" style="height:2.5rem; width:auto; vertical-align:middle; margin-right:0.5rem;">Una Bici per il Mondo</div>
         </div>
         <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
@@ -1691,6 +1726,7 @@ function addPhotoSlide() {
   setTimeout(() => {
     const cap = document.getElementById('s-caption-extra' + extraSlideCount);
     if (cap) makeDraggable(cap);
+    syncDateField('s-date-extra' + extraSlideCount);
   }, 100);
 
   // Sync data from current slide
