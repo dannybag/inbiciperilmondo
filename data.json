@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 3,
-    "from": "Rifuggio Lausen",
-    "to": "Verona",
-    "km": 35,
-    "dislivello": 161,
-    "name": "Rifugio Lausen  - Verona",
-    "polyline": "s`ouG}bzbA_@Xa@nCVt@rAdA|Bo@|DXtCcBdBBxEkB|IDb@a@q@hAsElBS`@HZbFpDf@|C?|@_AjEBxAS`AH|@x@xADvAn@lBk@jEJfBhCdEhBjEzD|D@r@oAz@Or@Jl@~@x@x@rBe@zBBh@jBXd@nBtBzB^pEdH`Hn@T|BaAfDpDfAdCt@nGxBfEpFAlDv@hEaArApAx@LxAcCl@k@`Ch@xAGzDs@jCsCx@?fC`AlCuB~FzDvHPzDoDEw@eA_DIuBTcDzAaIl@Un@TdAnCv@`AtDl@zAe@|GqGtAMv@\\zFbFT|@MvCZz@vCxAbAbAThA?bBgAvFlArHrArCfHjHjArBvClKQhAcAv@BlAhHjE`EvGn@zBN|Bq@tDb@I|@gDLkBEcEfEY|An@t@hBxBvNp@jB`D`CrBnElFbA`@`Aj@tDt@|A`M~G`B`BrAdD~@t@bVv@nQkAtGeBhEkGbEtAhD?bOqMbHeIxEGrFmAbAk@lDwDlB]dEsBdSuErBuC|AgA|DfBbDcClDE~Ac@lHoHnF}CvCeFnBeFvAgAtEHzGrElFAbFcAdJqE~El@xAEvFcDlF[nEwBjCLSc@Xl@pCT~XkE`BNtCbBtFAlOfCrPaGrCkCnAW~GhD|AzF|@v@jBq@jByBxFTtAyAtAm@z@TjBzCh@FxAcAfCbB|COtG|EpEi@`AwAz@KxA`CtClBbApBjAjHD`GT`CRr@r@d@hBSfC_DbAkCb@gDl@O~CtGv@xHm@lJPz@pBlD\\pAp@rKp@f@t@[rAyD~CgGnCk@`AuB`@YpAVjAfDH|EnC~Pn@fJn@pAfAQpDkE@_ByAmGCwAbH}JlA_FbALpC`FlCbBpBP`Ce@Pb@AlC\\~@bHtClBtB`A]`@{DxC}AIf@kAlAAh@hCbIn@`EWp@eDXCl@`CDvHlFjDpF~CfCzJvLlI|GlBzE^GGkAaBoHu@gABUdCxBbEvFhObBdAh@n@~BnAp[`AtBjAv@lI`C~Nr@jCaAlFkDhEeAlPGhIaApDeA~Al@tKhJhCjA|a@~BjAf@tAlBpAi@`A\\rA|AfDhLvEjc@zC~HlBjCfBjHjAjKjHbe@fCbOfKpnAb@RrJq@nBzHuA~B@ZxGrN~AtJjFjDnGlC|IUxAh@bCfDnElM~HxLFrAO~@sGpNk@|BWlWj@dA`BlAoCvS_@pAB^b@d@A`@iFnIfBxH}AbNjC~BfYpMLvAhGt@hArIO|BAtCdAvEr@Gb@p@IP@S",
-    "date": "2026-06-21T09:04:49Z",
-    "updated": "2026-06-21T17:23:54.060Z",
-    "totKm": 258,
-    "totDis": 2317,
-    "tappe": 3
+    "day": 2,
+    "from": "Milano",
+    "to": "",
+    "km": 57,
+    "dislivello": 1318,
+    "name": "Sona - Rifugio Lausen (BikeTrac)",
+    "polyline": "mnhtG_zcaAlDyLsAke@vAcDeCgFYwGj@oVqDa|BhCgg@?kNgA_YiByPvXe\\dEgHlIeC|FmJlSeCFaB{DqLdB~HpAlACpAuAmCkD}KeIg^gEkMcBaL_IuEGeBvAmFSaUmDyDqNso@HaEcE}HiHkYc@aFoOoj@mLiWsE{Rg@_K~@sNiAqMiEiSiAq[Dgd@`CwYoAoDiIzByA{F\\wG~CwIu@_AVd@|@aD@aHzAwAcC}KpGyIzBsIbCkDk@}D{@~A_DVbFuAwA}EbAzAn@}ArDySBgFwDf@nB`FnA}@jFyRnG{JbDqTaEiB~@oYlIqU}I{N}DsLgCmDeJ`@}GqA}GeHzEjCbA]{@^_GuDcAaHsGqNkFkGsEkBeFsOo@^`@eBsH_Vn@oBnGmAJ{AcE}c@gNs{@mBoIgGgMmE{a@_CeJ_BkDiBcAiMcWXx@gCeB}DoI`AnBfGdIvAjEaBj@uFoH}B]k@_DwNr@{FrBxEcCoN`FuCq@yMjCiNAiHzAqIzE}IYuCzGue@iJqAjCmPpCmDeEMoEwHmBiKRwNvEwGrGgRnAm_@eE_EgBkAoEca@{PsTaEyAiEsCaCwTDi^eQeCI{CtBoDyA}CxAeGEuFiBsFbAmIk@mGsB{CjE}D@mD`DwDwE}EaAeBgEeCOeD{CeEXsEoEkC~@oNmAqFfEaLsCoC`AaAdD{GpBgCYsMjIqG{@gHv@cMcBuJd@oDfCaF?uCxCu@`DmQjB{@nAi@vFiKxJsCvIsJhGqG`BqCxHkF}AmIj@cLhMsFMsKjGqCnEuBx@aAbDwKhDuB@gG{DaA~EeLvFsFrJuEvBuCfG{AJsF~FgD|@}E_A}LvFqIjAy@m@`@cArOqKpGwItFiEuLXxCaCwE[yLfE}EGkAhCRuDmAqBUwKcBd@_HkCgCcGiFiEYeGnEqLbA_HnAiBzAh@pEmCZmObNn@|D{AJeFfByAtAmJgEiHvDfCbAbCj@hK[bC|AlHQbCmE`DE~CgKCjC~JElBgG|A{Kh@e@jF~CbC}CbF`BnDq@fCtE~AAhB_Bx@{FgB_DoGsGuGDsFhB{CxC}NrAcCgJ|DyBaB{A}Gb@_CaAyWxFkIbEqPcPoBsIsJcGPtBeMs@mEz@qTlEsFrEwJj@wKlBaHLeF_CiD_AiEjCkIyAbEq@qCuBhCZ{AyDkDp@}G}DpDmFMqB}HIiGx@iBqAq@oAFqBjDeCaBgEz@kLw@eBcDeCmL}CsD}Dh@_H{Ga@wEwCaFeBWVuCaCsFxAwC{DgEoFgK\\wHq@wEiAeBpA_Mi@kDmFcEvG{EgKVuI`CcPe@rAqDfDT",
+    "date": "2026-06-20T08:11:48Z",
+    "updated": "2026-06-20T21:40:30.901Z",
+    "totKm": 223,
+    "totDis": 2156,
+    "tappe": 2
   },
   "tappe": [
     {
@@ -39,26 +39,6 @@
       "polyline": "mnhtG_zcaAlDyLsAke@vAcDeCgFYwGj@oVqDa|BhCgg@?kNgA_YiByPvXe\\dEgHlIeC|FmJlSeCFaB{DqLdB~HpAlACpAuAmCkD}KeIg^gEkMcBaL_IuEGeBvAmFSaUmDyDqNso@HaEcE}HiHkYc@aFoOoj@mLiWsE{Rg@_K~@sNiAqMiEiSiAq[Dgd@`CwYoAoDiIzByA{F\\wG~CwIu@_AVd@|@aD@aHzAwAcC}KpGyIzBsIbCkDk@}D{@~A_DVbFuAwA}EbAzAn@}ArDySBgFwDf@nB`FnA}@jFyRnG{JbDqTaEiB~@oYlIqU}I{N}DsLgCmDeJ`@}GqA}GeHzEjCbA]{@^_GuDcAaHsGqNkFkGsEkBeFsOo@^`@eBsH_Vn@oBnGmAJ{AcE}c@gNs{@mBoIgGgMmE{a@_CeJ_BkDiBcAiMcWXx@gCeB}DoI`AnBfGdIvAjEaBj@uFoH}B]k@_DwNr@{FrBxEcCoN`FuCq@yMjCiNAiHzAqIzE}IYuCzGue@iJqAjCmPpCmDeEMoEwHmBiKRwNvEwGrGgRnAm_@eE_EgBkAoEca@{PsTaEyAiEsCaCwTDi^eQeCI{CtBoDyA}CxAeGEuFiBsFbAmIk@mGsB{CjE}D@mD`DwDwE}EaAeBgEeCOeD{CeEXsEoEkC~@oNmAqFfEaLsCoC`AaAdD{GpBgCYsMjIqG{@gHv@cMcBuJd@oDfCaF?uCxCu@`DmQjB{@nAi@vFiKxJsCvIsJhGqG`BqCxHkF}AmIj@cLhMsFMsKjGqCnEuBx@aAbDwKhDuB@gG{DaA~EeLvFsFrJuEvBuCfG{AJsF~FgD|@}E_A}LvFqIjAy@m@`@cArOqKpGwItFiEuLXxCaCwE[yLfE}EGkAhCRuDmAqBUwKcBd@_HkCgCcGiFiEYeGnEqLbA_HnAiBzAh@pEmCZmObNn@|D{AJeFfByAtAmJgEiHvDfCbAbCj@hK[bC|AlHQbCmE`DE~CgKCjC~JElBgG|A{Kh@e@jF~CbC}CbF`BnDq@fCtE~AAhB_Bx@{FgB_DoGsGuGDsFhB{CxC}NrAcCgJ|DyBaB{A}Gb@_CaAyWxFkIbEqPcPoBsIsJcGPtBeMs@mEz@qTlEsFrEwJj@wKlBaHLeF_CiD_AiEjCkIyAbEq@qCuBhCZ{AyDkDp@}G}DpDmFMqB}HIiGx@iBqAq@oAFqBjDeCaBgEz@kLw@eBcDeCmL}CsD}Dh@_H{Ga@wEwCaFeBWVuCaCsFxAwC{DgEoFgK\\wHq@wEiAeBpA_Mi@kDmFcEvG{EgKVuI`CcPe@rAqDfDT",
       "date": "2026-06-20T08:11:48Z",
       "updated": "2026-06-20T21:40:30.901Z"
-    },
-    {
-      "day": 3,
-      "from": "Rifuggio Lausen",
-      "to": "Verona",
-      "km": 35,
-      "dislivello": 161,
-      "name": "Rifugio Lausen  - Verona",
-      "polyline": "s`ouG}bzbA_@Xa@nCVt@rAdA|Bo@|DXtCcBdBBxEkB|IDb@a@q@hAsElBS`@HZbFpDf@|C?|@_AjEBxAS`AH|@x@xADvAn@lBk@jEJfBhCdEhBjEzD|D@r@oAz@Or@Jl@~@x@x@rBe@zBBh@jBXd@nBtBzB^pEdH`Hn@T|BaAfDpDfAdCt@nGxBfEpFAlDv@hEaArApAx@LxAcCl@k@`Ch@xAGzDs@jCsCx@?fC`AlCuB~FzDvHPzDoDEw@eA_DIuBTcDzAaIl@Un@TdAnCv@`AtDl@zAe@|GqGtAMv@\\zFbFT|@MvCZz@vCxAbAbAThA?bBgAvFlArHrArCfHjHjArBvClKQhAcAv@BlAhHjE`EvGn@zBN|Bq@tDb@I|@gDLkBEcEfEY|An@t@hBxBvNp@jB`D`CrBnElFbA`@`Aj@tDt@|A`M~G`B`BrAdD~@t@bVv@nQkAtGeBhEkGbEtAhD?bOqMbHeIxEGrFmAbAk@lDwDlB]dEsBdSuErBuC|AgA|DfBbDcClDE~Ac@lHoHnF}CvCeFnBeFvAgAtEHzGrElFAbFcAdJqE~El@xAEvFcDlF[nEwBjCLSc@Xl@pCT~XkE`BNtCbBtFAlOfCrPaGrCkCnAW~GhD|AzF|@v@jBq@jByBxFTtAyAtAm@z@TjBzCh@FxAcAfCbB|COtG|EpEi@`AwAz@KxA`CtClBbApBjAjHD`GT`CRr@r@d@hBSfC_DbAkCb@gDl@O~CtGv@xHm@lJPz@pBlD\\pAp@rKp@f@t@[rAyD~CgGnCk@`AuB`@YpAVjAfDH|EnC~Pn@fJn@pAfAQpDkE@_ByAmGCwAbH}JlA_FbALpC`FlCbBpBP`Ce@Pb@AlC\\~@bHtClBtB`A]`@{DxC}AIf@kAlAAh@hCbIn@`EWp@eDXCl@`CDvHlFjDpF~CfCzJvLlI|GlBzE^GGkAaBoHu@gABUdCxBbEvFhObBdAh@n@~BnAp[`AtBjAv@lI`C~Nr@jCaAlFkDhEeAlPGhIaApDeA~Al@tKhJhCjA|a@~BjAf@tAlBpAi@`A\\rA|AfDhLvEjc@zC~HlBjCfBjHjAjKjHbe@fCbOfKpnAb@RrJq@nBzHuA~B@ZxGrN~AtJjFjDnGlC|IUxAh@bCfDnElM~HxLFrAO~@sGpNk@|BWlWj@dA`BlAoCvS_@pAB^b@d@A`@iFnIfBxH}AbNjC~BfYpMLvAhGt@hArIO|BAtCdAvEr@Gb@p@IP@S",
-      "date": "2026-06-21T09:04:49Z",
-      "updated": "2026-06-21T17:23:54.060Z"
     }
-  ],
-  "next_stage": {
-    "name": "Rifugio Lausen - Verona Porta Nuova",
-    "polyline": "}ynuGibzbAMG}B[u@@SHOJKRSn@MpABf@T^TTb@\\VJ|Bm@vCVj@IjCuAnACd@GjCmAl@OdDGhEH`@WWr@QNaAj@_Br@y@RIFCJ?NDJz@`@ZVbCrBNTDr@ZpAFp@e@lBQfAO`ABfBS`ANbAPJ\\r@D~@Rr@Zv@DV?PG\\YfAG`@CpAHv@lCbExAvD\\j@r@v@tAbATVHPJh@GLoA~@KXC\\BVLTj@ZNPx@rB@XI`@_@jAAVBNHFTBj@ON@LNb@pBl@h@v@p@Tf@Jd@D`@ErABTHRdBrAxBxBtAxATNN@`@QRUd@[`@CVJVTv@jAvAfBh@jANl@F|ANhA\\lBtAZ\\]`@GTf@VRjARTTNd@Xb@z@J~Bl@\\EzAu@pAEVLn@t@\\XRBVEXSP_@n@iB\\W\\C^Jt@b@\\@s@jAMbAP|FH~@`@|A`AlCTPT?f@MbBs@f@Kb@EXLbAuAVQ\\FEjASxAIzAH\\h@TVp@LNpAt@JP?TINQFEX?PNFREPKVg@XeAHQJ?JJH\\CnABLHDJATO{@nBCj@Bp@bAhDtBtC?NAjBMdCYpAcAjCSv@?hBO`EIp@On@eBxCmAtCMt@STwC~BWl@Sr@M|@EjFKjAWtFM~@p@fFi@hDUnCQr@s@zAdDWrASl@T`@f@nB|CbAbArBdBDPXZ^Tp@d@j@^vAdAXh@f@~ATtAD`AC~AB`@Bf@]fA]p@Y?]M_@D_@E[q@KC_@d@D`AOj@Ax@HZ?N?^NtAAv@OfBDpAZt@@t@Q~A`@hCVn@Et@S|@Qh@?h@j@zBV|AVn@h@z@j@n@`AA`Bm@x@QtBqA`Ae@sArBOn@WfDMr@y@vC_ApCS`@WRU\\Sb@I`ACfDBTJXv@bAz@d@lA|@bAbAt@bCXj@x@rAXTnFbBRBVCXKRYTMFpA?|AJ`CCrAB^JVr@`ALd@Gh@Uv@Gn@LRN?JWHu@J_@PUvAHzDYl@YnBg@hC{@pAk@f@Kf@Cd@Dz@Pj@?FH@FGL{@Jk@Zm@l@AHFJNC\\Sf@Ix@AlAJn@Cb@Kd@?`AHFCN@FFBJCJoAj@WRWTiBbA]d@_AdBgAbAuAxBeA|@oAb@_Bz@u@l@gBhBaAb@a@^wAvAMR?PNZh@V|@DpACpB}@pAWhD{AhBkAhAc@bBe@lB?bBv@`CWfAw@jBiBrBcCREBHNLVGJIt@yAjA{@Ki@A]JQx@s@nAw@xASX[FU`AyBvA}@Xa@j@_CHQR_@^QbASfDwBp@QpAQN[DY@eBFc@^s@VB|@f@lDvC`@JzA]n@e@NCx@U|Aq@rB?d@OV_@~@aD|A_@lCiE`@e@z@q@|C}AZGbDgBrAWb@CdAb@T?f@Uh@a@bBgBhAwA`Ai@n@m@Xe@j@cBR[f@OvAQdCIdBf@r@f@jAh@r@FZGTUPg@\\wBXkARi@TWXQrCi@rAa@bBsAfGsCh@w@\\eAdAkEFUZa@t@Ql@W~EaF~@aBN{@DgCHo@z@aAhB_@pAk@l@Kn@?jCW`BHz@CXQHSXuB`@o@|AeBd@Yp@AhBf@`@IdAq@r@aA~@q@l@@vAZb@DlBm@x@M|AChAXjEFlAr@pAXr@BXG~@o@r@MtA?pAr@|@ZhAAr@_@vAyAjAK`@Kn@e@Zm@b@a@h@QtBiAVGL@v@\\XChCmA`@IhB?PMLYFkANm@Xa@r@]lASlBCj@FvBvBx@X`CLj@U^g@bAiBj@a@|@MbBVpAb@`@BxA]fCl@Z?\\Mb@]\\OZD^\\v@jAbAbAt@\\z@FnA]\\A`@LdCtBDLRLh@Bh@E`@Dn@x@XbBN`@TVZT`@Hv@HpABXL`@f@pApBl@t@RBn@YjB}Bd@IrBX|@e@`BqCX[NIPA`@B^JtDxAbBHpC^zADdAMhBg@`AG|C|@`@T^H~CItBZb@ChCsA`@PhAx@b@Pl@GpB_Bh@SH@jCP~ChAz@lAdEbBlBzAnAv@z@XzALfAd@`BbAtCx@zELvDo@nCMnAd@b@\\jAzAx@tCZ\\\\HtGVZZhBbAfAd@bD^n@Nr@\\fBfAn@\\h@LtLvFbKbDPNFTH`CXl@z@d@pC|@nCv@jLv@vF^|A?b@Dn@^r@FRAj@QFArCY`ACxAGFMBGxAV`@?pAQl@c@v@{AVo@nAy@tCyAz@WpB{@bFoAdH[nC@h@HzCvAVDz@AJ^BPIxCxCxDVPbE]hAQ`CaAp@QlBCLEXu@LcAJINChB\\vFlAl@Vr@f@rAH~AHf@BnAX~C^JmA`@_CDW?Om@{@j@PvDhAfAR~CTN@?MfI\\dAYhAg@`FgDfBe@JFJAtBa@tAM`EJ|@BjA?fCIdGq@|@Ql@ULE^Q\\M\\E^@^Hr@`@`ElDnD~CfBfA|Af@dALbPt@rH\\fAFfAF~@Z^Xv@dAFNRPP@LELODMVCBNT?t@^v@~@j@nAh@|A`@~Ah@~AH\\H^PbAB\\EBbAnKpAnLr@vFLBBJV|@Tl@T`@vAxDT`@r@p@Zj@v@`DT~@f@lDVnBCd@D@F?Fd@DXHh@CHCHNn@`@dCJ\\tBbN~BfOd@lCJv@APBRBTF@DHVjB`@|C@NEHBP@HH@LfATrBB\\x@hK@JFz@AJGD?F@JL?@NJCD`@j@vGH`At@xJB^?@BRHlAREb@l@bE~Fn@`AdB|BdA|ARZJRDp@\\|BVjBvAdFiAbBEHOZV^l@hAh@fAfB|DNRv@fBVdAj@rEJp@DALZLB?BADl@VvDzBNMDHDh@Hp@BXDf@J@H?H@\\I`ATHKlA^JBPD@`@`EEn@o@XEp@?^Bb@Jj@^rAbBtExMZj@hHxKPf@D^Ap@Md@aA`C}ErK[lAIlAEbE?L?V?H?Ne@vLAJK^APATALrCbA`@PAFs@|ECRMr@AFIp@QpACLy@`FK?MB_@zAITcBrBCBABiBtCJLMZM^Sp@YrBIl@CX_@`Bm@bAWn@s@`DWvACLLJf@T@@n@VxAl@xAj@AJVJTJDGdAd@rEpBd@RvCnAnF~BlEnB`A`@LHFPCj@D@HBDHFJl@RpBbBV\\X~@NbADvAF@F@Ff@CPAFAF@HFJ@PBHDJBRL]N[FOJ|@Px@R|Ah@pEd@~DLEJCBA",
-    "from": "Rifugio Lausen ",
-    "to": "Verona",
-    "km": 38,
-    "dis": 102,
-    "date": "2026-06-20T21:41:27.772Z"
-  }
+  ]
 }
