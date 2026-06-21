@@ -546,6 +546,7 @@
 
 <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
   <button onclick="clearSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Cancella sessione">↺</button>
+  <button onclick="resetData()" style="background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;" title="Ricarica dati da GitHub">🔄 Reset data</button>
   <button id="downloadBtn" onclick="downloadSlides()"
     style="background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 2rem; border:none; border-radius:3px; cursor:pointer;">
     ⬇ Scarica slides
@@ -680,7 +681,7 @@
         <!-- BOTTOM OVERLAY: tappa info - draggabile -->
         <div id="s-info-group" style="position:absolute; bottom:0; left:0; right:0; z-index:2; padding:2.5rem 1.2rem 1.2rem; background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%); cursor:grab;">
           <div class="open-day-label">Tappa</div>
-          <div class="open-day-num" id="s-day-num">01</div>
+          <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; cursor:text;">01</div>
           <div class="open-from-to" id="s-from-to">Milano → Bologna</div>
           <div class="open-km" id="s-km">85 km · ↑500m</div>
         </div>
@@ -917,6 +918,27 @@ const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/d
 function pad(n) { return String(n).padStart(2, '0'); }
 
 // Leggi data.json da GitHub
+
+
+// Sincronizza giorno/data: modifica manuale su s-day-num si propaga a badge e extra
+function syncDayFromMain() {
+  var src = document.getElementById('s-day-num');
+  if (!src || src._synced) return;
+  src._synced = true;
+  src.addEventListener('input', function() {
+    var val = src.textContent;
+    var badge = document.getElementById('s-badge');
+    if (badge) badge.textContent = 'TAPPA ' + val;
+    document.querySelectorAll('[id^="s-badge-extra"]').forEach(function(el) { el.textContent = 'TAPPA ' + val; });
+    var closeDay = document.getElementById('s-close-day');
+    if (closeDay) closeDay.textContent = val;
+  });
+}
+
+async function resetData() {
+  await loadFromGitHub();
+}
+
 async function loadFromGitHub() {
   try {
     const token = localStorage.getItem('gh-token') || '';
@@ -1304,6 +1326,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cap) makeDraggable(cap);
   // Default image
   setTimeout(loadDefaultOpenPhoto, 200);
+  syncDayFromMain();
   // Drag s-open-tag, s-media-tag, s-info-group, s-handle-2
   var openTag = document.getElementById('s-open-tag'); if (openTag) simpleDrag(openTag);
   var mediaTag = document.getElementById('s-media-tag'); if (mediaTag) simpleDrag(mediaTag);
