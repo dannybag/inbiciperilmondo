@@ -1436,6 +1436,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cap) makeDraggable(cap);
   setTimeout(attachAutoSave, 300);
   setTimeout(loadDefaultOpenPhoto, 200);
+  syncDateFromMain();
   // Gruppo info draggabile con simpleDrag (no wrapper)
   var infoGroup = document.getElementById('s-info-group');
   if (infoGroup) simpleDrag(infoGroup);
@@ -2144,6 +2145,19 @@ function addHashtag() {
     el.style.cssText = 'position:absolute; bottom:1.5rem; right:0.8rem; z-index:5; cursor:grab; outline:none; font-family:IBM Plex Mono,monospace; font-size:0.55rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.4);';
     var slide = frame.querySelector('.slide-open, .slide-media');
     if (slide) { slide.appendChild(el); makeDraggable(el); }
+  });
+}
+
+
+// Sincronizza data: se modifichi s-day-num a mano, aggiorna badge su tutte le slide
+function syncDateFromMain() {
+  var src = document.getElementById('s-day-num');
+  if (!src) return;
+  src.addEventListener('input', function() {
+    var val = src.textContent;
+    var badge = document.getElementById('s-badge');
+    if (badge) badge.textContent = val;
+    document.querySelectorAll('[id^="s-badge-extra"]').forEach(function(el) { el.textContent = val; });
   });
 }
 
