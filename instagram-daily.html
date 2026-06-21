@@ -689,7 +689,7 @@
         <div id="openPhotoArea" style="position:absolute; top:2.2rem; bottom:4.8rem; left:0; right:0; overflow:hidden;">
           <input type="file" id="openPhotoInput" accept="image/*" style="display:none" onchange="loadOpenPhoto(this)">
           <div id="openPhotoHint" onclick="document.getElementById('openPhotoInput').click()" style="position:absolute; inset:0; cursor:pointer; display:flex; align-items:center; justify-content:center;">
-            <span style="font-family:'IBM Plex Mono',monospace; font-size:0.45rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.2);">📷 tocca per foto</span>
+            
           </div>
           <img id="openPhotoPreview" src="" style="display:none; position:absolute; top:50%; left:50%; cursor:grab; max-width:none; width:auto; height:auto;">
           <div id="openPhotoControls" style="display:none; position:absolute; top:50%; right:0.3rem; transform:translateY(-50%); z-index:10; flex-direction:column; gap:0.3rem;">
@@ -728,7 +728,7 @@
           <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="loadPhoto(this)">
           <div id="mediaHint" onclick="document.getElementById('photoInput').click()" style="display:flex; flex-direction:column; align-items:center; gap:0.3rem; cursor:pointer; width:100%; height:100%; justify-content:center;">
             <div class="media-icon">📷</div>
-            <div class="media-hint">Tocca per caricare<br>la tua foto</div>
+            
           </div>
           <img id="photoPreview" style="display:none; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;">
           <!-- Controlli foto -->
@@ -764,27 +764,7 @@
 </div>
 
 <!-- TIP -->
-<div class="tip">
-  <strong>Come funziona — passo per passo:</strong><br><br>
 
-  <strong>1. Ogni mattina, prima di partire:</strong><br>
-  Apri questo file nel browser. Inserisci il numero del giorno (es. 3), la città da cui parti, la città di arrivo e i km della tappa. Il numero di km totali percorsi si aggiorna man mano che procedi.<br><br>
-
-  <strong>2. Scegli il formato:</strong><br>
-  
-
-  <strong>3. Fai uno screenshot di ogni slide:</strong><br>
-  Hai 3 slide — apertura, foto/video, chiusura. Fai uno screenshot di ognuna.<br><br>
-
-  <strong>4. Aggiungi la tua foto:</strong><br>
-  Apri Canva (gratuito), CapCut o qualsiasi app di editing. Importa lo screenshot della slide "Foto/Video" e sostituisci l'area tratteggiata con la tua foto o video del giorno.<br><br>
-
-  <strong>5. Pubblica:</strong><br>
-  Carica le 3 slide in sequenza su Instagram come storia o post multiplo.<br><br>
-
-  <strong>Hashtag consigliati:</strong><br>
-  #InBiciPerIlMondo #UnaBiciPerIlMondo #WorldBicycleRelief #BuffaloBicycle #MilanoPalermoBici #Ciclismo
-</div>
 
 <!-- Hidden inputs (usati dagli script) -->
 <div style="display:none">
@@ -1780,7 +1760,7 @@ function addPhotoSlide() {
           <input type="file" id="${inputId}" accept="image/*" style="display:none" onchange="loadExtraPhoto(this,'${photoId}','${hintId}','${controlsId}','placeholder_${id}')">
           <div id="${hintId}" onclick="document.getElementById('${inputId}').click()" style="display:flex; flex-direction:column; align-items:center; gap:0.3rem; cursor:pointer; width:100%; height:100%; justify-content:center;">
             <div class="media-icon">📷</div>
-            <div class="media-hint">Tocca per caricare<br>la tua foto</div>
+            
           </div>
           <img id="${photoId}" style="display:none; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;">
           <div id="${controlsId}" style="display:none; position:absolute; bottom:0.4rem; right:0.4rem; z-index:10; flex-direction:column; gap:0.3rem;">
