@@ -798,15 +798,6 @@
 <div id="viaggio-section" style="display:none; overflow:hidden;">
   <link rel="stylesheet" id="leaflet-css" href="">
   <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 1rem;">
-    <!-- Stats -->
-    <div style="display:flex; gap:2rem; flex-wrap:wrap; margin-bottom:1.5rem;">
-      <div><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--orange); line-height:1;" id="v-km">0</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Km percorsi</div></div>
-      <div><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--orange); line-height:1;" id="v-dis">0</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Dislivello ↑ m</div></div>
-      <div style="margin-left:auto;"><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:rgba(255,248,244,0.3); line-height:1;" id="v-pct">0%</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Del percorso</div></div>
-    </div>
-    <!-- Progress -->
-    <div style="background:#2A2A2A; height:6px; border-radius:3px; margin-bottom:0.4rem; overflow:hidden;"><div id="v-prog" style="height:100%; background:var(--orange); width:0%; transition:width 1s;"></div></div>
-    <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:rgba(255,248,244,0.3); margin-bottom:1.5rem;"><span>Milano</span><span id="v-prog-label"></span><span>Palermo</span></div>
     <!-- Map + List -->
     <div id="v-map-wrap" style="display:flex; gap:0;">
       <div style="position:relative; width:50%; flex-shrink:0;" id="v-map-container">
@@ -818,6 +809,15 @@
         <div id="v-list"></div>
       </div>
     </div>
+    <!-- Stats -->
+    <div style="display:flex; gap:2rem; flex-wrap:wrap; margin-top:1.5rem; margin-bottom:1.5rem;">
+      <div><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--orange); line-height:1;" id="v-km">0</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Km percorsi</div></div>
+      <div><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--orange); line-height:1;" id="v-dis">0</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Dislivello ↑ m</div></div>
+      <div style="margin-left:auto;"><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:rgba(255,248,244,0.3); line-height:1;" id="v-pct">0%</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Del percorso</div></div>
+    </div>
+    <!-- Progress -->
+    <div style="background:#2A2A2A; height:6px; border-radius:3px; margin-bottom:0.4rem; overflow:hidden;"><div id="v-prog" style="height:100%; background:var(--orange); width:0%; transition:width 1s;"></div></div>
+    <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:rgba(255,248,244,0.3); margin-bottom:1.5rem;"><span>Milano</span><span id="v-prog-label"></span><span>Palermo</span></div>
     <!-- Mobile: stack -->
     <style>
       @media(max-width:768px) {
