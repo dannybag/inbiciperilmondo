@@ -981,9 +981,26 @@ function applyDailyTappa(tappa, actName) {
 (function loadLastTappa() {
   const saved = localStorage.getItem('daily-tappa');
   if (saved) {
-    try { applyDailyTappa(JSON.parse(saved)); } catch(e) {}
+    try { applyDailyTappa(JSON.parse(saved)); return; } catch(e) {}
   }
+  // Nessuna traccia salvata: imposta la data di OGGI di default
+  setDefaultTodayDate();
 })();
+
+function setDefaultTodayDate() {
+  const GIORNI = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+  const MESI   = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+  const now = new Date();
+  const dayOfWeek = GIORNI[now.getDay()];
+  const dateStr = String(now.getDate()).padStart(2,'0') + ' ' + MESI[now.getMonth()];
+  const label = document.getElementById('s-day-label');
+  const dayEl = document.getElementById('s-day-num');
+  if (label) label.textContent = dayOfWeek;
+  if (dayEl)  dayEl.textContent = dateStr;
+  const badge = document.getElementById('s-badge');
+  if (badge) badge.textContent = dateStr;
+  document.querySelectorAll('[id^="s-badge-extra"]').forEach(function(el){ el.textContent = dateStr; });
+}
 
 
 // ---- DEFAULT IMAGE SLIDE 1 ----
@@ -1968,11 +1985,10 @@ shufflePhrases();
 const cap2 = document.getElementById('s-caption');
 if (cap2) cap2.textContent = getNextPhrase();
 update();
-// ---- SESSION PERSISTENCE ----
-var SESSION_KEY = 'ig-session-daily';
-var _sessionDirty = false;  // dati modificati ma non salvati
+// ---- SESSION PERSISTENCE (v4 - riscritto da zero) ----
+var SESSION_KEY = 'ig-session-daily-v4';
+var _dirty = false;
 
-// Toast
 function showToast(msg, color, dur) {
   var t = document.getElementById('_toast');
   if (!t) {
@@ -1984,223 +2000,167 @@ function showToast(msg, color, dur) {
   t.textContent = msg;
   t.style.borderColor = color || '#F05A28';
   t.style.opacity = '1';
-  clearTimeout(t._t);
-  t._t = setTimeout(function(){ t.style.opacity='0'; }, dur || 3000);
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function() { t.style.opacity = '0'; }, dur || 3000);
 }
 
-// Compress photo
-function compressPhoto(img) {
-  if (!img || !img.src || img.src.indexOf('data:') !== 0) return null;
+function compressPhotoImg(img) {
+  if (!img) return null;
+  var src = img.getAttribute('src');
+  if (!src || src.indexOf('data:') !== 0) return null;
   try {
-    var MAX = 1200;
+    var MAX = 1000;
     var c = document.createElement('canvas');
-    var sc = Math.min(1, MAX / Math.max(img.naturalWidth||1, img.naturalHeight||1));
-    c.width  = Math.round((img.naturalWidth||900)  * sc);
-    c.height = Math.round((img.naturalHeight||900) * sc);
-    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-    var out = c.toDataURL('image/jpeg', 0.7);
-    return out.length < 4000000 ? out : null;
+    var nw = img.naturalWidth  || 900;
+    var nh = img.naturalHeight || 900;
+    var sc = Math.min(1, MAX / Math.max(nw, nh));
+    c.width  = Math.round(nw * sc);
+    c.height = Math.round(nh * sc);
+    var ctx = c.getContext('2d');
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    var out = c.toDataURL('image/jpeg', 0.65);
+    return out.length < 3500000 ? out : null;
   } catch(e) { return null; }
 }
 
-// SAVE
-function saveSession(manual) {
-  var data = { v:3, extra: extraSlideCount, texts:{}, styles:{}, photos:{} };
-  var photosSaved=0, photosSkipped=0;
+function collectSessionData() {
+  var data = { v: 4, extra: extraSlideCount, texts: {}, styles: {}, photos: {} };
 
-  // Captions (IDs espliciti)
-  var captionIds = ['s-caption'];
-  for (var i=1; i<=extraSlideCount; i++) captionIds.push('s-caption-extra'+i);
-  captionIds.forEach(function(id) {
+  var ids = ['s-caption', 's-day-num', 's-day-label', 's-from-to', 's-km',
+             's-badge', 's-media-tag', 's-open-tag', 's-hashtag', 's-handle-2'];
+  for (var i = 1; i <= extraSlideCount; i++) {
+    ids.push('s-caption-extra' + i);
+    ids.push('s-badge-extra' + i);
+    ids.push('s-media-tag-extra' + i);
+    ids.push('s-handle-extra' + i);
+  }
+  ids.forEach(function(id) {
     var el = document.getElementById(id);
     if (!el) return;
     data.texts[id]  = el.innerHTML;
-    data.styles[id] = el.style.cssText;
-    if (captionState[id]) data.texts[id+'__t'] = JSON.stringify(captionState[id]);
+    data.styles[id] = el.style.cssText || '';
+    if (captionState[id]) data.texts[id + '__t'] = JSON.stringify(captionState[id]);
   });
 
-  // Elementi fissi
-  ['s-day-num','s-day-label','s-from-to','s-km','s-badge','s-media-tag','s-open-tag','s-hashtag'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    data.texts[id]  = el.innerHTML;
-    data.styles[id] = el.style.cssText;
-  });
-
-  // Foto
-  [['photoPreview',photoX,photoY,photoScale],['openPhotoPreview',openX,openY,openScale]].forEach(function(row) {
-    var id=row[0], x=row[1], y=row[2], sc=row[3];
+  var photoMap = [
+    ['photoPreview', photoX, photoY, photoScale],
+    ['openPhotoPreview', openX, openY, openScale]
+  ];
+  // Foto slide extra (sistema separato: photoPreviewExtraN + extraPhotoState)
+  for (var j = 1; j <= extraSlideCount; j++) {
+    var pid = 'photoPreviewExtra' + j;
+    var st = extraPhotoState[pid];
+    if (st) photoMap.push([pid, st.x, st.y, st.scale]);
+  }
+  var skipped = 0;
+  photoMap.forEach(function(row) {
+    var id = row[0], x = row[1], y = row[2], sc = row[3];
     var img = document.getElementById(id);
-    var compressed = compressPhoto(img);
+    var compressed = compressPhotoImg(img);
     if (compressed) {
-      data.photos[id] = { src:compressed, x:x, y:y, sc:sc };
-      photosSaved++;
-    } else if (img && img.src && img.src.indexOf('data:')===0) {
-      photosSkipped++;
+      data.photos[id] = { src: compressed, x: x, y: y, sc: sc };
+    } else if (img && img.getAttribute('src') && img.getAttribute('src').indexOf('data:') === 0) {
+      skipped++;
     }
   });
+  data._skipped = skipped;
+  return data;
+}
 
+function saveSession(manual) {
   try {
-    localStorage.setItem(SESSION_KEY, JSON.stringify(data));
-    _sessionDirty = false;
+    var data = collectSessionData();
+    var json = JSON.stringify(data);
+    localStorage.setItem(SESSION_KEY, json);
+    _dirty = false;
     if (manual) {
-      var msg = '✓ Salvato · '+Object.keys(data.texts).length+' testi';
-      if (photosSaved)   msg += ' · '+photosSaved+' foto';
-      if (photosSkipped) msg += ' · ⚠'+photosSkipped+' foto grande';
+      var nText = Object.keys(data.texts).length;
+      var nPhoto = Object.keys(data.photos).length;
+      var msg = '✓ Salvato · ' + nText + ' testi';
+      if (nPhoto) msg += ' · ' + nPhoto + ' foto';
+      if (data._skipped) msg += ' · ⚠' + data._skipped + ' foto troppo grande';
       showToast(msg, '#F05A28', 4000);
     }
+    return true;
   } catch(e) {
-    if (manual) showToast('✗ Errore save: '+e.message, '#f44', 5000);
+    if (manual) showToast('✗ Errore: ' + e.message, '#f44', 5000);
+    console.error('saveSession failed:', e);
+    return false;
   }
 }
 
-// RESTORE
 function restoreSession() {
   var raw;
-  try { raw = localStorage.getItem(SESSION_KEY); } catch(e) { return; }
-  if (!raw) return;
+  try { raw = localStorage.getItem(SESSION_KEY); } catch(e) { return false; }
+  if (!raw) return false;
   var data;
-  try { data = JSON.parse(raw); } catch(e) { return; }
-  if (!data || data.v !== 3) return;
+  try { data = JSON.parse(raw); } catch(e) { return false; }
+  if (!data || data.v !== 4) return false;
 
-  // Extra slides
-  for (var i=extraSlideCount; i<(data.extra||0); i++) addPhotoSlide();
-  
-  setTimeout(function() {
-    // Testi e stili
-    Object.keys(data.texts).forEach(function(id) {
-      if (id.indexOf('__t') !== -1) return; // skip transform keys
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.innerHTML = data.texts[id] || '';
-      if (data.styles[id]) el.style.cssText = data.styles[id];
-      var tk = id+'__t';
-      if (data.texts[tk] && captionState[id]) {
-        try { Object.assign(captionState[id], JSON.parse(data.texts[tk])); applyTransform(id); } catch(e){}
-      }
-    });
+  for (var i = extraSlideCount; i < (data.extra || 0); i++) addPhotoSlide();
 
-    // Foto
-    Object.keys(data.photos).forEach(function(imgId) {
-      var p = data.photos[imgId];
-      if (!p || !p.src) return;
-      var img = document.getElementById(imgId);
-      if (!img) return;
-      img.onload = function() {
-        var tx = 'translate(calc(-50% + '+p.x+'px), calc(-50% + '+p.y+'px)) scale('+p.sc+')';
-        img.style.cssText = 'display:block;position:absolute;top:50%;left:50%;max-width:none;width:auto;height:auto;cursor:grab;transform:'+tx;
-        if (imgId==='photoPreview')     { photoX=p.x; photoY=p.y; photoScale=p.sc; }
-        else                            { openX=p.x;  openY=p.y;  openScale=p.sc; }
-      };
+  Object.keys(data.texts || {}).forEach(function(key) {
+    if (key.indexOf('__t') !== -1) return;
+    var el = document.getElementById(key);
+    if (!el) return;
+    el.innerHTML = data.texts[key] || '';
+    var style = data.styles[key];
+    if (style) el.style.cssText = style;
+    var tKey = key + '__t';
+    if (data.texts[tKey] && captionState[key]) {
+      try {
+        var t = JSON.parse(data.texts[tKey]);
+        Object.assign(captionState[key], t);
+        applyTransform(key);
+      } catch(e) {}
+    }
+  });
+
+  Object.keys(data.photos || {}).forEach(function(imgId) {
+    var p = data.photos[imgId];
+    if (!p || !p.src) return;
+    var img = document.getElementById(imgId);
+    if (!img) return;
+
+    if (imgId.indexOf('photoPreviewExtra') === 0) {
+      // Foto slide extra: usa extraPhotoState + applyExtraTransform
+      extraPhotoState[imgId] = { scale: p.sc, x: p.x, y: p.y, drag: null };
+      img.onload = function() { applyExtraTransform(imgId); };
       img.src = p.src;
-      var hint=document.getElementById(imgId.replace('Preview','Hint'));
-      var ctrl=document.getElementById(imgId.replace('Preview','Controls'));
-      if (hint) hint.style.display='none';
-      if (ctrl) ctrl.style.display='flex';
-    });
+      img.style.cssText = 'display:block;position:absolute;top:50%;left:50%;max-width:none;width:auto;height:auto;cursor:grab;';
+      var n = imgId.replace('photoPreviewExtra', '');
+      var hint = document.getElementById('mediaHintExtra' + n);
+      var ctrl = document.getElementById('photoControlsExtra' + n);
+      if (hint) hint.style.display = 'none';
+      if (ctrl) ctrl.style.display = 'flex';
+      return;
+    }
 
-    showToast('✓ Ripristinato', '#F05A28', 3000);
-  }, 400);
-}
-
-// DEBUG
-function debugSession() {
-  var raw = localStorage.getItem(SESSION_KEY);
-  if (!raw) { showToast('localStorage vuoto', '#f44', 4000); return; }
-  try {
-    var d = JSON.parse(raw);
-    showToast('v:'+d.v+' testi:'+Object.keys(d.texts||{}).length+' foto:'+Object.keys(d.photos||{}).length+' extra:'+d.extra, '#29B6F6', 6000);
-  } catch(e) { showToast('Errore: '+e.message,'#f44',5000); }
-}
-
-function addHashtag() {
-  var text = prompt('Testo hashtag:', '#DannyBag');
-  if (!text) return;
-  var slideIds = ['wrapStory','wrapStory2'];
-  for (var i=1; i<=extraSlideCount; i++) slideIds.push('wrapExtra'+i);
-  slideIds.forEach(function(slideId) {
-    var wrap = document.getElementById(slideId);
-    if (!wrap) return;
-    var frame = wrap.querySelector('.frame-story');
-    if (!frame) return;
-    var el = document.createElement('div');
-    el.contentEditable = 'true';
-    el.textContent = text;
-    el.style.cssText = 'position:absolute; bottom:1.5rem; right:0.8rem; z-index:5; cursor:grab; outline:none; font-family:IBM Plex Mono,monospace; font-size:0.55rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.4);';
-    var slide = frame.querySelector('.slide-open, .slide-media');
-    if (slide) { slide.appendChild(el); makeDraggable(el); }
+    img.onload = function() {
+      var tx = 'translate(calc(-50% + ' + p.x + 'px), calc(-50% + ' + p.y + 'px)) scale(' + p.sc + ')';
+      img.style.cssText = 'display:block;position:absolute;top:50%;left:50%;max-width:none;width:auto;height:auto;cursor:grab;transform:' + tx + ';';
+      if (imgId === 'photoPreview') { photoX = p.x; photoY = p.y; photoScale = p.sc; }
+      else { openX = p.x; openY = p.y; openScale = p.sc; }
+    };
+    img.src = p.src;
+    var hint = document.getElementById(imgId.replace('Preview', 'Hint'));
+    var ctrl = document.getElementById(imgId.replace('Preview', 'Controls'));
+    if (hint) hint.style.display = 'none';
+    if (ctrl) ctrl.style.display = 'flex';
   });
+
+  return true;
 }
-
-
-// Sincronizza data: se modifichi s-day-num a mano, aggiorna badge su tutte le slide
-function syncDateFromMain() {
-  var src = document.getElementById('s-day-num');
-  if (!src) return;
-  src.addEventListener('input', function() {
-    var val = src.textContent;
-    var badge = document.getElementById('s-badge');
-    if (badge) badge.textContent = val;
-    document.querySelectorAll('[id^="s-badge-extra"]').forEach(function(el) { el.textContent = val; });
-  });
-}
-
-function resetData() {
-  localStorage.removeItem('daily-tappa');
-
-  var GIORNI = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
-  var MESI   = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
-  var now    = new Date();
-  var dayEl  = document.getElementById('s-day-label');
-  var numEl  = document.getElementById('s-day-num');
-  var fromEl = document.getElementById('s-from-to');
-  var kmEl   = document.getElementById('s-km');
-  var msg    = document.getElementById('strava-msg');
-
-  var dateStr = String(now.getDate()).padStart(2,'0') + ' ' + MESI[now.getMonth()];
-  if (dayEl)  dayEl.textContent  = GIORNI[now.getDay()];
-  if (numEl)  numEl.textContent  = dateStr;
-  if (fromEl) { fromEl.textContent = ''; fromEl.style.display = 'none'; }
-  if (kmEl)   { kmEl.textContent   = ''; kmEl.style.display   = 'none'; }
-  if (msg)    msg.textContent    = 'Seleziona traccia da Strava';
-
-  // Aggiorna badge data su TUTTE le slide
-  var badge = document.getElementById('s-badge');
-  if (badge) badge.textContent = dateStr;
-  document.querySelectorAll('[id^="s-badge-extra"]').forEach(function(el) { el.textContent = dateStr; });
-
-  var picker = document.getElementById('strava-picker');
-  if (picker) picker.style.display = 'none';
-}
-
-function resetDaily() {
-  localStorage.removeItem('daily-tappa');
-  localStorage.removeItem(SESSION_KEY);
-  document.getElementById('reset-banner').style.display = 'none';
-  location.reload();
-}
-
-// Mostra banner se c'è una sessione salvata
-document.addEventListener('DOMContentLoaded', function() {
-  var saved = localStorage.getItem(SESSION_KEY) || localStorage.getItem('daily-tappa');
-  if (saved) document.getElementById('reset-banner').style.display = 'block';
-});
 
 function clearSession() {
-  if (confirm('Cancella sessione?')) { localStorage.removeItem(SESSION_KEY); location.reload(); }
+  if (confirm('Cancella bozza salvata e ricomincia?')) {
+    localStorage.removeItem(SESSION_KEY);
+    location.reload();
+  }
 }
 
-// Avviso se si chiude senza salvare
-window.addEventListener('beforeunload', function(e) {
-  if (_sessionDirty) {
-    e.preventDefault();
-    e.returnValue = '';
-  }
-});
-window.addEventListener('pagehide', function() { if (_sessionDirty) saveSession(false); });
+function markDirty() { _dirty = true; }
 
-// Marca dirty su ogni modifica
-function markDirty() { _sessionDirty = true; }
 function attachAutoSave() {
   document.querySelectorAll('[contenteditable]').forEach(function(el) {
     el.removeEventListener('input', markDirty);
@@ -2208,15 +2168,26 @@ function attachAutoSave() {
   });
 }
 
-// Ripristino all'avvio
+// Salvataggio di sicurezza alla chiusura/cambio tab
+window.addEventListener('beforeunload', function(e) {
+  saveSession(false);
+  if (_dirty) { e.preventDefault(); e.returnValue = ''; }
+});
+window.addEventListener('pagehide', function() { saveSession(false); });
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'hidden') saveSession(false);
+});
+setInterval(function() { if (_dirty) saveSession(false); }, 8000);
+
+// Avvio: ripristina sessione salvata, altrimenti lascia la data di oggi già impostata da loadLastTappa/default HTML
 document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(function() { restoreSession(); attachAutoSave(); }, 600);
+  setTimeout(function() {
+    var restored = restoreSession();
+    attachAutoSave();
+    if (restored) showToast('✓ Bozza ripristinata', '#F05A28', 3000);
+  }, 700);
 });
 
 </script>
-</body>
-</html>
-
-
 </body>
 </html>
