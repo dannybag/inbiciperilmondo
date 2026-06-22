@@ -987,6 +987,18 @@ function applyDailyTappa(tappa, actName) {
   setDefaultTodayDate();
 })();
 
+function syncDateFromMain() {
+  var src = document.getElementById('s-day-num');
+  if (!src || src._synced) return;
+  src._synced = true;
+  src.addEventListener('input', function() {
+    var val = src.textContent;
+    var badge = document.getElementById('s-badge');
+    if (badge) badge.textContent = val;
+    document.querySelectorAll('[id^="s-badge-extra"]').forEach(function(el) { el.textContent = val; });
+  });
+}
+
 function setDefaultTodayDate() {
   const GIORNI = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
   const MESI   = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
