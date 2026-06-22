@@ -2099,13 +2099,18 @@ function restoreSession() {
 
   for (var i = extraSlideCount; i < (data.extra || 0); i++) addPhotoSlide();
 
+  var STYLE_SAFE_IDS = {}; // solo le caption/frasi possono avere lo style ripristinato
+  document.querySelectorAll('[id^="s-caption"]').forEach(function(el) { STYLE_SAFE_IDS[el.id] = true; });
+
   Object.keys(data.texts || {}).forEach(function(key) {
     if (key.indexOf('__t') !== -1) return;
     var el = document.getElementById(key);
     if (!el) return;
     el.innerHTML = data.texts[key] || '';
+    // Ripristina lo style SOLO per le caption: hashtag/data/handle mantengono
+    // il proprio style live, per non rompere drag e pinch-zoom già attivi.
     var style = data.styles[key];
-    if (style) el.style.cssText = style;
+    if (style && STYLE_SAFE_IDS[key]) el.style.cssText = style;
     var tKey = key + '__t';
     if (data.texts[tKey] && captionState[key]) {
       try {
