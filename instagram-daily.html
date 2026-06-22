@@ -2169,8 +2169,10 @@ function restoreSession() {
   return true;
 }
 
+var _resetting = false;
 function clearSession() {
   if (confirm('Cancella bozza salvata e ricomincia?')) {
+    _resetting = true;
     localStorage.removeItem(SESSION_KEY);
     location.reload();
   }
@@ -2187,10 +2189,11 @@ function attachAutoSave() {
 
 // Salvataggio di sicurezza alla chiusura/cambio tab
 window.addEventListener('beforeunload', function(e) {
+  if (_resetting) return;
   saveSession(false);
   if (_dirty) { e.preventDefault(); e.returnValue = ''; }
 });
-window.addEventListener('pagehide', function() { saveSession(false); });
+window.addEventListener('pagehide', function() { if (!_resetting) saveSession(false); });
 document.addEventListener('visibilitychange', function() {
   if (document.visibilityState === 'hidden') saveSession(false);
 });
