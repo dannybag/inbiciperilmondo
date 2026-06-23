@@ -743,7 +743,6 @@
         </div>
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge">01 Gen</div>
-          <div class="media-tag" id="s-media-tag" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none;">@dannybag</div>
         </div>
         <!-- Caption trascinabile + bottone frase -->
         <div class="media-caption" id="s-caption" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare">Ogni km conta.</div>
@@ -1792,12 +1791,10 @@ function addPhotoSlide() {
         </div>
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge-extra${extraSlideCount}">01 Gen</div>
-          <div class="media-tag" id="s-media-tag-extra${extraSlideCount}" style="color:var(--orange);">@dannybag</div>
         </div>
         <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
-          <div class="slide-handle" id="s-handle-extra${extraSlideCount}" contenteditable="true" style="position:absolute; bottom:0.5rem; right:0.8rem; z-index:5; cursor:grab; outline:none; font-family:'IBM Plex Mono',monospace; font-size:0.55rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.35);">@dannybag</div>
-        <button onclick="openPhrasePanel('s-caption-extra${extraSlideCount}'); styleTargetId='s-caption-extra${extraSlideCount}';" style="background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
+          <button onclick="openPhrasePanel('s-caption-extra${extraSlideCount}'); styleTargetId='s-caption-extra${extraSlideCount}';" style="background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
           <button onclick="styleTargetId='s-caption-extra${extraSlideCount}'; openStylePanel('s-caption-extra${extraSlideCount}','wrapExtra${extraSlideCount}');" style="background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
         </div>
         <div class="media-overlay-bottom" style="position:absolute; bottom:0; left:0; right:0; z-index:2; pointer-events:none;">
@@ -1814,8 +1811,6 @@ function addPhotoSlide() {
   setTimeout(() => {
     const cap = document.getElementById('s-caption-extra' + extraSlideCount);
     if (cap) makeDraggable(cap);
-    var exH = document.getElementById('s-handle-extra'+extraSlideCount);
-    if (exH) { simpleDrag(exH); syncHandles('s-handle-extra'+extraSlideCount); }
     attachAutoSave();
     markDirty();
   }, 100);
@@ -2122,9 +2117,12 @@ function restoreSession() {
       // Foto slide extra (>2): ripristina via extraPhotoState + applyExtraTransform
       if (imgId.indexOf('photoPreviewExtra') === 0) {
         extraPhotoState[imgId] = { scale:p.sc, x:p.x, y:p.y, drag:null };
-        img.onload = function() { applyExtraTransform(imgId); };
-        img.src = p.src;
         img.style.cssText = 'display:block;position:absolute;top:50%;left:50%;max-width:none;width:auto;height:auto;cursor:grab;';
+        // Applica subito E su onload (per robustezza con cache)
+        var applyE = function() { applyExtraTransform(imgId); };
+        img.onload = applyE;
+        img.src = p.src;
+        applyE();
         var n = imgId.replace('photoPreviewExtra','');
         var hintE = document.getElementById('mediaHintExtra'+n);
         var ctrlE = document.getElementById('photoControlsExtra'+n);
@@ -2133,13 +2131,16 @@ function restoreSession() {
         return;
       }
 
-      img.onload = function() {
+      // Slide 1 e 2: applica posizione/scala SUBITO + aggiorna le variabili
+      var applyMain = function() {
         var tx = 'translate(calc(-50% + '+p.x+'px), calc(-50% + '+p.y+'px)) scale('+p.sc+')';
         img.style.cssText = 'display:block;position:absolute;top:50%;left:50%;max-width:none;width:auto;height:auto;cursor:grab;transform:'+tx;
-        if (imgId==='photoPreview')     { photoX=p.x; photoY=p.y; photoScale=p.sc; }
-        else                            { openX=p.x;  openY=p.y;  openScale=p.sc; }
       };
+      if (imgId==='photoPreview') { photoX=p.x; photoY=p.y; photoScale=p.sc; }
+      else                        { openX=p.x;  openY=p.y;  openScale=p.sc; }
+      img.onload = applyMain;
       img.src = p.src;
+      applyMain();
       var hint=document.getElementById(imgId.replace('Preview','Hint'));
       var ctrl=document.getElementById(imgId.replace('Preview','Controls'));
       if (hint) hint.style.display='none';
