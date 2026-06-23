@@ -1435,6 +1435,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cap) makeDraggable(cap);
   setTimeout(attachAutoSave, 300);
   setTimeout(loadDefaultOpenPhoto, 200);
+  setupMainPhotoDrag();
   syncDateFromMain();
   // Gruppo info draggabile con simpleDrag (no wrapper)
   var infoGroup = document.getElementById('s-info-group');
@@ -1754,7 +1755,7 @@ document.getElementById('phrase-overlay').addEventListener('click', e => {
 // ---- DYNAMIC PHOTO SLIDES ----
 let extraSlideCount = 0;
 
-function addPhotoSlide() {
+function addPhotoSlide(isRestoring) {
   extraSlideCount++;
   const id = 'wrapExtra' + extraSlideCount;
   const photoId = 'photoPreviewExtra' + extraSlideCount;
@@ -1807,22 +1808,28 @@ function addPhotoSlide() {
   const container = document.getElementById('framesContainer');
   container.appendChild(wrap);
 
-  // Attiva drag sulla caption della nuova slide
+  // Attiva drag sulla caption della nuova slide (snapshot del numero slide,
+  // altrimenti se si aggiungono 2 slide rapidamente il timeout legge il valore finale per entrambe)
+  const mySlideNum = extraSlideCount;
   setTimeout(() => {
-    const cap = document.getElementById('s-caption-extra' + extraSlideCount);
+    const cap = document.getElementById('s-caption-extra' + mySlideNum);
     if (cap) makeDraggable(cap);
+    setupExtraPhotoDrag('photoPreviewExtra' + mySlideNum);
     attachAutoSave();
     markDirty();
   }, 100);
 
-  // Sync data from current slide
-  const badge = document.getElementById('s-badge');
-  const caption = document.getElementById('s-caption');
-  const prog = document.getElementById('s-prog');
-  if (badge)   document.getElementById('s-badge-extra'+extraSlideCount).textContent = badge.textContent;
-  if (prog)    document.getElementById('s-prog-extra'+extraSlideCount).style.width = prog.style.width;
-  // Frase sempre nuova - non copiare dalla slide 2
-  document.getElementById('s-caption-extra'+extraSlideCount).textContent = getNextPhrase();
+  // Sync data from current slide (solo se NON stiamo ripristinando una sessione,
+  // altrimenti questi valori verrebbero sovrascritti subito dopo dal restore)
+  if (!isRestoring) {
+    const badge = document.getElementById('s-badge');
+    const caption = document.getElementById('s-caption');
+    const prog = document.getElementById('s-prog');
+    if (badge)   document.getElementById('s-badge-extra'+extraSlideCount).textContent = badge.textContent;
+    if (prog)    document.getElementById('s-prog-extra'+extraSlideCount).style.width = prog.style.width;
+    // Frase sempre nuova - non copiare dalla slide 2
+    document.getElementById('s-caption-extra'+extraSlideCount).textContent = getNextPhrase();
+  }
 }
 
 function removeExtraSlide(id) {
@@ -1832,6 +1839,41 @@ function removeExtraSlide(id) {
 
 // Per-slide photo state
 const extraPhotoState = {};
+
+function setupExtraPhotoDrag(photoId) {
+  const img = document.getElementById(photoId);
+  if (!img || img._dragSetup) return;
+  img._dragSetup = true;
+  img.addEventListener('touchstart', (ev) => {
+    const s = extraPhotoState[photoId];
+    if (!s) return;
+    s._pt = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+    if (ev.touches.length===1) s.drag={x:ev.touches[0].clientX-s.x,y:ev.touches[0].clientY-s.y};
+  }, {passive:true});
+  img.addEventListener('touchmove', (ev) => {
+    ev.preventDefault();
+    const s = extraPhotoState[photoId];
+    if (!s) return;
+    const cur = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+    const prev = s._pt;
+    if (!prev || !prev.length) { s._pt=cur; return; }
+    if (cur.length===1 && prev.length===1 && s.drag) {
+      s.x = ev.touches[0].clientX - s.drag.x;
+      s.y = ev.touches[0].clientY - s.drag.y;
+    } else if (cur.length>=2 && prev.length>=2) {
+      const dP=Math.hypot(prev[1].x-prev[0].x,prev[1].y-prev[0].y)||1;
+      const dC=Math.hypot(cur[1].x-cur[0].x,cur[1].y-cur[0].y);
+      s.scale=Math.max(0.1,Math.min(15,s.scale*dC/dP));
+      s.x+=(cur[0].x+cur[1].x)/2-(prev[0].x+prev[1].x)/2;
+      s.y+=(cur[0].y+cur[1].y)/2-(prev[0].y+prev[1].y)/2;
+    }
+    s._pt=cur; applyExtraTransform(photoId);
+  }, {passive:false});
+  img.addEventListener('touchend', (ev) => { const s=extraPhotoState[photoId]; if(s){ s.drag=null; s._pt=Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY})); } });
+  img.addEventListener('mousedown', (ev) => { const s=extraPhotoState[photoId]; if(!s)return; s.drag={x:ev.clientX-s.x,y:ev.clientY-s.y}; img.style.cursor='grabbing'; });
+  document.addEventListener('mousemove', (ev) => { const s=extraPhotoState[photoId]; if(!s||!s.drag)return; s.x=ev.clientX-s.drag.x;s.y=ev.clientY-s.drag.y;applyExtraTransform(photoId); });
+  document.addEventListener('mouseup', () => { const s=extraPhotoState[photoId]; if(s){ s.drag=null; } if(img) img.style.cursor='grab'; });
+}
 
 function loadExtraPhoto(input, photoId, hintId, controlsId, containerId) {
   if (!input.files || !input.files[0]) return;
@@ -1851,12 +1893,7 @@ function loadExtraPhoto(input, photoId, hintId, controlsId, containerId) {
     img.style.cssText = 'display:block; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;';
     hint.style.display = 'none';
     controls.style.display = 'flex';
-    img.addEventListener('touchstart', (ev) => { if(ev.touches.length===1){ const s=extraPhotoState[photoId]; s.drag={x:ev.touches[0].clientX-s.x,y:ev.touches[0].clientY-s.y}; }}, {passive:true});
-    img.addEventListener('touchmove', (ev) => { ev.preventDefault(); const s=extraPhotoState[photoId]; if(ev.touches.length===1&&s.drag){s.x=ev.touches[0].clientX-s.drag.x;s.y=ev.touches[0].clientY-s.drag.y;applyExtraTransform(photoId);} }, {passive:false});
-    img.addEventListener('touchend', () => { extraPhotoState[photoId].drag=null; });
-    img.addEventListener('mousedown', (ev) => { const s=extraPhotoState[photoId]; s.drag={x:ev.clientX-s.x,y:ev.clientY-s.y}; img.style.cursor='grabbing'; });
-    document.addEventListener('mousemove', (ev) => { const s=extraPhotoState[photoId]; if(!s||!s.drag)return; s.x=ev.clientX-s.drag.x;s.y=ev.clientY-s.drag.y;applyExtraTransform(photoId); });
-    document.addEventListener('mouseup', () => { if(extraPhotoState[photoId]) extraPhotoState[photoId].drag=null; img.style.cursor='grab'; });
+    setupExtraPhotoDrag(photoId);
   };
   reader.readAsDataURL(input.files[0]);
 }
@@ -1909,6 +1946,38 @@ function removePhoto() {
   photoScale = 1; photoX = 0; photoY = 0; photoRot = 0;
 }
 
+function setupMainPhotoDrag() {
+  const img = document.getElementById('photoPreview');
+  if (!img || img._drag2) return;
+  img._drag2 = true;
+  let _pt = null;
+  img.addEventListener('touchstart', (ev) => {
+    _pt = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+  }, {passive:true});
+  img.addEventListener('touchmove', (ev) => {
+    ev.preventDefault();
+    const cur = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+    if (!_pt || !_pt.length) { _pt=cur; return; }
+    if (cur.length===1 && _pt.length===1) {
+      photoX+=cur[0].x-_pt[0].x; photoY+=cur[0].y-_pt[0].y;
+    } else if (cur.length>=2 && _pt.length>=2) {
+      const dP=Math.hypot(_pt[1].x-_pt[0].x,_pt[1].y-_pt[0].y)||1;
+      const dC=Math.hypot(cur[1].x-cur[0].x,cur[1].y-cur[0].y);
+      const aP=Math.atan2(_pt[1].y-_pt[0].y,_pt[1].x-_pt[0].x)*180/Math.PI;
+      const aC=Math.atan2(cur[1].y-cur[0].y,cur[1].x-cur[0].x)*180/Math.PI;
+      photoScale=Math.max(0.1,Math.min(15,photoScale*dC/dP));
+      photoRot+=aC-aP;
+      photoX+=(cur[0].x+cur[1].x)/2-(_pt[0].x+_pt[1].x)/2;
+      photoY+=(cur[0].y+cur[1].y)/2-(_pt[0].y+_pt[1].y)/2;
+    }
+    _pt=cur; applyPhotoTransform();
+  }, {passive:false});
+  img.addEventListener('touchend', (ev) => { _pt=Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY})); }, {passive:true});
+  img.addEventListener('mousedown', (ev) => { dragStart={x:ev.clientX-photoX,y:ev.clientY-photoY}; img.style.cursor='grabbing'; });
+  document.addEventListener('mousemove', (ev) => { if(!dragStart)return; photoX=ev.clientX-dragStart.x; photoY=ev.clientY-dragStart.y; applyPhotoTransform(); });
+  document.addEventListener('mouseup', () => { dragStart=null; img.style.cursor='grab'; });
+}
+
 function loadPhoto(input) {
   if (!input.files || !input.files[0]) return;
   const reader = new FileReader();
@@ -1940,36 +2009,7 @@ function loadPhoto(input) {
     `;
     hint.style.display = 'none';
     controls.style.display = 'flex';
-
-    if (!img._drag2) {
-      img._drag2 = true;
-      let _pt = null;
-      img.addEventListener('touchstart', (ev) => {
-        _pt = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
-      }, {passive:true});
-      img.addEventListener('touchmove', (ev) => {
-        ev.preventDefault();
-        const cur = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
-        if (!_pt || !_pt.length) { _pt=cur; return; }
-        if (cur.length===1 && _pt.length===1) {
-          photoX+=cur[0].x-_pt[0].x; photoY+=cur[0].y-_pt[0].y;
-        } else if (cur.length>=2 && _pt.length>=2) {
-          const dP=Math.hypot(_pt[1].x-_pt[0].x,_pt[1].y-_pt[0].y)||1;
-          const dC=Math.hypot(cur[1].x-cur[0].x,cur[1].y-cur[0].y);
-          const aP=Math.atan2(_pt[1].y-_pt[0].y,_pt[1].x-_pt[0].x)*180/Math.PI;
-          const aC=Math.atan2(cur[1].y-cur[0].y,cur[1].x-cur[0].x)*180/Math.PI;
-          photoScale=Math.max(0.1,Math.min(15,photoScale*dC/dP));
-          photoRot+=aC-aP;
-          photoX+=(cur[0].x+cur[1].x)/2-(_pt[0].x+_pt[1].x)/2;
-          photoY+=(cur[0].y+cur[1].y)/2-(_pt[0].y+_pt[1].y)/2;
-        }
-        _pt=cur; applyPhotoTransform();
-      }, {passive:false});
-      img.addEventListener('touchend', (ev) => { _pt=Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY})); }, {passive:true});
-      img.addEventListener('mousedown', (ev) => { dragStart={x:ev.clientX-photoX,y:ev.clientY-photoY}; img.style.cursor='grabbing'; });
-      document.addEventListener('mousemove', (ev) => { if(!dragStart)return; photoX=ev.clientX-dragStart.x; photoY=ev.clientY-dragStart.y; applyPhotoTransform(); });
-      document.addEventListener('mouseup', () => { dragStart=null; img.style.cursor='grab'; });
-    }
+    setupMainPhotoDrag();
   };
   reader.readAsDataURL(input.files[0]);
 }
@@ -2091,7 +2131,7 @@ function restoreSession() {
   if (!data || data.v !== 3) return;
 
   // Extra slides
-  for (var i=extraSlideCount; i<(data.extra||0); i++) addPhotoSlide();
+  for (var i=extraSlideCount; i<(data.extra||0); i++) addPhotoSlide(true);
   
   setTimeout(function() {
     // Testi e stili
@@ -2123,6 +2163,7 @@ function restoreSession() {
         img.onload = applyE;
         img.src = p.src;
         applyE();
+        setupExtraPhotoDrag(imgId);
         var n = imgId.replace('photoPreviewExtra','');
         var hintE = document.getElementById('mediaHintExtra'+n);
         var ctrlE = document.getElementById('photoControlsExtra'+n);
@@ -2136,8 +2177,8 @@ function restoreSession() {
         var tx = 'translate(calc(-50% + '+p.x+'px), calc(-50% + '+p.y+'px)) scale('+p.sc+')';
         img.style.cssText = 'display:block;position:absolute;top:50%;left:50%;max-width:none;width:auto;height:auto;cursor:grab;transform:'+tx;
       };
-      if (imgId==='photoPreview') { photoX=p.x; photoY=p.y; photoScale=p.sc; }
-      else                        { openX=p.x;  openY=p.y;  openScale=p.sc; }
+      if (imgId==='photoPreview') { photoX=p.x; photoY=p.y; photoScale=p.sc; setupMainPhotoDrag(); }
+      else                        { openX=p.x;  openY=p.y;  openScale=p.sc; setupOpenPhotoDrag(); }
       img.onload = applyMain;
       img.src = p.src;
       applyMain();
