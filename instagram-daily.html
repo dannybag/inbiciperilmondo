@@ -574,6 +574,7 @@
   <button onclick="debugSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Debug sessione">🔍</button>
   <button onclick="restoreSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Ripristina ora">⏮</button>
   <button onclick="saveSession(true)" style="background:transparent; color:rgba(255,248,244,0.35); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;" title="Salva sessione">💾</button>
+  <button onclick="clearAllCaptions()" style="background:transparent; color:rgba(255,248,244,0.35); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;" title="Cancella tutte le frasi">🗑 frasi</button>
   <button id="downloadBtn" onclick="downloadSlides()"
     style="background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 2rem; border:none; border-radius:3px; cursor:pointer;">
     ⬇ Scarica slides
@@ -2275,6 +2276,22 @@ document.addEventListener('DOMContentLoaded', function() {
   var saved = localStorage.getItem(SESSION_KEY) || localStorage.getItem('daily-tappa');
   if (saved) document.getElementById('reset-banner').style.display = 'block';
 });
+
+function clearAllCaptions() {
+  if (!confirm('Eliminare tutte le frasi da tutte le slide?')) return;
+  var ids = ['s-caption'];
+  for (var i=1; i<=extraSlideCount; i++) ids.push('s-caption-extra'+i);
+  ids.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = '';
+    if (captionState[id]) captionState[id] = { x:0, y:0, rot:0, scale:1 };
+    if (typeof applyTransform === 'function') applyTransform(id);
+  });
+  markDirty();
+  saveSession(false);
+  showToast('🗑 Frasi eliminate da tutte le slide', '#F05A28', 3000);
+}
 
 function clearSession() {
   if (confirm('Cancella sessione?')) { localStorage.removeItem(SESSION_KEY); location.reload(); }
