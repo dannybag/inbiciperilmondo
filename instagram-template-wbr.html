@@ -546,6 +546,7 @@
 
 <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
   <button onclick="clearSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Cancella sessione">↺</button>
+  <button onclick="clearAllCaptions()" style="background:transparent; color:rgba(255,248,244,0.35); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;" title="Cancella tutte le frasi">🗑 frasi</button>
 
   <button id="downloadBtn" onclick="downloadSlides()"
     style="background:#F05A28; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.9rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.8rem 2rem; border:none; border-radius:3px; cursor:pointer;">
@@ -1701,11 +1702,14 @@ function addPhotoSlide() {
   const closing = document.getElementById('wrapStory3');
   container.insertBefore(wrap, closing);
 
-  // Attiva drag sulla caption della nuova slide
+  // Attiva drag sulla caption della nuova slide (snapshot del numero,
+  // altrimenti se si aggiungono 2 slide rapidamente il timeout legge il valore finale per entrambe)
+  const mySlideNum = extraSlideCount;
   setTimeout(() => {
-    const cap = document.getElementById('s-caption-extra' + extraSlideCount);
+    const cap = document.getElementById('s-caption-extra' + mySlideNum);
     if (cap) makeDraggable(cap);
-    syncDateField('s-date-extra' + extraSlideCount);
+    syncDateField('s-date-extra' + mySlideNum);
+    setupExtraPhotoDrag('photoPreviewExtra' + mySlideNum);
   }, 100);
 
   // Sync data from current slide
@@ -1726,6 +1730,41 @@ function removeExtraSlide(id) {
 // Per-slide photo state
 const extraPhotoState = {};
 
+function setupExtraPhotoDrag(photoId) {
+  const img = document.getElementById(photoId);
+  if (!img || img._dragSetup) return;
+  img._dragSetup = true;
+  img.addEventListener('touchstart', (ev) => {
+    const s = extraPhotoState[photoId];
+    if (!s) return;
+    s._pt = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+    if (ev.touches.length===1) s.drag={x:ev.touches[0].clientX-s.x,y:ev.touches[0].clientY-s.y};
+  }, {passive:true});
+  img.addEventListener('touchmove', (ev) => {
+    ev.preventDefault();
+    const s = extraPhotoState[photoId];
+    if (!s) return;
+    const cur = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+    const prev = s._pt;
+    if (!prev || !prev.length) { s._pt=cur; return; }
+    if (cur.length===1 && prev.length===1 && s.drag) {
+      s.x = ev.touches[0].clientX - s.drag.x;
+      s.y = ev.touches[0].clientY - s.drag.y;
+    } else if (cur.length>=2 && prev.length>=2) {
+      const dP=Math.hypot(prev[1].x-prev[0].x,prev[1].y-prev[0].y)||1;
+      const dC=Math.hypot(cur[1].x-cur[0].x,cur[1].y-cur[0].y);
+      s.scale=Math.max(0.1,Math.min(15,s.scale*dC/dP));
+      s.x+=(cur[0].x+cur[1].x)/2-(prev[0].x+prev[1].x)/2;
+      s.y+=(cur[0].y+cur[1].y)/2-(prev[0].y+prev[1].y)/2;
+    }
+    s._pt=cur; applyExtraTransform(photoId);
+  }, {passive:false});
+  img.addEventListener('touchend', (ev) => { const s=extraPhotoState[photoId]; if(s){ s.drag=null; s._pt=Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY})); } });
+  img.addEventListener('mousedown', (ev) => { const s=extraPhotoState[photoId]; if(!s)return; s.drag={x:ev.clientX-s.x,y:ev.clientY-s.y}; img.style.cursor='grabbing'; });
+  document.addEventListener('mousemove', (ev) => { const s=extraPhotoState[photoId]; if(!s||!s.drag)return; s.x=ev.clientX-s.drag.x;s.y=ev.clientY-s.drag.y;applyExtraTransform(photoId); });
+  document.addEventListener('mouseup', () => { const s=extraPhotoState[photoId]; if(s){ s.drag=null; } if(img) img.style.cursor='grab'; });
+}
+
 function loadExtraPhoto(input, photoId, hintId, controlsId, containerId) {
   if (!input.files || !input.files[0]) return;
   const reader = new FileReader();
@@ -1744,12 +1783,7 @@ function loadExtraPhoto(input, photoId, hintId, controlsId, containerId) {
     img.style.cssText = 'display:block; position:absolute; top:50%; left:50%; max-width:none; width:auto; height:auto; cursor:grab;';
     hint.style.display = 'none';
     controls.style.display = 'flex';
-    img.addEventListener('touchstart', (ev) => { if(ev.touches.length===1){ const s=extraPhotoState[photoId]; s.drag={x:ev.touches[0].clientX-s.x,y:ev.touches[0].clientY-s.y}; }}, {passive:true});
-    img.addEventListener('touchmove', (ev) => { ev.preventDefault(); const s=extraPhotoState[photoId]; if(ev.touches.length===1&&s.drag){s.x=ev.touches[0].clientX-s.drag.x;s.y=ev.touches[0].clientY-s.drag.y;applyExtraTransform(photoId);} }, {passive:false});
-    img.addEventListener('touchend', () => { extraPhotoState[photoId].drag=null; });
-    img.addEventListener('mousedown', (ev) => { const s=extraPhotoState[photoId]; s.drag={x:ev.clientX-s.x,y:ev.clientY-s.y}; img.style.cursor='grabbing'; });
-    document.addEventListener('mousemove', (ev) => { const s=extraPhotoState[photoId]; if(!s||!s.drag)return; s.x=ev.clientX-s.drag.x;s.y=ev.clientY-s.drag.y;applyExtraTransform(photoId); });
-    document.addEventListener('mouseup', () => { if(extraPhotoState[photoId]) extraPhotoState[photoId].drag=null; img.style.cursor='grab'; });
+    setupExtraPhotoDrag(photoId);
   };
   reader.readAsDataURL(input.files[0]);
 }
@@ -1802,6 +1836,38 @@ function removePhoto() {
   photoScale = 1; photoX = 0; photoY = 0; photoRot = 0;
 }
 
+function setupMainPhotoDrag() {
+  const img = document.getElementById('photoPreview');
+  if (!img || img._dragSetup) return;
+  img._dragSetup = true;
+  let _pt = null;
+  img.addEventListener('touchstart', (ev) => {
+    _pt = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+  }, {passive:true});
+  img.addEventListener('touchmove', (ev) => {
+    ev.preventDefault();
+    const cur = Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY}));
+    if (!_pt || !_pt.length) { _pt=cur; return; }
+    if (cur.length===1 && _pt.length===1) {
+      photoX+=cur[0].x-_pt[0].x; photoY+=cur[0].y-_pt[0].y;
+    } else if (cur.length>=2 && _pt.length>=2) {
+      const dP=Math.hypot(_pt[1].x-_pt[0].x,_pt[1].y-_pt[0].y)||1;
+      const dC=Math.hypot(cur[1].x-cur[0].x,cur[1].y-cur[0].y);
+      const aP=Math.atan2(_pt[1].y-_pt[0].y,_pt[1].x-_pt[0].x)*180/Math.PI;
+      const aC=Math.atan2(cur[1].y-cur[0].y,cur[1].x-cur[0].x)*180/Math.PI;
+      photoScale=Math.max(0.1,Math.min(15,photoScale*dC/dP));
+      photoRot+=aC-aP;
+      photoX+=(cur[0].x+cur[1].x)/2-(_pt[0].x+_pt[1].x)/2;
+      photoY+=(cur[0].y+cur[1].y)/2-(_pt[0].y+_pt[1].y)/2;
+    }
+    _pt=cur; applyPhotoTransform();
+  }, {passive:false});
+  img.addEventListener('touchend', (ev) => { _pt=Array.from(ev.touches).map(t=>({x:t.clientX,y:t.clientY})); }, {passive:true});
+  img.addEventListener('mousedown', (ev) => { dragStart={x:ev.clientX-photoX,y:ev.clientY-photoY}; img.style.cursor='grabbing'; });
+  document.addEventListener('mousemove', (ev) => { if(!dragStart)return; photoX=ev.clientX-dragStart.x; photoY=ev.clientY-dragStart.y; applyPhotoTransform(); });
+  document.addEventListener('mouseup', () => { dragStart=null; img.style.cursor='grab'; });
+}
+
 function loadPhoto(input) {
   if (!input.files || !input.files[0]) return;
   const reader = new FileReader();
@@ -1833,49 +1899,7 @@ function loadPhoto(input) {
     `;
     hint.style.display = 'none';
     controls.style.display = 'flex';
-
-    // Touch drag
-    const onTouchStart = (ev) => {
-      if (ev.touches.length === 1)
-        dragStart = { x: ev.touches[0].clientX - photoX, y: ev.touches[0].clientY - photoY };
-    };
-    const onTouchMove = (ev) => {
-      ev.preventDefault();
-      if (ev.touches.length === 1 && dragStart) {
-        photoX = ev.touches[0].clientX - dragStart.x;
-        photoY = ev.touches[0].clientY - dragStart.y;
-        applyPhotoTransform();
-      }
-    };
-    const onTouchEnd = () => { dragStart = null; };
-
-    // Mouse drag
-    const onMouseDown = (ev) => {
-      dragStart = { x: ev.clientX - photoX, y: ev.clientY - photoY };
-      img.style.cursor = 'grabbing';
-    };
-    const onMouseMove = (ev) => {
-      if (!dragStart) return;
-      photoX = ev.clientX - dragStart.x;
-      photoY = ev.clientY - dragStart.y;
-      applyPhotoTransform();
-    };
-    const onMouseUp = () => {
-      dragStart = null;
-      img.style.cursor = 'grab';
-    };
-
-    img.removeEventListener('touchstart', onTouchStart);
-    img.removeEventListener('touchmove', onTouchMove);
-    img.removeEventListener('touchend', onTouchEnd);
-    img.removeEventListener('mousedown', onMouseDown);
-
-    img.addEventListener('touchstart', onTouchStart, { passive: true });
-    img.addEventListener('touchmove', onTouchMove, { passive: false });
-    img.addEventListener('touchend', onTouchEnd);
-    img.addEventListener('mousedown', onMouseDown);
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+    setupMainPhotoDrag();
   };
   reader.readAsDataURL(input.files[0]);
 }
@@ -1887,8 +1911,17 @@ if (cap2) cap2.textContent = getNextPhrase();
 loadFromGitHub();
 // ---- SESSION PERSISTENCE ----
 const SESSION_KEY = 'ig-session-wbr';
+var _sessionDirty = false;
+var _resetting = false;
+function markDirty() { _sessionDirty = true; }
+function attachAutoSave() {
+  document.querySelectorAll('[contenteditable]').forEach(function(el) {
+    el.removeEventListener('input', markDirty);
+    el.addEventListener('input', markDirty);
+  });
+}
 
-function saveSession() {
+function saveSession(showMsg) {
   const session = {
     extraCount: extraSlideCount,
     slides: {}
@@ -1898,35 +1931,46 @@ function saveSession() {
   const allSlideIds = ['wrapStory', 'wrapStory2'];
   for (let i = 1; i <= extraSlideCount; i++) allSlideIds.push('wrapExtra' + i);
 
+  // Elementi "fissi"/handle: NON ripristinare il loro style al reload,
+  // altrimenti si rompe il drag (simpleDrag) già attivo su quegli elementi.
+  // Per questi salviamo solo il TESTO, non lo style.
+  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle'];
+
   allSlideIds.forEach(slideId => {
     const wrap = document.getElementById(slideId);
     if (!wrap) return;
     session.slides[slideId] = {};
 
-    // Captions
+    // Captions (qui SI ripristina lo style: posizione/rotazione/scala della frase)
     wrap.querySelectorAll('[id^="s-caption"], [id^="s-from-to"], [id^="s-km"]').forEach(el => {
       session.slides[slideId][el.id] = {
         text: el.textContent,
         style: el.style.cssText,
-        transform: captionState[el.id] || null
+        transform: captionState[el.id] || null,
+        isCaption: true
       };
     });
 
-    // Badge, tag, day elements
-    ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag'].forEach(id => {
+    // Badge, tag, day elements: SOLO testo, niente style (vedi nota sopra)
+    FIXED_IDS.forEach(id => {
       const el = document.getElementById(id) || wrap.querySelector('#' + id);
-      if (el) session.slides[slideId][id] = { style: el.style.cssText };
+      if (el) session.slides[slideId][id] = { text: el.textContent };
     });
 
     // Extra slide IDs
     const suffix = slideId.replace('wrapExtra', '');
     if (suffix !== slideId) {
-      ['s-badge-extra','s-media-tag-extra','s-caption-extra'].forEach(base => {
+      ['s-badge-extra','s-media-tag-extra'].forEach(base => {
+        const el = document.getElementById(base + suffix);
+        if (el) session.slides[slideId][base+suffix] = { text: el.textContent };
+      });
+      ['s-caption-extra'].forEach(base => {
         const el = document.getElementById(base + suffix);
         if (el) session.slides[slideId][base+suffix] = {
           text: el.textContent,
           style: el.style.cssText,
-          transform: captionState[el.id] || null
+          transform: captionState[el.id] || null,
+          isCaption: true
         };
       });
     }
@@ -1943,11 +1987,11 @@ function saveSession() {
         canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
         const compressed = canvas.toDataURL('image/jpeg', 0.6);
         if (compressed.length < 3_000_000) {
-          session.slides[slideId].photo = {
-            src: compressed,
-            imgId: img.id,
-            photoState: img.id.includes('open') ? { x: openX, y: openY, scale: openScale } : { x: photoX, y: photoY, scale: photoScale }
-          };
+          let photoState;
+          if (img.id === 'photoPreview')      photoState = { x: photoX, y: photoY, scale: photoScale };
+          else if (img.id === 'openPhotoPreview') photoState = { x: openX, y: openY, scale: openScale };
+          else { const s = extraPhotoState[img.id]; photoState = s ? { x: s.x, y: s.y, scale: s.scale } : { x:0, y:0, scale:1 }; }
+          session.slides[slideId].photo = { src: compressed, imgId: img.id, photoState: photoState };
         }
       } catch(e) {}
     }
@@ -1955,6 +1999,8 @@ function saveSession() {
 
   try {
     localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    _sessionDirty = false;
+    if (showMsg) console.log('✓ Sessione WBR salvata');
   } catch(e) {
     console.warn('Session save failed (storage full?):', e);
   }
@@ -1971,13 +2017,13 @@ async function restoreSession() {
     if (!document.getElementById('wrapExtra' + i)) addPhotoSlide();
   }
 
-  await new Promise(r => setTimeout(r, 100)); // attendi DOM
+  await new Promise(r => setTimeout(r, 150)); // attendi DOM + setup drag delle nuove slide
 
   // Ripristina stati
   Object.entries(session.slides || {}).forEach(([slideId, data]) => {
     Object.entries(data).forEach(([elId, state]) => {
       if (elId === 'photo') {
-        // Ripristina foto
+        // Ripristina foto + listener di drag/pinch (altrimenti restano "mute" al tocco)
         const img = document.getElementById(state.imgId);
         const hint = document.getElementById(state.imgId.replace('Preview','Hint'));
         const controls = document.getElementById(state.imgId.replace('Preview','Controls'));
@@ -1989,9 +2035,16 @@ async function restoreSession() {
           if (state.imgId === 'photoPreview') {
             photoX = state.photoState.x; photoY = state.photoState.y; photoScale = state.photoState.scale;
             applyPhotoTransform();
+            setupMainPhotoDrag();
           } else if (state.imgId === 'openPhotoPreview') {
             openX = state.photoState.x; openY = state.photoState.y; openScale = state.photoState.scale;
             applyOpenTransform();
+            setupOpenPhotoDrag();
+          } else {
+            // Foto slide extra
+            extraPhotoState[state.imgId] = { scale: state.photoState.scale, x: state.photoState.x, y: state.photoState.y, drag: null };
+            applyExtraTransform(state.imgId);
+            setupExtraPhotoDrag(state.imgId);
           }
         }
         return;
@@ -1999,28 +2052,50 @@ async function restoreSession() {
       const el = document.getElementById(elId);
       if (!el) return;
       if (state.text !== undefined) el.textContent = state.text;
-      if (state.style) el.style.cssText = state.style;
+      // Lo style si ripristina SOLO per le caption (vedi nota in saveSession)
+      if (state.isCaption && state.style) el.style.cssText = state.style;
       if (state.transform && captionState[elId]) {
         captionState[elId] = state.transform;
         applyTransform(elId);
       }
     });
   });
+
+  attachAutoSave();
 }
 
-// Auto-save ogni 30s e prima di chiudere
-setInterval(saveSession, 30000);
-window.addEventListener('beforeunload', saveSession);
+function clearAllCaptions() {
+  if (!confirm('Eliminare tutte le frasi da tutte le slide?')) return;
+  var ids = ['s-caption'];
+  for (var i=1; i<=extraSlideCount; i++) ids.push('s-caption-extra'+i);
+  ids.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = '';
+    if (captionState[id]) captionState[id] = { x:0, y:0, rot:0, scale:1 };
+    if (typeof applyTransform === 'function') applyTransform(id);
+  });
+  markDirty();
+  saveSession(true);
+}
+
+// Auto-salvataggio ogni 5 secondi se ci sono modifiche, + salvataggio di sicurezza alla chiusura
+setInterval(function() { if (_sessionDirty) saveSession(false); }, 5000);
+window.addEventListener('beforeunload', function() { if (!_resetting) saveSession(false); });
+window.addEventListener('pagehide', function() { if (!_resetting) saveSession(false); });
 
 // Bottone reset sessione
 function clearSession() {
   if (confirm('Cancella sessione salvata e ricomincia da capo?')) {
+    _resetting = true;
     localStorage.removeItem(SESSION_KEY);
     location.reload();
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => { setTimeout(restoreSession, 200); });
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => { restoreSession(); attachAutoSave(); }, 200);
+});
 
 </script>
 </body>
