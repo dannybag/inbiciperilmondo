@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 3,
-    "from": "Rifugio Lausen",
-    "to": "Verona",
-    "km": 35,
-    "dislivello": 161,
-    "name": "Rifugio Lausen  - Verona",
-    "polyline": "s`ouG}bzbA_@Xa@nCVt@rAdA|Bo@|DXtCcBdBBxEkB|IDb@a@q@hAsElBS`@HZbFpDf@|C?|@_AjEBxAS`AH|@x@xADvAn@lBk@jEJfBhCdEhBjEzD|D@r@oAz@Or@Jl@~@x@x@rBe@zBBh@jBXd@nBtBzB^pEdH`Hn@T|BaAfDpDfAdCt@nGxBfEpFAlDv@hEaArApAx@LxAcCl@k@`Ch@xAGzDs@jCsCx@?fC`AlCuB~FzDvHPzDoDEw@eA_DIuBTcDzAaIl@Un@TdAnCv@`AtDl@zAe@|GqGtAMv@\\zFbFT|@MvCZz@vCxAbAbAThA?bBgAvFlArHrArCfHjHjArBvClKQhAcAv@BlAhHjE`EvGn@zBN|Bq@tDb@I|@gDLkBEcEfEY|An@t@hBxBvNp@jB`D`CrBnElFbA`@`Aj@tDt@|A`M~G`B`BrAdD~@t@bVv@nQkAtGeBhEkGbEtAhD?bOqMbHeIxEGrFmAbAk@lDwDlB]dEsBdSuErBuC|AgA|DfBbDcClDE~Ac@lHoHnF}CvCeFnBeFvAgAtEHzGrElFAbFcAdJqE~El@xAEvFcDlF[nEwBjCLSc@Xl@pCT~XkE`BNtCbBtFAlOfCrPaGrCkCnAW~GhD|AzF|@v@jBq@jByBxFTtAyAtAm@z@TjBzCh@FxAcAfCbB|COtG|EpEi@`AwAz@KxA`CtClBbApBjAjHD`GT`CRr@r@d@hBSfC_DbAkCb@gDl@O~CtGv@xHm@lJPz@pBlD\\pAp@rKp@f@t@[rAyD~CgGnCk@`AuB`@YpAVjAfDH|EnC~Pn@fJn@pAfAQpDkE@_ByAmGCwAbH}JlA_FbALpC`FlCbBpBP`Ce@Pb@AlC\\~@bHtClBtB`A]`@{DxC}AIf@kAlAAh@hCbIn@`EWp@eDXCl@`CDvHlFjDpF~CfCzJvLlI|GlBzE^GGkAaBoHu@gABUdCxBbEvFhObBdAh@n@~BnAp[`AtBjAv@lI`C~Nr@jCaAlFkDhEeAlPGhIaApDeA~Al@tKhJhCjA|a@~BjAf@tAlBpAi@`A\\rA|AfDhLvEjc@zC~HlBjCfBjHjAjKjHbe@fCbOfKpnAb@RrJq@nBzHuA~B@ZxGrN~AtJjFjDnGlC|IUxAh@bCfDnElM~HxLFrAO~@sGpNk@|BWlWj@dA`BlAoCvS_@pAB^b@d@A`@iFnIfBxH}AbNjC~BfYpMLvAhGt@hArIO|BAtCdAvEr@Gb@p@IP@S",
-    "date": "2026-06-21T09:04:49Z",
-    "updated": "2026-06-21T17:28:54.358Z",
-    "totKm": 258,
-    "totDis": 2317,
-    "tappe": 3
+    "day": 4,
+    "from": "Verona",
+    "to": "",
+    "km": 82,
+    "dislivello": 211,
+    "name": "Risotto cotto direttamente in risaia.",
+    "polyline": "k|ltGw~fw@bk@db@rC|DxDt}BhNzs@D~[tg@xHWbKp@jEiAzBl@xJd@tAjFx@y@bRsEbBNrJnE^v@js@`DvG|BhKjWjb@hEhD~@vCc@tBnFvPjBfAnMpSvScLzIr[jHwDlSmQxPwCvIp@vDjS~Bte@JneAbBtRtZ~]xBUjLmK~WyGte@_BfEfBI|IsW`GzWcGNeJlFdAcAxPtAzUp\\jy@dFaGjAnAxG}G|ArArAo@MyBx@}BpLoBlJcFQeDlF}DcBsC_F|@oDrEcBJhBwRdKyIlKyDGmJlVgMjEQfCjE~BwFzFfBlA_FrFiGxC}K`HcKtHgC~DwHlIvLlEiJvIwKiAiHn@mC~CTxDmHoG{F_qAep@gBqDbC}EQcBuPsIoCoQ`@eDvOwEpCeCnDxAbFkDpLhJ|FwFkLmGmJXwCqJdB}E}CsHrLqKeB_DgBcLkG_IUyEbAiCvWsUqAeTsD{GgE{A}KbCwItDjCJ|EiDqB{f@pAwR_Bqb@lA_LpG{Pl@mGlMu@pUy[v@j@`Uc]zEnHfBaFnCaEvJzA~RrTd@fChFrF`FxKol@zp@N|C_FvDlFjPfGqExBCpY|YxJoZbLqBzHvUu@nDxEpFbB]nHkL`i@ff@zFuFnMfLQcYnF}AdBcHpQKxDzWz@lOlNNtE{FEcEpK{e@gAsQlCiBmGvDaCKmAwA{CcLiA}HpCwQfFmEn@qIw@sCjCw[BuIzAgA`Q~FzSmAxDsBjBaFLaKuCec@jAsBxDeA{@wLxFcHaByDkIst@~BmC_AqOnA}KpL{L]yGjAwEhCaDaGaMrBsEuCuKlRuLuDaV@gIgKu]~NgNkJgWa@iFmMgOiJa^eGcN{@Cj@aBkm@o~@_C_BaU}^aDrFif@pe@uRxOaVbNhHgE}CcLiMaUcIjKsDfLuK{TwIa^{@_@OiDmEgI{n@kkCi^ef@cApDeB\\GlEoAjEeEzBmKtNgN~^qGtDiCzFsAxNxA`k@}ClClNlXie@j]uRtUpAhKlAfRsLdIyLzTxI~VEfBqU}DiAkCt@}Fk@w@_UbMeErIaAhGkErDuHr@{BxCqBCOjA|ArBvEbYe@jj@}LbEoHb@mHhKaCtH{Dv[wEjKDlDsBYmOxRqVxIaFdFyAcb@LiOaC{HaB_@NuGaFcQ{FoEeIlJqI|FcAIoCyFuLrEsD`HsA`HsBiA}@|CdFhEwErQgDCCaQiD{H{A{@yEbJ_Bq@oEtJaCi@_F|AqEyC{Fk@]`EuBzBzAhIsAxAc]uEs@w@zEwNbFkG|BwGLmGsC}@wHdCaJ|RcAc@kv@lWYlDcFpH{Lp@gLKyg@ZQv\\",
+    "date": "2026-06-27T08:15:20Z",
+    "updated": "2026-06-28T10:43:13.927Z",
+    "totKm": 340,
+    "totDis": 2528,
+    "tappe": 4
   },
   "tappe": [
     {
@@ -50,6 +50,17 @@
       "polyline": "s`ouG}bzbA_@Xa@nCVt@rAdA|Bo@|DXtCcBdBBxEkB|IDb@a@q@hAsElBS`@HZbFpDf@|C?|@_AjEBxAS`AH|@x@xADvAn@lBk@jEJfBhCdEhBjEzD|D@r@oAz@Or@Jl@~@x@x@rBe@zBBh@jBXd@nBtBzB^pEdH`Hn@T|BaAfDpDfAdCt@nGxBfEpFAlDv@hEaArApAx@LxAcCl@k@`Ch@xAGzDs@jCsCx@?fC`AlCuB~FzDvHPzDoDEw@eA_DIuBTcDzAaIl@Un@TdAnCv@`AtDl@zAe@|GqGtAMv@\\zFbFT|@MvCZz@vCxAbAbAThA?bBgAvFlArHrArCfHjHjArBvClKQhAcAv@BlAhHjE`EvGn@zBN|Bq@tDb@I|@gDLkBEcEfEY|An@t@hBxBvNp@jB`D`CrBnElFbA`@`Aj@tDt@|A`M~G`B`BrAdD~@t@bVv@nQkAtGeBhEkGbEtAhD?bOqMbHeIxEGrFmAbAk@lDwDlB]dEsBdSuErBuC|AgA|DfBbDcClDE~Ac@lHoHnF}CvCeFnBeFvAgAtEHzGrElFAbFcAdJqE~El@xAEvFcDlF[nEwBjCLSc@Xl@pCT~XkE`BNtCbBtFAlOfCrPaGrCkCnAW~GhD|AzF|@v@jBq@jByBxFTtAyAtAm@z@TjBzCh@FxAcAfCbB|COtG|EpEi@`AwAz@KxA`CtClBbApBjAjHD`GT`CRr@r@d@hBSfC_DbAkCb@gDl@O~CtGv@xHm@lJPz@pBlD\\pAp@rKp@f@t@[rAyD~CgGnCk@`AuB`@YpAVjAfDH|EnC~Pn@fJn@pAfAQpDkE@_ByAmGCwAbH}JlA_FbALpC`FlCbBpBP`Ce@Pb@AlC\\~@bHtClBtB`A]`@{DxC}AIf@kAlAAh@hCbIn@`EWp@eDXCl@`CDvHlFjDpF~CfCzJvLlI|GlBzE^GGkAaBoHu@gABUdCxBbEvFhObBdAh@n@~BnAp[`AtBjAv@lI`C~Nr@jCaAlFkDhEeAlPGhIaApDeA~Al@tKhJhCjA|a@~BjAf@tAlBpAi@`A\\rA|AfDhLvEjc@zC~HlBjCfBjHjAjKjHbe@fCbOfKpnAb@RrJq@nBzHuA~B@ZxGrN~AtJjFjDnGlC|IUxAh@bCfDnElM~HxLFrAO~@sGpNk@|BWlWj@dA`BlAoCvS_@pAB^b@d@A`@iFnIfBxH}AbNjC~BfYpMLvAhGt@hArIO|BAtCdAvEr@Gb@p@IP@S",
       "date": "2026-06-21T09:04:49Z",
       "updated": "2026-06-21T17:28:54.358Z"
+    },
+    {
+      "day": 4,
+      "from": "Verona",
+      "to": "",
+      "km": 82,
+      "dislivello": 211,
+      "name": "Risotto cotto direttamente in risaia.",
+      "polyline": "k|ltGw~fw@bk@db@rC|DxDt}BhNzs@D~[tg@xHWbKp@jEiAzBl@xJd@tAjFx@y@bRsEbBNrJnE^v@js@`DvG|BhKjWjb@hEhD~@vCc@tBnFvPjBfAnMpSvScLzIr[jHwDlSmQxPwCvIp@vDjS~Bte@JneAbBtRtZ~]xBUjLmK~WyGte@_BfEfBI|IsW`GzWcGNeJlFdAcAxPtAzUp\\jy@dFaGjAnAxG}G|ArArAo@MyBx@}BpLoBlJcFQeDlF}DcBsC_F|@oDrEcBJhBwRdKyIlKyDGmJlVgMjEQfCjE~BwFzFfBlA_FrFiGxC}K`HcKtHgC~DwHlIvLlEiJvIwKiAiHn@mC~CTxDmHoG{F_qAep@gBqDbC}EQcBuPsIoCoQ`@eDvOwEpCeCnDxAbFkDpLhJ|FwFkLmGmJXwCqJdB}E}CsHrLqKeB_DgBcLkG_IUyEbAiCvWsUqAeTsD{GgE{A}KbCwItDjCJ|EiDqB{f@pAwR_Bqb@lA_LpG{Pl@mGlMu@pUy[v@j@`Uc]zEnHfBaFnCaEvJzA~RrTd@fChFrF`FxKol@zp@N|C_FvDlFjPfGqExBCpY|YxJoZbLqBzHvUu@nDxEpFbB]nHkL`i@ff@zFuFnMfLQcYnF}AdBcHpQKxDzWz@lOlNNtE{FEcEpK{e@gAsQlCiBmGvDaCKmAwA{CcLiA}HpCwQfFmEn@qIw@sCjCw[BuIzAgA`Q~FzSmAxDsBjBaFLaKuCec@jAsBxDeA{@wLxFcHaByDkIst@~BmC_AqOnA}KpL{L]yGjAwEhCaDaGaMrBsEuCuKlRuLuDaV@gIgKu]~NgNkJgWa@iFmMgOiJa^eGcN{@Cj@aBkm@o~@_C_BaU}^aDrFif@pe@uRxOaVbNhHgE}CcLiMaUcIjKsDfLuK{TwIa^{@_@OiDmEgI{n@kkCi^ef@cApDeB\\GlEoAjEeEzBmKtNgN~^qGtDiCzFsAxNxA`k@}ClClNlXie@j]uRtUpAhKlAfRsLdIyLzTxI~VEfBqU}DiAkCt@}Fk@w@_UbMeErIaAhGkErDuHr@{BxCqBCOjA|ArBvEbYe@jj@}LbEoHb@mHhKaCtH{Dv[wEjKDlDsBYmOxRqVxIaFdFyAcb@LiOaC{HaB_@NuGaFcQ{FoEeIlJqI|FcAIoCyFuLrEsD`HsA`HsBiA}@|CdFhEwErQgDCCaQiD{H{A{@yEbJ_Bq@oEtJaCi@_F|AqEyC{Fk@]`EuBzBzAhIsAxAc]uEs@w@zEwNbFkG|BwGLmGsC}@wHdCaJ|RcAc@kv@lWYlDcFpH{Lp@gLKyg@ZQv\\",
+      "date": "2026-06-27T08:15:20Z",
+      "updated": "2026-06-28T10:43:13.927Z"
     }
   ],
   "next_stage": {
