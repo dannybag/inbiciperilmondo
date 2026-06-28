@@ -4,30 +4,7 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 1,
-    "from": "Risaie ",
-    "to": "Milanesi",
-    "km": 82,
-    "dislivello": 211,
-    "name": "",
-    "polyline": "",
-    "date": "2026-06-28T10:45:28.203Z",
-    "updated": "2026-06-28T10:45:28.203Z",
-    "totKm": 82,
-    "totDis": 211,
-    "tappe": 1
+    "day": 0
   },
-  "tappe": [
-    {
-      "day": 1,
-      "from": "Risaie ",
-      "to": "Milanesi",
-      "km": 82,
-      "dislivello": 211,
-      "name": "",
-      "polyline": "",
-      "date": "2026-06-28T10:45:28.203Z",
-      "updated": "2026-06-28T10:45:28.203Z"
-    }
-  ]
+  "tappe": []
 }
