@@ -215,7 +215,7 @@
   }
   .open-day-label {
     font-family: var(--mono);
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 900;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -313,10 +313,10 @@
   .media-day-badge {
     background: var(--orange);
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 0.15rem 0.6rem;
+    padding: 0.18rem 0.7rem;
     border-radius: 2px;
     color: var(--cream);
     line-height: 1.4;
@@ -690,7 +690,7 @@
         </div>
 
         <div class="open-bar"></div>
-        <div class="open-hashtag">#InBiciPerIlMondo</div>
+        <div class="open-hashtag">#UnaBiciPerIlMondo</div>
         <button onclick="openStylePanel(null,'wrapStory')" style="position:absolute; bottom:0.4rem; right:0.4rem; z-index:5; background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
       </div>
     </div>
@@ -720,8 +720,10 @@
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge">TAPPA 01</div>
           <div id="s-date-2" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;"></div>
-          <div class="media-tag" id="s-media-tag" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none; display:flex; align-items:center; gap:0.4rem;"><img src="https://mipa.dannybag.org/img/OrangBike2.png" alt="" style="height:2.5rem; width:auto; vertical-align:middle; margin-right:0.5rem;">Una Bici per il Mondo</div>
+          <div id="s-route-title" contenteditable="true" title="Tocca per modificare il titolo (es. nome tappa Strava)" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:var(--cream); margin-top:0.3rem; text-transform:uppercase;"></div>
+          <div class="media-tag" id="s-media-tag" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none; display:flex; align-items:center; gap:0.4rem;">Una Bici per il Mondo</div>
         </div>
+        <div id="s-hashtag-2" contenteditable="true" style="position:absolute; top:1rem; right:1.2rem; z-index:2; font-family:var(--mono); font-size:0.4rem; font-weight:700; letter-spacing:0.08em; color:rgba(255,248,244,0.4); text-transform:uppercase; outline:none; cursor:text;">#UnaBiciPerIlMondo</div>
         <!-- Caption trascinabile + bottone frase -->
         <div class="media-caption" id="s-caption" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare">Ogni km conta.</div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
@@ -745,7 +747,6 @@
         <!-- TOP: barra arancione con icona + nome -->
         <div style="position:absolute; top:0; left:0; right:0; z-index:3; height:3px; background:var(--orange);"></div>
         <div style="position:relative; z-index:2; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem;">
-          <img src="https://mipa.dannybag.org/img/OrangBike2.png" alt="" style="height:2.5rem; width:auto; vertical-align:middle; margin-right:0.5rem;">
           <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange);">Una Bici per il Mondo</div>
         </div>
 
@@ -782,7 +783,7 @@
           </a>
         </div>
 
-        <div class="close-hashtags">#InBiciPerIlMondo · #WorldBicycleRelief</div>
+        <div class="close-hashtags">#UnaBiciPerIlMondo · #WorldBicycleRelief</div>
         <button onclick="openStylePanel(null,'wrapStory3')" style="position:absolute; bottom:2rem; right:0.4rem; z-index:5; background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
       </div>
     </div>
@@ -1682,8 +1683,10 @@ function addPhotoSlide() {
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge-extra${extraSlideCount}">TAPPA 01</div>
           <div id="s-date-extra${extraSlideCount}" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;">${document.getElementById('s-date-2')?.textContent || ''}</div>
-          <div class="media-tag" style="color:var(--orange); display:flex; align-items:center; gap:0.4rem;"><img src="https://mipa.dannybag.org/img/OrangBike2.png" alt="" style="height:2.5rem; width:auto; vertical-align:middle; margin-right:0.5rem;">Una Bici per il Mondo</div>
+          <div id="s-route-title-extra${extraSlideCount}" contenteditable="true" title="Tocca per modificare il titolo" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:var(--cream); margin-top:0.3rem; text-transform:uppercase;"></div>
+          <div class="media-tag" style="color:var(--orange); display:flex; align-items:center; gap:0.4rem;">Una Bici per il Mondo</div>
         </div>
+        <div id="s-hashtag-extra${extraSlideCount}" contenteditable="true" style="position:absolute; top:1rem; right:1.2rem; z-index:2; font-family:var(--mono); font-size:0.4rem; font-weight:700; letter-spacing:0.08em; color:rgba(255,248,244,0.4); text-transform:uppercase; outline:none; cursor:text;">#UnaBiciPerIlMondo</div>
         <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
           <div class="slide-handle" id="s-handle-extra${extraSlideCount}" contenteditable="true" style="position:absolute; bottom:0.5rem; right:0.8rem; z-index:5; cursor:grab; outline:none; font-family:'IBM Plex Mono',monospace; font-size:0.55rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.35);">@UnaBiciPerIlMondo</div>
@@ -1933,7 +1936,7 @@ function saveSession(showMsg) {
   // Elementi "fissi"/handle: NON ripristinare il loro style al reload,
   // altrimenti si rompe il drag (simpleDrag) già attivo su quegli elementi.
   // Per questi salviamo solo il TESTO, non lo style.
-  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle'];
+  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-date','s-date-2','s-route-title','s-hashtag-2'];
 
   allSlideIds.forEach(slideId => {
     const wrap = document.getElementById(slideId);
@@ -1959,7 +1962,7 @@ function saveSession(showMsg) {
     // Extra slide IDs
     const suffix = slideId.replace('wrapExtra', '');
     if (suffix !== slideId) {
-      ['s-badge-extra','s-media-tag-extra'].forEach(base => {
+      ['s-badge-extra','s-media-tag-extra','s-date-extra','s-route-title-extra','s-hashtag-extra'].forEach(base => {
         const el = document.getElementById(base + suffix);
         if (el) session.slides[slideId][base+suffix] = { text: el.textContent };
       });
