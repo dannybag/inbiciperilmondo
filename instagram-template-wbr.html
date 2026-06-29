@@ -676,16 +676,17 @@
 
         <!-- TOP OVERLAY: logo -->
         <div class="open-tag" id="s-open-tag" contenteditable="true" style="position:absolute; top:1rem; left:1.2rem; z-index:2; cursor:grab; outline:none;">
-          <img src="https://mipa.dannybag.org/img/OrangBike2.png" alt="" style="height:3rem; width:auto; vertical-align:middle; margin-right:0.6rem;"> Una Bici per il Mondo
+          Una Bici per il Mondo
         </div>
 
         <!-- BOTTOM OVERLAY: tappa info - draggabile -->
         <div id="s-info-group" style="position:absolute; bottom:0; left:0; right:0; z-index:2; padding:2.5rem 1.2rem 1.2rem; background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%); cursor:grab;">
-          <div class="open-day-label">Tappa</div>
-          <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; cursor:text;">01</div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <div class="open-day-label" style="margin-bottom:0; padding:0;">Tappa</div>
+            <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; cursor:text; padding:0;">01</div>
+          </div>
           <div id="s-date" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; font-weight:600; letter-spacing:0.05em; color:rgba(255,248,244,0.6); margin-top:0.2rem;"></div>
           <div class="open-from-to" id="s-from-to">Milano → Bologna</div>
-          <div class="open-km" id="s-km">85 km · ↑500m</div>
         </div>
 
         <div class="open-bar"></div>
@@ -906,7 +907,7 @@ function pad(n) { return String(n).padStart(2, '0'); }
 
 // ---- DATA CALENDARIO (editabile, separata dal numero tappa) ----
 function defaultDateStr() {
-  var MESI = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+  var MESI = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
   var d = new Date();
   return String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
 }
@@ -1013,7 +1014,6 @@ function update() {
   // Story
   document.getElementById('s-day-num').textContent = dayStr;
   document.getElementById('s-from-to').textContent = route;
-  document.getElementById('s-km').textContent = `${kmStr} · ↑${dislivello}m`;
   document.getElementById('s-badge').textContent = `TAPPA ${dayStr}`;
   // Non cambia la frase automaticamente - viene gestita dai bottoni 💬 per slide
   const photoMsgLocal = document.getElementById('s-caption')?.textContent || '';
@@ -1408,7 +1408,6 @@ const SLIDE_FIXED = {
     { id: 's-open-tag', label: 'Una Bici' },
     { id: 's-day-num',  label: 'N° Tappa' },
     { id: 's-from-to',  label: 'Rotta' },
-    { id: 's-km',       label: 'Km' },
   ],
   'wrapStory2': [
     { id: 's-media-tag', label: 'Una Bici' },
@@ -1942,7 +1941,7 @@ function saveSession(showMsg) {
     session.slides[slideId] = {};
 
     // Captions (qui SI ripristina lo style: posizione/rotazione/scala della frase)
-    wrap.querySelectorAll('[id^="s-caption"], [id^="s-from-to"], [id^="s-km"]').forEach(el => {
+    wrap.querySelectorAll('[id^="s-caption"], [id^="s-from-to"]').forEach(el => {
       session.slides[slideId][el.id] = {
         text: el.textContent,
         style: el.style.cssText,
