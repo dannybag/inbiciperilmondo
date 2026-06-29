@@ -686,7 +686,7 @@
             <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; cursor:text; padding:0;">01</div>
           </div>
           <div id="s-date" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; font-weight:600; letter-spacing:0.05em; color:rgba(255,248,244,0.6); margin-top:0.2rem;"></div>
-          <div class="open-from-to" id="s-from-to">Milano → Bologna</div>
+          <div class="open-from-to" id="s-from-to" style="display:none;">Milano → Bologna</div>
           <div id="s-route-title-1" contenteditable="true" title="Tocca per modificare il titolo (es. nome tappa Strava)" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:rgba(255,248,244,0.7); margin-top:0.3rem; text-transform:uppercase;"></div>
         </div>
 
@@ -1416,7 +1416,6 @@ const SLIDE_FIXED = {
   'wrapStory':  [
     { id: 's-open-tag', label: 'Una Bici' },
     { id: 's-day-num',  label: 'N° Tappa' },
-    { id: 's-from-to',  label: 'Rotta' },
   ],
   'wrapStory2': [
     { id: 's-media-tag', label: 'Una Bici' },
