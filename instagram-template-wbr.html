@@ -687,6 +687,7 @@
           </div>
           <div id="s-date" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; font-weight:600; letter-spacing:0.05em; color:rgba(255,248,244,0.6); margin-top:0.2rem;"></div>
           <div class="open-from-to" id="s-from-to">Milano → Bologna</div>
+          <div id="s-route-title-1" contenteditable="true" title="Tocca per modificare il titolo (es. nome tappa Strava)" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:rgba(255,248,244,0.7); margin-top:0.3rem; text-transform:uppercase;"></div>
         </div>
 
         <div class="open-bar"></div>
@@ -880,8 +881,11 @@ function loadDefaultOpenPhoto() {
   if (!img || img.getAttribute('src')) return;
   img.onload = function() {
     var cw = (container ? container.offsetWidth : 0) || 270;
-    // Fit orizzontale: la foto occupa tutta la larghezza, bici intera visibile, niente ritaglio laterale
-    openScale = cw / img.naturalWidth;
+    var ch = (container ? container.offsetHeight : 0) || 480;
+    // Riempi tutta l'altezza della slide; se questo facesse uscire la bici
+    // dai lati orizzontalmente, passa ad adattare alla larghezza (niente taglio laterale)
+    var scaleH = ch / img.naturalHeight;
+    openScale = (img.naturalWidth * scaleH > cw) ? (cw / img.naturalWidth) : scaleH;
     openX = 0; openY = 0; openRot = 0;
     applyOpenTransform();
   };
@@ -1933,7 +1937,7 @@ function saveSession(showMsg) {
   // Elementi "fissi"/handle: NON ripristinare il loro style al reload,
   // altrimenti si rompe il drag (simpleDrag) già attivo su quegli elementi.
   // Per questi salviamo solo il TESTO, non lo style.
-  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-date','s-date-2','s-route-title'];
+  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-date','s-date-2','s-route-title','s-route-title-1'];
 
   allSlideIds.forEach(slideId => {
     const wrap = document.getElementById(slideId);
