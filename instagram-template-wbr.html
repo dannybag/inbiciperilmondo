@@ -231,7 +231,7 @@
     padding: 0 1.2rem;
     letter-spacing: -0.02em;
   }
-  .frame-story .open-day-num { font-size: 6rem; }
+  .frame-story .open-day-num { font-size: 4.5rem; }
   .open-route { display: none; }
   .open-from-to {
     font-family: 'Bebas Neue', sans-serif;
@@ -718,8 +718,8 @@
           </div>
         </div>
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
-          <div class="media-day-badge" id="s-badge">TAPPA 01</div>
-          <div id="s-date-2" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;"></div>
+          <div class="media-day-badge" id="s-badge" style="display:none;">TAPPA 01</div>
+          <div id="s-date-2" contenteditable="true" style="display:none; outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;"></div>
           <div id="s-route-title" contenteditable="true" title="Tocca per modificare il titolo (es. nome tappa Strava)" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:var(--cream); margin-top:0.3rem; text-transform:uppercase;"></div>
           <div class="media-tag" id="s-media-tag" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none; display:flex; align-items:center; gap:0.4rem;">#UnaBiciPerIlMondo</div>
         </div>
@@ -1229,15 +1229,21 @@ function simpleDrag(el) {
   function onMove(x, y) {
     el.style.left=(startLeft+x-startX)+'px'; el.style.top=(startTop+y-startY)+'px';
   }
+  // Se il tocco/click parte da un campo editabile DENTRO il contenitore (non l'elemento
+  // stesso), non avviare il drag: lascia che il tap apra la tastiera/cursore normalmente.
+  function isInnerEditable(e) {
+    return e.target !== el && e.target.isContentEditable;
+  }
   el.addEventListener('mousedown', function(e) {
+    if (isInnerEditable(e)) return;
     onDown(e.clientX,e.clientY);
     function mm(e){onMove(e.clientX,e.clientY);}
     function mu(){document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',mu);}
     document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
   });
   var tp=null;
-  el.addEventListener('touchstart',function(e){tp={x:e.touches[0].clientX,y:e.touches[0].clientY};onDown(tp.x,tp.y);},{passive:true});
-  el.addEventListener('touchmove',function(e){e.preventDefault();onMove(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+  el.addEventListener('touchstart',function(e){ if(isInnerEditable(e)){tp=null;return;} tp={x:e.touches[0].clientX,y:e.touches[0].clientY};onDown(tp.x,tp.y);},{passive:true});
+  el.addEventListener('touchmove',function(e){ if(!tp)return; e.preventDefault();onMove(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
   el.addEventListener('touchend',function(){tp=null;},{passive:true});
 }
 
@@ -1683,8 +1689,8 @@ function addPhotoSlide() {
           </div>
         </div>
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
-          <div class="media-day-badge" id="s-badge-extra${extraSlideCount}">TAPPA 01</div>
-          <div id="s-date-extra${extraSlideCount}" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;">${document.getElementById('s-date-2')?.textContent || ''}</div>
+          <div class="media-day-badge" id="s-badge-extra${extraSlideCount}" style="display:none;">TAPPA 01</div>
+          <div id="s-date-extra${extraSlideCount}" contenteditable="true" style="display:none; outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;">${document.getElementById('s-date-2')?.textContent || ''}</div>
           <div id="s-route-title-extra${extraSlideCount}" contenteditable="true" title="Tocca per modificare il titolo" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:var(--cream); margin-top:0.3rem; text-transform:uppercase;"></div>
           <div class="media-tag" style="color:var(--orange); display:flex; align-items:center; gap:0.4rem;">#UnaBiciPerIlMondo</div>
         </div>
