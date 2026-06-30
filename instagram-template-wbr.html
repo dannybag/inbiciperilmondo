@@ -2352,13 +2352,11 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(async () => {
     await restoreSession();
     attachAutoSave();
-    loadDefaultOpenPhoto(); // no-op se una foto è già stata ripristinata
-    // Forza la correzione di eventuale testo "Una Bici per il Mondo" rimasto
-    // in cache da sessioni salvate prima del passaggio all'hashtag
+    loadDefaultOpenPhoto();
+    update(); // forza scrittura di s-close-totale con i valori correnti
     document.querySelectorAll('#s-open-tag, #s-media-tag, [id^="s-media-tag-extra"]').forEach(el => {
       if (el.textContent.trim() === 'Una Bici per il Mondo') el.textContent = '#UnaBiciPerIlMondo';
     });
-    // Ricarica dati freschi da GitHub (titolo, data, km totali) dopo il restore sessione
     await loadFromGitHub();
   }, 200);
 });
