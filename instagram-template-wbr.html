@@ -307,8 +307,9 @@
     padding: 0.9rem 1rem 1.5rem;
     background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, transparent 100%);
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
   .media-day-badge {
     background: var(--orange);
@@ -746,7 +747,6 @@
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge" style="display:none;">TAPPA 01</div>
           <div id="s-date-2" contenteditable="true" style="display:none; outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;"></div>
-          <div id="s-route-title" contenteditable="true" title="Tocca per modificare il titolo (es. nome tappa Strava)" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:var(--cream); margin-top:0.3rem; text-transform:uppercase;"></div>
           <div class="media-tag" id="s-media-tag" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none; display:flex; align-items:center; gap:0.4rem;">#UnaBiciPerIlMondo</div>
         </div>
         <!-- Caption trascinabile + bottone frase -->
@@ -1011,9 +1011,6 @@ function applyWbrTappa(tappa) {
   // Titolo (slide 1) = nome attività Strava, resta editabile dopo
   const title1 = document.getElementById('s-route-title-1');
   if (title1) title1.textContent = name;
-  const title2 = document.getElementById('s-route-title');
-  if (title2) title2.textContent = name;
-  document.querySelectorAll('[id^="s-route-title-extra"]').forEach(el => el.textContent = name);
 
   const d1 = document.getElementById('s-date'); if (d1) d1.textContent = dateStr;
   const d2 = document.getElementById('s-date-2'); if (d2) d2.textContent = dateStr;
@@ -1877,7 +1874,6 @@ function addPhotoSlide() {
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge-extra${extraSlideCount}" style="display:none;">TAPPA 01</div>
           <div id="s-date-extra${extraSlideCount}" contenteditable="true" style="display:none; outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;">${document.getElementById('s-date-2')?.textContent || ''}</div>
-          <div id="s-route-title-extra${extraSlideCount}" contenteditable="true" title="Tocca per modificare il titolo" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:var(--cream); margin-top:0.3rem; text-transform:uppercase;"></div>
           <div class="media-tag" style="color:var(--orange); display:flex; align-items:center; gap:0.4rem;">#UnaBiciPerIlMondo</div>
         </div>
         <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
@@ -2139,7 +2135,7 @@ function saveSession(showMsg) {
   // Elementi "fissi"/handle: NON ripristinare il loro style al reload,
   // altrimenti si rompe il drag (simpleDrag) già attivo su quegli elementi.
   // Per questi salviamo solo il TESTO, non lo style.
-  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-date','s-date-2','s-route-title','s-route-title-1'];
+  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-date','s-date-2','s-route-title-1'];
 
   allSlideIds.forEach(slideId => {
     const wrap = document.getElementById(slideId);
@@ -2165,7 +2161,7 @@ function saveSession(showMsg) {
     // Extra slide IDs
     const suffix = slideId.replace('wrapExtra', '');
     if (suffix !== slideId) {
-      ['s-badge-extra','s-media-tag-extra','s-date-extra','s-route-title-extra'].forEach(base => {
+      ['s-badge-extra','s-media-tag-extra','s-date-extra'].forEach(base => {
         const el = document.getElementById(base + suffix);
         if (el) session.slides[slideId][base+suffix] = { text: el.textContent };
       });
