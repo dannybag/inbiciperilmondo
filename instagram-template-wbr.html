@@ -713,7 +713,6 @@
             <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; cursor:text; padding:0;">01</div>
           </div>
           <div id="s-date" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; font-weight:600; letter-spacing:0.05em; color:rgba(255,248,244,0.6); margin-top:0.2rem;"></div>
-          <div class="open-from-to" id="s-from-to" style="display:none;">Milano → Bologna</div>
           <div id="s-route-title-1" contenteditable="true" title="Tocca per modificare il titolo (es. nome tappa Strava)" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:rgba(255,248,244,0.7); margin-top:0.3rem; text-transform:uppercase;"></div>
           <div id="s-km-day" style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.25rem;"></div>
         </div>
@@ -836,6 +835,18 @@
 <div id="adm-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:9999; align-items:center; justify-content:center; overflow-y:auto; padding:2rem 0;">
   <div style="background:#1A1A1A; border:2px solid #F05A28; border-radius:8px; padding:2.5rem; width:420px; max-width:92vw;">
     <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#F05A28; margin-bottom:2rem;">⚙️ Dati tappa del giorno</div>
+
+    <div style="margin-bottom:1rem;">
+      <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Nome tappa</label>
+      <input id="adm-title" type="text" placeholder="es. Risaie Milanesi"
+        style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:1.2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none; box-sizing:border-box;">
+    </div>
+
+    <div style="margin-bottom:1rem;">
+      <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Data tappa</label>
+      <input id="adm-date" type="text" placeholder="es. 29 Giugno"
+        style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:1.2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none; box-sizing:border-box;">
+    </div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
       <div>
@@ -1217,6 +1228,10 @@ function admOpen() {
   document.getElementById('adm-day').value  = document.getElementById('dayNum').value;
   document.getElementById('adm-from').value = document.getElementById('fromCity').value;
   document.getElementById('adm-to').value   = document.getElementById('toCity').value;
+  const t1 = document.getElementById('s-route-title-1');
+  document.getElementById('adm-title').value = t1 ? t1.textContent.trim() : '';
+  const dt = document.getElementById('s-date');
+  document.getElementById('adm-date').value = dt ? dt.textContent.trim() : '';
   document.getElementById('adm-km').value   = document.getElementById('kmDay').value;
   document.getElementById('adm-dis').value  = document.getElementById('dislivello').value;
   admRefreshTotals();
@@ -1235,6 +1250,14 @@ function admSave() {
   const dis  = parseInt(document.getElementById('adm-dis').value) || 0;
   const from = document.getElementById('adm-from').value || 'Milano';
   const to   = document.getElementById('adm-to').value   || '';
+  const titleVal = document.getElementById('adm-title').value.trim();
+  const dateVal  = document.getElementById('adm-date').value.trim();
+  const t1 = document.getElementById('s-route-title-1');
+  if (t1 && titleVal) t1.textContent = titleVal;
+  if (dateVal) {
+    ['s-date','s-date-2'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=dateVal; });
+    document.querySelectorAll('[id^="s-date-extra"]').forEach(el => el.textContent = dateVal);
+  }
   document.getElementById('dayNum').value    = day;
   document.getElementById('fromCity').value  = from;
   document.getElementById('toCity').value    = to;
