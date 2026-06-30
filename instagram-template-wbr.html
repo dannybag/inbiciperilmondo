@@ -1144,33 +1144,19 @@ function populateFromTappa(tappa, tappeList, fundraising) {
   document.getElementById('kmTot').value     = tappa.totKm || 0;
   document.getElementById('dislivelloTot').value = tappa.totDis || 0;
 
-  // Nome tappa (da Strava via index.html → data.json)
-  if (tappa.name) {
-    const t1 = document.getElementById('s-route-title-1');
-    if (t1) t1.textContent = tappa.name;
-  }
+  // Titolo slide 1 = "Milano → Sona" (from → to, come in Tappa del Giorno)
+  const from  = tappa.from || 'Milano';
+  const to    = tappa.to   || '';
+  const t1 = document.getElementById('s-route-title-1');
+  if (t1 && to) t1.textContent = from + ' \u2192 ' + to;
 
-  // Data tappa (da Strava via index.html → data.json) su tutte le slide
+  // Data tappa: converte ISO → "26 Giugno"
   if (tappa.date) {
     const MESI = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
     const d = new Date(tappa.date);
     const dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
     ['s-date','s-date-2'].forEach(function(id){ const el=document.getElementById(id); if(el) el.textContent=dateStr; });
     document.querySelectorAll('[id^="s-date-extra"]').forEach(function(el){ el.textContent=dateStr; });
-  }
-
-  // Nome tappa → titolo slide 1 (modificabile)
-  if (tappa.name) {
-    const t1 = document.getElementById('s-route-title-1');
-    if (t1) t1.textContent = tappa.name;
-  }
-
-  // Data tappa → tutte le slide
-  if (tappa.date) {
-    ['s-date','s-date-2'].forEach(function(id) {
-      const el = document.getElementById(id); if (el) el.textContent = tappa.date;
-    });
-    document.querySelectorAll('[id^="s-date-extra"]').forEach(function(el) { el.textContent = tappa.date; });
   }
   // Mini barra raccolta fondi
   if (fundraising) {
