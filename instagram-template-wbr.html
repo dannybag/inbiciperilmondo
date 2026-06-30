@@ -1212,9 +1212,9 @@ function update() {
   var elCloseSub = document.getElementById('s-close-sub');
   if (elCloseSub) elCloseSub.innerHTML = `Oggi: ${document.getElementById('kmDay').value} km · ↑${document.getElementById('dislivello').value}m<br>Totale: ${tot} km · ↑${disTot}m`;
   var elKmDay = document.getElementById('s-km-day');
-  if (elKmDay) elKmDay.textContent = `Oggi: ${kmStr} km · ↑${dislivello}m`;
+  if (elKmDay) elKmDay.textContent = `${km}km · ↑${dislivello}m`;
   var elTotale = document.getElementById('s-close-totale');
-  if (elTotale) elTotale.textContent = `Percorsi: ${tot} km · ↑${disTot}m`;
+  if (elTotale) elTotale.textContent = `In sella ad oggi: ${tot}km · ↑${disTot}m`;
   document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = closeMsg.replace('\n', '<br>');
 
   // Aggiorna anche le slide extra con la stessa frase
