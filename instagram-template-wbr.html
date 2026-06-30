@@ -778,10 +778,10 @@
 
         <!-- MESSAGGIO -->
         <div style="position:relative; z-index:2;">
-          <div id="s-close-totale" style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; font-weight:900; letter-spacing:0.08em; color:rgba(255,248,244,0.9); margin-bottom:0.4rem;"></div>
           <div class="close-msg" id="s-close-msg" contenteditable="true" style="outline:none; cursor:text;">Le gambe<br>girano ancora.</div>
           <button onclick="openPhrasePanel('s-close-msg'); styleTargetId='s-close-msg';" style="margin-top:0.3rem; background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
           <div class="close-sub" id="s-close-sub" style="display:none;">Oggi: 85 km · ↑320m<br>Totale: 266 km · ↑450m</div>
+          <div id="s-close-totale" style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.08em; margin-top:0.4rem;"></div>
         </div>
 
         <!-- MIDDLE: barra raccolta fondi -->
@@ -1192,7 +1192,7 @@ function update() {
   var elKmDay = document.getElementById('s-km-day');
   if (elKmDay) elKmDay.innerHTML = `${km}&thinsp;km · ↑${dislivello}&thinsp;m`;
   var elTotale = document.getElementById('s-close-totale');
-  if (elTotale) elTotale.innerHTML = `<strong>In sella ad oggi:</strong> ${tot}&thinsp;km · ↑${disTot}&thinsp;m`;
+  if (elTotale) elTotale.innerHTML = `<strong style="color:rgba(255,248,244,0.95); font-weight:900;">In sella ad oggi:</strong> <span style="color:rgba(255,248,244,0.55);">${tot}&thinsp;km · ↑${disTot}&thinsp;m</span>`;
   document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = closeMsg.replace('\n', '<br>');
 
   // Aggiorna anche le slide extra con la stessa frase
