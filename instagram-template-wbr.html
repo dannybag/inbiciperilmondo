@@ -2353,11 +2353,11 @@ document.addEventListener('DOMContentLoaded', () => {
     await restoreSession();
     attachAutoSave();
     loadDefaultOpenPhoto();
-    update(); // forza scrittura di s-close-totale con i valori correnti
     document.querySelectorAll('#s-open-tag, #s-media-tag, [id^="s-media-tag-extra"]').forEach(el => {
       if (el.textContent.trim() === 'Una Bici per il Mondo') el.textContent = '#UnaBiciPerIlMondo';
     });
     await loadFromGitHub();
+    update();
   }, 200);
 });
 
