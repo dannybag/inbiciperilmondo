@@ -837,12 +837,6 @@
   <div style="background:#1A1A1A; border:2px solid #F05A28; border-radius:8px; padding:2.5rem; width:420px; max-width:92vw;">
     <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#F05A28; margin-bottom:2rem;">⚙️ Dati tappa del giorno</div>
 
-    <div style="margin-bottom:1rem;">
-      <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Nome tappa</label>
-      <input id="adm-title" type="text" placeholder="es. Risaie Milanesi"
-        style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:1.2rem; font-weight:700; padding:0.4rem 0.7rem; border-radius:4px; outline:none; box-sizing:border-box;">
-    </div>
-
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
       <div>
         <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Tappa</label>
@@ -1198,7 +1192,7 @@ function update() {
   var elKmDay = document.getElementById('s-km-day');
   if (elKmDay) elKmDay.innerHTML = `${km}&thinsp;km · ↑${dislivello}&thinsp;m`;
   var elTotale = document.getElementById('s-close-totale');
-  if (elTotale) elTotale.innerHTML = `<strong style="color:rgba(255,248,244,0.95); font-size:0.58rem;">In sella da:</strong> <span style="font-size:0.58rem;">${tot}&thinsp;km · ↑${disTot}&thinsp;m</span>`;
+  if (elTotale) elTotale.innerHTML = `<strong style="color:rgba(255,248,244,0.95);">In sella da:</strong> ${tot}&thinsp;km · ↑${disTot}&thinsp;m`;
   document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = closeMsg.replace('\n', '<br>');
 
   // Aggiorna anche le slide extra con la stessa frase
@@ -1223,8 +1217,6 @@ function admOpen() {
   document.getElementById('adm-day').value  = document.getElementById('dayNum').value;
   document.getElementById('adm-from').value = document.getElementById('fromCity').value;
   document.getElementById('adm-to').value   = document.getElementById('toCity').value;
-  const titleEl = document.getElementById('s-route-title-1');
-  document.getElementById('adm-title').value = titleEl ? titleEl.textContent.trim() : '';
   document.getElementById('adm-km').value   = document.getElementById('kmDay').value;
   document.getElementById('adm-dis').value  = document.getElementById('dislivello').value;
   admRefreshTotals();
@@ -1243,9 +1235,6 @@ function admSave() {
   const dis  = parseInt(document.getElementById('adm-dis').value) || 0;
   const from = document.getElementById('adm-from').value || 'Milano';
   const to   = document.getElementById('adm-to').value   || '';
-  const titleInput = document.getElementById('adm-title').value.trim();
-  const title1 = document.getElementById('s-route-title-1');
-  if (title1 && titleInput) title1.textContent = titleInput;
   document.getElementById('dayNum').value    = day;
   document.getElementById('fromCity').value  = from;
   document.getElementById('toCity').value    = to;
