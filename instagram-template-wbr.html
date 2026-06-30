@@ -770,22 +770,28 @@
       <div class="slide-close">
         <div class="close-day" id="s-close-day">01</div>
 
-        <!-- TOP: barra arancione con icona + nome -->
+        <!-- Barra arancione top -->
         <div style="position:absolute; top:0; left:0; right:0; z-index:3; height:3px; background:var(--orange);"></div>
-        <div style="position:relative; z-index:2; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem;">
+
+        <!-- 1. HASHTAG -->
+        <div style="position:relative; z-index:2; margin-bottom:0.5rem;">
           <div id="s-close-hashtag" contenteditable="true" style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); cursor:grab; outline:none;">#UnaBiciPerIlMondo</div>
         </div>
 
-        <!-- MESSAGGIO -->
-        <div style="position:relative; z-index:2;">
-          <div class="close-msg" id="s-close-msg" contenteditable="true" style="outline:none; cursor:text;">Le gambe<br>girano ancora.</div>
+        <!-- 2. FRASE -->
+        <div style="position:relative; z-index:2; margin-bottom:0.3rem;">
+          <div class="close-msg" id="s-close-msg" contenteditable="true" style="outline:none; cursor:grab;">Le gambe<br>girano ancora.</div>
           <button onclick="openPhrasePanel('s-close-msg'); styleTargetId='s-close-msg';" style="margin-top:0.3rem; background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
-          <div class="close-sub" id="s-close-sub" style="display:none;">Oggi: 85 km · ↑320m<br>Totale: 266 km · ↑450m</div>
-          <div id="s-close-totale" style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.08em; margin-top:0.4rem; cursor:grab; position:relative;"></div>
         </div>
 
-        <!-- MIDDLE: barra raccolta fondi -->
-        <div style="position:relative; z-index:2; margin-top:0.5rem;">
+        <!-- 3. IN SELLA FINO AD OGGI -->
+        <div id="s-close-totale" style="position:relative; z-index:2; font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.08em; cursor:grab; margin-bottom:0.6rem;"></div>
+
+        <!-- ghost elementi mantenuti per compatibilità JS -->
+        <div class="close-sub" id="s-close-sub" style="display:none;"></div>
+
+        <!-- 4. RACCOLTA FONDI -->
+        <div style="position:relative; z-index:2;">
           <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.48rem; font-weight:600; letter-spacing:0.1em; color:rgba(255,248,244,0.4); margin-bottom:0.25rem;">
             <span>Raccolta fondi</span>
             <span id="close-raised-pct">0%</span>
@@ -797,13 +803,15 @@
             <span id="close-raised-amt">€0</span>
             <span>€1.700</span>
           </div>
+
+          <!-- 5. BICI BUFFALO -->
           <div style="display:flex; align-items:baseline; gap:0.4rem; margin-top:0.5rem;">
             <span id="close-bikes-num" style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:var(--orange); line-height:1;">0</span>
             <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; color:rgba(255,248,244,0.5); letter-spacing:0.05em;">bici <strong style="color:var(--orange);">Buffalo</strong> per ora!</span>
           </div>
         </div>
 
-        <!-- BOTTOM: CTA su sfondo arancione -->
+        <!-- BOTTOM: CTA -->
         <div style="position:relative; z-index:2; margin-top:auto; padding-top:0.8rem;">
           <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank">
             <span style="font-size:0.9rem; font-weight:900; letter-spacing:0.15em;">DONA ORA</span>
