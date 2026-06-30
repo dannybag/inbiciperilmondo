@@ -543,9 +543,35 @@
 <h1>Una Bici per il Mondo · Instagram Kit</h1>
 <div class="subtitle">Milano → Palermo · World Bicycle Relief · Template giornaliero</div>
 
+<!-- RESET SESSIONE -->
+<div id="reset-banner" style="display:none; background:rgba(240,90,40,0.12); border:1px solid rgba(240,90,40,0.4); border-radius:6px; padding:0.7rem 1.2rem; margin-bottom:1rem; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; color:rgba(255,248,244,0.7); letter-spacing:0.05em;">
+  Sessione precedente trovata.
+  <button onclick="resetWbrSession()" style="background:#F05A28; color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.3rem 0.8rem; cursor:pointer; margin-left:0.8rem;">🔄 Nuova sessione</button>
+  <button onclick="document.getElementById('reset-banner').style.display='none'" style="background:transparent; color:rgba(255,248,244,0.3); border:none; font-size:0.8rem; cursor:pointer; margin-left:0.4rem;">✕</button>
+</div>
+<div style="display:flex; gap:0.8rem; justify-content:center; margin-bottom:1rem; flex-wrap:wrap;">
+  <button onclick="stravaLoadActivities()" id="stravaBtn"
+    style="background:#FC4C02; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.6rem 1.2rem; border:none; border-radius:3px; cursor:pointer;">
+    ⚡ Leggi da Strava
+  </button>
+  <button onclick="resetData()"
+    style="background:transparent; color:rgba(255,248,244,0.5); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.6rem 1rem; border:1px solid rgba(255,248,244,0.2); border-radius:3px; cursor:pointer;">
+    🔄 Reset data
+  </button>
+  <button onclick="stravaConnect()"
+    style="background:transparent; color:rgba(255,248,244,0.35); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.6rem 1rem; border:1px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;">
+    Connetti Strava
+  </button>
+</div>
+<div id="strava-msg" style="text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:rgba(255,248,244,0.4); margin-bottom:0.5rem; min-height:1rem;"></div>
+<div id="strava-picker" style="display:none; max-height:220px; overflow-y:auto; margin: 0 auto 1.5rem; max-width:600px; background:#1A1A1A; border:1px solid rgba(240,90,40,0.3); border-radius:6px; padding:0.5rem;"></div>
+
 
 <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap;">
   <button onclick="clearSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Cancella sessione">↺</button>
+  <button onclick="debugSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Debug sessione">🔍</button>
+  <button onclick="restoreSession()" style="background:transparent; color:rgba(255,248,244,0.25); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.1); border-radius:3px; cursor:pointer;" title="Ripristina ora">⏮</button>
+  <button onclick="saveSession(true)" style="background:transparent; color:rgba(255,248,244,0.35); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;" title="Salva sessione">💾</button>
   <button onclick="clearAllCaptions()" style="background:transparent; color:rgba(255,248,244,0.35); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.8rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:3px; cursor:pointer;" title="Cancella tutte le frasi">🗑 frasi</button>
 
   <button id="downloadBtn" onclick="downloadSlides()"
@@ -897,6 +923,167 @@ function loadDefaultOpenPhoto() {
 }
 
 // ---- GITHUB CONFIG ----
+// ---- STRAVA ----
+const _si = [57,60,60,57,64,64];
+const _ss = [63,57,106,104,109,59,107,60,105,56,58,64,60,108,109,62,105,104,60,59,107,58,57,104,105,104,56,58,56,58,60,62,109,109,63,62,109,62,107,57];
+const _dec = (a) => a.map(c => String.fromCharCode(c - 7)).join('');
+const STRAVA_REDIRECT = window.location.href.split('?')[0];
+
+function stravaConnect() {
+  const url = `https://www.strava.com/oauth/authorize?client_id=${_dec(_si)}&response_type=code&redirect_uri=${encodeURIComponent(STRAVA_REDIRECT)}&approval_prompt=force&scope=activity:read_all`;
+  window.location.href = url;
+}
+
+async function stravaGetToken() {
+  const expiry = parseInt(localStorage.getItem('strava-expiry') || '0');
+  if (Date.now() / 1000 < expiry - 60) return localStorage.getItem('strava-access');
+  const refresh = localStorage.getItem('strava-refresh');
+  if (!refresh) return null;
+  const res = await fetch('https://www.strava.com/oauth/token', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ client_id: _dec(_si), client_secret: _dec(_ss), refresh_token: refresh, grant_type: 'refresh_token' })
+  });
+  const d = await res.json();
+  if (d.access_token) {
+    localStorage.setItem('strava-access', d.access_token);
+    localStorage.setItem('strava-refresh', d.refresh_token);
+    localStorage.setItem('strava-expiry', d.expires_at);
+    return d.access_token;
+  }
+  return null;
+}
+
+async function stravaLoadActivities() {
+  const msg = document.getElementById('strava-msg');
+  const picker = document.getElementById('strava-picker');
+  msg.textContent = 'Caricamento attività...';
+  const token = await stravaGetToken();
+  if (!token) { msg.textContent = '✗ Strava non connesso — clicca Connetti'; return; }
+  const res = await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=40', {
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  const acts = await res.json();
+  if (!acts || !acts.length) { msg.textContent = '✗ Nessuna attività trovata'; return; }
+  msg.textContent = '';
+  picker.innerHTML = '';
+  picker.style.display = 'block';
+  acts.forEach(act => {
+    const km  = Math.round(act.distance / 1000);
+    const dis = Math.round(act.total_elevation_gain);
+    const date = new Date(act.start_date_local).toLocaleDateString('it-IT', { day:'2-digit', month:'short' });
+    const btn = document.createElement('button');
+    btn.style.cssText = 'display:block; width:100%; text-align:left; background:transparent; border:none; border-bottom:1px solid rgba(240,90,40,0.1); color:#FFF8F4; font-family:\'Barlow\',sans-serif; font-size:0.85rem; padding:0.5rem 0.7rem; cursor:pointer;';
+    btn.innerHTML = `<span style="color:#FC4C02; font-weight:700; font-family:'IBM Plex Mono',monospace; font-size:0.65rem;">${date}</span>&nbsp;&nbsp;${act.name}<br><span style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:rgba(255,248,244,0.4);">${km} km · ↑${dis}m</span>`;
+    btn.onmouseover = () => btn.style.background = 'rgba(240,90,40,0.08)';
+    btn.onmouseout  = () => btn.style.background = 'transparent';
+    btn.onclick = () => {
+      const tappa = {
+        name:       act.name,
+        km,
+        dislivello: dis,
+        start_date: act.start_date_local || act.start_date
+      };
+      localStorage.setItem('wbr-tappa', JSON.stringify(tappa));
+      applyWbrTappa(tappa);
+      picker.style.display = 'none';
+      msg.textContent = `✓ ${act.name} · ${km} km · ↑${dis}m`;
+    };
+    picker.appendChild(btn);
+  });
+}
+
+function applyWbrTappa(tappa) {
+  const km   = tappa.km || 0;
+  const dis  = tappa.dislivello || 0;
+  const name = tappa.name || 'Attività';
+
+  const GIORNI = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+  const MESI   = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  let dateStr = defaultDateStr();
+  if (tappa.start_date) {
+    const d = new Date(tappa.start_date);
+    dateStr = `${String(d.getDate()).padStart(2,'0')} ${MESI[d.getMonth()]}`;
+  }
+
+  document.getElementById('kmDay').value      = km;
+  document.getElementById('dislivello').value = dis;
+
+  // Titolo (slide 1) = nome attività Strava, resta editabile dopo
+  const title1 = document.getElementById('s-route-title-1');
+  if (title1) title1.textContent = name;
+  const title2 = document.getElementById('s-route-title');
+  if (title2) title2.textContent = name;
+  document.querySelectorAll('[id^="s-route-title-extra"]').forEach(el => el.textContent = name);
+
+  const d1 = document.getElementById('s-date'); if (d1) d1.textContent = dateStr;
+  const d2 = document.getElementById('s-date-2'); if (d2) d2.textContent = dateStr;
+  document.querySelectorAll('[id^="s-date-extra"]').forEach(el => el.textContent = dateStr);
+
+  update();
+}
+
+// Reset campi tappa corrente (mantiene il titolo modificabile a mano se preferito,
+// ma azzera km/dislivello/data tornando a oggi)
+function resetData() {
+  localStorage.removeItem('wbr-tappa');
+  document.getElementById('kmDay').value = 0;
+  document.getElementById('dislivello').value = 0;
+  const dateStr = defaultDateStr();
+  const d1 = document.getElementById('s-date'); if (d1) d1.textContent = dateStr;
+  const d2 = document.getElementById('s-date-2'); if (d2) d2.textContent = dateStr;
+  document.querySelectorAll('[id^="s-date-extra"]').forEach(el => el.textContent = dateStr);
+  const msg = document.getElementById('strava-msg');
+  if (msg) msg.textContent = 'Seleziona traccia da Strava';
+  const picker = document.getElementById('strava-picker');
+  if (picker) picker.style.display = 'none';
+  update();
+}
+
+function resetWbrSession() {
+  localStorage.removeItem('wbr-tappa');
+  localStorage.removeItem(SESSION_KEY);
+  const banner = document.getElementById('reset-banner');
+  if (banner) banner.style.display = 'none';
+  location.reload();
+}
+
+(function loadLastWbrTappa() {
+  const saved = localStorage.getItem('wbr-tappa');
+  if (saved) {
+    try { applyWbrTappa(JSON.parse(saved)); } catch(e) {}
+  }
+})();
+
+function showToast(msg, color, dur) {
+  var t = document.getElementById('_toast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = '_toast';
+    t.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#111;border-radius:5px;color:#fff;font-family:monospace;font-size:0.65rem;padding:0.5rem 1.2rem;z-index:99999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;border:1px solid #F05A28;box-shadow:0 4px 12px rgba(0,0,0,0.5);';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.borderColor = color || '#F05A28';
+  t.style.opacity = '1';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function() { t.style.opacity = '0'; }, dur || 3000);
+}
+
+function debugSession() {
+  var raw = localStorage.getItem(SESSION_KEY);
+  if (!raw) { showToast('localStorage vuoto', '#f44', 4000); return; }
+  try {
+    var d = JSON.parse(raw);
+    var nSlides = Object.keys(d.slides || {}).length;
+    var nPhotos = 0, nCaptions = 0;
+    Object.values(d.slides || {}).forEach(function(s) {
+      if (s.photo) nPhotos++;
+      Object.keys(s).forEach(function(k) { if (k.indexOf('s-caption') === 0) nCaptions++; });
+    });
+    showToast('slide:'+nSlides+' extra:'+(d.extraCount||0)+' foto:'+nPhotos+' frasi:'+nCaptions, '#29B6F6', 6000);
+  } catch(e) { showToast('Errore: '+e.message, '#f44', 5000); }
+}
+
 const GH_OWNER = 'dannybag';
 const GH_REPO  = 'inbiciperilmondo';
 const GH_API   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/data.json`;
@@ -950,7 +1137,7 @@ function syncDayFromMain() {
   });
 }
 
-async function resetData() {
+async function resetDataFromGitHub() {
   await loadFromGitHub();
 }
 
@@ -1919,6 +2106,16 @@ if (cap2) cap2.textContent = getNextPhrase();
 loadFromGitHub();
 // ---- SESSION PERSISTENCE ----
 const SESSION_KEY = 'ig-session-wbr';
+
+(function checkPreviousSession() {
+  const saved = localStorage.getItem(SESSION_KEY);
+  if (saved) {
+    setTimeout(() => {
+      const banner = document.getElementById('reset-banner');
+      if (banner) banner.style.display = 'block';
+    }, 300);
+  }
+})();
 var _sessionDirty = false;
 var _resetting = false;
 function markDirty() { _sessionDirty = true; }
@@ -2008,7 +2205,7 @@ function saveSession(showMsg) {
   try {
     localStorage.setItem(SESSION_KEY, JSON.stringify(session));
     _sessionDirty = false;
-    if (showMsg) console.log('✓ Sessione WBR salvata');
+    if (showMsg) showToast('✓ Sessione salvata', '#F05A28', 3000);
   } catch(e) {
     console.warn('Session save failed (storage full?):', e);
   }
