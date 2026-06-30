@@ -772,12 +772,13 @@
         <!-- TOP: barra arancione con icona + nome -->
         <div style="position:absolute; top:0; left:0; right:0; z-index:3; height:3px; background:var(--orange);"></div>
         <div style="position:relative; z-index:2; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem;">
-          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange);">#UnaBiciPerIlMondo</div>
+          <div id="s-close-hashtag" contenteditable="true" style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); cursor:grab; outline:none;">#UnaBiciPerIlMondo</div>
         </div>
 
         <!-- MESSAGGIO -->
         <div style="position:relative; z-index:2;">
           <div class="close-msg" id="s-close-msg">Le gambe<br>girano ancora.</div>
+          <button onclick="openPhrasePanel('s-close-msg'); styleTargetId='s-close-msg';" style="margin-top:0.3rem; background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
           <div class="close-sub" id="s-close-sub">Oggi: 85 km · ↑320m<br>Totale: 266 km · ↑450m</div>
         </div>
 
@@ -804,7 +805,7 @@
         <div style="position:relative; z-index:2; margin-top:auto; padding-top:0.8rem;">
           <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank">
             <span style="font-size:0.9rem; font-weight:900; letter-spacing:0.15em;">DONA ORA</span>
-            <span style="font-size:0.42rem; font-weight:800; letter-spacing:0.25em; color:rgba(255,248,244,0.6);">LINK IN BIO</span>
+            <span style="font-size:0.62rem; font-weight:900; letter-spacing:0.2em; color:rgba(255,248,244,0.75);">LINK IN BIO</span>
           </a>
         </div>
 
@@ -1537,6 +1538,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Drag s-open-tag, s-media-tag, s-info-group, s-handle-2
   var openTag = document.getElementById('s-open-tag'); if (openTag) simpleDrag(openTag);
   var mediaTag = document.getElementById('s-media-tag'); if (mediaTag) simpleDrag(mediaTag);
+  var closeHashtag = document.getElementById('s-close-hashtag'); if (closeHashtag) simpleDrag(closeHashtag);
   var infoGrp = document.getElementById('s-info-group'); if (infoGrp) simpleDrag(infoGrp);
   var h2 = document.getElementById('s-handle-2'); if (h2) simpleDrag(h2);
   // Sync handles
@@ -1874,7 +1876,7 @@ function addPhotoSlide() {
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge-extra${extraSlideCount}" style="display:none;">TAPPA 01</div>
           <div id="s-date-extra${extraSlideCount}" contenteditable="true" style="display:none; outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;">${document.getElementById('s-date-2')?.textContent || ''}</div>
-          <div class="media-tag" style="color:var(--orange); display:flex; align-items:center; gap:0.4rem;">#UnaBiciPerIlMondo</div>
+          <div class="media-tag" id="s-media-tag-extra${extraSlideCount}" style="color:var(--orange); display:flex; align-items:center; gap:0.4rem;">#UnaBiciPerIlMondo</div>
         </div>
         <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
@@ -1901,6 +1903,8 @@ function addPhotoSlide() {
     if (cap) makeDraggable(cap);
     syncDateField('s-date-extra' + mySlideNum);
     setupExtraPhotoDrag('photoPreviewExtra' + mySlideNum);
+    const htag = document.getElementById('s-media-tag-extra' + mySlideNum);
+    if (htag) simpleDrag(htag);
   }, 100);
 
   // Sync data from current slide
@@ -2135,7 +2139,7 @@ function saveSession(showMsg) {
   // Elementi "fissi"/handle: NON ripristinare il loro style al reload,
   // altrimenti si rompe il drag (simpleDrag) già attivo su quegli elementi.
   // Per questi salviamo solo il TESTO, non lo style.
-  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-date','s-date-2','s-route-title-1'];
+  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-date','s-date-2','s-route-title-1','s-close-hashtag','s-close-msg'];
 
   allSlideIds.forEach(slideId => {
     const wrap = document.getElementById(slideId);
