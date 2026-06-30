@@ -1557,7 +1557,7 @@ document.addEventListener('DOMContentLoaded', () => {
   var openTag = document.getElementById('s-open-tag'); if (openTag) simpleDrag(openTag);
   var mediaTag = document.getElementById('s-media-tag'); if (mediaTag) simpleDrag(mediaTag);
   var closeHashtag = document.getElementById('s-close-hashtag'); if (closeHashtag) simpleDrag(closeHashtag);
-  var closeMsg = document.getElementById('s-close-msg'); if (closeMsg) simpleDrag(closeMsg);
+  var closeMsg = document.getElementById('s-close-msg'); if (closeMsg) closeMsg.style.cursor = 'text';
   var infoGrp = document.getElementById('s-info-group'); if (infoGrp) simpleDrag(infoGrp);
   var h2 = document.getElementById('s-handle-2'); if (h2) simpleDrag(h2);
   // Sync handles
