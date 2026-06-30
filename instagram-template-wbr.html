@@ -778,10 +778,10 @@
 
         <!-- MESSAGGIO -->
         <div style="position:relative; z-index:2;">
-          <div class="close-msg" id="s-close-msg" contenteditable="true" style="outline:none; cursor:grab;">Le gambe<br>girano ancora.</div>
+          <div id="s-close-totale" style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; font-weight:900; letter-spacing:0.08em; color:rgba(255,248,244,0.9); margin-bottom:0.4rem;"></div>
+          <div class="close-msg" id="s-close-msg" contenteditable="true" style="outline:none; cursor:text;">Le gambe<br>girano ancora.</div>
           <button onclick="openPhrasePanel('s-close-msg'); styleTargetId='s-close-msg';" style="margin-top:0.3rem; background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
           <div class="close-sub" id="s-close-sub" style="display:none;">Oggi: 85 km · ↑320m<br>Totale: 266 km · ↑450m</div>
-          <div id="s-close-totale" style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.3rem;"></div>
         </div>
 
         <!-- MIDDLE: barra raccolta fondi -->
@@ -1532,7 +1532,6 @@ document.addEventListener('DOMContentLoaded', () => {
   var openTag = document.getElementById('s-open-tag'); if (openTag) simpleDrag(openTag);
   var mediaTag = document.getElementById('s-media-tag'); if (mediaTag) simpleDrag(mediaTag);
   var closeHashtag = document.getElementById('s-close-hashtag'); if (closeHashtag) simpleDrag(closeHashtag);
-  var closeMsg = document.getElementById('s-close-msg'); if (closeMsg) simpleDrag(closeMsg);
   var infoGrp = document.getElementById('s-info-group'); if (infoGrp) simpleDrag(infoGrp);
   var h2 = document.getElementById('s-handle-2'); if (h2) simpleDrag(h2);
   // Sync handles
