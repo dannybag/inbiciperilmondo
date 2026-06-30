@@ -713,7 +713,8 @@
             <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; cursor:text; padding:0;">01</div>
           </div>
           <div id="s-date" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; font-weight:600; letter-spacing:0.05em; color:rgba(255,248,244,0.6); margin-top:0.2rem;"></div>
-          <div id="s-route-title-1" contenteditable="true" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:rgba(255,248,244,0.7); margin-top:0.3rem; text-transform:uppercase;"></div>
+          <div class="open-from-to" id="s-from-to" style="display:none;">Milano → Bologna</div>
+          <div id="s-route-title-1" contenteditable="true" title="Tocca per modificare il titolo (es. nome tappa Strava)" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:rgba(255,248,244,0.7); margin-top:0.3rem; text-transform:uppercase;"></div>
           <div id="s-km-day" style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.25rem;"></div>
         </div>
 
@@ -784,9 +785,9 @@
         </div>
 
         <!-- MIDDLE: barra raccolta fondi -->
-        <div style="position:relative; z-index:2; margin-top:1.8rem;">
+        <div style="position:relative; z-index:2; margin-top:0.5rem;">
           <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.48rem; font-weight:600; letter-spacing:0.1em; color:rgba(255,248,244,0.4); margin-bottom:0.25rem;">
-            <span style="color:rgba(255,248,244,0.95); font-weight:900; font-size:0.58rem;">Raccolta fondi</span>
+            <span>Raccolta fondi</span>
             <span id="close-raised-pct">0%</span>
           </div>
           <div style="background:rgba(255,255,255,0.1); border-radius:2px; height:4px; width:100%; overflow:hidden;">
@@ -1023,6 +1024,28 @@ function applyWbrTappa(tappa) {
 
 // Reset campi tappa corrente (mantiene il titolo modificabile a mano se preferito,
 // ma azzera km/dislivello/data tornando a oggi)
+function resetData() {
+  localStorage.removeItem('wbr-tappa');
+  document.getElementById('kmDay').value = 0;
+  document.getElementById('dislivello').value = 0;
+  const dateStr = defaultDateStr();
+  const d1 = document.getElementById('s-date'); if (d1) d1.textContent = dateStr;
+  const d2 = document.getElementById('s-date-2'); if (d2) d2.textContent = dateStr;
+  document.querySelectorAll('[id^="s-date-extra"]').forEach(el => el.textContent = dateStr);
+  const msg = document.getElementById('strava-msg');
+  if (msg) msg.textContent = 'Seleziona traccia da Strava';
+  const picker = document.getElementById('strava-picker');
+  if (picker) picker.style.display = 'none';
+  update();
+}
+
+function resetWbrSession() {
+  localStorage.removeItem('wbr-tappa');
+  localStorage.removeItem('ig-session-wbr'); // hardcoded: SESSION_KEY è dichiarata più avanti nel file
+  const banner = document.getElementById('reset-banner');
+  if (banner) banner.style.display = 'none';
+  location.reload();
+}
 
 (function loadLastWbrTappa() {
   const saved = localStorage.getItem('wbr-tappa');
@@ -1143,21 +1166,6 @@ function populateFromTappa(tappa, tappeList, fundraising) {
   document.getElementById('dislivello').value = tappa.dislivello || 0;
   document.getElementById('kmTot').value     = tappa.totKm || 0;
   document.getElementById('dislivelloTot').value = tappa.totDis || 0;
-
-  // Titolo slide 1 = "Milano → Sona" (from → to, come in Tappa del Giorno)
-  const from  = tappa.from || 'Milano';
-  const to    = tappa.to   || '';
-  const t1 = document.getElementById('s-route-title-1');
-  if (t1 && to) t1.textContent = from + ' \u2192 ' + to;
-
-  // Data tappa: converte ISO → "26 Giugno"
-  if (tappa.date) {
-    const MESI = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
-    const d = new Date(tappa.date);
-    const dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
-    ['s-date','s-date-2'].forEach(function(id){ const el=document.getElementById(id); if(el) el.textContent=dateStr; });
-    document.querySelectorAll('[id^="s-date-extra"]').forEach(function(el){ el.textContent=dateStr; });
-  }
   // Mini barra raccolta fondi
   if (fundraising) {
     const raised = fundraising.raised || 0;
@@ -1206,7 +1214,7 @@ function update() {
   var elKmDay = document.getElementById('s-km-day');
   if (elKmDay) elKmDay.innerHTML = `${km}&thinsp;km · ↑${dislivello}&thinsp;m`;
   var elTotale = document.getElementById('s-close-totale');
-  if (elTotale) elTotale.innerHTML = `<strong style="color:rgba(255,248,244,0.95);">In sella da:</strong> ${tot}&thinsp;km · ↑${disTot}&thinsp;m`;
+  if (elTotale) elTotale.innerHTML = `<strong>In sella ad oggi:</strong> ${tot}&thinsp;km · ↑${disTot}&thinsp;m`;
   document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = closeMsg.replace('\n', '<br>');
 
   // Aggiorna anche le slide extra con la stessa frase
@@ -1400,68 +1408,35 @@ function loadOpenPhoto(input) {
 // Drag semplice per elementi position:absolute (no cap-wrapper)
 function simpleDrag(el) {
   var startX, startY, startLeft, startTop;
-
-  function ensureAbsolute() {
-    var pos = window.getComputedStyle(el).position;
-    if (pos === 'static' || pos === 'relative') {
-      var er = el.getBoundingClientRect();
-      var parent = el.offsetParent || el.parentElement;
-      var pr = parent.getBoundingClientRect();
-      el.style.position = 'absolute';
-      el.style.left   = (er.left - pr.left) + 'px';
-      el.style.top    = (er.top  - pr.top)  + 'px';
-      el.style.right  = 'auto';
-      el.style.bottom = 'auto';
-    }
-  }
-
   function getPos() {
-    var parent = el.offsetParent || el.parentElement;
-    var pr = parent.getBoundingClientRect();
+    var pr = el.offsetParent ? el.offsetParent.getBoundingClientRect() : {left:0,top:0};
     var er = el.getBoundingClientRect();
     return { left: er.left - pr.left, top: er.top - pr.top };
   }
-
   function onDown(x, y) {
-    ensureAbsolute();
-    var p = getPos();
-    startX = x; startY = y; startLeft = p.left; startTop = p.top;
-    el.style.left   = startLeft + 'px';
-    el.style.top    = startTop  + 'px';
-    el.style.right  = 'auto';
-    el.style.bottom = 'auto';
+    var p = getPos(); startX=x; startY=y; startLeft=p.left; startTop=p.top;
+    el.style.left=startLeft+'px'; el.style.top=startTop+'px';
+    el.style.right='auto'; el.style.bottom='auto';
   }
-
   function onMove(x, y) {
-    el.style.left = (startLeft + x - startX) + 'px';
-    el.style.top  = (startTop  + y - startY) + 'px';
+    el.style.left=(startLeft+x-startX)+'px'; el.style.top=(startTop+y-startY)+'px';
   }
-
+  // Se il tocco/click parte da un campo editabile DENTRO il contenitore (non l'elemento
+  // stesso), non avviare il drag: lascia che il tap apra la tastiera/cursore normalmente.
   function isInnerEditable(e) {
     return e.target !== el && e.target.isContentEditable;
   }
-
   el.addEventListener('mousedown', function(e) {
     if (isInnerEditable(e)) return;
-    onDown(e.clientX, e.clientY);
-    function mm(e) { onMove(e.clientX, e.clientY); }
-    function mu() { document.removeEventListener('mousemove', mm); document.removeEventListener('mouseup', mu); }
-    document.addEventListener('mousemove', mm);
-    document.addEventListener('mouseup', mu);
+    onDown(e.clientX,e.clientY);
+    function mm(e){onMove(e.clientX,e.clientY);}
+    function mu(){document.removeEventListener('mousemove',mm);document.removeEventListener('mouseup',mu);}
+    document.addEventListener('mousemove',mm); document.addEventListener('mouseup',mu);
   });
-
-  var tp = null;
-  el.addEventListener('touchstart', function(e) {
-    if (isInnerEditable(e)) { tp = null; return; }
-    tp = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    onDown(tp.x, tp.y);
-  }, { passive: true });
-  el.addEventListener('touchmove', function(e) {
-    if (!tp) return;
-    e.preventDefault();
-    onMove(e.touches[0].clientX, e.touches[0].clientY);
-  }, { passive: false });
-  el.addEventListener('touchend', function() { tp = null; }, { passive: true });
+  var tp=null;
+  el.addEventListener('touchstart',function(e){ if(isInnerEditable(e)){tp=null;return;} tp={x:e.touches[0].clientX,y:e.touches[0].clientY};onDown(tp.x,tp.y);},{passive:true});
+  el.addEventListener('touchmove',function(e){ if(!tp)return; e.preventDefault();onMove(e.touches[0].clientX,e.touches[0].clientY);},{passive:false});
+  el.addEventListener('touchend',function(){tp=null;},{passive:true});
 }
 
 // ---- CAPTION TRANSFORM (drag + rotate + scale) ----
@@ -2140,29 +2115,6 @@ loadFromGitHub();
 // ---- SESSION PERSISTENCE ----
 const SESSION_KEY = 'ig-session-wbr';
 
-function resetData() {
-  localStorage.removeItem('wbr-tappa');
-  document.getElementById('kmDay').value = 0;
-  document.getElementById('dislivello').value = 0;
-  const dateStr = defaultDateStr();
-  const d1 = document.getElementById('s-date'); if (d1) d1.textContent = dateStr;
-  const d2 = document.getElementById('s-date-2'); if (d2) d2.textContent = dateStr;
-  document.querySelectorAll('[id^="s-date-extra"]').forEach(el => el.textContent = dateStr);
-  const msg = document.getElementById('strava-msg');
-  if (msg) msg.textContent = 'Seleziona traccia da Strava';
-  const picker = document.getElementById('strava-picker');
-  if (picker) picker.style.display = 'none';
-  update();
-}
-
-function resetWbrSession() {
-  localStorage.removeItem('wbr-tappa');
-  localStorage.removeItem(SESSION_KEY);
-  const banner = document.getElementById('reset-banner');
-  if (banner) banner.style.display = 'none';
-  location.reload();
-}
-
 (function checkPreviousSession() {
   const saved = localStorage.getItem(SESSION_KEY);
   if (saved) {
@@ -2364,11 +2316,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#s-open-tag, #s-media-tag, [id^="s-media-tag-extra"]').forEach(el => {
       if (el.textContent.trim() === 'Una Bici per il Mondo') el.textContent = '#UnaBiciPerIlMondo';
     });
-    // Ricarica dati freschi da GitHub (titolo, data, km totali) dopo il restore sessione
-    await loadFromGitHub();
   }, 200);
 });
 
 </script>
+</body>
+</html>
+
+
 </body>
 </html>
