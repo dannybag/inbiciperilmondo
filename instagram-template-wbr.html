@@ -1192,7 +1192,7 @@ function update() {
   var elKmDay = document.getElementById('s-km-day');
   if (elKmDay) elKmDay.innerHTML = `${km}&thinsp;km · ↑${dislivello}&thinsp;m`;
   var elTotale = document.getElementById('s-close-totale');
-  if (elTotale) elTotale.innerHTML = `<strong style="color:rgba(255,248,244,0.95);">In sella da:</strong> ${tot}&thinsp;km · ↑${disTot}&thinsp;m`;
+  if (elTotale) elTotale.innerHTML = `<strong style="color:rgba(255,248,244,0.95); font-size:0.58rem;">In sella da:</strong> <span style="font-size:0.58rem;">${tot}&thinsp;km · ↑${disTot}&thinsp;m</span>`;
   document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = closeMsg.replace('\n', '<br>');
 
   // Aggiorna anche le slide extra con la stessa frase
