@@ -715,6 +715,7 @@
           <div id="s-date" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; font-weight:600; letter-spacing:0.05em; color:rgba(255,248,244,0.6); margin-top:0.2rem;"></div>
           <div class="open-from-to" id="s-from-to" style="display:none;">Milano → Bologna</div>
           <div id="s-route-title-1" contenteditable="true" title="Tocca per modificare il titolo (es. nome tappa Strava)" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:rgba(255,248,244,0.7); margin-top:0.3rem; text-transform:uppercase;"></div>
+          <div id="s-km-day" style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.25rem;"></div>
         </div>
 
         <div class="open-bar"></div>
@@ -779,7 +780,8 @@
         <div style="position:relative; z-index:2;">
           <div class="close-msg" id="s-close-msg">Le gambe<br>girano ancora.</div>
           <button onclick="openPhrasePanel('s-close-msg'); styleTargetId='s-close-msg';" style="margin-top:0.3rem; background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
-          <div class="close-sub" id="s-close-sub">Oggi: 85 km · ↑320m<br>Totale: 266 km · ↑450m</div>
+          <div class="close-sub" id="s-close-sub" style="display:none;">Oggi: 85 km · ↑320m<br>Totale: 266 km · ↑450m</div>
+          <div id="s-close-totale" style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.3rem;"></div>
         </div>
 
         <!-- MIDDLE: barra raccolta fondi -->
@@ -1207,7 +1209,12 @@ function update() {
   const photoMsgLocal = document.getElementById('s-caption')?.textContent || '';
   document.getElementById('s-prog').style.width = `${pct}%`;
   document.getElementById('s-close-day').textContent = dayStr;
-  document.getElementById('s-close-sub').innerHTML = `Oggi: ${document.getElementById('kmDay').value} km · ↑${document.getElementById('dislivello').value}m<br>Totale: ${tot} km · ↑${disTot}m`;
+  var elCloseSub = document.getElementById('s-close-sub');
+  if (elCloseSub) elCloseSub.innerHTML = `Oggi: ${document.getElementById('kmDay').value} km · ↑${document.getElementById('dislivello').value}m<br>Totale: ${tot} km · ↑${disTot}m`;
+  var elKmDay = document.getElementById('s-km-day');
+  if (elKmDay) elKmDay.textContent = `Oggi: ${kmStr} km · ↑${dislivello}m`;
+  var elTotale = document.getElementById('s-close-totale');
+  if (elTotale) elTotale.textContent = `Percorsi: ${tot} km · ↑${disTot}m`;
   document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = closeMsg.replace('\n', '<br>');
 
   // Aggiorna anche le slide extra con la stessa frase
