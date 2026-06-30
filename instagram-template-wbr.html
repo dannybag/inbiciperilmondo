@@ -2364,13 +2364,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('#s-open-tag, #s-media-tag, [id^="s-media-tag-extra"]').forEach(el => {
       if (el.textContent.trim() === 'Una Bici per il Mondo') el.textContent = '#UnaBiciPerIlMondo';
     });
+    // Ricarica dati freschi da GitHub (titolo, data, km totali) dopo il restore sessione
+    await loadFromGitHub();
   }, 200);
 });
 
 </script>
-</body>
-</html>
-
-
 </body>
 </html>
