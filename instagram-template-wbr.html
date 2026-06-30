@@ -438,9 +438,10 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 1.2rem;
+    justify-content: flex-start;
+    padding: 1.2rem 1.2rem 7rem 1.2rem;
     overflow: hidden;
+    gap: 0.55rem;
   }
   .slide-close::before {
     content: '';
@@ -803,8 +804,8 @@
           </div>
         </div>
 
-        <!-- BOTTOM: CTA -->
-        <div style="position:relative; z-index:2; margin-top:auto; padding-top:0.8rem;">
+        <!-- BOTTOM: CTA fisso in fondo -->
+        <div style="position:absolute; bottom:0; left:0; right:0; z-index:2;">
           <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="close-cta" target="_blank">
             <span style="font-size:0.9rem; font-weight:900; letter-spacing:0.15em;">DONA ORA</span>
             <span style="font-size:0.62rem; font-weight:900; letter-spacing:0.2em; color:rgba(255,248,244,0.75);">LINK IN BIO</span>
