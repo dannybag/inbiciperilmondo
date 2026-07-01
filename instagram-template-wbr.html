@@ -1166,6 +1166,27 @@ function populateFromTappa(tappa, tappeList, fundraising) {
   document.getElementById('dislivello').value = tappa.dislivello || 0;
   document.getElementById('kmTot').value     = tappa.totKm || 0;
   document.getElementById('dislivelloTot').value = tappa.totDis || 0;
+
+  // Nome tappa → titolo slide 1
+  if (tappa.name) {
+    const title1 = document.getElementById('s-route-title-1');
+    if (title1) title1.textContent = tappa.name;
+  }
+
+  // DATA: leggi da tappa.date (ISO o start_date) e imposta su tutte le slide
+  const MESI = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  let dateStr = defaultDateStr(); // fallback a oggi
+  if (tappa.date) {
+    const d = new Date(tappa.date);
+    dateStr = `${String(d.getDate()).padStart(2,'0')} ${MESI[d.getMonth()]}`;
+  } else if (tappa.start_date) {
+    const d = new Date(tappa.start_date);
+    dateStr = `${String(d.getDate()).padStart(2,'0')} ${MESI[d.getMonth()]}`;
+  }
+  const d1 = document.getElementById('s-date'); if (d1) d1.textContent = dateStr;
+  const d2 = document.getElementById('s-date-2'); if (d2) d2.textContent = dateStr;
+  document.querySelectorAll('[id^="s-date-extra"]').forEach(el => el.textContent = dateStr);
+
   // Mini barra raccolta fondi
   if (fundraising) {
     const raised = fundraising.raised || 0;
@@ -2147,7 +2168,7 @@ function saveSession(showMsg) {
   // Elementi "fissi"/handle: NON ripristinare il loro style al reload,
   // altrimenti si rompe il drag (simpleDrag) già attivo su quegli elementi.
   // Per questi salviamo solo il TESTO, non lo style.
-  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-date','s-date-2','s-route-title-1','s-close-hashtag','s-close-msg'];
+  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-route-title-1','s-close-hashtag','s-close-msg'];
 
   allSlideIds.forEach(slideId => {
     const wrap = document.getElementById(slideId);
