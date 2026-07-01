@@ -1179,16 +1179,25 @@ function populateFromTappa(tappa, tappeList, fundraising) {
   document.getElementById('dislivelloTot').value = tappa.totDis || 0;
 
   // Nome tappa → titolo slide 1
-  if (tappa.name) {
+  // Usa lo stesso formato di Index.html: from → to
+  if (tappa.from && tappa.to) {
     const title1 = document.getElementById('s-route-title-1');
     if (title1) {
-      console.log('✅ Impostando titolo da GitHub:', tappa.name);
-      title1.textContent = tappa.name;
-      titleFromGitHub = true;  // Marca che titolo viene da GitHub
+      const routeTitle = tappa.from + ' → ' + tappa.to;
+      console.log('✅ Impostando titolo da GitHub:', routeTitle);
+      title1.textContent = routeTitle;
+      titleFromGitHub = true;
       console.log('titleFromGitHub = true');
     }
+  } else if (tappa.name) {
+    const title1 = document.getElementById('s-route-title-1');
+    if (title1) {
+      console.log('✅ Impostando titolo da GitHub (fallback name):', tappa.name);
+      title1.textContent = tappa.name;
+      titleFromGitHub = true;
+    }
   } else {
-    console.log('⚠️ tappa.name è VUOTO in GitHub');
+    console.log('⚠️ Nessun titolo disponibile in GitHub');
   }
 
   // DATA: leggi da tappa.date (ISO o start_date) e imposta su tutte le slide
