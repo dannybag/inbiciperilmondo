@@ -1011,8 +1011,8 @@ function loadDefaultOpenPhoto() {
   var container = document.getElementById('openPhotoArea');
   if (!img || img.getAttribute('src')) return;
   img.onload = function() {
-    var cw = container.offsetWidth  || 260;
-    var ch = container.offsetHeight || 360;
+    var cw = container.offsetWidth  || 270;
+    var ch = container.offsetHeight || 480;
     // Fit within container (contain, not cover)
     openScale = Math.min(cw / img.naturalWidth, ch / img.naturalHeight);
     openX = 0; openY = 0; openRot = 0;
