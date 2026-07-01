@@ -1153,11 +1153,15 @@ async function loadFromGitHub() {
     if (!res.ok) throw new Error();
     const meta = await res.json();
     const data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(meta.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
+    console.log('GitHub data loaded:', data);
     if (data.tappa && data.tappa.day > 0) {
+      console.log('Tappa trovata:', data.tappa);
       populateFromTappa(data.tappa, data.tappe || [], data.fundraising || null);
+    } else {
+      console.log('Nessuna tappa trovata in GitHub');
     }
   } catch(e) {
-    console.log('GitHub load failed, using defaults');
+    console.log('GitHub load failed:', e);
   }
 }
 
@@ -2138,6 +2142,7 @@ shufflePhrases();
 // Assegna frase iniziale alla slide 2
 const cap2 = document.getElementById('s-caption');
 if (cap2) cap2.textContent = getNextPhrase();
+console.log('🔍 Avvio caricamento GitHub...');
 loadFromGitHub();
 // ---- SESSION PERSISTENCE ----
 const SESSION_KEY = 'ig-session-wbr';
