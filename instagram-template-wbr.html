@@ -439,7 +439,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 1.2rem;
+    padding: 3rem 1.2rem 1.2rem;
     overflow: hidden;
   }
   .slide-close::before {
@@ -779,7 +779,6 @@
         <!-- MESSAGGIO -->
         <div style="position:relative; z-index:2;">
           <div class="close-msg" id="s-close-msg" contenteditable="true" style="outline:none; cursor:grab;">Le gambe<br>girano ancora.</div>
-          <button onclick="openPhrasePanel('s-close-msg'); styleTargetId='s-close-msg';" style="margin-top:0.3rem; background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
           <div class="close-sub" id="s-close-sub" style="display:none;">Oggi: 85 km · ↑320m<br>Totale: 266 km · ↑450m</div>
           <div id="s-close-totale" style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; color:var(--cream); margin-top:0.3rem;"></div>
         </div>
@@ -801,6 +800,7 @@
             <span id="close-bikes-num" style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:var(--orange); line-height:1;">0</span>
             <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; color:rgba(255,248,244,0.5); letter-spacing:0.05em;">bici <strong style="color:var(--orange);">Buffalo</strong> per ora!</span>
           </div>
+          <button onclick="openPhrasePanel('s-close-msg'); styleTargetId='s-close-msg';" style="margin-top:0.5rem; background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
         </div>
 
         <!-- BOTTOM: CTA su sfondo arancione -->
