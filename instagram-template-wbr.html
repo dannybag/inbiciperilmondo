@@ -1012,8 +1012,12 @@ function applyWbrTappa(tappa) {
 
   // Titolo: NON sovrascrivere se è da GitHub, solo se vuoto
   const title1 = document.getElementById('s-route-title-1');
+  console.log('applyWbrTappa - titleFromGitHub:', titleFromGitHub, 'titolo attuale:', title1?.textContent, 'Strava name:', name);
   if (title1 && !titleFromGitHub && !title1.textContent.trim()) {
+    console.log('✅ Impostando titolo da Strava:', name);
     title1.textContent = name;  // Usa Strava solo se vuoto E non da GitHub
+  } else {
+    console.log('❌ Titolo NON impostato (già da GitHub o non vuoto)');
   }
 
   const d1 = document.getElementById('s-date'); if (d1) d1.textContent = dateStr;
@@ -1178,9 +1182,13 @@ function populateFromTappa(tappa, tappeList, fundraising) {
   if (tappa.name) {
     const title1 = document.getElementById('s-route-title-1');
     if (title1) {
+      console.log('✅ Impostando titolo da GitHub:', tappa.name);
       title1.textContent = tappa.name;
       titleFromGitHub = true;  // Marca che titolo viene da GitHub
+      console.log('titleFromGitHub = true');
     }
+  } else {
+    console.log('⚠️ tappa.name è VUOTO in GitHub');
   }
 
   // DATA: leggi da tappa.date (ISO o start_date) e imposta su tutte le slide
