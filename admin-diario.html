@@ -69,6 +69,12 @@
 
   .photo-preview { display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem; }
   .photo-preview img { width:64px; height:64px; object-fit:cover; border-radius:3px; border:1px solid rgba(255,248,244,0.1); }
+  .photo-thumb { position:relative; }
+  .photo-thumb .rm {
+    position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%;
+    background:var(--red); color:#fff; font-size:0.65rem; line-height:18px; text-align:center;
+    cursor:pointer; border:2px solid var(--dark);
+  }
 
   button {
     font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; letter-spacing:0.03em;
@@ -138,6 +144,7 @@
   <textarea id="f-text" placeholder="Racconta cosa è successo oggi..."></textarea>
 
   <label>Foto (una o più)</label>
+  <div class="photo-preview" id="existing-photos"></div>
   <input type="file" id="f-photos" accept="image/*" multiple>
   <div class="photo-preview" id="photo-preview"></div>
 
@@ -146,6 +153,7 @@
 
   <div class="btn-save-row">
     <button class="btn-primary" id="btn-save" onclick="saveEntry()">Pubblica nota</button>
+    <button class="btn-ghost" id="btn-cancel" onclick="cancelEdit()" style="display:none;">Annulla modifica</button>
     <span class="status-msg" id="save-status"></span>
   </div>
 
@@ -257,6 +265,56 @@ async function uploadPhoto(file, dateStr) {
   return path;
 }
 
+// ---- STATO EDITING ----
+let editingIndex = null;   // indice nell'array entries (non ordinato) se stiamo modificando
+let keptPhotos = [];       // path delle foto esistenti mantenute durante la modifica
+
+function renderExistingPhotos() {
+  const wrap = document.getElementById('existing-photos');
+  wrap.innerHTML = keptPhotos.map((p, i) => `
+    <div class="photo-thumb">
+      <img src="${p}">
+      <div class="rm" onclick="removeExistingPhoto(${i})">✕</div>
+    </div>
+  `).join('');
+}
+function removeExistingPhoto(i) {
+  keptPhotos.splice(i, 1);
+  renderExistingPhotos();
+}
+
+function editEntry(idx) {
+  const e = window.cachedEntries[idx];
+  editingIndex = idx;
+  keptPhotos = [...(e.photos || [])];
+  document.getElementById('f-date').value = e.date;
+  document.getElementById('f-title').value = e.title;
+  document.getElementById('f-text').value = e.text;
+  document.getElementById('f-video').value = e.video || '';
+  document.getElementById('f-photos').value = '';
+  document.getElementById('photo-preview').innerHTML = '';
+  renderExistingPhotos();
+  document.getElementById('btn-save').textContent = 'Aggiorna nota';
+  document.getElementById('btn-cancel').style.display = 'inline-block';
+  setStatus('', '');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function cancelEdit() {
+  editingIndex = null;
+  keptPhotos = [];
+  document.getElementById('f-date').valueAsDate = new Date();
+  document.getElementById('f-title').value = '';
+  document.getElementById('f-text').value = '';
+  document.getElementById('f-video').value = '';
+  document.getElementById('f-photos').value = '';
+  document.getElementById('photo-preview').innerHTML = '';
+  document.getElementById('existing-photos').innerHTML = '';
+  document.getElementById('btn-save').textContent = 'Pubblica nota';
+  document.getElementById('btn-cancel').style.display = 'none';
+  setStatus('', '');
+}
+
 // ---- SAVE ENTRY ----
 async function saveEntry() {
   const statusEl = document.getElementById('save-status');
@@ -276,29 +334,36 @@ async function saveEntry() {
 
   try {
     setStatus('Carico le foto...', 'wait');
-    const photoPaths = [];
+    const newPhotoPaths = [];
     for (const file of files) {
-      photoPaths.push(await uploadPhoto(file, date));
+      newPhotoPaths.push(await uploadPhoto(file, date));
     }
+    const photoPaths = [...keptPhotos, ...newPhotoPaths];
 
     setStatus('Salvo la nota...', 'wait');
     const { entries, sha } = await readDiario();
-    entries.push({
-      day: entries.length + 1,
-      date,
-      title,
-      text,
-      photos: photoPaths,
-      video: video || null
-    });
-    await writeDiario(entries, sha, `Diario: nuova nota "${title}"`);
 
-    setStatus('✓ Nota pubblicata.', 'ok');
-    document.getElementById('f-title').value = '';
-    document.getElementById('f-text').value = '';
-    document.getElementById('f-video').value = '';
-    document.getElementById('f-photos').value = '';
-    document.getElementById('photo-preview').innerHTML = '';
+    if (editingIndex !== null && entries[editingIndex]) {
+      entries[editingIndex] = {
+        ...entries[editingIndex],
+        date, title, text,
+        photos: photoPaths,
+        video: video || null
+      };
+      await writeDiario(entries, sha, `Diario: modifico nota "${title}"`);
+      setStatus('✓ Nota aggiornata.', 'ok');
+    } else {
+      entries.push({
+        day: entries.length + 1,
+        date, title, text,
+        photos: photoPaths,
+        video: video || null
+      });
+      await writeDiario(entries, sha, `Diario: nuova nota "${title}"`);
+      setStatus('✓ Nota pubblicata.', 'ok');
+    }
+
+    cancelEdit();
     loadEntryList();
   } catch (e) {
     console.error(e);
@@ -320,13 +385,17 @@ async function loadEntryList() {
   if (!getToken()) { list.innerHTML = '<div class="empty">Configura il token per vedere le note</div>'; return; }
   try {
     const { entries } = await readDiario();
+    window.cachedEntries = entries;
     if (!entries.length) { list.innerHTML = '<div class="empty">Nessuna nota ancora</div>'; return; }
-    const sorted = [...entries].sort((a, b) => new Date(b.date) - new Date(a.date));
-    list.innerHTML = sorted.map(e => `
+    const order = entries
+      .map((e, idx) => ({ e, idx }))
+      .sort((a, b) => new Date(b.e.date) - new Date(a.e.date));
+    list.innerHTML = order.map(({ e, idx }) => `
       <div class="entry-row">
         <div class="entry-row-date">${e.date}</div>
         <div class="entry-row-title">${e.title}<br><span class="entry-row-meta">${(e.photos||[]).length} foto${e.video ? ' · video' : ''}</span></div>
-        <button class="btn-danger" onclick="deleteEntry('${e.date}', ${JSON.stringify(e.title).replace(/"/g,'&quot;')})">ELIMINA</button>
+        <button class="btn-ghost" style="font-size:0.7rem; padding:0.35rem 0.7rem;" onclick="editEntry(${idx})">MODIFICA</button>
+        <button class="btn-danger" onclick="deleteEntry(${idx})">ELIMINA</button>
       </div>
     `).join('');
   } catch (e) {
@@ -334,12 +403,14 @@ async function loadEntryList() {
   }
 }
 
-async function deleteEntry(date, title) {
-  if (!confirm(`Eliminare la nota "${title}" del ${date}?`)) return;
+async function deleteEntry(idx) {
+  const target = window.cachedEntries[idx];
+  if (!confirm(`Eliminare la nota "${target.title}" del ${target.date}?`)) return;
   try {
     const { entries, sha } = await readDiario();
-    const filtered = entries.filter(e => !(e.date === date && e.title === title));
-    await writeDiario(filtered, sha, `Diario: elimino nota "${title}"`);
+    entries.splice(idx, 1);
+    await writeDiario(entries, sha, `Diario: elimino nota "${target.title}"`);
+    if (editingIndex === idx) cancelEdit();
     loadEntryList();
   } catch (e) {
     alert('Errore eliminazione: ' + e.message);
