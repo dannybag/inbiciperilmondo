@@ -150,9 +150,9 @@
   <input type="file" id="f-photos" accept="image/*" multiple>
   <div class="photo-preview" id="photo-preview"></div>
 
-  <label>Video (link YouTube, oppure lascia vuoto)</label>
-  <input type="text" id="f-video" placeholder="https://youtube.com/watch?v=...">
-
+  <label>Video (link YouTube, uno per riga — lascia vuoto se nessuno)</label>
+  <textarea id="f-video" style="min-height:70px;" placeholder="https://youtube.com/watch?v=...
+https://youtube.com/watch?v=..."></textarea>
   <div class="btn-save-row">
     <button class="btn-primary" id="btn-save" onclick="saveEntry()">Pubblica nota</button>
     <button class="btn-ghost" id="btn-cancel" onclick="cancelEdit()" style="display:none;">Annulla modifica</button>
@@ -322,7 +322,7 @@ function editEntry(idx) {
   document.getElementById('f-date').value = e.date;
   document.getElementById('f-title').value = e.title;
   document.getElementById('f-text').value = e.text;
-  document.getElementById('f-video').value = e.video || '';
+  document.getElementById('f-video').value = (e.videos || (e.video ? [e.video] : [])).join('\n');
   document.getElementById('f-photos').value = '';
   document.getElementById('photo-preview').innerHTML = '';
   renderExistingPhotos();
@@ -357,7 +357,8 @@ async function saveEntry() {
   const date = document.getElementById('f-date').value;
   const title = document.getElementById('f-title').value.trim();
   const text = document.getElementById('f-text').value.trim();
-  const video = document.getElementById('f-video').value.trim();
+  const videos = document.getElementById('f-video').value
+    .split('\n').map(v => v.trim()).filter(Boolean);
   const files = [...document.getElementById('f-photos').files];
 
   if (!date || !title || !text) { setStatus('Data, titolo e testo sono obbligatori.', 'err'); return; }
@@ -376,11 +377,12 @@ async function saveEntry() {
     const { entries, sha } = await readDiario();
 
     if (editingIndex !== null && entries[editingIndex]) {
+      const { video: _old, ...rest } = entries[editingIndex]; // rimuovo eventuale vecchio campo singolare
       entries[editingIndex] = {
-        ...entries[editingIndex],
+        ...rest,
         date, title, text,
         photos: photoPaths,
-        video: video || null
+        videos
       };
       await writeDiario(entries, sha, `Diario: modifico nota "${title}"`);
       setStatus('✓ Nota aggiornata.', 'ok');
@@ -389,7 +391,7 @@ async function saveEntry() {
         day: entries.length + 1,
         date, title, text,
         photos: photoPaths,
-        video: video || null
+        videos
       });
       await writeDiario(entries, sha, `Diario: nuova nota "${title}"`);
       setStatus('✓ Nota pubblicata.', 'ok');
@@ -428,7 +430,7 @@ async function loadEntryList() {
           <div class="entry-row-date">${e.date}</div>
           <div class="entry-row-title">${e.title}</div>
         </div>
-        <div class="entry-row-meta">${(e.photos||[]).length} foto${e.video ? ' · video' : ''}</div>
+        <div class="entry-row-meta">${(e.photos||[]).length} foto${(e.videos||(e.video?[e.video]:[])).length ? ' · ' + (e.videos||[e.video]).length + ' video' : ''}</div>
         <div class="entry-row-actions">
           <button class="btn-ghost" style="font-size:0.7rem; padding:0.35rem 0.7rem;" onclick="editEntry(${idx})">MODIFICA</button>
           <button class="btn-danger" onclick="deleteEntry(${idx})">ELIMINA</button>
