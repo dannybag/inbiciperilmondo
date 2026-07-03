@@ -15,7 +15,7 @@
     "updated": "2026-07-03T22:14:15.066Z",
     "totKm": 246,
     "totDis": 608,
-    "tappe": 3
+    "tappe": 2
   },
   "tappe": [
     {
@@ -30,17 +30,6 @@
       "updated": "2026-07-03T11:02:07.804Z"
     },
     {
-      "day": 2,
-      "from": "Martesana ",
-      "to": "",
-      "km": 0,
-      "dislivello": 0,
-      "name": "",
-      "polyline": "",
-      "date": "2026-07-03T22:11:22.735Z",
-      "updated": "2026-07-03T22:11:22.735Z"
-    },
-    {
       "day": 3,
       "from": "Milano",
       "to": "",
@@ -51,6 +40,5 @@
       "date": "2026-07-03T22:14:13.430Z",
       "updated": "2026-07-03T22:14:15.066Z"
     }
-  ],
-  "next_stage": null
+  ]
 }
