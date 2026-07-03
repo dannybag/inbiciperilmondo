@@ -10,7 +10,10 @@
         "diario/img/2026-07-02-1783109378965-WhatsApp_Image_2026-05-15_at_11_41_52__1__jpeg.jpg",
         "diario/img/2026-07-02-1783109405804-WhatsApp_Image_2026-05-15_at_11_41_52__1__jpeg.jpg"
       ],
-      "video": "https://youtube.com/shorts/8XlHCMDJeRE?si=n9PtyKy2mlSJ8jg2"
+      "videos": [
+        "https://youtube.com/shorts/8XlHCMDJeRE?si=n9PtyKy2mlSJ8jg2",
+        "https://youtube.com/shorts/CUTOk9eA7p8?si=9kHbOu0_PGZw4COi"
+      ]
     }
   ]
 }
