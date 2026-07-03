@@ -787,8 +787,9 @@
       <span class="live-sep">·</span>
       <span class="live-stat"><span id="cnt-dis">—</span></span>
     </div>
-    <div style="margin-top:0.8rem;">
+    <div style="margin-top:0.8rem; display:flex; gap:0.6rem; flex-wrap:wrap;">
       <button onclick="toggleViaggio()" id="viaggio-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:transparent; border:1px solid rgba(240,90,40,0.4); padding:0.4rem 1rem; border-radius:3px; cursor:pointer; white-space:nowrap;">🗺 Guarda il Viaggio <span id="viaggio-arrow">↓</span></button>
+      <button onclick="toggleDiario()" id="diario-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:transparent; border:1px solid rgba(240,90,40,0.4); padding:0.4rem 1rem; border-radius:3px; cursor:pointer; white-space:nowrap;">📔 Leggi il Diario <span id="diario-arrow">↓</span></button>
     </div>
   </div>
 
@@ -850,6 +851,37 @@
         #v-next-expand-btn { display:none !important; }
       }
     </style>
+  </div>
+</div>
+
+<!-- IL DIARIO - sezione espandibile, esperienza completa come per Il Viaggio -->
+<div id="diario-section" style="display:none; overflow:hidden;">
+  <style>
+    .dia-photos { display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; }
+    .dia-photo { width:88px; height:88px; border-radius:3px; overflow:hidden; cursor:pointer; border:1px solid rgba(255,248,244,0.08); flex-shrink:0; position:relative; background:#0A0A0A; }
+    .dia-photo img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s; }
+    .dia-photo:hover img { transform:scale(1.06); }
+    .dia-videos { display:flex; flex-direction:column; align-items:center; gap:0.6rem; margin-top:0.8rem; }
+    .dia-video { width:100%; max-width:420px; border-radius:3px; overflow:hidden; border:1px solid rgba(255,248,244,0.08); }
+    .dia-video video { width:100%; display:block; background:#000; }
+    .dia-yt { position:relative; width:100%; aspect-ratio:16/9; background:#000 center/cover no-repeat; cursor:pointer; }
+    .dia-yt .play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:2.4rem; height:2.4rem; border-radius:50%; background:rgba(240,90,40,0.9); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 6px rgba(0,0,0,0.25); }
+    .dia-yt .play::before { content:''; border-style:solid; border-width:6px 0 6px 11px; border-color:transparent transparent transparent #fff; margin-left:3px; }
+    .dia-yt iframe { width:100%; aspect-ratio:16/9; border:0; display:block; }
+    .dia-lightbox { display:none; position:fixed; inset:0; background:rgba(10,10,10,0.92); z-index:9500; align-items:center; justify-content:center; padding:4vw; }
+    .dia-lightbox.open { display:flex; }
+    .dia-lightbox img { max-width:100%; max-height:90vh; border-radius:4px; }
+    .dia-lightbox-close { position:absolute; top:1.2rem; right:5vw; font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:#FFF8F4; background:none; border:1px solid rgba(255,248,244,0.3); padding:0.3rem 0.7rem; cursor:pointer; letter-spacing:0.1em; }
+  </style>
+  <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 2.2rem;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:1.2rem; text-align:center;">Ricordi, incontri e imprevisti, giorno per giorno</div>
+    <div id="diario-full" style="max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:1.4rem;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">Caricamento...</div>
+    </div>
+  </div>
+  <div class="dia-lightbox" id="dia-lightbox">
+    <button class="dia-lightbox-close" onclick="closeDiaLightbox()">CHIUDI ✕</button>
+    <img id="dia-lightbox-img" src="" alt="">
   </div>
 </div>
 
@@ -1569,6 +1601,80 @@
     sec.style.display = _viaggioOpen ? 'block' : 'none';
     arrow.textContent = _viaggioOpen ? '↑' : '↓';
     if(_viaggioOpen) openViaggio();
+  }
+
+  let _diarioOpen = false;
+  let _diarioLoaded = false;
+  function toggleDiario() {
+    const sec = document.getElementById('diario-section');
+    const arrow = document.getElementById('diario-arrow');
+    _diarioOpen = !_diarioOpen;
+    sec.style.display = _diarioOpen ? 'block' : 'none';
+    arrow.textContent = _diarioOpen ? '↑' : '↓';
+    if (_diarioOpen && !_diarioLoaded) { _diarioLoaded = true; loadDiarioPreview(); }
+  }
+
+  function _diarioYtId(url) {
+    if (!url) return null;
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([a-zA-Z0-9_-]{11})/);
+    return m ? m[1] : null;
+  }
+
+  function _diaRenderVideo(url) {
+    const ytId = _diarioYtId(url);
+    if (ytId) {
+      return `<div class="dia-video">
+        <div class="dia-yt" style="background-image:url('https://img.youtube.com/vi/${ytId}/hqdefault.jpg')" onclick="_diaPlayYt(this, '${ytId}')">
+          <div class="play"></div>
+        </div>
+      </div>`;
+    }
+    return `<div class="dia-video"><video controls preload="metadata" src="${url}"></video></div>`;
+  }
+
+  function _diaPlayYt(el, id) {
+    el.outerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+  }
+
+  function openDiaLightbox(src) {
+    document.getElementById('dia-lightbox-img').src = src;
+    document.getElementById('dia-lightbox').classList.add('open');
+  }
+  function closeDiaLightbox() {
+    document.getElementById('dia-lightbox').classList.remove('open');
+  }
+
+  async function loadDiarioPreview() {
+    const wrap = document.getElementById('diario-full');
+    try {
+      const res = await fetch('https://api.github.com/repos/dannybag/inbiciperilmondo/contents/diario.json?t=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) throw new Error('diario.json non trovato');
+      const meta = await res.json();
+      const raw = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g,'')))));
+      const entries = (raw.entries || []).slice().sort((a,b) => new Date(b.date) - new Date(a.date));
+      if (!entries.length) {
+        wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">Ancora nessuna nota</div>';
+        return;
+      }
+      const MESI=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+      wrap.innerHTML = entries.map(e => {
+        const d = new Date(e.date);
+        const dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
+        const photos = e.photos || [];
+        const videos = e.videos || (e.video ? [e.video] : []);
+        return `
+          <div style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:4px; padding:1.2rem 1.3rem;">
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.35); text-transform:uppercase; margin-bottom:0.4rem;">${dateStr}${e.day ? ' · giorno ' + e.day : ''}</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:700; color:#FFF8F4; margin-bottom:0.5rem;">${e.title}</div>
+            <div style="font-family:'Barlow',sans-serif; font-size:0.92rem; line-height:1.55; color:rgba(255,248,244,0.8); margin-bottom:${(photos.length||videos.length)?'0.8rem':'0'};">${e.text}</div>
+            ${photos.length ? `<div class="dia-photos">${photos.map(p => `<div class="dia-photo" onclick="openDiaLightbox('${p}')"><img src="${p}" loading="lazy"></div>`).join('')}</div>` : ''}
+            ${videos.length ? `<div class="dia-videos">${videos.map(v => _diaRenderVideo(v)).join('')}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+    } catch (e) {
+      wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; color:rgba(224,85,85,0.6); text-align:center; padding:1rem 0;">Diario non ancora disponibile</div>';
+    }
   }
 
   handleStravaCallback();
