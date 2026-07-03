@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 1,
-    "from": "Adda",
-    "to": "Martesana ",
-    "km": 111,
-    "dislivello": 466,
-    "name": "Serale Adda Martesana, birrette comprese.",
-    "polyline": "ocmtGohgw@DtBePmCe_DdB}Lw@gmCu{DkCwFsEu`@wB{@kLvBmL_NqIcBmEoK`@gK~@yKfHmp@iBmqA|DuXu@{RiJcTgAc^{EgTcCmeC}Gk]pA{r@[}m@lCwSkDq~@\\{nAeGw^yCuh@mFsb@gFqRiDsGiCy]{L}[pEgPiGyRyDu@gCwD{Fi[aZqfAf@yDkDwDsd@agBi@hAs@_Bx@hBd@kARyt@fIBnYfK^yAz@oQOkb@rIen@nEii@_SqLmCv@dD{TiCkWdHg`@pAuRdNq~@}Cob@fPwbAAqD}@eAkvAi\\__@bDmNxIoHx@yJvLoGRyQuMiIiKwXaHyKcAwJeF_NeQ@}GnCeKUeBsMFcT_FiPePsI_@oH|HiEzIeJtHy}@fJ{RfIwCE{[zPuNbMgNxGdCWaBbAfB[FfC~@h@SjC{EdH{BtMkFpFkLx@k`@wHoMlD{FhIaGjj@qItV_Hx\\}LvZ{DlDyIrA{O_D}QhC{m@GqDfEaPvl@kH~GwLuAUxApCjCuAnAwn@yBsCmFaE|QcAP}BcErGpRAjY`D`j@cGnBTjSyItVoV{BNqL{NhDcPP{B`H}EfCcJhOyArIkH|H{LxZ}H`DwFMcNeHaK`@sE}Ea[kPwTe@kHmAoIsLsDgBoE^{F`FgJg@{ElBtEcBdJd@|F_F~Di@`EdBfIpLzHtAfTXtZzOrFtFjJe@xRdC|DkA~MkTrDcRbKkRX{KrJoYn[q@|MgK~@wLfDeIVuKoBqGbBoPvDk[|EeK|FExSqBbJaEtJKtO~FvGhGhF`@pIyI`Oak@fD_Elp@?zPeC|M|CnIu@|EgEhNi^tFuYnIqV~F_j@bGqInLiDhb@zHhJo@bGwFnCkNfEkGXkCiAaEeB\\bBeAeCZzMmGhQaOhYkOlD@|Q_Iv}@cJtJqHvEoJfHsHlIXdPjP~S~EpMO\\xAiCvJGrHzMlQfGzDjNbBzYnHfIdKfR|MdGUjJqLxHcAxN_Jb^{CbxAf]RzEcPfbAxCdc@_Np}@y@hNyFD_@jHpBx@sAYY~Ar@VmAe@gCnVtBh@jCd[jBFcCx@e_@buBeDvu@Jnh@t@zGpb@f~AzDvEg@zDlY~dAhGp\\dC~DfEv@vFnRaEzPtLh[jCp^|J|XzFtc@xCzh@jGp_@_@jnAjDl~@mCbTXpm@qAnq@~Gf_@~B|dCxE|ShAv^dJlS|@lSaEdYlBhpAgHxp@_A~Ki@rJjEdLjJzB`LnMbL{BhBbApEz_@rBlGhnC~zDb@jC|_Ar~@",
-    "date": "2026-07-02T16:34:42Z",
-    "updated": "2026-07-03T11:02:07.804Z",
+    "day": 2,
+    "from": "Martesana ",
+    "to": "",
+    "km": 0,
+    "dislivello": 0,
+    "name": "",
+    "polyline": "",
+    "date": "2026-07-03T22:11:22.735Z",
+    "updated": "2026-07-03T22:11:22.735Z",
     "totKm": 111,
     "totDis": 466,
-    "tappe": 1
+    "tappe": 2
   },
   "tappe": [
     {
@@ -28,6 +28,17 @@
       "polyline": "ocmtGohgw@DtBePmCe_DdB}Lw@gmCu{DkCwFsEu`@wB{@kLvBmL_NqIcBmEoK`@gK~@yKfHmp@iBmqA|DuXu@{RiJcTgAc^{EgTcCmeC}Gk]pA{r@[}m@lCwSkDq~@\\{nAeGw^yCuh@mFsb@gFqRiDsGiCy]{L}[pEgPiGyRyDu@gCwD{Fi[aZqfAf@yDkDwDsd@agBi@hAs@_Bx@hBd@kARyt@fIBnYfK^yAz@oQOkb@rIen@nEii@_SqLmCv@dD{TiCkWdHg`@pAuRdNq~@}Cob@fPwbAAqD}@eAkvAi\\__@bDmNxIoHx@yJvLoGRyQuMiIiKwXaHyKcAwJeF_NeQ@}GnCeKUeBsMFcT_FiPePsI_@oH|HiEzIeJtHy}@fJ{RfIwCE{[zPuNbMgNxGdCWaBbAfB[FfC~@h@SjC{EdH{BtMkFpFkLx@k`@wHoMlD{FhIaGjj@qItV_Hx\\}LvZ{DlDyIrA{O_D}QhC{m@GqDfEaPvl@kH~GwLuAUxApCjCuAnAwn@yBsCmFaE|QcAP}BcErGpRAjY`D`j@cGnBTjSyItVoV{BNqL{NhDcPP{B`H}EfCcJhOyArIkH|H{LxZ}H`DwFMcNeHaK`@sE}Ea[kPwTe@kHmAoIsLsDgBoE^{F`FgJg@{ElBtEcBdJd@|F_F~Di@`EdBfIpLzHtAfTXtZzOrFtFjJe@xRdC|DkA~MkTrDcRbKkRX{KrJoYn[q@|MgK~@wLfDeIVuKoBqGbBoPvDk[|EeK|FExSqBbJaEtJKtO~FvGhGhF`@pIyI`Oak@fD_Elp@?zPeC|M|CnIu@|EgEhNi^tFuYnIqV~F_j@bGqInLiDhb@zHhJo@bGwFnCkNfEkGXkCiAaEeB\\bBeAeCZzMmGhQaOhYkOlD@|Q_Iv}@cJtJqHvEoJfHsHlIXdPjP~S~EpMO\\xAiCvJGrHzMlQfGzDjNbBzYnHfIdKfR|MdGUjJqLxHcAxN_Jb^{CbxAf]RzEcPfbAxCdc@_Np}@y@hNyFD_@jHpBx@sAYY~Ar@VmAe@gCnVtBh@jCd[jBFcCx@e_@buBeDvu@Jnh@t@zGpb@f~AzDvEg@zDlY~dAhGp\\dC~DfEv@vFnRaEzPtLh[jCp^|J|XzFtc@xCzh@jGp_@_@jnAjDl~@mCbTXpm@qAnq@~Gf_@~B|dCxE|ShAv^dJlS|@lSaEdYlBhpAgHxp@_A~Ki@rJjEdLjJzB`LnMbL{BhBbApEz_@rBlGhnC~zDb@jC|_Ar~@",
       "date": "2026-07-02T16:34:42Z",
       "updated": "2026-07-03T11:02:07.804Z"
+    },
+    {
+      "day": 2,
+      "from": "Martesana ",
+      "to": "",
+      "km": 0,
+      "dislivello": 0,
+      "name": "",
+      "polyline": "",
+      "date": "2026-07-03T22:11:22.735Z",
+      "updated": "2026-07-03T22:11:22.735Z"
     }
   ],
   "next_stage": null
