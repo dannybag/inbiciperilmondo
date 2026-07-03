@@ -126,7 +126,8 @@
   }
 
   /* MEDIA */
-  .entry-media { display:flex; gap:0.5rem; flex-wrap:wrap; }
+  .media-photos { display:flex; gap:0.5rem; flex-wrap:wrap; }
+  .media-videos { display:flex; flex-direction:column; gap:0.6rem; margin-top:0.8rem; }
   .media-photo {
     width:96px; height:96px;
     border-radius:3px;
@@ -145,7 +146,6 @@
     border-radius:3px;
     overflow:hidden;
     border:1px solid rgba(255,248,244,0.08);
-    margin-top:0.3rem;
   }
   .media-video video { width:100%; display:block; background:#000; }
 
@@ -243,15 +243,15 @@ const MOCK_ENTRIES = [
     title: "Un caffè offerto a Pozzuolo",
     text: "Alla fine della prima tappa un signore al bar non ha voluto farmi pagare il caffè quando ha saputo dove sto andando. Piccole cose che pesano più dei km.",
     photos: ["img/OrangBike1.png", "img/OrangBike2.png"],
-    video: null
+    videos: []
   },
   {
     day: 1,
     date: "2026-06-30",
     title: "Si parte",
-    text: "Partenza da Milano alle 7, cielo grigio ma umore alto. Il primo chilometro è sempre il più strano: dopo mesi di preparazione, si parte davvero.<br>Video della partenza qui sotto.",
-    photos: ["img/OrangBike4azzurro.png"],
-    video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    text: "Partenza da Milano alle 7, cielo grigio ma umore alto. Il primo chilometro è sempre il più strano: dopo mesi di preparazione, si parte davvero.",
+    photos: ["img/OrangBike4azzurro.png", "img/OrangBike1.png", "img/OrangBike2.png"],
+    videos: ["https://www.youtube.com/watch?v=dQw4w9WgXcQ", "https://www.youtube.com/watch?v=jNQXAC9IVRw"]
   }
 ];
 
@@ -292,20 +292,23 @@ function renderEntries(entries) {
     return;
   }
   const sorted = [...entries].sort((a,b) => new Date(b.date) - new Date(a.date));
-  track.innerHTML = sorted.map(e => `
+  track.innerHTML = sorted.map(e => {
+    const photos = e.photos || [];
+    // compatibilità: vecchie note potrebbero avere 'video' singolare invece di 'videos'
+    const videos = e.videos || (e.video ? [e.video] : []);
+    return `
     <div class="entry">
       <div class="entry-day"><div class="n">${e.day ?? ''}</div><div class="d">${formatDate(e.date)}</div></div>
       <div class="entry-dot"></div>
       <div class="entry-card">
         <div class="entry-title">${e.title}</div>
         <div class="entry-text">${e.text}</div>
-        <div class="entry-media">
-          ${(e.photos||[]).map(p => `<div class="media-photo" onclick="openLightbox('${p}')"><img src="${p}" loading="lazy"></div>`).join('')}
-          ${e.video ? renderVideo(e.video) : ''}
-        </div>
+        ${photos.length ? `<div class="media-photos">${photos.map(p => `<div class="media-photo" onclick="openLightbox('${p}')"><img src="${p}" loading="lazy"></div>`).join('')}</div>` : ''}
+        ${videos.length ? `<div class="media-videos">${videos.map(v => renderVideo(v)).join('')}</div>` : ''}
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function openLightbox(src) {
