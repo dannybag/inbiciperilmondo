@@ -95,12 +95,14 @@
 
   /* LISTA NOTE ESISTENTI */
   .entry-row {
-    display:flex; align-items:center; gap:0.8rem;
+    display:flex; flex-direction:column; gap:0.5rem;
     padding:0.8rem 0; border-bottom:1px solid rgba(255,248,244,0.06);
   }
-  .entry-row-date { font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); width:3.6rem; flex-shrink:0; }
+  .entry-row-top { display:flex; align-items:baseline; gap:0.8rem; }
+  .entry-row-date { font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); flex-shrink:0; }
   .entry-row-title { flex:1; font-family:'Barlow Condensed',sans-serif; font-size:0.95rem; color:var(--cream); }
   .entry-row-meta { font-family:var(--mono); font-size:0.55rem; color:rgba(255,248,244,0.3); }
+  .entry-row-actions { display:flex; gap:0.5rem; }
   .empty { font-family:var(--mono); font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; padding:1rem 0; }
 </style>
 </head>
@@ -213,6 +215,36 @@ function fileToB64(file) {
   });
 }
 
+// Ridimensiona e ricomprime una foto prima dell'upload: essenziale da smartphone
+// (una foto nativa pesa 4-8MB, in bici con dati mobili sarebbe troppo lenta/instabile)
+function compressImage(file, maxDim = 1600, quality = 0.75) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      let { width, height } = img;
+      if (width > maxDim || height > maxDim) {
+        const scale = maxDim / Math.max(width, height);
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width; canvas.height = height;
+      canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(blob => {
+        if (!blob) { reject(new Error('Compressione foto fallita')); return; }
+        const r = new FileReader();
+        r.onload = () => resolve(r.result.split(',')[1]);
+        r.onerror = reject;
+        r.readAsDataURL(blob);
+      }, 'image/jpeg', quality);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Foto non leggibile')); };
+    img.src = url;
+  });
+}
+
 // ---- PHOTO PREVIEW ----
 document.getElementById('f-photos').addEventListener('change', (e) => {
   const wrap = document.getElementById('photo-preview');
@@ -250,9 +282,9 @@ async function writeDiario(entries, sha, message) {
 
 // ---- UPLOAD PHOTO ----
 async function uploadPhoto(file, dateStr) {
-  const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_');
+  const safeName = file.name.replace(/[^a-zA-Z0-9\-_]/g, '_').replace(/\.[^.]+$/, '') + '.jpg';
   const path = `diario/img/${dateStr}-${Date.now()}-${safeName}`;
-  const b64 = await fileToB64(file);
+  const b64 = await compressImage(file);
   const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
     method: 'PUT',
     headers: ghHeaders(),
@@ -333,7 +365,7 @@ async function saveEntry() {
   btn.disabled = true;
 
   try {
-    setStatus('Carico le foto...', 'wait');
+    setStatus('Comprimo e carico le foto...', 'wait');
     const newPhotoPaths = [];
     for (const file of files) {
       newPhotoPaths.push(await uploadPhoto(file, date));
@@ -392,10 +424,15 @@ async function loadEntryList() {
       .sort((a, b) => new Date(b.e.date) - new Date(a.e.date));
     list.innerHTML = order.map(({ e, idx }) => `
       <div class="entry-row">
-        <div class="entry-row-date">${e.date}</div>
-        <div class="entry-row-title">${e.title}<br><span class="entry-row-meta">${(e.photos||[]).length} foto${e.video ? ' · video' : ''}</span></div>
-        <button class="btn-ghost" style="font-size:0.7rem; padding:0.35rem 0.7rem;" onclick="editEntry(${idx})">MODIFICA</button>
-        <button class="btn-danger" onclick="deleteEntry(${idx})">ELIMINA</button>
+        <div class="entry-row-top">
+          <div class="entry-row-date">${e.date}</div>
+          <div class="entry-row-title">${e.title}</div>
+        </div>
+        <div class="entry-row-meta">${(e.photos||[]).length} foto${e.video ? ' · video' : ''}</div>
+        <div class="entry-row-actions">
+          <button class="btn-ghost" style="font-size:0.7rem; padding:0.35rem 0.7rem;" onclick="editEntry(${idx})">MODIFICA</button>
+          <button class="btn-danger" onclick="deleteEntry(${idx})">ELIMINA</button>
+        </div>
       </div>
     `).join('');
   } catch (e) {
