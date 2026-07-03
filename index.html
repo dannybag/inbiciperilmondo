@@ -787,7 +787,7 @@
       <span class="live-sep">·</span>
       <span class="live-stat"><span id="cnt-dis">—</span></span>
     </div>
-    <div style="margin-top:0.8rem; display:flex; gap:0.6rem; flex-wrap:wrap;">
+    <div style="margin-top:0.8rem; display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center;">
       <button onclick="toggleViaggio()" id="viaggio-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:transparent; border:1px solid rgba(240,90,40,0.4); padding:0.4rem 1rem; border-radius:3px; cursor:pointer; white-space:nowrap;">🗺 Guarda il Viaggio <span id="viaggio-arrow">↓</span></button>
       <button onclick="toggleDiario()" id="diario-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:transparent; border:1px solid rgba(240,90,40,0.4); padding:0.4rem 1rem; border-radius:3px; cursor:pointer; white-space:nowrap;">📔 Leggi il Diario <span id="diario-arrow">↓</span></button>
     </div>
@@ -1601,6 +1601,11 @@
     sec.style.display = _viaggioOpen ? 'block' : 'none';
     arrow.textContent = _viaggioOpen ? '↑' : '↓';
     if(_viaggioOpen) openViaggio();
+    if (_viaggioOpen && _diarioOpen) {
+      _diarioOpen = false;
+      document.getElementById('diario-section').style.display = 'none';
+      document.getElementById('diario-arrow').textContent = '↓';
+    }
   }
 
   let _diarioOpen = false;
@@ -1612,6 +1617,11 @@
     sec.style.display = _diarioOpen ? 'block' : 'none';
     arrow.textContent = _diarioOpen ? '↑' : '↓';
     if (_diarioOpen && !_diarioLoaded) { _diarioLoaded = true; loadDiarioPreview(); }
+    if (_diarioOpen && _viaggioOpen) {
+      _viaggioOpen = false;
+      document.getElementById('viaggio-section').style.display = 'none';
+      document.getElementById('viaggio-arrow').textContent = '↓';
+    }
   }
 
   function _diarioYtId(url) {
