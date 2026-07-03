@@ -5,29 +5,29 @@
   },
   "tappa": {
     "day": 1,
-    "from": "Milano",
-    "to": "Pozzuolo Martesana",
-    "km": 61,
-    "dislivello": 175,
-    "name": "Un cicin del Muzza",
-    "polyline": "{cmtGmjhw@Mm|A_EaOx@cCMwDqAw@sPtW_HCeAgCEaI[c@iM?yEhAcBq@y@iBwCw@_MYW}@MiJkAo@w@qFkCcCmAkRd@mOM{Lp@_GcBmYIaKYeAgDiq@DeHw@sFSmHLsP}CmLwDoQLkEx@kEFyLcDwHKe@`@_@cAcCNo@sAgCyBoKw@gFe@cK\\qA`Ak@bJ^nj@rGhEUKw@x@{A@}BhAkFm@aMFsTr@kBhAq@hMa@`@g@eFeq@Yg^dJiF|DaGzAuEnBcAfDuJwJcaBTi@jFmA^w@{Deg@tKiAnDTxKm@vCgChLmDhLyBdFb@rCo@zDqDi@cHLkD|CoK~AeCwAuNaAoEgCcXmGCaK}t@xIqGF{@bBeA~@sH}BgKcKrAbAmb@nRaF~_@y_@nAcD|A}AfQ{FaD_c@^g@jNyCq@cP[i@eJb@kAe@wGb@qDgUvDaBmCqWzCcAxDj@~KkAvBh@xPcFxEUpB{C{AkAeHqKcM_WwBiHwCaSyAuCuCyAqWw@}CuAKwCtDgItB_Hr@oEO}E}@wFmAsD_C_EyS}Ocg@el@_DkAiG`@kC_AeBaD_B_J[aDNkAeDaKgD}AsCgCxAfAq@p@t@u@{AgAuFqHoEgAsLcNqK}IwEcCwN~DsCIqA{@w@}DZePuC{GsGwDq@iAe@iG`@gPmDmLwAaBeBi@kMvCqAW{@qAIcEhEoT}@cMeBwEeAq@kC@yIkH^n@hAcBIk@}@lBo@Va@bBL{@[v@YU}Sq_@s_@yk@o`@{`@qTkM{HiAmQq@_@b@NxKZhBq@j@SjBcAl@aAtBo@NwLbRgHpHwLrPInAbAFt@vDbChi@OvDo@fAXdB[lCw@dAaHlB_J`Ag@tjA}@dDv@|BIhf@v@xP~BzRnAzMzAzb@hB|J]xExCvl@IjAh@~@_@fBj@`LsG_A{CtA}Plc@yF~HoCdDoIlGqIdJo@YeOlMGp@fCnGKfAyKzKkC{Dq@~HmD|FpE|MA|@kBEiTxDzLh\\r@lD`@lOj@hGpDdHf@vEnD`JpFnb@tBzYj@jOhGr_@_@|lAjDr_AmCbT^vOGz]e@bYy@vFJxLn@hIpF|Uf@x^tAfdBf@zDvDlO`@zVf@bGfJrSd@nERlLgDnRWbEfB~`A@dNuBlVmDdZP`ImAfAs@vGBlBnEjL|A~@jF\\zLdNhLwBzAv@bFl`@lBfG~I|Kje@hr@b@AvB_E`@MdQbW|KqD",
-    "date": "2026-07-01T09:42:34Z",
-    "updated": "2026-07-01T15:52:48.058Z",
-    "totKm": 61,
-    "totDis": 175,
+    "from": "Adda",
+    "to": "Martesana ",
+    "km": 111,
+    "dislivello": 466,
+    "name": "Serale Adda Martesana, birrette comprese.",
+    "polyline": "ocmtGohgw@DtBePmCe_DdB}Lw@gmCu{DkCwFsEu`@wB{@kLvBmL_NqIcBmEoK`@gK~@yKfHmp@iBmqA|DuXu@{RiJcTgAc^{EgTcCmeC}Gk]pA{r@[}m@lCwSkDq~@\\{nAeGw^yCuh@mFsb@gFqRiDsGiCy]{L}[pEgPiGyRyDu@gCwD{Fi[aZqfAf@yDkDwDsd@agBi@hAs@_Bx@hBd@kARyt@fIBnYfK^yAz@oQOkb@rIen@nEii@_SqLmCv@dD{TiCkWdHg`@pAuRdNq~@}Cob@fPwbAAqD}@eAkvAi\\__@bDmNxIoHx@yJvLoGRyQuMiIiKwXaHyKcAwJeF_NeQ@}GnCeKUeBsMFcT_FiPePsI_@oH|HiEzIeJtHy}@fJ{RfIwCE{[zPuNbMgNxGdCWaBbAfB[FfC~@h@SjC{EdH{BtMkFpFkLx@k`@wHoMlD{FhIaGjj@qItV_Hx\\}LvZ{DlDyIrA{O_D}QhC{m@GqDfEaPvl@kH~GwLuAUxApCjCuAnAwn@yBsCmFaE|QcAP}BcErGpRAjY`D`j@cGnBTjSyItVoV{BNqL{NhDcPP{B`H}EfCcJhOyArIkH|H{LxZ}H`DwFMcNeHaK`@sE}Ea[kPwTe@kHmAoIsLsDgBoE^{F`FgJg@{ElBtEcBdJd@|F_F~Di@`EdBfIpLzHtAfTXtZzOrFtFjJe@xRdC|DkA~MkTrDcRbKkRX{KrJoYn[q@|MgK~@wLfDeIVuKoBqGbBoPvDk[|EeK|FExSqBbJaEtJKtO~FvGhGhF`@pIyI`Oak@fD_Elp@?zPeC|M|CnIu@|EgEhNi^tFuYnIqV~F_j@bGqInLiDhb@zHhJo@bGwFnCkNfEkGXkCiAaEeB\\bBeAeCZzMmGhQaOhYkOlD@|Q_Iv}@cJtJqHvEoJfHsHlIXdPjP~S~EpMO\\xAiCvJGrHzMlQfGzDjNbBzYnHfIdKfR|MdGUjJqLxHcAxN_Jb^{CbxAf]RzEcPfbAxCdc@_Np}@y@hNyFD_@jHpBx@sAYY~Ar@VmAe@gCnVtBh@jCd[jBFcCx@e_@buBeDvu@Jnh@t@zGpb@f~AzDvEg@zDlY~dAhGp\\dC~DfEv@vFnRaEzPtLh[jCp^|J|XzFtc@xCzh@jGp_@_@jnAjDl~@mCbTXpm@qAnq@~Gf_@~B|dCxE|ShAv^dJlS|@lSaEdYlBhpAgHxp@_A~Ki@rJjEdLjJzB`LnMbL{BhBbApEz_@rBlGhnC~zDb@jC|_Ar~@",
+    "date": "2026-07-02T16:34:42Z",
+    "updated": "2026-07-03T11:02:07.804Z",
+    "totKm": 111,
+    "totDis": 466,
     "tappe": 1
   },
   "tappe": [
     {
       "day": 1,
-      "from": "Milano",
-      "to": "Pozzuolo Martesana",
-      "km": 61,
-      "dislivello": 175,
-      "name": "Un cicin del Muzza",
-      "polyline": "{cmtGmjhw@Mm|A_EaOx@cCMwDqAw@sPtW_HCeAgCEaI[c@iM?yEhAcBq@y@iBwCw@_MYW}@MiJkAo@w@qFkCcCmAkRd@mOM{Lp@_GcBmYIaKYeAgDiq@DeHw@sFSmHLsP}CmLwDoQLkEx@kEFyLcDwHKe@`@_@cAcCNo@sAgCyBoKw@gFe@cK\\qA`Ak@bJ^nj@rGhEUKw@x@{A@}BhAkFm@aMFsTr@kBhAq@hMa@`@g@eFeq@Yg^dJiF|DaGzAuEnBcAfDuJwJcaBTi@jFmA^w@{Deg@tKiAnDTxKm@vCgChLmDhLyBdFb@rCo@zDqDi@cHLkD|CoK~AeCwAuNaAoEgCcXmGCaK}t@xIqGF{@bBeA~@sH}BgKcKrAbAmb@nRaF~_@y_@nAcD|A}AfQ{FaD_c@^g@jNyCq@cP[i@eJb@kAe@wGb@qDgUvDaBmCqWzCcAxDj@~KkAvBh@xPcFxEUpB{C{AkAeHqKcM_WwBiHwCaSyAuCuCyAqWw@}CuAKwCtDgItB_Hr@oEO}E}@wFmAsD_C_EyS}Ocg@el@_DkAiG`@kC_AeBaD_B_J[aDNkAeDaKgD}AsCgCxAfAq@p@t@u@{AgAuFqHoEgAsLcNqK}IwEcCwN~DsCIqA{@w@}DZePuC{GsGwDq@iAe@iG`@gPmDmLwAaBeBi@kMvCqAW{@qAIcEhEoT}@cMeBwEeAq@kC@yIkH^n@hAcBIk@}@lBo@Va@bBL{@[v@YU}Sq_@s_@yk@o`@{`@qTkM{HiAmQq@_@b@NxKZhBq@j@SjBcAl@aAtBo@NwLbRgHpHwLrPInAbAFt@vDbChi@OvDo@fAXdB[lCw@dAaHlB_J`Ag@tjA}@dDv@|BIhf@v@xP~BzRnAzMzAzb@hB|J]xExCvl@IjAh@~@_@fBj@`LsG_A{CtA}Plc@yF~HoCdDoIlGqIdJo@YeOlMGp@fCnGKfAyKzKkC{Dq@~HmD|FpE|MA|@kBEiTxDzLh\\r@lD`@lOj@hGpDdHf@vEnD`JpFnb@tBzYj@jOhGr_@_@|lAjDr_AmCbT^vOGz]e@bYy@vFJxLn@hIpF|Uf@x^tAfdBf@zDvDlO`@zVf@bGfJrSd@nERlLgDnRWbEfB~`A@dNuBlVmDdZP`ImAfAs@vGBlBnEjL|A~@jF\\zLdNhLwBzAv@bFl`@lBfG~I|Kje@hr@b@AvB_E`@MdQbW|KqD",
-      "date": "2026-07-01T09:42:34Z",
-      "updated": "2026-07-01T15:52:48.058Z"
+      "from": "Adda",
+      "to": "Martesana ",
+      "km": 111,
+      "dislivello": 466,
+      "name": "Serale Adda Martesana, birrette comprese.",
+      "polyline": "ocmtGohgw@DtBePmCe_DdB}Lw@gmCu{DkCwFsEu`@wB{@kLvBmL_NqIcBmEoK`@gK~@yKfHmp@iBmqA|DuXu@{RiJcTgAc^{EgTcCmeC}Gk]pA{r@[}m@lCwSkDq~@\\{nAeGw^yCuh@mFsb@gFqRiDsGiCy]{L}[pEgPiGyRyDu@gCwD{Fi[aZqfAf@yDkDwDsd@agBi@hAs@_Bx@hBd@kARyt@fIBnYfK^yAz@oQOkb@rIen@nEii@_SqLmCv@dD{TiCkWdHg`@pAuRdNq~@}Cob@fPwbAAqD}@eAkvAi\\__@bDmNxIoHx@yJvLoGRyQuMiIiKwXaHyKcAwJeF_NeQ@}GnCeKUeBsMFcT_FiPePsI_@oH|HiEzIeJtHy}@fJ{RfIwCE{[zPuNbMgNxGdCWaBbAfB[FfC~@h@SjC{EdH{BtMkFpFkLx@k`@wHoMlD{FhIaGjj@qItV_Hx\\}LvZ{DlDyIrA{O_D}QhC{m@GqDfEaPvl@kH~GwLuAUxApCjCuAnAwn@yBsCmFaE|QcAP}BcErGpRAjY`D`j@cGnBTjSyItVoV{BNqL{NhDcPP{B`H}EfCcJhOyArIkH|H{LxZ}H`DwFMcNeHaK`@sE}Ea[kPwTe@kHmAoIsLsDgBoE^{F`FgJg@{ElBtEcBdJd@|F_F~Di@`EdBfIpLzHtAfTXtZzOrFtFjJe@xRdC|DkA~MkTrDcRbKkRX{KrJoYn[q@|MgK~@wLfDeIVuKoBqGbBoPvDk[|EeK|FExSqBbJaEtJKtO~FvGhGhF`@pIyI`Oak@fD_Elp@?zPeC|M|CnIu@|EgEhNi^tFuYnIqV~F_j@bGqInLiDhb@zHhJo@bGwFnCkNfEkGXkCiAaEeB\\bBeAeCZzMmGhQaOhYkOlD@|Q_Iv}@cJtJqHvEoJfHsHlIXdPjP~S~EpMO\\xAiCvJGrHzMlQfGzDjNbBzYnHfIdKfR|MdGUjJqLxHcAxN_Jb^{CbxAf]RzEcPfbAxCdc@_Np}@y@hNyFD_@jHpBx@sAYY~Ar@VmAe@gCnVtBh@jCd[jBFcCx@e_@buBeDvu@Jnh@t@zGpb@f~AzDvEg@zDlY~dAhGp\\dC~DfEv@vFnRaEzPtLh[jCp^|J|XzFtc@xCzh@jGp_@_@jnAjDl~@mCbTXpm@qAnq@~Gf_@~B|dCxE|ShAv^dJlS|@lSaEdYlBhpAgHxp@_A~Ki@rJjEdLjJzB`LnMbL{BhBbApEz_@rBlGhnC~zDb@jC|_Ar~@",
+      "date": "2026-07-02T16:34:42Z",
+      "updated": "2026-07-03T11:02:07.804Z"
     }
   ]
 }
