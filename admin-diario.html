@@ -152,6 +152,10 @@
   <label>Foto (una o più)</label>
   <div class="photo-preview" id="existing-photos"></div>
   <input type="file" id="f-photos" accept="image/*" multiple>
+  <div style="margin-top:0.5rem;">
+    <button type="button" class="btn-ghost" style="font-size:0.7rem; padding:0.4rem 0.8rem;" onclick="document.getElementById('f-photos-ext').click()">💾 Sfoglia archiviazione esterna (USB/SSD)</button>
+    <input type="file" id="f-photos-ext" multiple style="display:none;">
+  </div>
   <div class="photo-preview" id="photo-preview"></div>
 
   <label>Video (link YouTube, uno per riga — lascia vuoto se nessuno)</label>
@@ -249,15 +253,34 @@ function compressImage(file, maxDim = 1600, quality = 0.75) {
   });
 }
 
-// ---- PHOTO PREVIEW ----
-document.getElementById('f-photos').addEventListener('change', (e) => {
+// ---- PHOTO PREVIEW (unifica galleria + archiviazione esterna) ----
+let selectedPhotoFiles = [];
+
+function renderNewPhotoPreview() {
   const wrap = document.getElementById('photo-preview');
-  wrap.innerHTML = '';
-  [...e.target.files].forEach(file => {
-    const img = document.createElement('img');
-    img.src = URL.createObjectURL(file);
-    wrap.appendChild(img);
-  });
+  wrap.innerHTML = selectedPhotoFiles.map((file, i) => `
+    <div class="photo-thumb">
+      <img src="${URL.createObjectURL(file)}">
+      <div class="rm" onclick="removeSelectedPhoto(${i})">✕</div>
+    </div>
+  `).join('');
+}
+function removeSelectedPhoto(i) {
+  selectedPhotoFiles.splice(i, 1);
+  renderNewPhotoPreview();
+}
+function addPhotoFiles(fileList) {
+  selectedPhotoFiles.push(...[...fileList].filter(f => f.type.startsWith('image/')));
+  renderNewPhotoPreview();
+}
+
+document.getElementById('f-photos').addEventListener('change', (e) => {
+  addPhotoFiles(e.target.files);
+  e.target.value = '';
+});
+document.getElementById('f-photos-ext').addEventListener('change', (e) => {
+  addPhotoFiles(e.target.files);
+  e.target.value = '';
 });
 
 // ---- READ diario.json ----
@@ -405,6 +428,7 @@ function editEntry(idx) {
   document.getElementById('f-text').value = e.text;
   document.getElementById('f-video').value = (e.videos || (e.video ? [e.video] : [])).join('\n');
   document.getElementById('f-photos').value = '';
+  selectedPhotoFiles = [];
   document.getElementById('photo-preview').innerHTML = '';
   renderExistingPhotos();
   document.getElementById('btn-save').textContent = 'Aggiorna nota';
@@ -421,6 +445,7 @@ function cancelEdit() {
   document.getElementById('f-text').value = '';
   document.getElementById('f-video').value = '';
   document.getElementById('f-photos').value = '';
+  selectedPhotoFiles = [];
   document.getElementById('photo-preview').innerHTML = '';
   document.getElementById('existing-photos').innerHTML = '';
   document.getElementById('btn-save').textContent = 'Pubblica nota';
@@ -440,7 +465,7 @@ async function saveEntry() {
   const text = document.getElementById('f-text').value.trim();
   const videos = document.getElementById('f-video').value
     .split('\n').map(v => v.trim()).filter(Boolean);
-  const files = [...document.getElementById('f-photos').files];
+  const files = selectedPhotoFiles;
 
   if (!date || !title || !text) { setStatus('Data, titolo e testo sono obbligatori.', 'err'); return; }
 
