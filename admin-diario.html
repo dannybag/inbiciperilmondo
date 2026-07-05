@@ -142,8 +142,12 @@
   <label>Titolo</label>
   <input type="text" id="f-title" placeholder="Es. Un caffè offerto a Pozzuolo">
 
-  <label>Testo del ricordo</label>
+  <label style="display:flex; align-items:center; justify-content:space-between;">
+    <span>Testo del ricordo</span>
+    <button type="button" id="mic-btn" onclick="toggleDictation()" style="font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em; text-transform:none; background:none; border:1px solid rgba(255,248,244,0.25); color:var(--cream); padding:0.25rem 0.6rem; border-radius:12px; cursor:pointer;">🎤 Detta</button>
+  </label>
   <textarea id="f-text" placeholder="Racconta cosa è successo oggi..."></textarea>
+  <div id="mic-status" class="token-help" style="display:none;"></div>
 
   <label>Foto (una o più)</label>
   <div class="photo-preview" id="existing-photos"></div>
@@ -295,6 +299,83 @@ async function uploadPhoto(file, dateStr) {
     throw new Error('Errore upload foto: ' + (err.message || res.status));
   }
   return path;
+}
+
+// ---- DETTATURA VOCALE ----
+let recognition = null;
+let dictating = false;
+let baseTextBeforeDictation = '';
+
+function initDictation() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const micStatus = document.getElementById('mic-status');
+  const micBtn = document.getElementById('mic-btn');
+  if (!SR) {
+    micBtn.disabled = true;
+    micBtn.style.opacity = '0.4';
+    micStatus.style.display = 'block';
+    micStatus.textContent = 'Dettatura non disponibile in questo browser (tipico di Safari su iPhone). Usa il tasto 🎤 sulla tastiera di sistema: funziona comunque, in ogni campo di testo.';
+    return null;
+  }
+  const r = new SR();
+  r.lang = 'it-IT';
+  r.continuous = true;
+  r.interimResults = true;
+  return r;
+}
+
+function toggleDictation() {
+  const textarea = document.getElementById('f-text');
+  const micBtn = document.getElementById('mic-btn');
+  const micStatus = document.getElementById('mic-status');
+
+  if (!recognition) {
+    recognition = initDictation();
+    if (!recognition) return;
+
+    recognition.onresult = (event) => {
+      let finalChunk = '';
+      let interim = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const t = event.results[i][0].transcript;
+        if (event.results[i].isFinal) finalChunk += t;
+        else interim += t;
+      }
+      if (finalChunk) {
+        baseTextBeforeDictation = (baseTextBeforeDictation + ' ' + finalChunk).trim() + ' ';
+      }
+      textarea.value = (baseTextBeforeDictation + interim).trim();
+    };
+    recognition.onerror = (event) => {
+      micStatus.style.display = 'block';
+      micStatus.textContent = 'Errore microfono: ' + event.error + '. Riprova, o usa il microfono della tastiera.';
+    };
+    recognition.onend = () => {
+      if (dictating) {
+        try { recognition.start(); } catch (e) { /* già avviato */ }
+      }
+    };
+  }
+
+  if (dictating) {
+    dictating = false;
+    recognition.stop();
+    micBtn.textContent = '🎤 Detta';
+    micBtn.style.borderColor = 'rgba(255,248,244,0.25)';
+    micBtn.style.color = 'var(--cream)';
+  } else {
+    dictating = true;
+    baseTextBeforeDictation = textarea.value ? textarea.value.trim() + ' ' : '';
+    micStatus.style.display = 'none';
+    try {
+      recognition.start();
+      micBtn.textContent = '● Sto ascoltando...';
+      micBtn.style.borderColor = 'var(--red)';
+      micBtn.style.color = 'var(--red)';
+    } catch (e) {
+      dictating = false;
+    }
+  }
 }
 
 // ---- STATO EDITING ----
@@ -460,6 +541,16 @@ async function deleteEntry(idx) {
 document.getElementById('f-date').valueAsDate = new Date();
 updateTokenStatus();
 loadEntryList();
+(function checkDictationSupport() {
+  if (!(window.SpeechRecognition || window.webkitSpeechRecognition)) {
+    const micBtn = document.getElementById('mic-btn');
+    const micStatus = document.getElementById('mic-status');
+    micBtn.disabled = true;
+    micBtn.style.opacity = '0.4';
+    micStatus.style.display = 'block';
+    micStatus.textContent = 'Dettatura non disponibile in questo browser (tipico di Safari su iPhone). Usa il tasto 🎤 sulla tastiera di sistema: funziona comunque, in ogni campo di testo.';
+  }
+})();
 </script>
 </body>
 </html>
