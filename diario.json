@@ -1,3 +1,15 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "day": 1,
+      "date": "2026-07-05",
+      "title": "Fontanile Quarantina",
+      "text": "Oggi bella gita",
+      "photos": [],
+      "videos": [
+        "https://youtube.com/shorts/Hw-EVdm29ro?si=o1w7c427TDFLmiOv"
+      ],
+      "published": true
+    }
+  ]
 }
