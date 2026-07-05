@@ -328,6 +328,7 @@ async function uploadPhoto(file, dateStr) {
 let recognition = null;
 let dictating = false;
 let baseTextBeforeDictation = '';
+let sessionFinalText = '';
 
 function initDictation() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -357,23 +358,30 @@ function toggleDictation() {
     if (!recognition) return;
 
     recognition.onresult = (event) => {
-      let finalChunk = '';
+      // Ricostruisco l'intera trascrizione della sessione corrente ad ogni evento
+      // (non accodo in modo incrementale: su Chrome Android event.resultIndex
+      // non è affidabile e causava frasi duplicate)
+      let finalText = '';
       let interim = '';
-      for (let i = event.resultIndex; i < event.results.length; i++) {
+      for (let i = 0; i < event.results.length; i++) {
         const t = event.results[i][0].transcript;
-        if (event.results[i].isFinal) finalChunk += t;
+        if (event.results[i].isFinal) finalText += t + ' ';
         else interim += t;
       }
-      if (finalChunk) {
-        baseTextBeforeDictation = (baseTextBeforeDictation + ' ' + finalChunk).trim() + ' ';
-      }
-      textarea.value = (baseTextBeforeDictation + interim).trim();
+      sessionFinalText = finalText.trim();
+      textarea.value = [baseTextBeforeDictation, sessionFinalText, interim].filter(Boolean).join(' ').trim();
     };
     recognition.onerror = (event) => {
       micStatus.style.display = 'block';
       micStatus.textContent = 'Errore microfono: ' + event.error + '. Riprova, o usa il microfono della tastiera.';
     };
     recognition.onend = () => {
+      // Consolido il testo confermato di questa sessione nella base, così un
+      // eventuale riavvio (results array che riparte da zero) non lo riscrive.
+      if (sessionFinalText) {
+        baseTextBeforeDictation = (baseTextBeforeDictation + ' ' + sessionFinalText).trim();
+        sessionFinalText = '';
+      }
       if (dictating) {
         try { recognition.start(); } catch (e) { /* già avviato */ }
       }
@@ -388,7 +396,8 @@ function toggleDictation() {
     micBtn.style.color = 'var(--cream)';
   } else {
     dictating = true;
-    baseTextBeforeDictation = textarea.value ? textarea.value.trim() + ' ' : '';
+    baseTextBeforeDictation = textarea.value ? textarea.value.trim() : '';
+    sessionFinalText = '';
     micStatus.style.display = 'none';
     try {
       recognition.start();
