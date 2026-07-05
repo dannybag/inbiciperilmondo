@@ -1661,7 +1661,7 @@
       if (!res.ok) throw new Error('diario.json non trovato');
       const meta = await res.json();
       const raw = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g,'')))));
-      const entries = (raw.entries || []).slice().sort((a,b) => new Date(b.date) - new Date(a.date));
+      const entries = (raw.entries || []).filter(e => e.published !== false).slice().sort((a,b) => new Date(b.date) - new Date(a.date));
       if (!entries.length) {
         wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">Ancora nessuna nota</div>';
         return;

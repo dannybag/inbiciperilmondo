@@ -472,7 +472,8 @@ async function saveEntry() {
         day: entries.length + 1,
         date, title, text,
         photos: photoPaths,
-        videos
+        videos,
+        published: true
       });
       await writeDiario(entries, sha, `Diario: nuova nota "${title}"`);
       setStatus('✓ Nota pubblicata.', 'ok');
@@ -505,21 +506,37 @@ async function loadEntryList() {
     const order = entries
       .map((e, idx) => ({ e, idx }))
       .sort((a, b) => new Date(b.e.date) - new Date(a.e.date));
-    list.innerHTML = order.map(({ e, idx }) => `
-      <div class="entry-row">
+    list.innerHTML = order.map(({ e, idx }) => {
+      const isPublished = e.published !== false;
+      return `
+      <div class="entry-row" style="${isPublished ? '' : 'opacity:0.5;'}">
         <div class="entry-row-top">
           <div class="entry-row-date">${e.date}</div>
-          <div class="entry-row-title">${e.title}</div>
+          <div class="entry-row-title">${e.title}${isPublished ? '' : ' <span style="color:rgba(255,248,244,0.4); font-family:var(--mono); font-size:0.55rem; text-transform:uppercase; letter-spacing:0.05em;">· nascosta</span>'}</div>
         </div>
         <div class="entry-row-meta">${(e.photos||[]).length} foto${(e.videos||(e.video?[e.video]:[])).length ? ' · ' + (e.videos||[e.video]).length + ' video' : ''}</div>
         <div class="entry-row-actions">
           <button class="btn-ghost" style="font-size:0.7rem; padding:0.35rem 0.7rem;" onclick="editEntry(${idx})">MODIFICA</button>
+          <button class="btn-ghost" style="font-size:0.7rem; padding:0.35rem 0.7rem;" onclick="togglePublish(${idx})">${isPublished ? 'SPUBBLICA' : 'PUBBLICA'}</button>
           <button class="btn-danger" onclick="deleteEntry(${idx})">ELIMINA</button>
         </div>
       </div>
-    `).join('');
+    `;
+    }).join('');
   } catch (e) {
     list.innerHTML = '<div class="empty">Errore caricamento: ' + e.message + '</div>';
+  }
+}
+
+async function togglePublish(idx) {
+  try {
+    const { entries, sha } = await readDiario();
+    const current = entries[idx].published !== false;
+    entries[idx].published = !current;
+    await writeDiario(entries, sha, `Diario: ${current ? 'spubblico' : 'pubblico'} nota "${entries[idx].title}"`);
+    loadEntryList();
+  } catch (e) {
+    alert('Errore: ' + e.message);
   }
 }
 
