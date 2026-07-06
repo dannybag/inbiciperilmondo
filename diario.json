@@ -1,3 +1,18 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "day": 1,
+      "date": "2026-07-06",
+      "title": "Nuovo inserimento!",
+      "text": "Nuovo insert foto.",
+      "photos": [
+        "diario/img/2026-07-06-1783369314236-n6jbi-1000104563_jpg.jpg",
+        "diario/img/2026-07-06-1783369314753-9no4r-1000104566_jpg.jpg",
+        "diario/img/2026-07-06-1783369315104-rweo0-1000104561_jpg.jpg",
+        "diario/img/2026-07-06-1783369315486-czoj6-1000104562_jpg.jpg"
+      ],
+      "videos": [],
+      "published": true
+    }
+  ]
 }
