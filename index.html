@@ -1711,10 +1711,9 @@
         return;
       }
       const MESI=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
-      const GIORNI=['dom','lun','mar','mer','gio','ven','sab'];
       wrap.innerHTML = entries.map(e => {
         const d = new Date(e.date);
-        const dateStr = GIORNI[d.getDay()] + ' ' + d.getDate() + ' ' + MESI[d.getMonth()] + ' ' + d.getFullYear();
+        const dateStr = d.getDate() + ' ' + MESI[d.getMonth()] + ' ' + d.getFullYear();
         const photos = e.photos || [];
         const videos = e.videos || (e.video ? [e.video] : []);
         return `
