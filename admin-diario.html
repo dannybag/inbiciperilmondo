@@ -293,7 +293,7 @@ async function readDiario() {
   return { entries: raw.entries || [], sha: d.sha };
 }
 
-// ---- WRITE diario.json ----
+// ---- WRITE diario.json (usato da elimina/pubblica: singola modifica, un solo file) ----
 async function writeDiario(entries, sha, message) {
   const body = {
     message,
@@ -307,21 +307,65 @@ async function writeDiario(entries, sha, message) {
   }
 }
 
-// ---- UPLOAD PHOTO ----
-async function uploadPhoto(file, dateStr) {
+// ---- PREPARA FOTO (comprime, non carica ancora: verrà inclusa nel commit unico) ----
+async function preparePhoto(file, dateStr) {
   const safeName = file.name.replace(/[^a-zA-Z0-9\-_]/g, '_').replace(/\.[^.]+$/, '') + '.jpg';
-  const path = `diario/img/${dateStr}-${Date.now()}-${safeName}`;
-  const b64 = await compressImage(file);
-  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
-    method: 'PUT',
-    headers: ghHeaders(),
-    body: JSON.stringify({ message: `Diario: aggiungo foto ${safeName}`, content: b64 })
+  const path = `diario/img/${dateStr}-${Date.now()}-${Math.random().toString(36).slice(2,7)}-${safeName}`;
+  const content = await compressImage(file);
+  return { path, content };
+}
+
+// ---- COMMIT UNICO (foto + diario.json insieme, un solo push = un solo deploy Pages) ----
+// Evita il problema di più push ravvicinati che si accavallano e falliscono il deploy
+// ("Deployment failed, try again later"), tipico quando si caricano più foto in una nota.
+async function commitBatch(photoBlobs, entries, message) {
+  const refRes = await fetch(`https://api.github.com/repos/${REPO}/git/ref/heads/main`, { headers: ghHeaders() });
+  if (!refRes.ok) throw new Error('Errore lettura riferimento branch main');
+  const parentSha = (await refRes.json()).object.sha;
+
+  const commitRes = await fetch(`https://api.github.com/repos/${REPO}/git/commits/${parentSha}`, { headers: ghHeaders() });
+  if (!commitRes.ok) throw new Error('Errore lettura commit corrente');
+  const baseTreeSha = (await commitRes.json()).tree.sha;
+
+  const photoTreeEntries = await Promise.all(photoBlobs.map(async (p) => {
+    const blobRes = await fetch(`https://api.github.com/repos/${REPO}/git/blobs`, {
+      method: 'POST', headers: ghHeaders(),
+      body: JSON.stringify({ content: p.content, encoding: 'base64' })
+    });
+    if (!blobRes.ok) throw new Error('Errore creazione blob foto');
+    const sha = (await blobRes.json()).sha;
+    return { path: p.path, mode: '100644', type: 'blob', sha };
+  }));
+
+  const diarioBlobRes = await fetch(`https://api.github.com/repos/${REPO}/git/blobs`, {
+    method: 'POST', headers: ghHeaders(),
+    body: JSON.stringify({ content: utf8ToB64(JSON.stringify({ entries }, null, 2)), encoding: 'base64' })
   });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error('Errore upload foto: ' + (err.message || res.status));
-  }
-  return path;
+  if (!diarioBlobRes.ok) throw new Error('Errore creazione blob diario.json');
+  const diarioSha = (await diarioBlobRes.json()).sha;
+
+  const treeRes = await fetch(`https://api.github.com/repos/${REPO}/git/trees`, {
+    method: 'POST', headers: ghHeaders(),
+    body: JSON.stringify({
+      base_tree: baseTreeSha,
+      tree: [...photoTreeEntries, { path: 'diario.json', mode: '100644', type: 'blob', sha: diarioSha }]
+    })
+  });
+  if (!treeRes.ok) throw new Error('Errore creazione tree');
+  const newTreeSha = (await treeRes.json()).sha;
+
+  const newCommitRes = await fetch(`https://api.github.com/repos/${REPO}/git/commits`, {
+    method: 'POST', headers: ghHeaders(),
+    body: JSON.stringify({ message, tree: newTreeSha, parents: [parentSha] })
+  });
+  if (!newCommitRes.ok) throw new Error('Errore creazione commit');
+  const newCommitSha = (await newCommitRes.json()).sha;
+
+  const updateRefRes = await fetch(`https://api.github.com/repos/${REPO}/git/refs/heads/main`, {
+    method: 'PATCH', headers: ghHeaders(),
+    body: JSON.stringify({ sha: newCommitSha })
+  });
+  if (!updateRefRes.ok) throw new Error('Errore aggiornamento branch main');
 }
 
 // ---- DETTATURA VOCALE ----
@@ -484,16 +528,17 @@ async function saveEntry() {
   btn.disabled = true;
 
   try {
-    setStatus('Comprimo e carico le foto...', 'wait');
-    const newPhotoPaths = [];
+    setStatus('Comprimo le foto...', 'wait');
+    const newPhotoBlobs = [];
     for (const file of files) {
-      newPhotoPaths.push(await uploadPhoto(file, date));
+      newPhotoBlobs.push(await preparePhoto(file, date));
     }
-    const photoPaths = [...keptPhotos, ...newPhotoPaths];
+    const photoPaths = [...keptPhotos, ...newPhotoBlobs.map(p => p.path)];
 
-    setStatus('Salvo la nota...', 'wait');
-    const { entries, sha } = await readDiario();
+    setStatus('Leggo il diario...', 'wait');
+    const { entries } = await readDiario();
 
+    let message;
     if (editingIndex !== null && entries[editingIndex]) {
       const { video: _old, ...rest } = entries[editingIndex]; // rimuovo eventuale vecchio campo singolare
       entries[editingIndex] = {
@@ -502,8 +547,7 @@ async function saveEntry() {
         photos: photoPaths,
         videos
       };
-      await writeDiario(entries, sha, `Diario: modifico nota "${title}"`);
-      setStatus('✓ Nota aggiornata.', 'ok');
+      message = `Diario: modifico nota "${title}"`;
     } else {
       entries.push({
         day: entries.length + 1,
@@ -512,9 +556,12 @@ async function saveEntry() {
         videos,
         published: true
       });
-      await writeDiario(entries, sha, `Diario: nuova nota "${title}"`);
-      setStatus('✓ Nota pubblicata.', 'ok');
+      message = `Diario: nuova nota "${title}"`;
     }
+
+    setStatus('Salvo tutto in un unico commit...', 'wait');
+    await commitBatch(newPhotoBlobs, entries, message);
+    setStatus(editingIndex !== null ? '✓ Nota aggiornata.' : '✓ Nota pubblicata.', 'ok');
 
     cancelEdit();
     loadEntryList();
