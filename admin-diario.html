@@ -322,7 +322,7 @@ async function preparePhoto(file, dateStr) {
 // ---- COMMIT UNICO (foto + diario.json insieme, un solo push = un solo deploy Pages) ----
 // Evita il problema di più push ravvicinati che si accavallano e falliscono il deploy
 // ("Deployment failed, try again later"), tipico quando si caricano più foto in una nota.
-async function commitBatch(photoBlobs, entries, message) {
+async function commitBatch(photoBlobs, entries, message, deletePaths = []) {
   const refRes = await fetch(`https://api.github.com/repos/${REPO}/git/ref/heads/main`, { headers: ghHeaders() });
   if (!refRes.ok) throw new Error('Errore lettura riferimento branch main');
   const parentSha = (await refRes.json()).object.sha;
@@ -341,6 +341,10 @@ async function commitBatch(photoBlobs, entries, message) {
     return { path: p.path, mode: '100644', type: 'blob', sha };
   }));
 
+  // Per eliminare un file dal repo tramite Git Trees API basta indicarlo
+  // con sha:null nel nuovo tree, insieme a base_tree
+  const deleteTreeEntries = deletePaths.map(path => ({ path, mode: '100644', type: 'blob', sha: null }));
+
   const diarioBlobRes = await fetch(`https://api.github.com/repos/${REPO}/git/blobs`, {
     method: 'POST', headers: ghHeaders(),
     body: JSON.stringify({ content: utf8ToB64(JSON.stringify({ entries }, null, 2)), encoding: 'base64' })
@@ -352,7 +356,7 @@ async function commitBatch(photoBlobs, entries, message) {
     method: 'POST', headers: ghHeaders(),
     body: JSON.stringify({
       base_tree: baseTreeSha,
-      tree: [...photoTreeEntries, { path: 'diario.json', mode: '100644', type: 'blob', sha: diarioSha }]
+      tree: [...photoTreeEntries, ...deleteTreeEntries, { path: 'diario.json', mode: '100644', type: 'blob', sha: diarioSha }]
     })
   });
   if (!treeRes.ok) throw new Error('Errore creazione tree');
@@ -546,8 +550,10 @@ async function saveEntry() {
     const { entries } = await readDiario();
 
     let message;
+    let removedPhotos = [];
     if (editingIndex !== null && entries[editingIndex]) {
       const { video: _old, ...rest } = entries[editingIndex]; // rimuovo eventuale vecchio campo singolare
+      removedPhotos = (rest.photos || []).filter(p => !keptPhotos.includes(p));
       entries[editingIndex] = {
         ...rest,
         date, title, text,
@@ -567,7 +573,7 @@ async function saveEntry() {
     }
 
     setStatus('Salvo tutto in un unico commit...', 'wait');
-    await commitBatch(newPhotoBlobs, entries, message);
+    await commitBatch(newPhotoBlobs, entries, message, removedPhotos);
     setStatus(editingIndex !== null ? '✓ Nota aggiornata.' : '✓ Nota pubblicata.', 'ok');
 
     cancelEdit();
@@ -633,11 +639,13 @@ async function togglePublish(idx) {
 
 async function deleteEntry(idx) {
   const target = window.cachedEntries[idx];
-  if (!confirm(`Eliminare la nota "${target.title}" del ${target.date}?`)) return;
+  const photoCount = (target.photos || []).length;
+  const warn = photoCount ? ` (e le ${photoCount} foto collegate)` : '';
+  if (!confirm(`Eliminare la nota "${target.title}" del ${target.date}${warn}?`)) return;
   try {
-    const { entries, sha } = await readDiario();
+    const { entries } = await readDiario();
     entries.splice(idx, 1);
-    await writeDiario(entries, sha, `Diario: elimino nota "${target.title}"`);
+    await commitBatch([], entries, `Diario: elimino nota "${target.title}"`, target.photos || []);
     if (editingIndex === idx) cancelEdit();
     loadEntryList();
   } catch (e) {

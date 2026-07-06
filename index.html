@@ -1718,7 +1718,7 @@
         const videos = e.videos || (e.video ? [e.video] : []);
         return `
           <div style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:4px; padding:1.2rem 1.3rem;">
-            <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.35); text-transform:uppercase; margin-bottom:0.4rem;">${dateStr}${e.day ? ' · giorno ' + e.day : ''}</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.08em; color:var(--orange); text-transform:uppercase; margin-bottom:0.4rem;">${dateStr}</div>
             <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:700; color:#FFF8F4; margin-bottom:0.5rem;">${e.title}</div>
             <div style="font-family:'Barlow',sans-serif; font-size:0.92rem; line-height:1.55; color:rgba(255,248,244,0.8); margin-bottom:${(photos.length||videos.length)?'0.8rem':'0'};">${e.text}</div>
             ${photos.length ? `<div class="dia-photos">${photos.map((p, i) => `<div class="dia-photo" onclick='openDiaLightbox(${JSON.stringify(photos)}, ${i})'><img src="${p}" loading="lazy"></div>`).join('')}</div>` : ''}
