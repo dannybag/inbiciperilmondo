@@ -1,3 +1,18 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "day": 1,
+      "date": "2026-07-06",
+      "title": "Milano - Parma",
+      "text": "Oggi bel viaggio, conosciuto belle persone.",
+      "photos": [
+        "diario/img/2026-07-06-1783370645874-y6mok-1000104563_jpg.jpg",
+        "diario/img/2026-07-06-1783370646323-lnifk-1000104566_jpg.jpg",
+        "diario/img/2026-07-06-1783370646804-9wty9-1000104570_jpg.jpg",
+        "diario/img/2026-07-06-1783370647161-8wjhf-1000104575_jpg.jpg"
+      ],
+      "videos": [],
+      "published": true
+    }
+  ]
 }
