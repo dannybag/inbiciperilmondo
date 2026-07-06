@@ -1,18 +1,3 @@
 {
-  "entries": [
-    {
-      "day": 1,
-      "date": "2026-07-06",
-      "title": "Prova dettatura",
-      "text": "prova di dettatura e inserimento foto",
-      "photos": [
-        "diario/img/2026-07-06-1783367371648-pnhbh-1000104561_jpg.jpg",
-        "diario/img/2026-07-06-1783367372077-dt4re-1000104567_jpg.jpg",
-        "diario/img/2026-07-06-1783367702091-tzq4c-1000104566_jpg.jpg",
-        "diario/img/2026-07-06-1783367702399-wvuh9-1000104563_jpg.jpg"
-      ],
-      "videos": [],
-      "published": true
-    }
-  ]
+  "entries": []
 }
