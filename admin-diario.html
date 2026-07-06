@@ -343,7 +343,10 @@ function initDictation() {
   }
   const r = new SR();
   r.lang = 'it-IT';
-  r.continuous = true;
+  // Ascolto "a frase": più stabile su Android rispetto a continuous:true,
+  // che su alcuni dispositivi genera ipotesi di trascrizione crescenti
+  // marcate tutte come definitive, causando frasi duplicate.
+  r.continuous = false;
   r.interimResults = true;
   return r;
 }
@@ -358,18 +361,18 @@ function toggleDictation() {
     if (!recognition) return;
 
     recognition.onresult = (event) => {
-      // Ricostruisco l'intera trascrizione della sessione corrente ad ogni evento
-      // (non accodo in modo incrementale: su Chrome Android event.resultIndex
-      // non è affidabile e causava frasi duplicate)
-      let finalText = '';
-      let interim = '';
-      for (let i = 0; i < event.results.length; i++) {
-        const t = event.results[i][0].transcript;
-        if (event.results[i].isFinal) finalText += t + ' ';
-        else interim += t;
+      // Prendo solo l'ULTIMO risultato, non la somma di tutti quelli marcati
+      // come "finali": su alcuni Android il riconoscitore emette più ipotesi
+      // via via più lunghe per la stessa frase, marcandole tutte come definitive.
+      // Sommarle (come facevo prima) produceva le frasi duplicate crescenti.
+      const last = event.results[event.results.length - 1];
+      const transcript = last[0].transcript;
+      if (last.isFinal) {
+        sessionFinalText = transcript.trim();
+        textarea.value = [baseTextBeforeDictation, sessionFinalText].filter(Boolean).join(' ').trim();
+      } else {
+        textarea.value = [baseTextBeforeDictation, transcript].filter(Boolean).join(' ').trim();
       }
-      sessionFinalText = finalText.trim();
-      textarea.value = [baseTextBeforeDictation, sessionFinalText, interim].filter(Boolean).join(' ').trim();
     };
     recognition.onerror = (event) => {
       micStatus.style.display = 'block';
