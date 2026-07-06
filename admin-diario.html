@@ -157,6 +157,7 @@
     <input type="file" id="f-photos-ext" multiple style="display:none;">
   </div>
   <div class="photo-preview" id="photo-preview"></div>
+  <div id="photo-count" style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); margin-top:0.3rem;"></div>
 
   <label>Video (link YouTube, uno per riga — lascia vuoto se nessuno)</label>
   <textarea id="f-video" style="min-height:70px;" placeholder="https://youtube.com/watch?v=...
@@ -264,6 +265,9 @@ function renderNewPhotoPreview() {
       <div class="rm" onclick="removeSelectedPhoto(${i})">✕</div>
     </div>
   `).join('');
+  const countEl = document.getElementById('photo-count');
+  const total = keptPhotos.length + selectedPhotoFiles.length;
+  countEl.textContent = total > 0 ? `${total} foto in totale (${selectedPhotoFiles.length} nuove)` : '';
 }
 function removeSelectedPhoto(i) {
   selectedPhotoFiles.splice(i, 1);
@@ -469,6 +473,9 @@ function renderExistingPhotos() {
       <div class="rm" onclick="removeExistingPhoto(${i})">✕</div>
     </div>
   `).join('');
+  const countEl = document.getElementById('photo-count');
+  const total = keptPhotos.length + selectedPhotoFiles.length;
+  countEl.textContent = total > 0 ? `${total} foto in totale (${selectedPhotoFiles.length} nuove)` : '';
 }
 function removeExistingPhoto(i) {
   keptPhotos.splice(i, 1);

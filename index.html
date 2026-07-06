@@ -870,8 +870,12 @@
     .dia-yt iframe { width:100%; aspect-ratio:16/9; border:0; display:block; }
     .dia-lightbox { display:none; position:fixed; inset:0; background:rgba(10,10,10,0.92); z-index:9500; align-items:center; justify-content:center; padding:4vw; }
     .dia-lightbox.open { display:flex; }
-    .dia-lightbox img { max-width:100%; max-height:90vh; border-radius:4px; }
+    .dia-lightbox img { max-width:100%; max-height:90vh; border-radius:4px; user-select:none; -webkit-user-select:none; }
     .dia-lightbox-close { position:absolute; top:1.2rem; right:5vw; font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:#FFF8F4; background:none; border:1px solid rgba(255,248,244,0.3); padding:0.3rem 0.7rem; cursor:pointer; letter-spacing:0.1em; }
+    .dia-lightbox-nav { position:absolute; top:50%; transform:translateY(-50%); width:2.6rem; height:2.6rem; border-radius:50%; background:rgba(0,0,0,0.5); border:1px solid rgba(255,248,244,0.25); color:#FFF8F4; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    .dia-lightbox-nav.prev { left:2vw; }
+    .dia-lightbox-nav.next { right:2vw; }
+    .dia-lightbox-count { position:absolute; bottom:1.2rem; left:50%; transform:translateX(-50%); font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.6); background:rgba(0,0,0,0.5); padding:0.25rem 0.7rem; border-radius:10px; }
   </style>
   <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 2.2rem;">
     <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:1.2rem; text-align:center;">Ricordi, incontri e imprevisti, giorno per giorno</div>
@@ -881,7 +885,10 @@
   </div>
   <div class="dia-lightbox" id="dia-lightbox">
     <button class="dia-lightbox-close" onclick="closeDiaLightbox()">CHIUDI ✕</button>
+    <button class="dia-lightbox-nav prev" onclick="diaLightboxNav(-1)">‹</button>
     <img id="dia-lightbox-img" src="" alt="">
+    <button class="dia-lightbox-nav next" onclick="diaLightboxNav(1)">›</button>
+    <div class="dia-lightbox-count" id="dia-lightbox-count"></div>
   </div>
 </div>
 
@@ -1646,13 +1653,50 @@
     el.outerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
   }
 
-  function openDiaLightbox(src) {
-    document.getElementById('dia-lightbox-img').src = src;
+  let diaLightboxPhotos = [];
+  let diaLightboxIndex = 0;
+
+  function openDiaLightbox(photos, index) {
+    diaLightboxPhotos = photos;
+    diaLightboxIndex = index;
+    _diaRenderLightbox();
     document.getElementById('dia-lightbox').classList.add('open');
+  }
+  function _diaRenderLightbox() {
+    document.getElementById('dia-lightbox-img').src = diaLightboxPhotos[diaLightboxIndex];
+    const nav = document.querySelectorAll('.dia-lightbox-nav');
+    const multi = diaLightboxPhotos.length > 1;
+    nav.forEach(b => b.style.display = multi ? 'flex' : 'none');
+    const count = document.getElementById('dia-lightbox-count');
+    count.style.display = multi ? 'block' : 'none';
+    count.textContent = (diaLightboxIndex + 1) + ' / ' + diaLightboxPhotos.length;
+  }
+  function diaLightboxNav(dir) {
+    diaLightboxIndex = (diaLightboxIndex + dir + diaLightboxPhotos.length) % diaLightboxPhotos.length;
+    _diaRenderLightbox();
   }
   function closeDiaLightbox() {
     document.getElementById('dia-lightbox').classList.remove('open');
   }
+
+  // Swipe touch + tasti freccia per scorrere tra le foto della stessa nota
+  (function initDiaLightboxGestures() {
+    const box = document.getElementById('dia-lightbox');
+    let touchStartX = null;
+    box.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+    box.addEventListener('touchend', (e) => {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40 && diaLightboxPhotos.length > 1) diaLightboxNav(dx < 0 ? 1 : -1);
+      touchStartX = null;
+    }, { passive: true });
+    document.addEventListener('keydown', (e) => {
+      if (!box.classList.contains('open')) return;
+      if (e.key === 'ArrowRight') diaLightboxNav(1);
+      if (e.key === 'ArrowLeft') diaLightboxNav(-1);
+      if (e.key === 'Escape') closeDiaLightbox();
+    });
+  })();
 
   async function loadDiarioPreview() {
     const wrap = document.getElementById('diario-full');
@@ -1677,7 +1721,7 @@
             <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.35); text-transform:uppercase; margin-bottom:0.4rem;">${dateStr}${e.day ? ' · giorno ' + e.day : ''}</div>
             <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:700; color:#FFF8F4; margin-bottom:0.5rem;">${e.title}</div>
             <div style="font-family:'Barlow',sans-serif; font-size:0.92rem; line-height:1.55; color:rgba(255,248,244,0.8); margin-bottom:${(photos.length||videos.length)?'0.8rem':'0'};">${e.text}</div>
-            ${photos.length ? `<div class="dia-photos">${photos.map(p => `<div class="dia-photo" onclick="openDiaLightbox('${p}')"><img src="${p}" loading="lazy"></div>`).join('')}</div>` : ''}
+            ${photos.length ? `<div class="dia-photos">${photos.map((p, i) => `<div class="dia-photo" onclick='openDiaLightbox(${JSON.stringify(photos)}, ${i})'><img src="${p}" loading="lazy"></div>`).join('')}</div>` : ''}
             ${videos.length ? `<div class="dia-videos">${videos.map(v => _diaRenderVideo(v)).join('')}</div>` : ''}
           </div>
         `;
