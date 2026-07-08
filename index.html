@@ -799,6 +799,10 @@
 <div id="viaggio-section" style="display:none; overflow:hidden;">
   <link rel="stylesheet" id="leaflet-css" href="">
   <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 1rem;">
+    <!-- Progress bar SOPRA -->
+    <div style="background:#2A2A2A; height:6px; border-radius:3px; margin-bottom:0.8rem; overflow:hidden;"><div id="v-prog" style="height:100%; background:var(--orange); width:0%; transition:width 1s;"></div></div>
+    <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:rgba(255,248,244,0.3); margin-bottom:1.5rem;"><span>Milano</span><span id="v-prog-label"></span><span>Palermo</span></div>
+
     <!-- Map + List -->
     <div id="v-map-wrap" style="display:flex; gap:0;">
       <div style="position:relative; width:50%; flex-shrink:0;" id="v-map-container">
@@ -806,7 +810,7 @@
         <button onclick="expandMap()" id="v-expand-btn" title="Espandi mappa" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(240,90,40,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
       </div>
       <div style="width:50%; height:45vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(240,90,40,0.15);">
-        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:0.8rem;">← Tappe percorse</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:0.8rem; font-weight:700;">← Tappe percorse</div>
         <div id="v-list"></div>
       </div>
     </div>
@@ -816,10 +820,6 @@
       <div><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--orange); line-height:1;" id="v-dis">0</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Dislivello ↑ m</div></div>
       <div style="margin-left:auto;"><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:rgba(255,248,244,0.3); line-height:1;" id="v-pct">0%</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Del percorso</div></div>
     </div>
-    <!-- Progress -->
-    <div style="background:#2A2A2A; height:6px; border-radius:3px; margin-bottom:0.4rem; overflow:hidden;"><div id="v-prog" style="height:100%; background:var(--orange); width:0%; transition:width 1s;"></div></div>
-    <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.5rem; color:rgba(255,248,244,0.3); margin-bottom:1.5rem;"><span>Milano</span><span id="v-prog-label"></span><span>Palermo</span></div>
-    <!-- Mobile: stack -->
     <style>
       @media(max-width:768px) {
         #v-map-wrap { flex-direction:column !important; }
@@ -838,7 +838,7 @@
           <button onclick="expandNextMap()" id="v-next-expand-btn" title="Espandi mappa" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(79,195,247,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
         </div>
         <div style="width:50%; height:45vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(79,195,247,0.15); display:flex; flex-direction:column; justify-content:center;">
-          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.8rem;">→ Prossima tappa</div>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.8rem; font-weight:700;">→ Prossima tappa</div>
           <div id="v-next-title" style="display:flex; flex-direction:column; gap:0.3rem;"></div>
         </div>
       </div>
