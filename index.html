@@ -445,6 +445,28 @@
   }
   .footer-copy a { color: var(--orange); text-decoration: none; }
   /* ---- PROGRESS BAR ---- */
+  .progress-wrap {
+    padding: 1rem 0;
+    background: transparent;
+  }
+  .progress-track {
+    background: #2A2A2A;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255,248,244,0.6);
+    padding: 0.3rem 0;
+    margin-bottom: 1.5rem;
+  }
   .progress-section {
     background: #111;
     padding: 1.2rem 5vw;
@@ -800,11 +822,17 @@
   <link rel="stylesheet" id="leaflet-css" href="">
   <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 1rem;">
     <!-- Progress bar SOPRA -->
-    <div style="background:#2A2A2A; height:6px; border-radius:3px; margin-bottom:0.8rem; overflow:hidden;"><div id="v-prog" style="height:100%; background:var(--orange); width:0%; transition:width 1s;"></div></div>
-    <div style="display:flex; justify-content:space-between; font-family:'IBM Plex Mono',monospace; font-size:0.7rem; font-weight:700; color:rgba(255,248,244,0.6); margin-bottom:1.5rem;"><span>Milano</span><span id="v-prog-label"></span><span>Palermo</span></div>
+    <div class="progress-wrap" style="padding:0 0 1rem 0; background:transparent;">
+      <div class="progress-track">
+        <div class="progress-fill" id="v-prog" style="width:0%"></div>
+      </div>
+      <div class="progress-labels">
+        <span>Milano</span><span id="v-prog-label"></span><span>Palermo</span>
+      </div>
+    </div>
 
     <!-- Map + List -->
-    <div id="v-map-wrap" style="display:flex; gap:0;">
+    <div id="v-map-wrap" style="display:flex; gap:0; margin-top:1rem;">
       <div style="position:relative; width:50%; flex-shrink:0;" id="v-map-container">
         <div id="v-map" style="width:100%; height:45vh; background:#111;"></div>
         <button onclick="expandMap()" id="v-expand-btn" title="Espandi mappa" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(240,90,40,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
