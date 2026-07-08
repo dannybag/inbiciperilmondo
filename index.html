@@ -446,30 +446,19 @@
   .footer-copy a { color: var(--orange); text-decoration: none; }
   /* ---- PROGRESS BAR ---- */
   .progress-wrap {
-    padding: 0;
-    background: transparent;
+    padding:1rem 5vw 0;
+    background:#111;
   }
   .progress-track {
-    background: #2A2A2A;
-    height: 8px;
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
+    background:#2A2A2A; height:8px; border-radius:4px; overflow:hidden; position:relative;
   }
   .progress-fill {
-    height: 100%;
-    background: var(--orange);
-    border-radius: 4px;
-    transition: width 1s;
+    height:100%; background:var(--orange); border-radius:4px; transition:width 1s;
   }
   .progress-labels {
-    display: flex;
-    justify-content: space-between;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.5rem;
-    letter-spacing: 0.1em;
-    color: rgba(255,248,244,0.3);
-    padding: 0.3rem 0 1rem;
+    display:flex; justify-content:space-between;
+    font-family:var(--mono); font-size:0.5rem; letter-spacing:0.1em;
+    color:rgba(255,248,244,0.3); padding:0.3rem 0 1rem;
   }
   .progress-section {
     background: #111;
@@ -831,7 +820,9 @@
         <div class="progress-fill" id="v-prog" style="width:0%"></div>
       </div>
       <div class="progress-labels">
-        <span>Milano</span><span id="v-prog-label"></span><span>Palermo</span>
+        <span>Milano</span>
+        <span id="v-prog-label"></span>
+        <span>Palermo</span>
       </div>
     </div>
 
