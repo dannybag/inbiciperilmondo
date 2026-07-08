@@ -823,6 +823,7 @@
         <span>Milano</span>
         <span id="v-prog-label"></span>
         <span>Palermo</span>
+        <span id="v-prog-pct" style="margin-left:auto;">0%</span>
       </div>
     </div>
 
@@ -1531,6 +1532,7 @@
     document.getElementById('v-pct').textContent = pct+'%';
     document.getElementById('v-prog').style.width = pct+'%';
     document.getElementById('v-prog-label').textContent = pct>0?km+' / 1.700 km':'';
+    document.getElementById('v-prog-pct').textContent = pct+'%';
   }
 
   async function openViaggio() {
