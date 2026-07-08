@@ -446,8 +446,8 @@
   .footer-copy a { color: var(--orange); text-decoration: none; }
   /* ---- PROGRESS BAR ---- */
   .progress-wrap {
-    padding:1rem 5vw 0;
-    background:#111;
+    padding:0;
+    background:transparent;
   }
   .progress-track {
     background:#2A2A2A; height:8px; border-radius:4px; overflow:hidden; position:relative;
@@ -458,7 +458,7 @@
   .progress-labels {
     display:flex; justify-content:space-between;
     font-family:var(--mono); font-size:0.7rem; font-weight:700; letter-spacing:0.1em;
-    color:rgba(255,248,244,0.3); padding:0.3rem 0 1rem;
+    color:rgba(255,248,244,0.3); padding:0;
   }
   .progress-section {
     background: #111;
@@ -815,15 +815,19 @@
   <link rel="stylesheet" id="leaflet-css" href="">
   <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 1rem;">
     <!-- Progress bar SOPRA -->
-    <div class="progress-wrap">
-      <div class="progress-track">
-        <div class="progress-fill" id="v-prog" style="width:0%"></div>
+    <div style="padding:1rem 5vw 0; background:#111;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+        <div class="progress-labels" style="flex:1; margin:0;">
+          <span>Milano</span>
+          <span id="v-prog-label"></span>
+          <span>Palermo</span>
+        </div>
+        <div id="v-prog-pct" style="font-family:var(--mono); font-size:1rem; font-weight:700; color:rgba(255,248,244,0.95); margin-left:1rem;">0%</div>
       </div>
-      <div class="progress-labels">
-        <span>Milano</span>
-        <span id="v-prog-label"></span>
-        <span>Palermo</span>
-        <span id="v-prog-pct" style="margin-left:auto;">0%</span>
+      <div class="progress-wrap" style="padding:0;">
+        <div class="progress-track">
+          <div class="progress-fill" id="v-prog" style="width:0%"></div>
+        </div>
       </div>
     </div>
 
