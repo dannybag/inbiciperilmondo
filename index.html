@@ -1452,7 +1452,11 @@
 
   async function renderViaggioMap(tappe) {
     if(_viaggioMap) { _viaggioMap.remove(); _viaggioMap=null; }
-    _viaggioMap = L.map('v-map').setView([44.5,11.3],6);
+    _viaggioMap = L.map('v-map', {dragging: false, scrollWheelZoom: false}).setView([44.5,11.3],6);
+    _viaggioMap.once('click', function() {
+      _viaggioMap.dragging.enable();
+      _viaggioMap.scrollWheelZoom.enable();
+    });
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{
       attribution:'© Esri', maxZoom:18
     }).addTo(_viaggioMap);
@@ -1540,7 +1544,11 @@
        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:#4FC3F7; margin-top:0.2rem;">${ns.km||0} km &nbsp;·&nbsp; ↑${ns.dis||0} m</div>`;
 
     if (_nextStageMap) { _nextStageMap.remove(); _nextStageMap = null; }
-    _nextStageMap = L.map('v-next-map').setView([44.5,11.3], 6);
+    _nextStageMap = L.map('v-next-map', {dragging: false, scrollWheelZoom: false}).setView([44.5,11.3], 6);
+    _nextStageMap.once('click', function() {
+      _nextStageMap.dragging.enable();
+      _nextStageMap.scrollWheelZoom.enable();
+    });
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
       attribution:'© Esri', maxZoom:18
     }).addTo(_nextStageMap);
