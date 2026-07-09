@@ -858,27 +858,13 @@
       }
     </style>
 
-    <!-- PROSSIMA TAPPA - stesso layout di Tappe percorse -->
+    <!-- PROSSIME TAPPE - lista come Tappe percorse -->
     <div id="v-next-block" style="display:none; margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid rgba(79,195,247,0.2);">
-      <div id="v-next-wrap" style="display:flex; gap:0;">
-        <div style="position:relative; width:50%; height:45vh; flex-shrink:0;" id="v-next-map-container">
-          <div id="v-next-map" style="width:100%; height:100%; background:#111;"></div>
-          <button onclick="expandNextMap()" id="v-next-expand-btn" title="Espandi mappa" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(79,195,247,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
-        </div>
-        <div style="width:50%; height:45vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(79,195,247,0.15); display:flex; flex-direction:column; justify-content:center;">
-          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.8rem; font-weight:700;">→ Prossima tappa</div>
-          <div id="v-next-title" style="display:flex; flex-direction:column; gap:0.3rem;"></div>
-        </div>
+      <div style="padding:0 1.5rem;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.8rem; font-weight:700;">→ Prossime tappe</div>
+        <div id="v-next-list" style="display:flex; flex-direction:column; gap:0.4rem;"></div>
       </div>
     </div>
-    <style>
-      @media(max-width:768px) {
-        #v-next-wrap { flex-direction:column !important; }
-        #v-next-map-container { width:100% !important; height:35vh !important; }
-        #v-next-wrap > div:last-child { width:100% !important; height:auto !important; border-left:none !important; border-top:1px solid rgba(79,195,247,0.15); }
-        #v-next-expand-btn { display:none !important; }
-      }
-    </style>
   </div>
 </div>
 
@@ -1551,47 +1537,50 @@
       });
     }
     setTimeout(()=>renderViaggioMap(tappe),100);
-    setTimeout(()=>renderNextStageMap(),150);
+    setTimeout(()=>renderNextStages(),150);
   }
 
   // ---- PROSSIMA TAPPA - mappa indipendente ----
-  let _nextStageMap = null;
-
-  function renderNextStageMap() {
+  function renderNextStages() {
     const block = document.getElementById('v-next-block');
-    const ns = window._nextStage; // popolato da loadFromGitHub
+    const nextStages = window._nextStages || []; // array da loadFromGitHub
 
-    if (!ns || (!ns.polyline && !ns.name)) {
+    if (!nextStages || nextStages.length === 0) {
       block.style.display = 'none';
       return;
     }
+    
     block.style.display = 'block';
-    const route = (ns.from && ns.to) ? `${ns.from} → ${ns.to}` : (ns.name || '—');
-    document.getElementById('v-next-title').innerHTML =
-      (ns.name ? `<div style="font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; color:rgba(255,248,244,0.5);">${ns.name}</div>` : '') +
-      `<div style="font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:#FFF8F4;">${route}</div>
-       <div style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:#4FC3F7; margin-top:0.2rem;">${ns.km||0} km &nbsp;·&nbsp; ↑${ns.dis||0} m</div>`;
-
-    if (_nextStageMap) { _nextStageMap.remove(); _nextStageMap = null; }
-    _nextStageMap = L.map('v-next-map', {dragging: false, scrollWheelZoom: false}).setView([44.5,11.3], 6);
-    _nextStageMap.once('click', function() {
-      _nextStageMap.dragging.enable();
-      _nextStageMap.scrollWheelZoom.enable();
-    });
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-      attribution:'© Esri', maxZoom:18
-    }).addTo(_nextStageMap);
-
-    if (ns.polyline) {
-      const pts = decodePolyline(ns.polyline);
-      if (pts.length) {
-        L.polyline(pts, { color:'#4FC3F7', weight:4, opacity:0.9 }).addTo(_nextStageMap);
-        L.marker(pts[0], { icon: L.divIcon({ html:'<div style="background:#4FC3F7;color:#000;font-family:IBM Plex Mono,monospace;font-size:0.5rem;font-weight:700;width:1.6rem;height:1.6rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #fff;">A</div>', className:'', iconSize:[26,26], iconAnchor:[13,13] }) }).addTo(_nextStageMap);
-        L.marker(pts[pts.length-1], { icon: L.divIcon({ html:'<div style="background:#4FC3F7;color:#000;font-family:IBM Plex Mono,monospace;font-size:0.5rem;font-weight:700;width:1.6rem;height:1.6rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #fff;">B</div>', className:'', iconSize:[26,26], iconAnchor:[13,13] }) }).addTo(_nextStageMap);
-        _nextStageMap.fitBounds(L.latLngBounds(pts), { padding:[30,30] });
+    const MESI = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+    const list = document.getElementById('v-next-list');
+    
+    list.innerHTML = nextStages.map((ns, idx) => {
+      let dateStr = '—';
+      if (ns.date) {
+        const d = new Date(ns.date);
+        dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
       }
-    }
+      const label = (ns.from && ns.to) ? `${ns.from} → ${ns.to}` : (ns.name || '—');
+      return `<div style="display:flex; align-items:center; gap:0.8rem; padding:0.6rem 0; border-bottom:1px solid rgba(79,195,247,0.1); flex-wrap:wrap;">
+        <span style="font-family:'Bebas Neue',sans-serif; font-size:0.9rem; color:#4FC3F7; min-width:1.5rem; flex-shrink:0;">${idx + 1}</span>
+        <span style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); min-width:4rem; flex-shrink:0;">${dateStr}</span>
+        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:#FFF8F4;">${label} <span style="font-family:var(--mono);font-size:0.7rem;color:rgba(255,248,244,0.5);margin-left:0.3rem;">${ns.km||0} km · ↑${ns.dislivello||0} m</span></span>
+        <button onclick="deleteNextStage(${idx})" style="background:rgba(79,195,247,0.15); color:#4FC3F7; border:1px solid rgba(79,195,247,0.3); border-radius:3px; font-family:var(--mono); font-size:0.55rem; padding:0.3rem 0.5rem; cursor:pointer; text-transform:uppercase; letter-spacing:0.05em;">🗑 Elimina</button>
+      </div>`;
+    }).join('');
   }
+
+  function deleteNextStage(idx) {
+    const ns = window._nextStages || [];
+    if (idx < 0 || idx >= ns.length) return;
+    if (!confirm(`Eliminare la tappa futura ${idx + 1}?`)) return;
+    ns.splice(idx, 1);
+    window._nextStages = ns;
+    renderNextStages();
+    showToast('Tappa futura eliminata');
+  }
+  
+  window.deleteNextStage = deleteNextStage;
 
 
   let _mapExpanded = false;
@@ -1788,7 +1777,7 @@
       // Compatibilità: usa tappe[] se esiste, altrimenti usa tappa legacy
       if (data.tappe && data.tappe.length > 0) {
         _tappeList = data.tappe;
-        window._nextStage = data.next_stage || null;
+        window._nextStages = data.next_stages || [];
         const tots = tapCalcTotals(_tappeList);
         _prev = { totKm: tots.totKm, totDis: tots.totDis, tappe: tots.tappe };
       } else if (data.tappa && data.tappa.day > 0) {
@@ -1932,7 +1921,7 @@
     document.getElementById('tap-msg').textContent = '';
     document.getElementById('tap-is-next').checked = false;
     tapToggleNext();
-    document.getElementById('tap-next-clear-row').style.display = window._nextStage ? 'block' : 'none';
+    document.getElementById('tap-next-clear-row').style.display = (window._nextStages && window._nextStages.length > 0) ? 'block' : 'none';
     window._tapStravaSelected = null;
     tapRefresh();
   }
@@ -1992,12 +1981,12 @@
       });
       const d = await res.json();
       const raw = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
-      raw.next_stage = null;
+      raw.next_stages = [];
       const ok = await saveToGitHub(raw, token, msg);
       if (ok) {
-        window._nextStage = null;
+        window._nextStages = [];
         document.getElementById('tap-next-clear-row').style.display = 'none';
-        msg.textContent = '✓ Prossima tappa rimossa';
+        msg.textContent = '✓ Prossime tappe rimosse';
       }
     } catch(e) { msg.textContent = '✗ Errore: ' + e.message; }
   }
@@ -2039,16 +2028,18 @@
         });
         const d = await res.json();
         const raw = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
-        raw.next_stage = {
+        if (!raw.next_stages) raw.next_stages = [];
+        raw.next_stages.push({
           name:     sel.name || '',
           polyline: sel.polyline || '',
-          from, to, km, dis,
+          from, to, km, dislivello: dis,
           date: new Date().toISOString()
-        };
+        });
         const ok = await saveToGitHub(raw, token, msg);
         if (ok) {
-          window._nextStage = raw.next_stage;
-          msg.textContent = `✓ Prossima tappa salvata · ${km} km`;
+          window._nextStages = raw.next_stages;
+          renderNextStages();
+          msg.textContent = `✓ Prossima tappa aggiunta · ${km} km`;
           setTimeout(() => tapClose(), 1200);
         }
       } catch(e) { msg.textContent = '✗ Errore: ' + e.message; }
