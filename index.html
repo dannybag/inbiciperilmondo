@@ -858,11 +858,28 @@
       }
     </style>
 
-    <!-- PROSSIME TAPPE - multiple con mappe individuali -->
+    <!-- PROSSIME TAPPE - stessa layout di Tappe percorse -->
     <div id="v-next-block" style="display:none; margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid rgba(79,195,247,0.2);">
-      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:1rem; font-weight:700; padding:0 5vw;">→ Prossime tappe</div>
-      <div id="v-next-stages-container"></div>
+      <div id="v-next-wrap" style="display:flex; gap:0;">
+        <div style="position:relative; width:50%; flex-shrink:0;" id="v-next-map-container">
+          <div id="v-next-map" style="width:100%; height:45vh; background:#111;"></div>
+          <button onclick="expandNextMap()" id="v-next-expand-btn" title="Espandi mappa" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(79,195,247,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
+        </div>
+        <div style="width:50%; height:45vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(79,195,247,0.15);">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.8rem; font-weight:700;">→ Prossime tappe</div>
+          <div id="v-next-list"></div>
+        </div>
+      </div>
     </div>
+    <style>
+      @media(max-width:768px) {
+        #v-next-wrap { flex-direction:column !important; }
+        #v-next-map-container { width:100% !important; }
+        #v-next-map { height:35vh !important; }
+        #v-next-wrap > div:last-child { width:100% !important; height:auto !important; border-left:none !important; border-top:1px solid rgba(79,195,247,0.15); }
+        #v-next-expand-btn { display:none !important; }
+      }
+    </style>
   </div>
 </div>
 
@@ -1541,7 +1558,7 @@
   // ---- PROSSIMA TAPPA - mappa indipendente ----
   let _nextStageMap = null;
 
-  let _nextStageMaps = {};
+  let _nextStageMap = null;
 
   function renderNextStages() {
     const block = document.getElementById('v-next-block');
@@ -1553,57 +1570,57 @@
     }
 
     block.style.display = 'block';
-    const container = document.getElementById('v-next-stages-container');
+    const MESI = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+    const list = document.getElementById('v-next-list');
     
-    container.innerHTML = nextStages.map((ns, idx) => {
-      const route = (ns.from && ns.to) ? `${ns.from} → ${ns.to}` : (ns.name || '—');
-      const mapId = `v-next-map-${idx}`;
-      const wrapId = `v-next-wrap-${idx}`;
-      const btnId = `v-next-expand-btn-${idx}`;
-      
-      return `<div style="margin-bottom:2rem;">
-        <div id="${wrapId}" style="display:flex; gap:0;">
-          <div style="position:relative; width:50%; height:45vh; flex-shrink:0;" id="${mapId}-container">
-            <div id="${mapId}" style="width:100%; height:100%; background:#111;"></div>
-            <button onclick="expandNextMap('${idx}')" id="${btnId}" title="Espandi mappa" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(79,195,247,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
-          </div>
-          <div style="width:50%; height:45vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(79,195,247,0.15); display:flex; flex-direction:column; justify-content:center;">
-            ${ns.name ? `<div style="font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; color:rgba(255,248,244,0.5);">${ns.name}</div>` : ''}
-            <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.1rem; font-weight:600; color:#FFF8F4;">${route}</div>
-            <div style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:#4FC3F7; margin-top:0.2rem;">${ns.km||0} km &nbsp;·&nbsp; ↑${ns.dislivello||0} m</div>
-          </div>
-        </div>
+    list.innerHTML = nextStages.map((ns, idx) => {
+      let dateStr = '—';
+      if (ns.date) {
+        const d = new Date(ns.date);
+        dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
+      }
+      const label = (ns.from && ns.to) ? `${ns.from} → ${ns.to}` : (ns.name || '—');
+      return `<div style="display:flex; align-items:baseline; gap:0.8rem; padding:0.8rem 0; border-bottom:1px solid rgba(79,195,247,0.1); flex-wrap:wrap;">
+        <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:#4FC3F7; min-width:1.8rem; flex-shrink:0;">${idx + 1}</span>
+        <span style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); min-width:4rem; flex-shrink:0;">${dateStr}</span>
+        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:#FFF8F4;">${label} <span style="font-family:var(--mono);font-size:0.75rem;color:#4FC3F7;margin-left:0.3rem;">${ns.km||0} km · ↑${ns.dislivello||0}m</span></span>
       </div>`;
     }).join('');
 
-    // Inizializza mappe per ogni tappa
-    nextStages.forEach((ns, idx) => {
-      const mapId = `v-next-map-${idx}`;
-      setTimeout(() => initNextMap(mapId, ns), 100 + (idx * 50));
-    });
+    renderNextStagesMap(nextStages);
   }
 
-  function initNextMap(mapId, ns) {
-    if (_nextStageMaps[mapId]) _nextStageMaps[mapId].remove();
+  function renderNextStagesMap(nextStages) {
+    if (!nextStages || nextStages.length === 0) return;
+
+    if (_nextStageMap) { _nextStageMap.remove(); _nextStageMap = null; }
     
-    _nextStageMaps[mapId] = L.map(mapId, {dragging: false, scrollWheelZoom: false}).setView([44.5,11.3], 6);
-    _nextStageMaps[mapId].once('click', function() {
-      _nextStageMaps[mapId].dragging.enable();
-      _nextStageMaps[mapId].scrollWheelZoom.enable();
+    _nextStageMap = L.map('v-next-map', {dragging: false, scrollWheelZoom: false}).setView([44.5,11.3], 6);
+    _nextStageMap.once('click', function() {
+      _nextStageMap.dragging.enable();
+      _nextStageMap.scrollWheelZoom.enable();
     });
     
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
       attribution:'© Esri', maxZoom:18
-    }).addTo(_nextStageMaps[mapId]);
+    }).addTo(_nextStageMap);
 
-    if (ns.polyline) {
-      const pts = decodePolyline(ns.polyline);
-      if (pts.length) {
-        L.polyline(pts, { color:'#4FC3F7', weight:4, opacity:0.9 }).addTo(_nextStageMaps[mapId]);
-        L.marker(pts[0], { icon: L.divIcon({ html:'<div style="background:#4FC3F7;color:#000;font-family:IBM Plex Mono,monospace;font-size:0.5rem;font-weight:700;width:1.6rem;height:1.6rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #fff;">A</div>', className:'', iconSize:[26,26], iconAnchor:[13,13] }) }).addTo(_nextStageMaps[mapId]);
-        L.marker(pts[pts.length-1], { icon: L.divIcon({ html:'<div style="background:#4FC3F7;color:#000;font-family:IBM Plex Mono,monospace;font-size:0.5rem;font-weight:700;width:1.6rem;height:1.6rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #fff;">B</div>', className:'', iconSize:[26,26], iconAnchor:[13,13] }) }).addTo(_nextStageMaps[mapId]);
-        _nextStageMaps[mapId].fitBounds(L.latLngBounds(pts), { padding:[30,30] });
+    const allPts = [];
+    nextStages.forEach((ns, idx) => {
+      if (ns.polyline) {
+        const pts = decodePolyline(ns.polyline);
+        if (pts.length) {
+          L.polyline(pts, { color:'#4FC3F7', weight:4, opacity:0.8 })
+           .bindTooltip(`<b>${idx+1}.</b> ${ns.from||''} → ${ns.to||''}<br>${ns.km} km · ↑${ns.dislivello||0}m`, {sticky:true})
+           .addTo(_nextStageMap);
+          L.marker(pts[0], {icon:L.divIcon({html:`<div style="background:#4FC3F7;color:#000;font-family:Bebas Neue,sans-serif;font-size:0.6rem;width:1.3rem;height:1.3rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);">${idx+1}</div>`, className:'', iconSize:[21,21], iconAnchor:[10,10]})}).addTo(_nextStageMap);
+          allPts.push(...pts);
+        }
       }
+    });
+
+    if (allPts.length) {
+      _nextStageMap.fitBounds(L.latLngBounds(allPts), {padding:[40,40]});
     }
   }
 
@@ -1631,36 +1648,30 @@
   }
 
   let _nextMapExpanded = false;
-  let _nextMapsExpanded = {};
+  let _nextMapExpanded = false;
 
-  function expandNextMap(idx) {
-    const mapId = `v-next-map-${idx}`;
-    const wrapId = `v-next-wrap-${idx}`;
-    const btnId = `v-next-expand-btn-${idx}`;
-    
-    const mapEl  = document.getElementById(mapId);
-    const wrap   = document.getElementById(`${mapId}-container`);
-    const infoEl = wrap.parentElement.nextElementSibling || wrap.parentElement.querySelector(`[id*="info"]`);
-    const btn    = document.getElementById(btnId);
+  function expandNextMap() {
+    const mapEl = document.getElementById('v-next-map');
+    const wrap = document.getElementById('v-next-map-container');
+    const infoEl = wrap.parentElement.querySelector('div:last-child');
+    const btn = document.getElementById('v-next-expand-btn');
     const isMobile = window.innerWidth <= 768;
     
-    _nextMapsExpanded[idx] = !_nextMapsExpanded[idx];
+    _nextMapExpanded = !_nextMapExpanded;
     
-    if (_nextMapsExpanded[idx]) {
+    if (_nextMapExpanded) {
       if (!isMobile) wrap.style.width = '100%';
       mapEl.style.height = isMobile ? '50vh' : '60vh';
-      const infoDiv = wrap.parentElement.querySelector('div:last-child');
-      if (infoDiv && !isMobile) infoDiv.style.display = 'none';
+      if (infoEl && !isMobile) infoEl.style.display = 'none';
       btn.textContent = '⤡ Riduci';
     } else {
       if (!isMobile) wrap.style.width = '50%';
       mapEl.style.height = isMobile ? '35vh' : '45vh';
-      const infoDiv = wrap.parentElement.querySelector('div:last-child');
-      if (infoDiv) infoDiv.style.display = '';
+      if (infoEl) infoEl.style.display = '';
       btn.textContent = '⤢ Espandi';
     }
-    if (_nextStageMaps[mapId]) {
-      setTimeout(() => _nextStageMaps[mapId].invalidateSize(), 50);
+    if (_nextStageMap) {
+      setTimeout(() => _nextStageMap.invalidateSize(), 50);
     }
   }
 
