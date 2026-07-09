@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 1,
-    "from": "Milano",
-    "to": "Martesana",
-    "km": 130,
-    "dislivello": 374,
-    "name": "Milano - Fontanile Quarantina",
-    "polyline": "agmtGqggw@moDd@cJk@gnCq}DoBaFsEw_@ePx@iLyMiI}AyEcLh@}J`A{K|Gkp@eBqqAbEeXs@mRmJqTgAy^}EmTaCmeCaHs_@rAyo@Wmn@jC_SiDu~@\\aoAgGa_@}Cqi@wFcc@aKeYcC{]{Lk[pGkNwB{FmEiMiEiAeCuDiGw\\oY_eAh@qDmD{Deg@gfBjANIyj@fDmv@r_@avBcCs[nHca@dAkQhNa_A}Ckb@v@_IvNiy@rMhEpDuR`E~AnAcCzMhFrByK`L}JtCsHfVwDrA_Nf`@mOhV_EyAi~@dAsK|HqGgA{YnITfB{C\\cKdJeDzIeLl@fCrCi@zAcRhD{I`NiOfI{C`@gK|~@yX`NeHjObDeA}\\mS_iCp@rClOxGbAxDtJgA`A{n@iJweAdK{GtFfA~@eFlC}Cx]gW~AjFtZiC?mD~|@kGr@aDxQ}D^bCzBGj@xFtGzGtXmRwCzAc@gBhBoBkBjBd@|BbZyRhNgDiCif@_EuMcAaNaLaTuD}s@fEBfAsDfZkAfCeJf`@_GEaNzJiCdHyLePkd@bjCkg@vReCjSjBhc@}HtBd\\jPuX|FeE|pC{j@lBi^fCal@lNdHhDcJ~Dx@tCyEdChBRlDcGy@zFvANzBeCjBwD`TdFvZaBlJcKvXyBi@rAnCw^r`AeJxJgBrGwI|FcQxSyPlk@iGhLIr_C{@p@WxxD|CzsBiSpiAhBt~@{\\~n@yCrJap@`wDsfBllHsFjKaZfWr@JeBBqf@mu@{[acAgVdGyBcMkPkJiFv@eGvHuYhMyE}B{K_NsYzFiDQyMyK_JwZ_HuG{HuAiQhT}DN}MgIcJkLwOwEoMqLwe@}WkLaAqT|E}KsGyN_@uI}_@{EocAkGmKgKqE{LGaJjGkKj@cH}Bga@mAgU}HSxAvALsIzw@OkBqNlAeAvLmCyAHfF_zAwh@{A?uAbG{Irm@|Clb@eNr~@yJxs@xB|\\e_@btBoD|x@D`m@}JfL_I~AHfKeS~GsKaC[pCxBj@Pa@H}Ag@tBeBYy@tEr@tEjMsEtC}TfWkHlA_DxHyEtCnGx_@bwArDzDk@rDrYpeAhGr\\bCxDbEv@vFzQyDzQxL|ZzBr]rJ|WpEb\\vExr@jGf`@a@dmAhDj_AkC|RRds@}Ad]p@tTzFdXxBvbCbFlVjAx^hJbTv@rR_EnXbBdrA}Gvo@aA~Kc@dKlE|KxIhBhLxMlL_C`BdArEz_@tBlGrrAplBbPiJdFlIgAmHcIuN|ArBdFsFxHrDlDiClDvKxDoA",
-    "date": "2026-07-05T06:59:38Z",
-    "updated": "2026-07-09T08:36:24.088Z",
-    "totKm": 130,
-    "totDis": 374,
-    "tappe": 1
+    "day": 2,
+    "from": "Ciccio",
+    "to": "Pasticcio",
+    "km": 111,
+    "dislivello": 466,
+    "name": "Serale Adda Martesana, birrette comprese.",
+    "polyline": "ocmtGohgw@DtBePmCe_DdB}Lw@gmCu{DkCwFsEu`@wB{@kLvBmL_NqIcBmEoK`@gK~@yKfHmp@iBmqA|DuXu@{RiJcTgAc^{EgTcCmeC}Gk]pA{r@[}m@lCwSkDq~@\\{nAeGw^yCuh@mFsb@gFqRiDsGiCy]{L}[pEgPiGyRyDu@gCwD{Fi[aZqfAf@yDkDwDsd@agBi@hAs@_Bx@hBd@kARyt@fIBnYfK^yAz@oQOkb@rIen@nEii@_SqLmCv@dD{TiCkWdHg`@pAuRdNq~@}Cob@fPwbAAqD}@eAkvAi\\__@bDmNxIoHx@yJvLoGRyQuMiIiKwXaHyKcAwJeF_NeQ@}GnCeKUeBsMFcT_FiPePsI_@oH|HiEzIeJtHy}@fJ{RfIwCE{[zPuNbMgNxGdCWaBbAfB[FfC~@h@SjC{EdH{BtMkFpFkLx@k`@wHoMlD{FhIaGjj@qItV_Hx\\}LvZ{DlDyIrA{O_D}QhC{m@GqDfEaPvl@kH~GwLuAUxApCjCuAnAwn@yBsCmFaE|QcAP}BcErGpRAjY`D`j@cGnBTjSyItVoV{BNqL{NhDcPP{B`H}EfCcJhOyArIkH|H{LxZ}H`DwFMcNeHaK`@sE}Ea[kPwTe@kHmAoIsLsDgBoE^{F`FgJg@{ElBtEcBdJd@|F_F~Di@`EdBfIpLzHtAfTXtZzOrFtFjJe@xRdC|DkA~MkTrDcRbKkRX{KrJoYn[q@|MgK~@wLfDeIVuKoBqGbBoPvDk[|EeK|FExSqBbJaEtJKtO~FvGhGhF`@pIyI`Oak@fD_Elp@?zPeC|M|CnIu@|EgEhNi^tFuYnIqV~F_j@bGqInLiDhb@zHhJo@bGwFnCkNfEkGXkCiAaEeB\\bBeAeCZzMmGhQaOhYkOlD@|Q_Iv}@cJtJqHvEoJfHsHlIXdPjP~S~EpMO\\xAiCvJGrHzMlQfGzDjNbBzYnHfIdKfR|MdGUjJqLxHcAxN_Jb^{CbxAf]RzEcPfbAxCdc@_Np}@y@hNyFD_@jHpBx@sAYY~Ar@VmAe@gCnVtBh@jCd[jBFcCx@e_@buBeDvu@Jnh@t@zGpb@f~AzDvEg@zDlY~dAhGp\\dC~DfEv@vFnRaEzPtLh[jCp^|J|XzFtc@xCzh@jGp_@_@jnAjDl~@mCbTXpm@qAnq@~Gf_@~B|dCxE|ShAv^dJlS|@lSaEdYlBhpAgHxp@_A~Ki@rJjEdLjJzB`LnMbL{BhBbApEz_@rBlGhnC~zDb@jC|_Ar~@",
+    "date": "2026-07-02T16:34:42Z",
+    "updated": "2026-07-09T15:45:01.132Z",
+    "totKm": 241,
+    "totDis": 840,
+    "tappe": 2
   },
   "tappe": [
     {
@@ -28,6 +28,17 @@
       "polyline": "agmtGqggw@moDd@cJk@gnCq}DoBaFsEw_@ePx@iLyMiI}AyEcLh@}J`A{K|Gkp@eBqqAbEeXs@mRmJqTgAy^}EmTaCmeCaHs_@rAyo@Wmn@jC_SiDu~@\\aoAgGa_@}Cqi@wFcc@aKeYcC{]{Lk[pGkNwB{FmEiMiEiAeCuDiGw\\oY_eAh@qDmD{Deg@gfBjANIyj@fDmv@r_@avBcCs[nHca@dAkQhNa_A}Ckb@v@_IvNiy@rMhEpDuR`E~AnAcCzMhFrByK`L}JtCsHfVwDrA_Nf`@mOhV_EyAi~@dAsK|HqGgA{YnITfB{C\\cKdJeDzIeLl@fCrCi@zAcRhD{I`NiOfI{C`@gK|~@yX`NeHjObDeA}\\mS_iCp@rClOxGbAxDtJgA`A{n@iJweAdK{GtFfA~@eFlC}Cx]gW~AjFtZiC?mD~|@kGr@aDxQ}D^bCzBGj@xFtGzGtXmRwCzAc@gBhBoBkBjBd@|BbZyRhNgDiCif@_EuMcAaNaLaTuD}s@fEBfAsDfZkAfCeJf`@_GEaNzJiCdHyLePkd@bjCkg@vReCjSjBhc@}HtBd\\jPuX|FeE|pC{j@lBi^fCal@lNdHhDcJ~Dx@tCyEdChBRlDcGy@zFvANzBeCjBwD`TdFvZaBlJcKvXyBi@rAnCw^r`AeJxJgBrGwI|FcQxSyPlk@iGhLIr_C{@p@WxxD|CzsBiSpiAhBt~@{\\~n@yCrJap@`wDsfBllHsFjKaZfWr@JeBBqf@mu@{[acAgVdGyBcMkPkJiFv@eGvHuYhMyE}B{K_NsYzFiDQyMyK_JwZ_HuG{HuAiQhT}DN}MgIcJkLwOwEoMqLwe@}WkLaAqT|E}KsGyN_@uI}_@{EocAkGmKgKqE{LGaJjGkKj@cH}Bga@mAgU}HSxAvALsIzw@OkBqNlAeAvLmCyAHfF_zAwh@{A?uAbG{Irm@|Clb@eNr~@yJxs@xB|\\e_@btBoD|x@D`m@}JfL_I~AHfKeS~GsKaC[pCxBj@Pa@H}Ag@tBeBYy@tEr@tEjMsEtC}TfWkHlA_DxHyEtCnGx_@bwArDzDk@rDrYpeAhGr\\bCxDbEv@vFzQyDzQxL|ZzBr]rJ|WpEb\\vExr@jGf`@a@dmAhDj_AkC|RRds@}Ad]p@tTzFdXxBvbCbFlVjAx^hJbTv@rR_EnXbBdrA}Gvo@aA~Kc@dKlE|KxIhBhLxMlL_C`BdArEz_@tBlGrrAplBbPiJdFlIgAmHcIuN|ArBdFsFxHrDlDiClDvKxDoA",
       "date": "2026-07-05T06:59:38Z",
       "updated": "2026-07-09T08:36:24.088Z"
+    },
+    {
+      "day": 2,
+      "from": "Ciccio",
+      "to": "Pasticcio",
+      "km": 111,
+      "dislivello": 466,
+      "name": "Serale Adda Martesana, birrette comprese.",
+      "polyline": "ocmtGohgw@DtBePmCe_DdB}Lw@gmCu{DkCwFsEu`@wB{@kLvBmL_NqIcBmEoK`@gK~@yKfHmp@iBmqA|DuXu@{RiJcTgAc^{EgTcCmeC}Gk]pA{r@[}m@lCwSkDq~@\\{nAeGw^yCuh@mFsb@gFqRiDsGiCy]{L}[pEgPiGyRyDu@gCwD{Fi[aZqfAf@yDkDwDsd@agBi@hAs@_Bx@hBd@kARyt@fIBnYfK^yAz@oQOkb@rIen@nEii@_SqLmCv@dD{TiCkWdHg`@pAuRdNq~@}Cob@fPwbAAqD}@eAkvAi\\__@bDmNxIoHx@yJvLoGRyQuMiIiKwXaHyKcAwJeF_NeQ@}GnCeKUeBsMFcT_FiPePsI_@oH|HiEzIeJtHy}@fJ{RfIwCE{[zPuNbMgNxGdCWaBbAfB[FfC~@h@SjC{EdH{BtMkFpFkLx@k`@wHoMlD{FhIaGjj@qItV_Hx\\}LvZ{DlDyIrA{O_D}QhC{m@GqDfEaPvl@kH~GwLuAUxApCjCuAnAwn@yBsCmFaE|QcAP}BcErGpRAjY`D`j@cGnBTjSyItVoV{BNqL{NhDcPP{B`H}EfCcJhOyArIkH|H{LxZ}H`DwFMcNeHaK`@sE}Ea[kPwTe@kHmAoIsLsDgBoE^{F`FgJg@{ElBtEcBdJd@|F_F~Di@`EdBfIpLzHtAfTXtZzOrFtFjJe@xRdC|DkA~MkTrDcRbKkRX{KrJoYn[q@|MgK~@wLfDeIVuKoBqGbBoPvDk[|EeK|FExSqBbJaEtJKtO~FvGhGhF`@pIyI`Oak@fD_Elp@?zPeC|M|CnIu@|EgEhNi^tFuYnIqV~F_j@bGqInLiDhb@zHhJo@bGwFnCkNfEkGXkCiAaEeB\\bBeAeCZzMmGhQaOhYkOlD@|Q_Iv}@cJtJqHvEoJfHsHlIXdPjP~S~EpMO\\xAiCvJGrHzMlQfGzDjNbBzYnHfIdKfR|MdGUjJqLxHcAxN_Jb^{CbxAf]RzEcPfbAxCdc@_Np}@y@hNyFD_@jHpBx@sAYY~Ar@VmAe@gCnVtBh@jCd[jBFcCx@e_@buBeDvu@Jnh@t@zGpb@f~AzDvEg@zDlY~dAhGp\\dC~DfEv@vFnRaEzPtLh[jCp^|J|XzFtc@xCzh@jGp_@_@jnAjDl~@mCbTXpm@qAnq@~Gf_@~B|dCxE|ShAv^dJlS|@lSaEdYlBhpAgHxp@_A~Ki@rJjEdLjJzB`LnMbL{BhBbApEz_@rBlGhnC~zDb@jC|_Ar~@",
+      "date": "2026-07-02T16:34:42Z",
+      "updated": "2026-07-09T15:45:01.132Z"
     }
   ],
   "next_stages": [
