@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 3,
-    "from": "Pasticcio",
+    "day": 4,
+    "from": "Milano",
     "to": "",
     "km": 0,
     "dislivello": 0,
     "name": "",
     "polyline": "",
-    "date": "2026-07-09T15:48:30.470Z",
-    "updated": "2026-07-09T15:48:30.470Z",
+    "date": "2026-07-09T22:51:22.649Z",
+    "updated": "2026-07-09T22:51:22.649Z",
     "totKm": 0,
     "totDis": 0,
-    "tappe": 1
+    "tappe": 2
   },
   "tappe": [
     {
@@ -28,6 +28,17 @@
       "polyline": "",
       "date": "2026-07-09T15:48:30.470Z",
       "updated": "2026-07-09T15:48:30.470Z"
+    },
+    {
+      "day": 4,
+      "from": "Milano",
+      "to": "",
+      "km": 0,
+      "dislivello": 0,
+      "name": "",
+      "polyline": "",
+      "date": "2026-07-09T22:51:22.649Z",
+      "updated": "2026-07-09T22:51:22.649Z"
     }
   ],
   "next_stage": null
