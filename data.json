@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 2,
-    "from": "Verona",
-    "to": "Bologna",
-    "km": 61,
-    "dislivello": 175,
-    "name": "Un cicin del Muzza",
-    "polyline": "{cmtGmjhw@Mm|A_EaOx@cCMwDqAw@sPtW_HCeAgCEaI[c@iM?yEhAcBq@y@iBwCw@_MYW}@MiJkAo@w@qFkCcCmAkRd@mOM{Lp@_GcBmYIaKYeAgDiq@DeHw@sFSmHLsP}CmLwDoQLkEx@kEFyLcDwHKe@`@_@cAcCNo@sAgCyBoKw@gFe@cK\\qA`Ak@bJ^nj@rGhEUKw@x@{A@}BhAkFm@aMFsTr@kBhAq@hMa@`@g@eFeq@Yg^dJiF|DaGzAuEnBcAfDuJwJcaBTi@jFmA^w@{Deg@tKiAnDTxKm@vCgChLmDhLyBdFb@rCo@zDqDi@cHLkD|CoK~AeCwAuNaAoEgCcXmGCaK}t@xIqGF{@bBeA~@sH}BgKcKrAbAmb@nRaF~_@y_@nAcD|A}AfQ{FaD_c@^g@jNyCq@cP[i@eJb@kAe@wGb@qDgUvDaBmCqWzCcAxDj@~KkAvBh@xPcFxEUpB{C{AkAeHqKcM_WwBiHwCaSyAuCuCyAqWw@}CuAKwCtDgItB_Hr@oEO}E}@wFmAsD_C_EyS}Ocg@el@_DkAiG`@kC_AeBaD_B_J[aDNkAeDaKgD}AsCgCxAfAq@p@t@u@{AgAuFqHoEgAsLcNqK}IwEcCwN~DsCIqA{@w@}DZePuC{GsGwDq@iAe@iG`@gPmDmLwAaBeBi@kMvCqAW{@qAIcEhEoT}@cMeBwEeAq@kC@yIkH^n@hAcBIk@}@lBo@Va@bBL{@[v@YU}Sq_@s_@yk@o`@{`@qTkM{HiAmQq@_@b@NxKZhBq@j@SjBcAl@aAtBo@NwLbRgHpHwLrPInAbAFt@vDbChi@OvDo@fAXdB[lCw@dAaHlB_J`Ag@tjA}@dDv@|BIhf@v@xP~BzRnAzMzAzb@hB|J]xExCvl@IjAh@~@_@fBj@`LsG_A{CtA}Plc@yF~HoCdDoIlGqIdJo@YeOlMGp@fCnGKfAyKzKkC{Dq@~HmD|FpE|MA|@kBEiTxDzLh\\r@lD`@lOj@hGpDdHf@vEnD`JpFnb@tBzYj@jOhGr_@_@|lAjDr_AmCbT^vOGz]e@bYy@vFJxLn@hIpF|Uf@x^tAfdBf@zDvDlO`@zVf@bGfJrSd@nERlLgDnRWbEfB~`A@dNuBlVmDdZP`ImAfAs@vGBlBnEjL|A~@jF\\zLdNhLwBzAv@bFl`@lBfG~I|Kje@hr@b@AvB_E`@MdQbW|KqD",
-    "date": "2026-07-01T09:42:34Z",
-    "updated": "2026-07-10T05:37:23.819Z",
-    "totKm": 96,
-    "totDis": 336,
-    "tappe": 2
+    "day": 1,
+    "from": "Milano",
+    "to": "Verona",
+    "km": 35,
+    "dislivello": 161,
+    "name": "Rifugio Lausen  - Verona",
+    "polyline": "s`ouG}bzbA_@Xa@nCVt@rAdA|Bo@|DXtCcBdBBxEkB|IDb@a@q@hAsElBS`@HZbFpDf@|C?|@_AjEBxAS`AH|@x@xADvAn@lBk@jEJfBhCdEhBjEzD|D@r@oAz@Or@Jl@~@x@x@rBe@zBBh@jBXd@nBtBzB^pEdH`Hn@T|BaAfDpDfAdCt@nGxBfEpFAlDv@hEaArApAx@LxAcCl@k@`Ch@xAGzDs@jCsCx@?fC`AlCuB~FzDvHPzDoDEw@eA_DIuBTcDzAaIl@Un@TdAnCv@`AtDl@zAe@|GqGtAMv@\\zFbFT|@MvCZz@vCxAbAbAThA?bBgAvFlArHrArCfHjHjArBvClKQhAcAv@BlAhHjE`EvGn@zBN|Bq@tDb@I|@gDLkBEcEfEY|An@t@hBxBvNp@jB`D`CrBnElFbA`@`Aj@tDt@|A`M~G`B`BrAdD~@t@bVv@nQkAtGeBhEkGbEtAhD?bOqMbHeIxEGrFmAbAk@lDwDlB]dEsBdSuErBuC|AgA|DfBbDcClDE~Ac@lHoHnF}CvCeFnBeFvAgAtEHzGrElFAbFcAdJqE~El@xAEvFcDlF[nEwBjCLSc@Xl@pCT~XkE`BNtCbBtFAlOfCrPaGrCkCnAW~GhD|AzF|@v@jBq@jByBxFTtAyAtAm@z@TjBzCh@FxAcAfCbB|COtG|EpEi@`AwAz@KxA`CtClBbApBjAjHD`GT`CRr@r@d@hBSfC_DbAkCb@gDl@O~CtGv@xHm@lJPz@pBlD\\pAp@rKp@f@t@[rAyD~CgGnCk@`AuB`@YpAVjAfDH|EnC~Pn@fJn@pAfAQpDkE@_ByAmGCwAbH}JlA_FbALpC`FlCbBpBP`Ce@Pb@AlC\\~@bHtClBtB`A]`@{DxC}AIf@kAlAAh@hCbIn@`EWp@eDXCl@`CDvHlFjDpF~CfCzJvLlI|GlBzE^GGkAaBoHu@gABUdCxBbEvFhObBdAh@n@~BnAp[`AtBjAv@lI`C~Nr@jCaAlFkDhEeAlPGhIaApDeA~Al@tKhJhCjA|a@~BjAf@tAlBpAi@`A\\rA|AfDhLvEjc@zC~HlBjCfBjHjAjKjHbe@fCbOfKpnAb@RrJq@nBzHuA~B@ZxGrN~AtJjFjDnGlC|IUxAh@bCfDnElM~HxLFrAO~@sGpNk@|BWlWj@dA`BlAoCvS_@pAB^b@d@A`@iFnIfBxH}AbNjC~BfYpMLvAhGt@hArIO|BAtCdAvEr@Gb@p@IP@S",
+    "date": "2026-06-21T09:04:49Z",
+    "updated": "2026-07-10T05:30:58.527Z",
+    "totKm": 35,
+    "totDis": 161,
+    "tappe": 1
   },
   "tappe": [
     {
@@ -28,18 +28,6 @@
       "polyline": "s`ouG}bzbA_@Xa@nCVt@rAdA|Bo@|DXtCcBdBBxEkB|IDb@a@q@hAsElBS`@HZbFpDf@|C?|@_AjEBxAS`AH|@x@xADvAn@lBk@jEJfBhCdEhBjEzD|D@r@oAz@Or@Jl@~@x@x@rBe@zBBh@jBXd@nBtBzB^pEdH`Hn@T|BaAfDpDfAdCt@nGxBfEpFAlDv@hEaArApAx@LxAcCl@k@`Ch@xAGzDs@jCsCx@?fC`AlCuB~FzDvHPzDoDEw@eA_DIuBTcDzAaIl@Un@TdAnCv@`AtDl@zAe@|GqGtAMv@\\zFbFT|@MvCZz@vCxAbAbAThA?bBgAvFlArHrArCfHjHjArBvClKQhAcAv@BlAhHjE`EvGn@zBN|Bq@tDb@I|@gDLkBEcEfEY|An@t@hBxBvNp@jB`D`CrBnElFbA`@`Aj@tDt@|A`M~G`B`BrAdD~@t@bVv@nQkAtGeBhEkGbEtAhD?bOqMbHeIxEGrFmAbAk@lDwDlB]dEsBdSuErBuC|AgA|DfBbDcClDE~Ac@lHoHnF}CvCeFnBeFvAgAtEHzGrElFAbFcAdJqE~El@xAEvFcDlF[nEwBjCLSc@Xl@pCT~XkE`BNtCbBtFAlOfCrPaGrCkCnAW~GhD|AzF|@v@jBq@jByBxFTtAyAtAm@z@TjBzCh@FxAcAfCbB|COtG|EpEi@`AwAz@KxA`CtClBbApBjAjHD`GT`CRr@r@d@hBSfC_DbAkCb@gDl@O~CtGv@xHm@lJPz@pBlD\\pAp@rKp@f@t@[rAyD~CgGnCk@`AuB`@YpAVjAfDH|EnC~Pn@fJn@pAfAQpDkE@_ByAmGCwAbH}JlA_FbALpC`FlCbBpBP`Ce@Pb@AlC\\~@bHtClBtB`A]`@{DxC}AIf@kAlAAh@hCbIn@`EWp@eDXCl@`CDvHlFjDpF~CfCzJvLlI|GlBzE^GGkAaBoHu@gABUdCxBbEvFhObBdAh@n@~BnAp[`AtBjAv@lI`C~Nr@jCaAlFkDhEeAlPGhIaApDeA~Al@tKhJhCjA|a@~BjAf@tAlBpAi@`A\\rA|AfDhLvEjc@zC~HlBjCfBjHjAjKjHbe@fCbOfKpnAb@RrJq@nBzHuA~B@ZxGrN~AtJjFjDnGlC|IUxAh@bCfDnElM~HxLFrAO~@sGpNk@|BWlWj@dA`BlAoCvS_@pAB^b@d@A`@iFnIfBxH}AbNjC~BfYpMLvAhGt@hArIO|BAtCdAvEr@Gb@p@IP@S",
       "date": "2026-06-21T09:04:49Z",
       "updated": "2026-07-10T05:30:58.527Z"
-    },
-    {
-      "day": 2,
-      "from": "Verona",
-      "to": "Bologna",
-      "km": 61,
-      "dislivello": 175,
-      "name": "Un cicin del Muzza",
-      "polyline": "{cmtGmjhw@Mm|A_EaOx@cCMwDqAw@sPtW_HCeAgCEaI[c@iM?yEhAcBq@y@iBwCw@_MYW}@MiJkAo@w@qFkCcCmAkRd@mOM{Lp@_GcBmYIaKYeAgDiq@DeHw@sFSmHLsP}CmLwDoQLkEx@kEFyLcDwHKe@`@_@cAcCNo@sAgCyBoKw@gFe@cK\\qA`Ak@bJ^nj@rGhEUKw@x@{A@}BhAkFm@aMFsTr@kBhAq@hMa@`@g@eFeq@Yg^dJiF|DaGzAuEnBcAfDuJwJcaBTi@jFmA^w@{Deg@tKiAnDTxKm@vCgChLmDhLyBdFb@rCo@zDqDi@cHLkD|CoK~AeCwAuNaAoEgCcXmGCaK}t@xIqGF{@bBeA~@sH}BgKcKrAbAmb@nRaF~_@y_@nAcD|A}AfQ{FaD_c@^g@jNyCq@cP[i@eJb@kAe@wGb@qDgUvDaBmCqWzCcAxDj@~KkAvBh@xPcFxEUpB{C{AkAeHqKcM_WwBiHwCaSyAuCuCyAqWw@}CuAKwCtDgItB_Hr@oEO}E}@wFmAsD_C_EyS}Ocg@el@_DkAiG`@kC_AeBaD_B_J[aDNkAeDaKgD}AsCgCxAfAq@p@t@u@{AgAuFqHoEgAsLcNqK}IwEcCwN~DsCIqA{@w@}DZePuC{GsGwDq@iAe@iG`@gPmDmLwAaBeBi@kMvCqAW{@qAIcEhEoT}@cMeBwEeAq@kC@yIkH^n@hAcBIk@}@lBo@Va@bBL{@[v@YU}Sq_@s_@yk@o`@{`@qTkM{HiAmQq@_@b@NxKZhBq@j@SjBcAl@aAtBo@NwLbRgHpHwLrPInAbAFt@vDbChi@OvDo@fAXdB[lCw@dAaHlB_J`Ag@tjA}@dDv@|BIhf@v@xP~BzRnAzMzAzb@hB|J]xExCvl@IjAh@~@_@fBj@`LsG_A{CtA}Plc@yF~HoCdDoIlGqIdJo@YeOlMGp@fCnGKfAyKzKkC{Dq@~HmD|FpE|MA|@kBEiTxDzLh\\r@lD`@lOj@hGpDdHf@vEnD`JpFnb@tBzYj@jOhGr_@_@|lAjDr_AmCbT^vOGz]e@bYy@vFJxLn@hIpF|Uf@x^tAfdBf@zDvDlO`@zVf@bGfJrSd@nERlLgDnRWbEfB~`A@dNuBlVmDdZP`ImAfAs@vGBlBnEjL|A~@jF\\zLdNhLwBzAv@bFl`@lBfG~I|Kje@hr@b@AvB_E`@MdQbW|KqD",
-      "date": "2026-07-01T09:42:34Z",
-      "updated": "2026-07-10T05:37:23.819Z"
     }
-  ],
-  "next_stages": []
+  ]
 }
