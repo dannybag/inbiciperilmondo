@@ -1237,6 +1237,10 @@
         <label style="display:block; font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.3rem;">Data traccia (GPX/Strava)</label>
         <input type="date" id="tap-gpx-date" value="" style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; padding:0.5rem 0.8rem; border-radius:4px; outline:none;">
       </div>
+      <div style="margin-bottom:1rem;">
+        <label style="display:block; font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.3rem;">Titolo traccia (GPX/Strava)</label>
+        <input type="text" id="tap-gpx-title" placeholder="Nome traccia" value="" style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; padding:0.5rem 0.8rem; border-radius:4px; outline:none;">
+      </div>
 
 
       <!-- TOGGLE: tappa attuale vs prossima -->
@@ -1387,9 +1391,10 @@
         polyline,
         date:     dateStr
       };
-      // Pre-compila km e dis
+      // Pre-compila km, dis e titolo
       document.getElementById('tap-km').value  = parsed.km;
       document.getElementById('tap-dis').value = parsed.dis;
+      document.getElementById('tap-gpx-title').value = parsed.name;
       tapRefresh();
       msg.textContent = `✓ GPX: ${parsed.name || 'traccia caricata'} · ${parsed.km} km · ↑${parsed.dis}m · ${parsed.pts.length} punti GPS`;
       input.value = '';
@@ -1450,6 +1455,7 @@
         // Popola il campo data con la data di Strava
         const stravaDate = new Date(act.start_date_local).toISOString().split('T')[0];
         document.getElementById('tap-gpx-date').value = stravaDate;
+        document.getElementById('tap-gpx-title').value = act.name;
         document.getElementById('tap-km').value  = km;
         document.getElementById('tap-dis').value = dis;
         tapRefresh();
@@ -1983,6 +1989,7 @@
       document.getElementById('tap-day').value  = nextDay;
       document.getElementById('tap-km').value   = 0;
       document.getElementById('tap-dis').value  = 0;
+      document.getElementById('tap-gpx-title').value = '';
       document.getElementById('tap-from').value = _tappeList.length > 0 ? _tappeList[_tappeList.length - 1].to : (localStorage.getItem('tap-last-to') || 'Milano');
       document.getElementById('tap-to').value   = '';
       // Inizializza data a oggi per nuova tappa
@@ -2162,7 +2169,7 @@
         const raw = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
         if (!raw.next_stages) raw.next_stages = [];
         raw.next_stages.push({
-          name:     sel.name || '',
+          name:     document.getElementById('tap-gpx-title').value || sel.name || '',
           polyline: sel.polyline || '',
           from, to, km, dislivello: dis,
           date: ((() => {
