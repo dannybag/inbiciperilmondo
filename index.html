@@ -1233,6 +1233,11 @@
         </button>
       </div>
 
+      <div style="margin-bottom:1rem;">
+        <label style="display:block; font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.3rem;">Data traccia (GPX/Strava)</label>
+        <input type="date" id="tap-gpx-date" style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; padding:0.5rem 0.8rem; border-radius:4px; outline:none;">
+      </div>
+
 
       <!-- TOGGLE: tappa attuale vs prossima -->
       <div style="margin-top:1.2rem; padding-top:1.2rem; border-top:1px solid rgba(240,90,40,0.2); display:flex; align-items:center; gap:0.6rem;">
@@ -1240,7 +1245,11 @@
         <label for="tap-is-next" style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:#4FC3F7; cursor:pointer;">→ Salva come prossima tappa (non ancora percorsa)</label>
       </div>
       <div id="tap-next-clear-row" style="display:none; margin-top:0.5rem;">
-        <button onclick="tapClearNext()" style="background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; padding:0.4rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">✕ Rimuovi prossima tappa salvata</button>
+        <div style="margin-bottom:1rem;">
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.5rem;">Prossime tappe salvate</div>
+          <div id="tap-next-stages-list" style="max-height:150px; overflow-y:auto; border:1px solid rgba(79,195,247,0.2); border-radius:3px; padding:0.5rem;"></div>
+        </div>
+        <button onclick="tapClearAllNext()" style="background:transparent; color:rgba(255,248,244,0.4); font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; padding:0.4rem 0.8rem; border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">✕ Rimuovi TUTTE le prossime tappe</button>
       </div>
 
       <div style="display:flex; gap:1rem; margin-top:1.2rem;">
@@ -1365,10 +1374,18 @@
       const parsed = parseGPX(e.target.result);
       if (!parsed) { msg.textContent = '✗ File GPX non valido o senza traccia'; return; }
       const polyline = encodePolylineFromPts(parsed.pts);
+      
+      // Leggi data dal campo o usa oggi
+      let dateStr = new Date().toISOString();
+      const dateField = document.getElementById('tap-gpx-date');
+      if (dateField && dateField.value) {
+        dateStr = new Date(dateField.value + 'T00:00:00').toISOString();
+      }
+      
       window._tapStravaSelected = {
         name:     parsed.name,
         polyline,
-        date:     new Date().toISOString()
+        date:     dateStr
       };
       // Pre-compila km e dis
       document.getElementById('tap-km').value  = parsed.km;
@@ -1423,7 +1440,15 @@
             if (pts.length) polyline = encodePolyline(pts);
           } catch(e) {}
         }
-        window._tapStravaSelected = { name: act.name, polyline: polyline, date: act.start_date_local, km: km, dis: dis };
+        window._tapStravaSelected = { 
+          name: act.name, 
+          polyline: polyline, 
+          date: (document.getElementById('tap-gpx-date').value) 
+            ? new Date(document.getElementById('tap-gpx-date').value + 'T00:00:00').toISOString()
+            : act.start_date_local, 
+          km: km, 
+          dis: dis 
+        };
         document.getElementById('tap-km').value  = km;
         document.getElementById('tap-dis').value = dis;
         tapRefresh();
@@ -1961,6 +1986,9 @@
       document.getElementById('tap-dis').value  = 0;
       document.getElementById('tap-from').value = _tappeList.length > 0 ? _tappeList[_tappeList.length - 1].to : (localStorage.getItem('tap-last-to') || 'Milano');
       document.getElementById('tap-to').value   = '';
+      // Inizializza data odierna
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('tap-gpx-date').value = today;
     }
     document.getElementById('tap-msg').textContent = '';
     document.getElementById('tap-is-next').checked = false;
@@ -2009,15 +2037,75 @@
   function tapToggleNext() {
     const isNext = document.getElementById('tap-is-next').checked;
     const dayField = document.getElementById('tap-day').closest('div');
-    // Nascondi/mostra campo giorno (non serve per la prossima tappa)
     if (dayField) dayField.style.opacity = isNext ? '0.3' : '1';
+    tapRefreshNextStagesList();
   }
 
-  async function tapClearNext() {
+  function tapRefreshNextStagesList() {
+    const nextStages = window._nextStages || [];
+    const listEl = document.getElementById('tap-next-stages-list');
+    const MESI = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+    
+    if (nextStages.length === 0) {
+      listEl.innerHTML = '<div style="font-size:0.65rem; color:rgba(255,248,244,0.3);">Nessuna prossima tappa</div>';
+      return;
+    }
+    
+    listEl.innerHTML = nextStages.map((ns, idx) => {
+      let dateStr = '—';
+      if (ns.date) {
+        const d = new Date(ns.date);
+        dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
+      }
+      const label = (ns.from && ns.to) ? `${ns.from} → ${ns.to}` : (ns.name || '—');
+      return `<div style="display:flex; align-items:center; gap:0.5rem; padding:0.4rem; border-bottom:1px solid rgba(79,195,247,0.1); font-size:0.65rem;">
+        <span style="color:#4FC3F7; font-weight:700; min-width:1rem;">${idx+1}</span>
+        <span style="color:rgba(255,248,244,0.5); min-width:3rem;">${dateStr}</span>
+        <span style="flex:1; color:#FFF8F4;">${label}</span>
+        <button onclick="tapDeleteNextStage(${idx})" style="background:rgba(79,195,247,0.2); color:#4FC3F7; border:1px solid rgba(79,195,247,0.3); border-radius:2px; font-family:var(--mono); font-size:0.55rem; padding:0.2rem 0.4rem; cursor:pointer;">🗑</button>
+      </div>`;
+    }).join('');
+  }
+
+  async function tapDeleteNextStage(idx) {
+    if (!confirm(`Eliminare tappa futura ${idx + 1}?`)) return;
+    
     const token = localStorage.getItem('gh-token');
     if (!token) { alert('Token GitHub mancante'); return; }
+    
+    const msg = document.getElementById('tap-msg');
+    msg.textContent = 'Eliminazione...';
+    
+    try {
+      const res = await fetch(GH_API + '?t=' + Date.now(), {
+        headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' },
+        cache: 'no-store'
+      });
+      const d = await res.json();
+      const raw = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
+      
+      if (!raw.next_stages) raw.next_stages = [];
+      raw.next_stages.splice(idx, 1);
+      
+      const ok = await saveToGitHub(raw, token, msg);
+      if (ok) {
+        window._nextStages = raw.next_stages;
+        renderNextStageMap();
+        tapRefreshNextStagesList();
+        msg.textContent = '✓ Tappa futura eliminata';
+      }
+    } catch(e) { msg.textContent = '✗ Errore: ' + e.message; }
+  }
+
+  async function tapClearAllNext() {
+    if (!confirm('Eliminare TUTTE le prossime tappe?')) return;
+    
+    const token = localStorage.getItem('gh-token');
+    if (!token) { alert('Token GitHub mancante'); return; }
+    
     const msg = document.getElementById('tap-msg');
     msg.textContent = 'Rimozione...';
+    
     try {
       const res = await fetch(GH_API + '?t=' + Date.now(), {
         headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' },
@@ -2030,7 +2118,8 @@
       if (ok) {
         window._nextStages = [];
         document.getElementById('tap-next-clear-row').style.display = 'none';
-        msg.textContent = '✓ Prossime tappe rimosse'; renderNextStageMap();
+        renderNextStageMap();
+        msg.textContent = '✓ Prossime tappe rimosse';
       }
     } catch(e) { msg.textContent = '✗ Errore: ' + e.message; }
   }
