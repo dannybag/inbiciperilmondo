@@ -1443,9 +1443,7 @@
         window._tapStravaSelected = { 
           name: act.name, 
           polyline: polyline, 
-          date: (document.getElementById('tap-gpx-date').value) 
-            ? new Date(document.getElementById('tap-gpx-date').value + 'T00:00:00').toISOString()
-            : act.start_date_local, 
+          date: act.start_date_local,
           km: km, 
           dis: dis 
         };
