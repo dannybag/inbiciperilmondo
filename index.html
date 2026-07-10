@@ -1447,6 +1447,9 @@
           km: km, 
           dis: dis 
         };
+        // Popola il campo data con la data di Strava
+        const stravaDate = new Date(act.start_date_local).toISOString().split('T')[0];
+        document.getElementById('tap-gpx-date').value = stravaDate;
         document.getElementById('tap-km').value  = km;
         document.getElementById('tap-dis').value = dis;
         tapRefresh();
@@ -1984,9 +1987,6 @@
       document.getElementById('tap-dis').value  = 0;
       document.getElementById('tap-from').value = _tappeList.length > 0 ? _tappeList[_tappeList.length - 1].to : (localStorage.getItem('tap-last-to') || 'Milano');
       document.getElementById('tap-to').value   = '';
-      // Inizializza data odierna
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('tap-gpx-date').value = today;
     }
     document.getElementById('tap-msg').textContent = '';
     document.getElementById('tap-is-next').checked = false;
@@ -2164,7 +2164,10 @@
           name:     sel.name || '',
           polyline: sel.polyline || '',
           from, to, km, dislivello: dis,
-          date: new Date().toISOString()
+          date: ((() => {
+            const df = document.getElementById('tap-gpx-date');
+            return (df && df.value) ? new Date(df.value + 'T00:00:00').toISOString() : new Date().toISOString();
+          })())
         });
         const ok = await saveToGitHub(raw, token, msg);
         if (ok) {
