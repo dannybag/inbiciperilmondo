@@ -2089,7 +2089,18 @@
       const ok = await saveToGitHub(raw, token, msg);
       if (ok) {
         window._nextStages = raw.next_stages;
-        renderNextStageMap();
+        if (typeof L === 'undefined') {
+          const css = document.createElement('link');
+          css.rel = 'stylesheet';
+          css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+          document.head.appendChild(css);
+          const s = document.createElement('script');
+          s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+          s.onload = () => renderNextStageMap();
+          document.head.appendChild(s);
+        } else {
+          renderNextStageMap();
+        }
         tapRefreshNextStagesList();
         msg.textContent = '✓ Tappa futura eliminata';
       }
@@ -2117,7 +2128,18 @@
       if (ok) {
         window._nextStages = [];
         document.getElementById('tap-next-clear-row').style.display = 'none';
-        renderNextStageMap();
+        if (typeof L === 'undefined') {
+          const css = document.createElement('link');
+          css.rel = 'stylesheet';
+          css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+          document.head.appendChild(css);
+          const s = document.createElement('script');
+          s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+          s.onload = () => renderNextStageMap();
+          document.head.appendChild(s);
+        } else {
+          renderNextStageMap();
+        }
         msg.textContent = '✓ Prossime tappe rimosse';
       }
     } catch(e) { msg.textContent = '✗ Errore: ' + e.message; }
@@ -2173,7 +2195,19 @@
         const ok = await saveToGitHub(raw, token, msg);
         if (ok) {
           window._nextStages = raw.next_stages;
-          renderNextStageMap();
+          // Assicura che Leaflet sia caricato prima di renderizzare
+          if (typeof L === 'undefined') {
+            const css = document.createElement('link');
+            css.rel = 'stylesheet';
+            css.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+            document.head.appendChild(css);
+            const s = document.createElement('script');
+            s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+            s.onload = () => renderNextStageMap();
+            document.head.appendChild(s);
+          } else {
+            renderNextStageMap();
+          }
           msg.textContent = `✓ Prossima tappa aggiunta · ${km} km`;
           setTimeout(() => tapClose(), 1200);
         }
