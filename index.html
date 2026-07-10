@@ -2057,13 +2057,50 @@
         dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
       }
       const label = (ns.from && ns.to) ? `${ns.from} → ${ns.to}` : (ns.name || '—');
-      return `<div style="display:flex; align-items:center; gap:0.5rem; padding:0.4rem; border-bottom:1px solid rgba(79,195,247,0.1); font-size:0.65rem;">
-        <span style="color:#4FC3F7; font-weight:700; min-width:1rem;">${idx+1}</span>
-        <span style="color:rgba(255,248,244,0.5); min-width:3rem;">${dateStr}</span>
-        <span style="flex:1; color:#FFF8F4;">${label}</span>
-        <button onclick="tapDeleteNextStage(${idx})" style="background:rgba(79,195,247,0.2); color:#4FC3F7; border:1px solid rgba(79,195,247,0.3); border-radius:2px; font-family:var(--mono); font-size:0.55rem; padding:0.2rem 0.4rem; cursor:pointer;">🗑</button>
+      return `<div style="display:flex; flex-direction:column; gap:0.3rem; padding:0.4rem; border-bottom:1px solid rgba(79,195,247,0.1); font-size:0.65rem;">
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span style="color:#4FC3F7; font-weight:700; min-width:1rem;">${idx+1}</span>
+          <span style="color:rgba(255,248,244,0.5); min-width:3rem;">${dateStr}</span>
+          <span style="flex:1; color:#FFF8F4;">${label}</span>
+          <button onclick="tapDeleteNextStage(${idx})" style="background:rgba(79,195,247,0.2); color:#4FC3F7; border:1px solid rgba(79,195,247,0.3); border-radius:2px; font-family:var(--mono); font-size:0.55rem; padding:0.2rem 0.4rem; cursor:pointer;">🗑</button>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.3rem; margin-left:1rem;">
+          <span style="font-size:0.55rem; color:rgba(255,248,244,0.3);">Titolo:</span>
+          <input type="text" id="tap-next-title-${idx}" value="${ns.name || ''}" style="flex:1; background:#1A1A1A; border:1px solid rgba(79,195,247,0.2); color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; padding:0.2rem 0.3rem; border-radius:2px; outline:none;">
+          <button onclick="tapUpdateNextStageName(${idx})" style="background:rgba(79,195,247,0.15); color:#4FC3F7; border:1px solid rgba(79,195,247,0.2); border-radius:2px; font-family:var(--mono); font-size:0.55rem; padding:0.2rem 0.4rem; cursor:pointer;">✓</button>
+        </div>
       </div>`;
     }).join('');
+  }
+
+  async function tapUpdateNextStageName(idx) {
+    const newName = document.getElementById(`tap-next-title-${idx}`).value.trim();
+    if (!newName) { alert('Titolo non può essere vuoto'); return; }
+    
+    const token = localStorage.getItem('gh-token');
+    if (!token) { alert('Token GitHub mancante'); return; }
+    
+    const msg = document.getElementById('tap-msg');
+    msg.textContent = 'Aggiornamento titolo...';
+    
+    try {
+      const res = await fetch(GH_API + '?t=' + Date.now(), {
+        headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' },
+        cache: 'no-store'
+      });
+      const d = await res.json();
+      const raw = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(d.content.replace(/\\n/g,'')), c => c.charCodeAt(0))));
+      
+      if (!raw.next_stages || !raw.next_stages[idx]) { msg.textContent = '✗ Tappa non trovata'; return; }
+      
+      raw.next_stages[idx].name = newName;
+      
+      const ok = await saveToGitHub(raw, token, msg);
+      if (ok) {
+        window._nextStages[idx].name = newName;
+        msg.textContent = '✓ Titolo aggiornato';
+      }
+    } catch(e) { msg.textContent = '✗ Errore: ' + e.message; }
   }
 
   async function tapDeleteNextStage(idx) {
