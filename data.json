@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 2,
-    "from": "Lodi",
+    "day": 3,
+    "from": "Milano",
     "to": "",
     "km": 0,
     "dislivello": 0,
     "name": "",
     "polyline": "",
     "date": "2026-07-09T22:00:00.000Z",
-    "updated": "2026-07-10T16:10:49.569Z",
+    "updated": "2026-07-10T16:11:38.844Z",
     "totKm": 61,
     "totDis": 175,
-    "tappe": 2
+    "tappe": 3
   },
   "tappe": [
     {
@@ -39,6 +39,17 @@
       "polyline": "",
       "date": "2026-07-09T22:00:00.000Z",
       "updated": "2026-07-10T16:10:49.569Z"
+    },
+    {
+      "day": 3,
+      "from": "Milano",
+      "to": "",
+      "km": 0,
+      "dislivello": 0,
+      "name": "",
+      "polyline": "",
+      "date": "2026-07-09T22:00:00.000Z",
+      "updated": "2026-07-10T16:11:38.844Z"
     }
   ],
   "next_stages": [
