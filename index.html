@@ -1235,7 +1235,7 @@
 
       <div style="margin-bottom:1rem;">
         <label style="display:block; font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.3rem;">Data traccia (GPX/Strava)</label>
-        <input type="date" id="tap-gpx-date" style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; padding:0.5rem 0.8rem; border-radius:4px; outline:none;">
+        <input type="date" id="tap-gpx-date" value="" style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; padding:0.5rem 0.8rem; border-radius:4px; outline:none;">
       </div>
 
 
@@ -1966,7 +1966,6 @@
   }
 
   function tapShowForm(tappa) {
-    // tappa = null per nuova, oppure oggetto per modifica
     document.getElementById('tap-form').style.display = 'block';
     document.getElementById('tap-history').style.display = 'none';
     document.getElementById('tap-tab-new').style.background = '#F05A28';
@@ -1980,13 +1979,15 @@
       document.getElementById('tap-from').value = tappa.from;
       document.getElementById('tap-to').value   = tappa.to;
     } else {
-      // Nuova tappa: giorno successivo all'ultimo
       const nextDay = _tappeList.length > 0 ? Math.max(..._tappeList.map(t=>t.day)) + 1 : 1;
       document.getElementById('tap-day').value  = nextDay;
       document.getElementById('tap-km').value   = 0;
       document.getElementById('tap-dis').value  = 0;
       document.getElementById('tap-from').value = _tappeList.length > 0 ? _tappeList[_tappeList.length - 1].to : (localStorage.getItem('tap-last-to') || 'Milano');
       document.getElementById('tap-to').value   = '';
+      // Inizializza data a oggi per nuova tappa
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('tap-gpx-date').value = today;
     }
     document.getElementById('tap-msg').textContent = '';
     document.getElementById('tap-is-next').checked = false;
