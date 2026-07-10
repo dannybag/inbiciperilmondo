@@ -2225,10 +2225,18 @@
     // Aggiorna array locale (sostituisce o aggiunge)
     _tappeList = _tappeList.filter(t => t.day !== day);
     const sel = window._tapStravaSelected || {};
+    
+    // Leggi data dal campo tap-gpx-date se disponibile, altrimenti da sel.date o oggi
+    let tappDate = sel.date || new Date().toISOString();
+    const dateField = document.getElementById('tap-gpx-date');
+    if (dateField && dateField.value) {
+      tappDate = new Date(dateField.value + 'T00:00:00').toISOString();
+    }
+    
     _tappeList.push({ day, from, to, km, dislivello: dis,
       name:     sel.name     || '',
       polyline: sel.polyline || '',
-      date:     sel.date     || new Date().toISOString(),
+      date:     tappDate,
       updated:  new Date().toISOString()
     });
     _tappeList.sort((a,b) => a.day - b.day);
