@@ -2018,17 +2018,12 @@
         dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
       }
       const label = (t.from && t.to) ? `${t.from} → ${t.to}` : '—';
-      return `<div style="display:flex; flex-direction:column; gap:0.3rem; padding:0.4rem; border-bottom:1px solid rgba(240,90,40,0.1); font-size:0.65rem;">
-        <div style="display:flex; align-items:center; gap:0.5rem;">
-          <span style="color:#F05A28; font-weight:700; min-width:1.5rem; font-family:'Bebas Neue',sans-serif; font-size:0.9rem;">G${t.day}</span>
-          <span style="color:rgba(255,248,244,0.4); font-family:var(--mono); min-width:3.5rem; font-size:0.55rem;">${dateStr}</span>
-          <span style="flex:1; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; font-weight:600;">${label}</span>
-          <span style="color:#F05A28; font-family:var(--mono); font-size:0.7rem;">${t.km}km · ↑${t.dislivello}m</span>
-        </div>
-        <div style="display:flex; gap:0.3rem; margin-left:1rem; flex-shrink:0;">
-          <button onclick="tapShowForm(${JSON.stringify(t).replace(/"/g,'&quot;')})" style="background:rgba(240,90,40,0.15); color:#F05A28; border:1px solid rgba(240,90,40,0.3); border-radius:2px; font-family:var(--mono); font-size:0.55rem; padding:0.2rem 0.4rem; cursor:pointer;">✎</button>
-          <button onclick="tapDelete(${t.day})" style="background:rgba(255,255,255,0.05); color:rgba(255,248,244,0.25); border:1px solid rgba(255,248,244,0.1); border-radius:2px; font-family:var(--mono); font-size:0.55rem; padding:0.2rem 0.4rem; cursor:pointer;">🗑</button>
-        </div>
+      return `<div style="display:flex; align-items:center; gap:0.5rem; padding:0.4rem 0; border-bottom:1px solid rgba(240,90,40,0.1); font-size:0.65rem;">
+        <span style="color:#F05A28; font-weight:700; min-width:1rem; font-family:'Bebas Neue',sans-serif; font-size:0.95rem;">G${t.day}</span>
+        <span style="color:#F05A28; font-family:var(--mono); min-width:2.5rem; font-size:0.6rem;">${dateStr}</span>
+        <span style="flex:1; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; font-weight:600;">${label} <span style="font-family:var(--mono); font-size:0.7rem; color:#F05A28; margin-left:0.3rem;">${t.km} km · ↑${t.dislivello}m</span></span>
+        <button onclick="tapShowForm(${JSON.stringify(t).replace(/"/g,'&quot;')})" style="background:rgba(240,90,40,0.15); color:#F05A28; border:1px solid rgba(240,90,40,0.3); border-radius:2px; font-family:var(--mono); font-size:0.55rem; padding:0.2rem 0.4rem; cursor:pointer; flex-shrink:0;">✎</button>
+        <button onclick="tapDelete(${t.day})" style="background:rgba(255,255,255,0.05); color:rgba(255,248,244,0.25); border:1px solid rgba(255,248,244,0.1); border-radius:2px; font-family:var(--mono); font-size:0.55rem; padding:0.2rem 0.4rem; cursor:pointer; flex-shrink:0;">🗑</button>
       </div>`;
     }).join('')
   }
