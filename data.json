@@ -4,18 +4,18 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 2,
-    "from": "Siziano",
+    "day": 3,
+    "from": "Milano",
     "to": "",
     "km": 0,
     "dislivello": 0,
     "name": "",
     "polyline": "",
     "date": "2026-07-12T22:00:00.000Z",
-    "updated": "2026-07-13T20:05:59.243Z",
+    "updated": "2026-07-13T20:10:20.316Z",
     "totKm": 20,
     "totDis": 36,
-    "tappe": 2
+    "tappe": 3
   },
   "tappe": [
     {
@@ -39,6 +39,17 @@
       "polyline": "",
       "date": "2026-07-12T22:00:00.000Z",
       "updated": "2026-07-13T20:05:59.243Z"
+    },
+    {
+      "day": 3,
+      "from": "Milano",
+      "to": "",
+      "km": 0,
+      "dislivello": 0,
+      "name": "",
+      "polyline": "",
+      "date": "2026-07-12T22:00:00.000Z",
+      "updated": "2026-07-13T20:10:20.316Z"
     }
   ],
   "next_stages": [
