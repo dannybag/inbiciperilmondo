@@ -1504,6 +1504,8 @@
     return null;
   }
 
+  const TAPPE_COLORS = ['#F05A28','#4FC3F7','#81C784','#FFD54F','#BA68C8','#4DD0E1','#FF8A65','#AED581'];
+
   async function renderViaggioMap(tappe) {
     if(_viaggioMap) { _viaggioMap.remove(); _viaggioMap=null; }
     _viaggioMap = L.map('v-map', {dragging: false, scrollWheelZoom: false}).setView([44.5,11.3],6);
@@ -1518,18 +1520,19 @@
     const all=[]; let lastPt=null;
     for(let i=0;i<tappe.length;i++){
       const t=tappe[i];
+      const color = TAPPE_COLORS[i % TAPPE_COLORS.length];
       const tip=`<b>${i+1}.</b> ${t.from||''} → ${t.to||''}<br>${t.km} km · ↑${t.dislivello||0}m`;
       if(t.polyline){
         const pts=decodePolyline(t.polyline);
         if(pts.length){
-          L.polyline(pts,{color:'#F05A28',weight:4,opacity:i===tappe.length-1?1:0.75}).bindTooltip(tip,{sticky:true}).addTo(layer);
-          L.marker(pts[0],{icon:L.divIcon({html:`<div style="background:#F05A28;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:0.6rem;width:1.2rem;height:1.2rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1.5px solid #fff;">${i+1}</div>`,className:'',iconSize:[20,20],iconAnchor:[10,10]})}).addTo(layer);
+          L.polyline(pts,{color,weight:4,opacity:i===tappe.length-1?1:0.75}).bindTooltip(tip,{sticky:true}).addTo(layer);
+          L.marker(pts[0],{icon:L.divIcon({html:`<div style="background:${color};color:#fff;font-family:'Bebas Neue',sans-serif;font-size:0.6rem;width:1.2rem;height:1.2rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1.5px solid #fff;">${i+1}</div>`,className:'',iconSize:[20,20],iconAnchor:[10,10]})}).addTo(layer);
           all.push(...pts); lastPt=pts[pts.length-1];
         }
       } else {
         const fp = i===0 ? await geocodeCity(t.from) : lastPt;
         const tp = await geocodeCity(t.to||t.from);
-        if(fp&&tp){ L.polyline([fp,tp],{color:'#F05A28',weight:2,opacity:0.5,dashArray:'8,8'}).bindTooltip(tip,{sticky:true}).addTo(layer); all.push(fp,tp); lastPt=tp; }
+        if(fp&&tp){ L.polyline([fp,tp],{color,weight:2,opacity:0.5,dashArray:'8,8'}).bindTooltip(tip,{sticky:true}).addTo(layer); all.push(fp,tp); lastPt=tp; }
       }
     }
     if(lastPt) L.marker(lastPt,{icon:L.divIcon({html:`<div style="background:#F05A28;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:0.45rem;font-weight:700;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #fff;box-shadow:0 0 10px rgba(240,90,40,0.8);">QUI</div>`,className:'',iconSize:[32,32],iconAnchor:[16,16]}),zIndexOffset:1000}).addTo(layer);
@@ -1547,10 +1550,11 @@
         dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
       }
       const route = (t.from&&t.to)?t.from+' → '+t.to:(t.from||'—');
+      const color = TAPPE_COLORS[i % TAPPE_COLORS.length];
       return `<div style="display:flex; align-items:center; gap:0.8rem; padding:0.8rem 0; border-bottom:1px solid rgba(240,90,40,0.1); flex-wrap:wrap;">
-        <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:var(--orange); min-width:1.8rem; flex-shrink:0;">${i+1}</span>
+        <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:${color}; min-width:1.8rem; flex-shrink:0;">${i+1}</span>
         <span style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); min-width:4rem; flex-shrink:0;">${dateStr}</span>
-        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:#FFF8F4;">${route} <span style="font-family:var(--mono);font-size:0.75rem;color:var(--orange);margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0}m</span></span>
+        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:#FFF8F4;">${route} <span style="font-family:var(--mono);font-size:0.75rem;color:${color};margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0}m</span></span>
       </div>`;
     }).join('');
   }
@@ -1585,6 +1589,8 @@
   // ---- PROSSIMA TAPPA - mappa indipendente ----
   let _nextStageMap = null;
 
+  const NEXT_STAGE_COLORS = ['#4FC3F7','#81C784','#FFD54F','#FF7043','#9C27B0','#00BCD4'];
+
   function renderNextStageMap() {
     const block = document.getElementById('v-next-block');
     const nextStages = window._nextStages || [];
@@ -1605,10 +1611,11 @@
         dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
       }
       const label = (ns.from && ns.to) ? `${ns.from} → ${ns.to}` : (ns.name || '—');
+      const color = NEXT_STAGE_COLORS[idx % NEXT_STAGE_COLORS.length];
       return `<div style="display:flex; align-items:center; gap:0.8rem; padding:0.8rem 0; border-bottom:1px solid rgba(79,195,247,0.1); flex-wrap:wrap;">
-        <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:#4FC3F7; min-width:1.8rem; flex-shrink:0;">${idx + 1}</span>
+        <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:${color}; min-width:1.8rem; flex-shrink:0;">${idx + 1}</span>
         <span style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); min-width:4rem; flex-shrink:0;">${dateStr}</span>
-        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:#FFF8F4;">${label} <span style="font-family:var(--mono);font-size:0.75rem;color:#4FC3F7;margin-left:0.3rem;">${ns.km||0} km · ↑${ns.dislivello||0}m</span></span>
+        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:#FFF8F4;">${label} <span style="font-family:var(--mono);font-size:0.75rem;color:${color};margin-left:0.3rem;">${ns.km||0} km · ↑${ns.dislivello||0}m</span></span>
       </div>`;
     }).join('');
 
@@ -1636,12 +1643,11 @@
     }).addTo(_nextStageMap);
 
     const allPts = [];
-    const COLORS = ['#4FC3F7','#81C784','#FFD54F','#FF7043','#9C27B0','#00BCD4'];
     nextStages.forEach((ns, idx) => {
       if (ns.polyline) {
         const pts = decodePolyline(ns.polyline);
         if (pts.length) {
-          const color = COLORS[idx % COLORS.length];
+          const color = NEXT_STAGE_COLORS[idx % NEXT_STAGE_COLORS.length];
           L.polyline(pts, { color, weight:4, opacity:0.85 }).addTo(_nextStageMap);
           L.marker(pts[0], { icon: L.divIcon({ html:`<div style="background:${color};color:#000;font-family:Bebas Neue,sans-serif;font-size:0.6rem;font-weight:700;width:1.6rem;height:1.6rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid #fff;">${idx+1}</div>`, className:'', iconSize:[26,26], iconAnchor:[13,13] }) }).addTo(_nextStageMap);
           allPts.push(...pts);
