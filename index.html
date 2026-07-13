@@ -2010,19 +2010,27 @@
       return;
     }
     const sorted = [..._tappeList].sort((a,b) => b.day - a.day);
-    list.innerHTML = sorted.map(t => `
-      <div style="display:flex; align-items:center; justify-content:space-between; padding:0.7rem 0; border-bottom:1px solid rgba(240,90,40,0.1); gap:0.5rem;">
-        <div>
-          <span style="font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; font-weight:700; color:#F05A28;">G${t.day}</span>
-          <span style="font-family:'Barlow',sans-serif; font-size:0.8rem; color:rgba(255,248,244,0.7); margin-left:0.5rem;">${t.from} → ${t.to}</span>
-          <br>
-          <span style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:rgba(255,248,244,0.35);">${t.km} km · ↑${t.dislivello}m</span>
+    list.innerHTML = sorted.map(t => {
+      let dateStr = '—';
+      if (t.date) {
+        const d = new Date(t.date);
+        const MESI = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+        dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
+      }
+      const label = (t.from && t.to) ? `${t.from} → ${t.to}` : '—';
+      return `<div style="display:flex; flex-direction:column; gap:0.3rem; padding:0.4rem; border-bottom:1px solid rgba(240,90,40,0.1); font-size:0.65rem;">
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span style="color:#F05A28; font-weight:700; min-width:1.5rem; font-family:'Bebas Neue',sans-serif; font-size:0.9rem;">G${t.day}</span>
+          <span style="color:rgba(255,248,244,0.4); font-family:var(--mono); min-width:3.5rem; font-size:0.55rem;">${dateStr}</span>
+          <span style="flex:1; color:#FFF8F4; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; font-weight:600;">${label}</span>
+          <span style="color:#F05A28; font-family:var(--mono); font-size:0.7rem;">${t.km}km · ↑${t.dislivello}m</span>
         </div>
-        <div style="display:flex; gap:0.4rem; flex-shrink:0;">
-          <button onclick="tapShowForm(${JSON.stringify(t).replace(/"/g,'&quot;')})" style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; padding:0.3rem 0.7rem; background:transparent; border:1px solid rgba(240,90,40,0.5); color:#F05A28; border-radius:3px; cursor:pointer;">Modifica</button>
-          <button onclick="tapDelete(${t.day})" style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; padding:0.3rem 0.7rem; background:transparent; border:1px solid rgba(255,255,255,0.1); color:rgba(255,248,244,0.3); border-radius:3px; cursor:pointer;">✕</button>
+        <div style="display:flex; gap:0.3rem; margin-left:1rem; flex-shrink:0;">
+          <button onclick="tapShowForm(${JSON.stringify(t).replace(/"/g,'&quot;')})" style="background:rgba(240,90,40,0.15); color:#F05A28; border:1px solid rgba(240,90,40,0.3); border-radius:2px; font-family:var(--mono); font-size:0.55rem; padding:0.2rem 0.4rem; cursor:pointer;">✎</button>
+          <button onclick="tapDelete(${t.day})" style="background:rgba(255,255,255,0.05); color:rgba(255,248,244,0.25); border:1px solid rgba(255,248,244,0.1); border-radius:2px; font-family:var(--mono); font-size:0.55rem; padding:0.2rem 0.4rem; cursor:pointer;">🗑</button>
         </div>
-      </div>`).join('');
+      </div>`;
+    }).join('')
   }
 
   function openAdm1() {
