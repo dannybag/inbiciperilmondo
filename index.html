@@ -1541,14 +1541,16 @@
     const MESI=['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
     if(!tappe.length){ list.innerHTML='<div style="font-family:var(--mono);font-size:0.6rem;color:rgba(255,255,255,0.2);text-transform:uppercase;letter-spacing:0.1em;">Nessuna tappa ancora</div>'; return; }
     list.innerHTML = tappe.map((t,i)=>{
-      const date = t.date ? (d=>String(d.getDate()).padStart(2,'0')+' '+MESI[d.getMonth()])(new Date(t.date)) : (t.day?'Tappa '+t.day:'—');
+      let dateStr = '—';
+      if (t.date) {
+        const d = new Date(t.date);
+        dateStr = String(d.getDate()).padStart(2,'0') + ' ' + MESI[d.getMonth()];
+      }
       const route = (t.from&&t.to)?t.from+' → '+t.to:(t.from||'—');
-      return `<div style="display:flex;align-items:baseline;gap:0.4rem;padding:0.55rem 0;border-bottom:1px solid rgba(255,255,255,0.05);flex-wrap:wrap;">
-        <span style="font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--orange);min-width:1.4rem;flex-shrink:0;">${i+1}</span>
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.52rem;color:rgba(255,248,244,0.5);min-width:3.2rem;flex-shrink:0;">${date}</span>
-        <span style="flex:1;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;font-weight:600;color:#FFF8F4;min-width:0;word-break:break-word;">${t.name?`<span style='font-size:0.75rem;color:rgba(255,248,244,0.5);display:block;line-height:1.2;margin-bottom:0.1rem;'>${t.name}</span>`:''}${route}</span>
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:rgba(255,248,244,0.7);text-align:right;white-space:nowrap;min-width:3.5rem;flex-shrink:0;">${t.km||0} km</span>
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:rgba(255,248,244,0.5);text-align:right;white-space:nowrap;min-width:3.5rem;flex-shrink:0;">↑${t.dislivello||0} m</span>
+      return `<div style="display:flex; align-items:center; gap:0.8rem; padding:0.8rem 0; border-bottom:1px solid rgba(240,90,40,0.1); flex-wrap:wrap;">
+        <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:var(--orange); min-width:1.8rem; flex-shrink:0;">${i+1}</span>
+        <span style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); min-width:4rem; flex-shrink:0;">${dateStr}</span>
+        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:#FFF8F4;">${route} <span style="font-family:var(--mono);font-size:0.75rem;color:var(--orange);margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0}m</span></span>
       </div>`;
     }).join('');
   }
