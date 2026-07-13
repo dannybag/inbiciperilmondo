@@ -2213,6 +2213,10 @@
 
     // ---- RAMO: salva come PROSSIMA TAPPA ----
     if (isNext) {
+      if (km <= 0) {
+        msg.textContent = '✗ Inserisci i km (o carica GPX/Strava) prima di salvare';
+        return;
+      }
       const sel = window._tapStravaSelected || {};
       const token = localStorage.getItem('gh-token') || document.getElementById('tap-token').value.trim();
       if (!token) { msg.textContent = '✗ Token GitHub mancante'; return; }
@@ -2259,6 +2263,11 @@
     }
     // ---- fine ramo prossima tappa, prosegue come tappa normale ----
 
+    // Validazione: blocca salvataggio se km non inserito
+    if (km <= 0) {
+      msg.textContent = '✗ Inserisci i km (o carica GPX/Strava) prima di salvare';
+      return;
+    }
 
     const token = (document.getElementById('tap-token').value.trim()) || localStorage.getItem('gh-token') || '';
     if (token) localStorage.setItem('gh-token', token);
@@ -2333,7 +2342,12 @@
     let data = { fundraising: { raised: 0, goal: 1700 }, tappa: displayTappa, tappe: _tappeList };
     try {
       const r = await fetch(GH_API, { headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }, cache: 'no-store' });
-      if (r.ok) { const m = await r.json(); const existing = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(m.content.replace(/\n/g,'')), c => c.charCodeAt(0)))); data.fundraising = existing.fundraising || data.fundraising; }
+      if (r.ok) {
+        const m = await r.json();
+        const existing = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(m.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
+        data.fundraising = existing.fundraising || data.fundraising;
+        data.next_stages = existing.next_stages || [];
+      }
     } catch(e) {}
     await saveToGitHub(data, token, document.getElementById('tap-msg'));
   }
