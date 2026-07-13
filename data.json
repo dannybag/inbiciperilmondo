@@ -4,8 +4,31 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 0
+    "day": 1,
+    "from": "Siziano",
+    "to": "",
+    "km": 25,
+    "dislivello": 57,
+    "name": "Siziano - Milano",
+    "polyline": "khrsGyxcw@VdC@n@MhAGx@IVWXCl@OjAEdAJtCCzAw@pMYbDK`BGl@YxAC^D^Zb@L`@Dj@AVSnA]|AM\\o@lAiAbCYb@u@`AELKdAMr@e@xBk@`C]bBGd@Cf@@pADlADb@bAxDr@hBNt@d@p@d@pAF`@?~@BLTL\\j@f@j@`@PXAp@Od@QbAs@T?HFXt@Jp@BhAX|G?z@Ch@[hBcAtEwHt\\EP?b@^xCh@nBJZHJVHhANb@CTQx@wAPED@@DCPo@bAMZCN@NFn@C`@w@lCM`AQl@Fj@Tp@FVBf@Cd@@JDFL@VOF?PZJCxDeC|DsCvAsAVMb@KL@RNfMf\\b@rA\\pArB~LHxBPnAHxCv@fJ?\\CVOJgEfAyDt@EF?Rj@~ERn@dA~BL`ADfACjAB`Bf@rNGRE@i@?_ALoAZaBTWLy@fAkCjEM`@KhAYlBK`@QZ]vA]hBWhBMpAEhEKnAu@pBq@`DK`@e@t@s@x@CTBZYpB?v@T~CAr@Dj@LfAEtCMzA{@fCMx@S~C@x@RhBr@tDb@xCVx@P^XvAxA`LB\\TrAP`Bd@rGT|BR|FHZFFZ@DBDNh@dObA~REVMF{EBMDGHGLCPClB@v@P`JNxEBrBE~AK~AOnAAh@Hb@n@vAd@nA@VS`@m@j@_CxAwAlAIJGPAPHb@f@rADf@?P[zAQvAFZjAtCNt@ZnB?PCJQ?STsB`@oAh@wHlFoAr@qSpFiAVm@D{@BuEUqY}AsFU_Ie@e@?yCWUDYZ?FKJEACGCUEIWWUIm@G_@Kg@e@yA_AwDwAMMUe@QeAQi@UaAaAoC_@u@q@}@a@q@uByBqDeEqHcJcN_P_BsBg_@yc@{RoUaGkHa@[QZMAgCaDo@s@uAk@aAy@wAu@m_@mRek@wYiGwCsVeL{A[_@Ms@q@]SiLiFkAo@eVyKeBq@kAq@wFkC}EsBoOiHyAm@kA]cAs@y@a@yEqBiD_BiAk@kCeAiCqAk@a@}DqBaJmEw@k@iDeBi@UsEeCaj@}XcJ{E}ImEwAg@s@k@aB_Acb@gTuGaD{G}Ci[mOyC}AyKeF{BkA}GwC{IwE{IaEsGaDuCuA{Ai@mAg@qBqAgA[sJ{AsGy@uCm@k@Ag]eFmD_@CGA{@?cA^aP?_CMmBO{AKMk@eCa@aCUq@OaAKa@",
+    "date": "2026-06-08T22:00:00.000Z",
+    "updated": "2026-07-13T20:16:45.207Z",
+    "totKm": 25,
+    "totDis": 57,
+    "tappe": 1
   },
-  "tappe": [],
+  "tappe": [
+    {
+      "day": 1,
+      "from": "Siziano",
+      "to": "",
+      "km": 25,
+      "dislivello": 57,
+      "name": "Siziano - Milano",
+      "polyline": "khrsGyxcw@VdC@n@MhAGx@IVWXCl@OjAEdAJtCCzAw@pMYbDK`BGl@YxAC^D^Zb@L`@Dj@AVSnA]|AM\\o@lAiAbCYb@u@`AELKdAMr@e@xBk@`C]bBGd@Cf@@pADlADb@bAxDr@hBNt@d@p@d@pAF`@?~@BLTL\\j@f@j@`@PXAp@Od@QbAs@T?HFXt@Jp@BhAX|G?z@Ch@[hBcAtEwHt\\EP?b@^xCh@nBJZHJVHhANb@CTQx@wAPED@@DCPo@bAMZCN@NFn@C`@w@lCM`AQl@Fj@Tp@FVBf@Cd@@JDFL@VOF?PZJCxDeC|DsCvAsAVMb@KL@RNfMf\\b@rA\\pArB~LHxBPnAHxCv@fJ?\\CVOJgEfAyDt@EF?Rj@~ERn@dA~BL`ADfACjAB`Bf@rNGRE@i@?_ALoAZaBTWLy@fAkCjEM`@KhAYlBK`@QZ]vA]hBWhBMpAEhEKnAu@pBq@`DK`@e@t@s@x@CTBZYpB?v@T~CAr@Dj@LfAEtCMzA{@fCMx@S~C@x@RhBr@tDb@xCVx@P^XvAxA`LB\\TrAP`Bd@rGT|BR|FHZFFZ@DBDNh@dObA~REVMF{EBMDGHGLCPClB@v@P`JNxEBrBE~AK~AOnAAh@Hb@n@vAd@nA@VS`@m@j@_CxAwAlAIJGPAPHb@f@rADf@?P[zAQvAFZjAtCNt@ZnB?PCJQ?STsB`@oAh@wHlFoAr@qSpFiAVm@D{@BuEUqY}AsFU_Ie@e@?yCWUDYZ?FKJEACGCUEIWWUIm@G_@Kg@e@yA_AwDwAMMUe@QeAQi@UaAaAoC_@u@q@}@a@q@uByBqDeEqHcJcN_P_BsBg_@yc@{RoUaGkHa@[QZMAgCaDo@s@uAk@aAy@wAu@m_@mRek@wYiGwCsVeL{A[_@Ms@q@]SiLiFkAo@eVyKeBq@kAq@wFkC}EsBoOiHyAm@kA]cAs@y@a@yEqBiD_BiAk@kCeAiCqAk@a@}DqBaJmEw@k@iDeBi@UsEeCaj@}XcJ{E}ImEwAg@s@k@aB_Acb@gTuGaD{G}Ci[mOyC}AyKeF{BkA}GwC{IwE{IaEsGaDuCuA{Ai@mAg@qBqAgA[sJ{AsGy@uCm@k@Ag]eFmD_@CGA{@?cA^aP?_CMmBO{AKMk@eCa@aCUq@OaAKa@",
+      "date": "2026-06-08T22:00:00.000Z",
+      "updated": "2026-07-13T20:16:45.207Z"
+    }
+  ],
   "next_stages": []
 }
