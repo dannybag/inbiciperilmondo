@@ -722,7 +722,8 @@
 
 <!-- STICKY BAR -->
 <div class="sticky-bar">
-  <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="btn-sticky-orange" target="_blank">Dona ora</a>
+  <button onclick="toggleLang()" id="lang-btn" class="btn-sticky-ghost" style="cursor:pointer; font-family:'Barlow Condensed',sans-serif;">EN</button>
+  <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="btn-sticky-orange" target="_blank" data-i18n="dona_ora">Dona ora</a>
   <a href="https://worldbicyclerelief.org" class="btn-sticky-ghost" target="_blank">worldbicyclerelief.org</a>
 </div>
 
@@ -730,20 +731,20 @@
 <section class="hero">
   <div class="hero-bg-text">Buffalo</div>
   <div class="hero-inner">
-    <div class="hero-tag">Milano → Palermo · Una bici per volta, cambiamo il mondo</div>
+    <div class="hero-tag" data-i18n="hero_tag">Milano → Palermo · Una bici per volta, cambiamo il mondo</div>
 
-    <h1 class="hero-title">
+    <h1 class="hero-title" data-i18n-html="hero_title">
       Una Bici<br>
       per il <span class="accent">Mondo</span>
     </h1>
 
     <div class="hero-route">
-      Milano <span class="arrow">→</span> Palermo
+      <span data-i18n="milano">Milano</span> <span class="arrow">→</span> <span data-i18n="palermo">Palermo</span>
       <span style="margin-left:1.5rem; opacity:0.4">|</span>
       <span style="margin-left:1.5rem">1.700 km</span>
     </div>
 
-    <p class="hero-desc">
+    <p class="hero-desc" data-i18n-html="hero_desc">
       Ho appena compiuto 60 anni e mi sono regalato 1.700 km da percorrere sulla sella della mia bicicletta.
       Pedalerò da Milano a Palermo per sostenere <strong><span class="wbr"><a href="https://worldbicyclerelief.org" target="_blank" style="color:inherit">World Bicycle Relief</a></span></strong>:
       ogni euro raccolto servirà ad acquistare biciclette <strong>Buffalo</strong> per chi, nei Paesi in via di sviluppo, usa solo le gambe per raggiungere scuole, ospedali e mercati.<br>
@@ -754,26 +755,26 @@
 
 <!-- STRIP -->
 <div class="strip">
-  <div class="strip-text">147€ = 1 bicicletta <strong>Buffalo</strong>. Una bici che cambia una vita.</div>
+  <div class="strip-text" data-i18n-html="strip_text">147€ = 1 bicicletta <strong>Buffalo</strong>. Una bici che cambia una vita.</div>
 </div>
 
 <!-- STATS -->
 <div class="stats">
   <div class="stat-item">
     <div class="stat-num">~1.700</div>
-    <div class="stat-label">km in sella</div>
+    <div class="stat-label" data-i18n="stat_km">km in sella</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">~25</div>
-    <div class="stat-label">tappe previste</div>
+    <div class="stat-label" data-i18n="stat_tappe">tappe previste</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">1€<span style="font-size:0.5em;vertical-align:middle;position:relative;top:0.1em">*</span>km</div>
-    <div class="stat-label">obiettivo raccolta</div>
+    <div class="stat-label" data-i18n="stat_obiettivo">obiettivo raccolta</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">100%</div>
-    <div class="stat-label">fondi devoluti</div>
+    <div class="stat-label" data-i18n="stat_devoluti">fondi devoluti</div>
   </div>
 </div>
 
@@ -782,7 +783,7 @@
 
   <!-- SEZIONE 1: Tappa del giorno -->
   <div class="live-section">
-    <div class="live-label">Tappa del giorno</div>
+    <div class="live-label" data-i18n="tappa_giorno">Tappa del giorno</div>
     <div class="live-row" style="flex-wrap:wrap; gap:0.3rem 0.6rem;">
       <span class="live-route" id="tappa-route">—</span>
       <span class="live-sep">·</span>
@@ -794,17 +795,17 @@
 
   <!-- SEZIONE 2: Fin qui -->
   <div class="live-section live-section-alt">
-    <div class="live-label">In sella da:</div>
+    <div class="live-label" data-i18n="in_sella_da">In sella da:</div>
     <div class="live-row">
-      <span class="live-stat"><span id="cnt-tappe">—</span> tappe</span>
+      <span class="live-stat"><span id="cnt-tappe">—</span> <span data-i18n="tappe_word">tappe</span></span>
       <span class="live-sep">·</span>
       <span class="live-stat"><span id="cnt-km">—</span></span>
       <span class="live-sep">·</span>
       <span class="live-stat"><span id="cnt-dis">—</span></span>
     </div>
     <div style="margin-top:1.4rem; display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center;">
-      <button onclick="toggleViaggio()" id="viaggio-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:rgba(240,90,40,0.1); border:1px solid rgba(240,90,40,0.4); padding:0.6rem 1.3rem; border-radius:3px; cursor:pointer; white-space:nowrap;">Guarda il Viaggio <span id="viaggio-arrow">↓</span></button>
-      <button onclick="toggleDiario()" id="diario-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:rgba(240,90,40,0.1); border:1px solid rgba(240,90,40,0.4); padding:0.6rem 1.3rem; border-radius:3px; cursor:pointer; white-space:nowrap;">Leggi il Diario <span id="diario-arrow">↓</span></button>
+      <button onclick="toggleViaggio()" id="viaggio-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:rgba(240,90,40,0.1); border:1px solid rgba(240,90,40,0.4); padding:0.6rem 1.3rem; border-radius:3px; cursor:pointer; white-space:nowrap;"><span data-i18n="guarda_viaggio">Guarda il Viaggio</span> <span id="viaggio-arrow">↓</span></button>
+      <button onclick="toggleDiario()" id="diario-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:rgba(240,90,40,0.1); border:1px solid rgba(240,90,40,0.4); padding:0.6rem 1.3rem; border-radius:3px; cursor:pointer; white-space:nowrap;"><span data-i18n="leggi_diario">Leggi il Diario</span> <span id="diario-arrow">↓</span></button>
     </div>
   </div>
 
@@ -817,12 +818,12 @@
     <!-- Progress bar SOPRA -->
     <div style="padding:1rem 5vw 0; background:#111;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
-        <span style="font-family:var(--mono); font-size:0.7rem; font-weight:700; color:rgba(255,248,244,0.3);">Milano</span>
+        <span style="font-family:var(--mono); font-size:0.7rem; font-weight:700; color:rgba(255,248,244,0.3);" data-i18n="milano">Milano</span>
         <div style="flex:1; display:flex; justify-content:center; align-items:center; gap:0.5rem;">
           <span id="v-prog-label" style="font-family:var(--mono); font-size:0.7rem; font-weight:700; color:rgba(255,248,244,0.3);"></span>
           <span id="v-prog-pct" style="font-family:var(--mono); font-size:0.7rem; font-weight:700; color:rgba(255,248,244,0.3);">0%</span>
         </div>
-        <span style="font-family:var(--mono); font-size:0.7rem; font-weight:700; color:rgba(255,248,244,0.3);">Palermo</span>
+        <span style="font-family:var(--mono); font-size:0.7rem; font-weight:700; color:rgba(255,248,244,0.3);" data-i18n="palermo">Palermo</span>
       </div>
       <div class="progress-wrap" style="padding:0;">
         <div class="progress-track">
@@ -835,18 +836,18 @@
     <div id="v-map-wrap" style="display:flex; gap:0; margin-top:1rem;">
       <div style="position:relative; width:50%; flex-shrink:0;" id="v-map-container">
         <div id="v-map" style="width:100%; height:45vh; background:#111;"></div>
-        <button onclick="expandMap()" id="v-expand-btn" title="Espandi mappa" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(240,90,40,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
+        <button onclick="expandMap()" id="v-expand-btn" title="Espandi mappa" data-i18n="espandi" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(240,90,40,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
       </div>
       <div style="width:50%; height:45vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(240,90,40,0.15);">
-        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:0.8rem; font-weight:700;">← Tappe percorse</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:0.8rem; font-weight:700;" data-i18n="tappe_percorse">← Tappe percorse</div>
         <div id="v-list"></div>
       </div>
     </div>
     <!-- Stats -->
     <div style="display:flex; gap:2rem; flex-wrap:wrap; margin-top:1.5rem; margin-bottom:1.5rem;">
-      <div><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--orange); line-height:1;" id="v-km">0</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Km percorsi</div></div>
-      <div><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--orange); line-height:1;" id="v-dis">0</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Dislivello ↑ m</div></div>
-      <div style="margin-left:auto;"><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:rgba(255,248,244,0.3); line-height:1;" id="v-pct">0%</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);">Del percorso</div></div>
+      <div><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--orange); line-height:1;" id="v-km">0</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);" data-i18n="km_percorsi">Km percorsi</div></div>
+      <div><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--orange); line-height:1;" id="v-dis">0</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);" data-i18n="dislivello">Dislivello ↑ m</div></div>
+      <div style="margin-left:auto;"><div style="font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:rgba(255,248,244,0.3); line-height:1;" id="v-pct">0%</div><div style="font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,248,244,0.4);" data-i18n="del_percorso">Del percorso</div></div>
     </div>
     <style>
       @media(max-width:768px) {
@@ -863,10 +864,10 @@
       <div id="v-next-wrap" style="display:flex; gap:0;">
         <div style="position:relative; width:50%; height:45vh; flex-shrink:0;" id="v-next-map-container">
           <div id="v-next-map" style="width:100%; height:100%; background:#111;"></div>
-          <button onclick="expandNextMap()" id="v-next-expand-btn" title="Espandi mappa" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(79,195,247,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
+          <button onclick="expandNextMap()" id="v-next-expand-btn" title="Espandi mappa" data-i18n="espandi" style="position:absolute; top:0.5rem; right:0.5rem; z-index:1000; background:rgba(26,26,26,0.9); color:#FFF8F4; border:1px solid rgba(79,195,247,0.5); border-radius:3px; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; padding:0.3rem 0.5rem; cursor:pointer; letter-spacing:0.05em;">⤢ Espandi</button>
         </div>
         <div style="width:50%; height:45vh; overflow-y:auto; background:#111; padding:1rem 1.5rem; border-left:1px solid rgba(79,195,247,0.15);">
-          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.8rem; font-weight:700;">→ Prossime tappe</div>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase; color:#4FC3F7; margin-bottom:0.8rem; font-weight:700;" data-i18n="prossime_tappe">→ Prossime tappe</div>
           <div id="v-next-list"></div>
         </div>
       </div>
@@ -906,7 +907,7 @@
     .dia-lightbox-count { position:absolute; bottom:1.2rem; left:50%; transform:translateX(-50%); font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.6); background:rgba(0,0,0,0.5); padding:0.25rem 0.7rem; border-radius:10px; }
   </style>
   <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 2.2rem;">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:1.2rem; text-align:center;">Ricordi, incontri e imprevisti, giorno per giorno</div>
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:1.2rem; text-align:center;" data-i18n="diario_sub">Ricordi, incontri e imprevisti, giorno per giorno</div>
     <div id="diario-full" style="max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:1.4rem;">
       <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">Caricamento...</div>
     </div>
@@ -1123,8 +1124,8 @@
 
 <!-- FOOTER -->
 <div class="footer">
-  <div class="footer-logo">Una Bici per il <span>Mondo</span></div>
-  <div class="footer-copy">
+  <div class="footer-logo" data-i18n-html="footer_logo">Una Bici per il <span>Mondo</span></div>
+  <div class="footer-copy" data-i18n-html="footer_copy">
     Raccolta fondi a sostegno di <a href="https://worldbicyclerelief.org" target="_blank">World Bicycle Relief</a>.<br>
     100% dei fondi devoluti.
   </div>
@@ -2395,6 +2396,98 @@
     }
   }
 
+  // ---- I18N: traduzione IT/EN frontoffice ----
+  const I18N = {
+    it: {
+      dona_ora: 'Dona ora',
+      hero_tag: 'Milano → Palermo · Una bici per volta, cambiamo il mondo',
+      hero_title: 'Una Bici<br>per il <span class="accent">Mondo</span>',
+      milano: 'Milano',
+      palermo: 'Palermo',
+      hero_desc: `Ho appena compiuto 60 anni e mi sono regalato 1.700 km da percorrere sulla sella della mia bicicletta.
+      Pedalerò da Milano a Palermo per sostenere <strong><span class="wbr"><a href="https://worldbicyclerelief.org" target="_blank" style="color:inherit">World Bicycle Relief</a></span></strong>:
+      ogni euro raccolto servirà ad acquistare biciclette <strong>Buffalo</strong> per chi, nei Paesi in via di sviluppo, usa solo le gambe per raggiungere scuole, ospedali e mercati.<br>
+      Forse non è la scelta più saggia per un sessantenne, ma io ci provo!`,
+      strip_text: '147€ = 1 bicicletta <strong>Buffalo</strong>. Una bici che cambia una vita.',
+      stat_km: 'km in sella',
+      stat_tappe: 'tappe previste',
+      stat_obiettivo: 'obiettivo raccolta',
+      stat_devoluti: 'fondi devoluti',
+      tappa_giorno: 'Tappa del giorno',
+      in_sella_da: 'In sella da:',
+      tappe_word: 'tappe',
+      guarda_viaggio: 'Guarda il Viaggio',
+      leggi_diario: 'Leggi il Diario',
+      espandi: '⤢ Espandi',
+      tappe_percorse: '← Tappe percorse',
+      km_percorsi: 'Km percorsi',
+      dislivello: 'Dislivello ↑ m',
+      del_percorso: 'Del percorso',
+      prossime_tappe: '→ Prossime tappe',
+      diario_sub: 'Ricordi, incontri e imprevisti, giorno per giorno',
+      footer_logo: 'Una Bici per il <span>Mondo</span>',
+      footer_copy: 'Raccolta fondi a sostegno di <a href="https://worldbicyclerelief.org" target="_blank">World Bicycle Relief</a>.<br>100% dei fondi devoluti.'
+    },
+    en: {
+      dona_ora: 'Donate now',
+      hero_tag: 'Milan → Palermo · One bike at a time, we change the world',
+      hero_title: 'One Bike<br>for the <span class="accent">World</span>',
+      milano: 'Milan',
+      palermo: 'Palermo',
+      hero_desc: `I just turned 60 and gave myself a gift of 1,700 km to ride on my bicycle's saddle.
+      I'll be cycling from Milan to Palermo to support <strong><span class="wbr"><a href="https://worldbicyclerelief.org" target="_blank" style="color:inherit">World Bicycle Relief</a></span></strong>:
+      every euro raised will go towards buying <strong>Buffalo</strong> bicycles for people in developing countries who rely only on their legs to reach schools, hospitals and markets.<br>
+      Maybe it's not the wisest choice for a sixty-year-old, but I'm giving it a shot!`,
+      strip_text: '€147 = 1 <strong>Buffalo</strong> bicycle. A bike that changes a life.',
+      stat_km: 'km in the saddle',
+      stat_tappe: 'planned stages',
+      stat_obiettivo: 'fundraising goal',
+      stat_devoluti: 'funds donated',
+      tappa_giorno: "Today's Stage",
+      in_sella_da: 'In the saddle since:',
+      tappe_word: 'stages',
+      guarda_viaggio: 'View the Journey',
+      leggi_diario: 'Read the Diary',
+      espandi: '⤢ Expand',
+      tappe_percorse: '← Stages completed',
+      km_percorsi: 'Km covered',
+      dislivello: 'Elevation ↑ m',
+      del_percorso: 'Of the route',
+      prossime_tappe: '→ Upcoming stages',
+      diario_sub: 'Memories, encounters and surprises, day by day',
+      footer_logo: 'One Bike for the <span>World</span>',
+      footer_copy: 'Fundraising in support of <a href="https://worldbicyclerelief.org" target="_blank">World Bicycle Relief</a>.<br>100% of funds donated.'
+    }
+  };
+
+  function applyLang(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (I18N[lang][key] !== undefined) el.textContent = I18N[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.getAttribute('data-i18n-html');
+      if (I18N[lang][key] !== undefined) el.innerHTML = I18N[lang][key];
+    });
+    document.getElementById('lang-btn').textContent = lang === 'it' ? 'EN' : 'IT';
+    localStorage.setItem('site-lang', lang);
+    // Ri-renderizza le liste dinamiche (Tappe percorse / Prossime tappe) se già aperte
+    if (typeof _tappeList !== 'undefined' && _tappeList.length) {
+      const tappe = (_tappeList||[]).filter(t=>t.km>0);
+      if (document.getElementById('v-list').innerHTML) renderViaggioList(tappe);
+    }
+    if (window._nextStages && window._nextStages.length && document.getElementById('v-next-list').innerHTML) {
+      renderNextStageMap();
+    }
+  }
+
+  function toggleLang() {
+    const current = localStorage.getItem('site-lang') || 'it';
+    const next = current === 'it' ? 'en' : 'it';
+    applyLang(next);
+  }
+
   // ---- SHIFT shortcuts ----
   document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('fndin-overlay').addEventListener('click', (e) => {
@@ -2403,6 +2496,7 @@
     document.getElementById('tap-overlay').addEventListener('click', (e) => {
       if (e.target === document.getElementById('tap-overlay')) tapClose();
     });
+    applyLang(localStorage.getItem('site-lang') || 'it');
   });
 
   loadFromGitHub();
