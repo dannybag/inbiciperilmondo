@@ -815,22 +815,6 @@
 <div id="viaggio-section" style="display:none; overflow:hidden;">
   <link rel="stylesheet" id="leaflet-css" href="">
   <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 1rem;">
-    <!-- Progress bar SOPRA -->
-    <div style="padding:1rem 5vw 0; background:#111;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
-        <span style="font-family:var(--mono); font-size:0.7rem; font-weight:700; color:rgba(255,248,244,0.3);" data-i18n="milano">Milano</span>
-        <div style="flex:1; display:flex; justify-content:center; align-items:center; gap:0.5rem;">
-          <span id="v-prog-label" style="font-family:var(--mono); font-size:0.7rem; font-weight:700; color:rgba(255,248,244,0.3);"></span>
-          <span id="v-prog-pct" style="font-family:var(--mono); font-size:0.7rem; font-weight:700; color:rgba(255,248,244,0.3);">0%</span>
-        </div>
-        <span style="font-family:var(--mono); font-size:0.7rem; font-weight:700; color:rgba(255,248,244,0.3);" data-i18n="palermo">Palermo</span>
-      </div>
-      <div class="progress-wrap" style="padding:0;">
-        <div class="progress-track">
-          <div class="progress-fill" id="v-prog" style="width:0%"></div>
-        </div>
-      </div>
-    </div>
 
     <!-- Map + List -->
     <div id="v-map-wrap" style="display:flex; gap:0; margin-top:1rem;">
@@ -1029,6 +1013,7 @@
       style="position:absolute; inset:0; width:100%; height:100%;">
     </iframe>
   </div>
+  <div class="gallery-credit" data-i18n-html="video_credit">Video: © World Bicycle Relief · <a href="https://worldbicyclerelief.org" target="_blank">worldbicyclerelief.org</a></div>
   <div style="display:flex; flex-wrap:wrap; gap:1rem; margin-top:0.5rem;">
     <a href="https://thefirst20.org/" target="_blank" class="btn-orange-sm" data-i18n="scopri_20">Scopri i primi 20 anni di WBR</a>
     <a href="https://www.youtube.com/@WorldBicycleRelief" target="_blank" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,248,244,0.45); text-decoration:none; border:1px solid rgba(255,248,244,0.15); padding:0.5rem 1rem; border-radius:3px;">
@@ -1567,9 +1552,6 @@
     document.getElementById('v-km').textContent  = km.toLocaleString('it-IT');
     document.getElementById('v-dis').textContent = dis.toLocaleString('it-IT');
     document.getElementById('v-pct').textContent = pct+'%';
-    document.getElementById('v-prog').style.width = pct+'%';
-    document.getElementById('v-prog-label').textContent = pct>0?km+' / 1.700 km':'';
-    document.getElementById('v-prog-pct').textContent = pct+'%';
   }
 
   async function openViaggio() {
@@ -2446,6 +2428,7 @@
       data_box2: 'ragazze con una bici hanno il 19% di probabilità in meno di abbandonare la scuola e il 28% di assenze in meno.',
       data_box3: 'incremento del reddito familiare nelle famiglie che ricevono una bicicletta <strong>Buffalo</strong>, secondo studi in Uganda e Tanzania.',
       gallery_credit: 'Foto: © World Bicycle Relief · <a href="https://worldbicyclerelief.org" target="_blank">worldbicyclerelief.org</a>',
+      video_credit: 'Video: © World Bicycle Relief · <a href="https://worldbicyclerelief.org" target="_blank">worldbicyclerelief.org</a>',
       wbr20_label: 'World Bicycle Relief · 20 anni',
       wbr20_title: "Vent'anni di biciclette che cambiano il mondo.",
       wbr20_body: 'Dal 2005 ad oggi World Bicycle Relief ha consegnato oltre 850.000 biciclette Buffalo in 21 Paesi. Un traguardo celebrato nel 2025 con un obiettivo ambizioso per il futuro: <strong>1 milione di bici e 5 milioni di vite cambiate entro il 2026</strong>.',
@@ -2531,6 +2514,7 @@
       data_box2: 'girls with a bike are 19% less likely to drop out of school and have 28% fewer absences.',
       data_box3: 'increase in household income for families receiving a <strong>Buffalo</strong> bicycle, according to studies in Uganda and Tanzania.',
       gallery_credit: 'Photos: © World Bicycle Relief · <a href="https://worldbicyclerelief.org" target="_blank">worldbicyclerelief.org</a>',
+      video_credit: 'Video: © World Bicycle Relief · <a href="https://worldbicyclerelief.org" target="_blank">worldbicyclerelief.org</a>',
       wbr20_label: 'World Bicycle Relief · 20 years',
       wbr20_title: 'Twenty years of bicycles that change the world.',
       wbr20_body: 'Since 2005, World Bicycle Relief has delivered over 850,000 Buffalo bicycles across 21 countries. A milestone celebrated in 2025 with an ambitious goal for the future: <strong>1 million bikes and 5 million lives changed by 2026</strong>.',
