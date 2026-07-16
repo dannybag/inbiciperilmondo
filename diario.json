@@ -1,15 +1,3 @@
 {
-  "entries": [
-    {
-      "day": 2,
-      "date": "2026-07-16",
-      "title": "La giornata perfetta",
-      "text": "gente meravigliosa.",
-      "photos": [],
-      "videos": [],
-      "published": true,
-      "title_en": "The perfect day",
-      "text_en": "wonderful people."
-    }
-  ]
+  "entries": []
 }
