@@ -7,7 +7,9 @@
       "text": "Oggi la giornata è stata perfetta,  terreno fantastico, cliema fresco e bagnetto refrigerante. In più ho conosciuto gente meravigliosa.",
       "photos": [],
       "videos": [],
-      "published": true
+      "published": true,
+      "title_en": "The perfect day",
+      "text_en": "Today was a perfect day: fantastic terrain, cool weather and a refreshing dip. What’s more, I met some wonderful people."
     },
     {
       "day": 2,
@@ -16,7 +18,9 @@
       "text": "Prova a tradurre il testo da italiano a inglese con azione GitHub",
       "photos": [],
       "videos": [],
-      "published": true
+      "published": true,
+      "title_en": "Translation test",
+      "text_en": "Try translating the text from Italian to English using a GitHub action"
     }
   ]
 }
