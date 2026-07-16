@@ -1799,25 +1799,36 @@
         wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">Ancora nessuna nota</div>';
         return;
       }
-      const MESI=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
-      wrap.innerHTML = entries.map(e => {
-        const d = new Date(e.date);
-        const dateStr = d.getDate() + ' ' + MESI[d.getMonth()] + ' ' + d.getFullYear();
-        const photos = e.photos || [];
-        const videos = e.videos || (e.video ? [e.video] : []);
-        return `
-          <div style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:4px; padding:1.2rem 1.3rem;">
-            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.08em; color:var(--orange); text-transform:uppercase; margin-bottom:0.4rem;">${dateStr}</div>
-            <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:400; color:#FFF8F4; margin-bottom:0.5rem;">${e.title}</div>
-            <div style="font-family:'Barlow',sans-serif; font-size:0.92rem; line-height:1.55; color:rgba(255,248,244,0.8); margin-bottom:${(photos.length||videos.length)?'0.8rem':'0'};">${e.text}</div>
-            ${photos.length ? `<div class="dia-photos">${photos.map((p, i) => `<div class="dia-photo" onclick='openDiaLightbox(${JSON.stringify(photos)}, ${i})'><img src="${p}" loading="lazy"></div>`).join('')}</div>` : ''}
-            ${videos.length ? `<div class="dia-videos">${videos.map(v => _diaRenderVideo(v)).join('')}</div>` : ''}
-          </div>
-        `;
-      }).join('');
+      window._diarioEntries = entries;
+      renderDiarioEntries(entries);
     } catch (e) {
       wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; color:rgba(224,85,85,0.6); text-align:center; padding:1rem 0;">Diario non ancora disponibile</div>';
     }
+  }
+
+  function renderDiarioEntries(entries) {
+    const wrap = document.getElementById('diario-full');
+    const lang = localStorage.getItem('site-lang') || 'it';
+    const MESI_IT=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+    const MESI_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const MESI = lang === 'en' ? MESI_EN : MESI_IT;
+    wrap.innerHTML = entries.map(e => {
+      const d = new Date(e.date);
+      const dateStr = lang === 'en' ? (MESI[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear()) : (d.getDate() + ' ' + MESI[d.getMonth()] + ' ' + d.getFullYear());
+      const photos = e.photos || [];
+      const videos = e.videos || (e.video ? [e.video] : []);
+      const title = (lang === 'en' && e.title_en) ? e.title_en : e.title;
+      const text = (lang === 'en' && e.text_en) ? e.text_en : e.text;
+      return `
+        <div style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:4px; padding:1.2rem 1.3rem;">
+          <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.08em; color:var(--orange); text-transform:uppercase; margin-bottom:0.4rem;">${dateStr}</div>
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:400; color:#FFF8F4; margin-bottom:0.5rem;">${title}</div>
+          <div style="font-family:'Barlow',sans-serif; font-size:0.92rem; line-height:1.55; color:rgba(255,248,244,0.8); margin-bottom:${(photos.length||videos.length)?'0.8rem':'0'};">${text}</div>
+          ${photos.length ? `<div class="dia-photos">${photos.map((p, i) => `<div class="dia-photo" onclick='openDiaLightbox(${JSON.stringify(photos)}, ${i})'><img src="${p}" loading="lazy"></div>`).join('')}</div>` : ''}
+          ${videos.length ? `<div class="dia-videos">${videos.map(v => _diaRenderVideo(v)).join('')}</div>` : ''}
+        </div>
+      `;
+    }).join('');
   }
 
   handleStravaCallback();
@@ -2475,7 +2486,7 @@
       hero_title: 'One Bike<br>for the <span class="accent">World</span>',
       milano: 'Milan',
       palermo: 'Palermo',
-      hero_desc: `I just turned 60 and gave myself a gift of 1,700 km to ride on my bicycle's saddle.
+      hero_desc: `I just turned 60 and gave myself the gift of a 1,700 km ride on my bicycle's saddle.
       I'll be cycling from Milan to Palermo to support <strong><span class="wbr"><a href="https://worldbicyclerelief.org" target="_blank" style="color:inherit">World Bicycle Relief</a></span></strong>:
       every euro raised will go towards buying <strong>Buffalo</strong> bicycles for people in developing countries who rely only on their legs to reach schools, hospitals and markets.<br>
       Maybe it's not the wisest choice for a sixty-year-old, but I'm giving it a shot!`,
@@ -2501,7 +2512,7 @@
       di_word: 'of',
       quote_gambe: '"I bring the legs. You bring the heart."',
       missione_label: 'My mission',
-      missione_title: '1,700 km. For those a bike can change a life.',
+      missione_title: "1,700 km. To change people's lives with bikes.",
       missione_p1: `There's a moment when reading isn't enough. When signing a petition isn't enough.
       When you feel you have to do something with your body, not just your mind.
       This journey was born from that moment, and because silence now weighs on me more than the climbs I'll have to face.`,
@@ -2595,6 +2606,9 @@
     }
     if (window._nextStages && window._nextStages.length && document.getElementById('v-next-list').innerHTML) {
       renderNextStageMap();
+    }
+    if (window._diarioEntries && window._diarioEntries.length) {
+      renderDiarioEntries(window._diarioEntries);
     }
   }
 
