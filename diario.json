@@ -8,6 +8,15 @@
       "photos": [],
       "videos": [],
       "published": true
+    },
+    {
+      "day": 2,
+      "date": "2026-07-16",
+      "title": "La giornata perfetta",
+      "text": "gente meravigliosa.",
+      "photos": [],
+      "videos": [],
+      "published": true
     }
   ]
 }
