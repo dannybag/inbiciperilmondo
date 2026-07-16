@@ -1,15 +1,3 @@
 {
-  "entries": [
-    {
-      "day": 2,
-      "date": "2026-07-16",
-      "title": "Prova di traduzione",
-      "text": "Prova a tradurre il testo da italiano a inglese con azione GitHub",
-      "photos": [],
-      "videos": [],
-      "published": true,
-      "title_en": "Translation test",
-      "text_en": "Try translating the text from Italian to English using a GitHub action"
-    }
-  ]
+  "entries": []
 }
