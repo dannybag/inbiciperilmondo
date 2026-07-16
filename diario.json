@@ -1,3 +1,13 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "day": 1,
+      "date": "2026-07-16",
+      "title": "prova a tradurre",
+      "text": "Vediamo se le funzioni automatiche di traduzione funzionano.",
+      "photos": [],
+      "videos": [],
+      "published": true
+    }
+  ]
 }
