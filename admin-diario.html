@@ -576,6 +576,9 @@ async function saveEntry() {
     await commitBatch(newPhotoBlobs, entries, message, removedPhotos);
     setStatus(editingIndex !== null ? '✓ Nota aggiornata.' : '✓ Nota pubblicata.', 'ok');
 
+    // Avvia la traduzione automatica EN (GitHub Action con DeepL)
+    await triggerTranslation();
+
     cancelEdit();
     loadEntryList();
   } catch (e) {
@@ -583,6 +586,27 @@ async function saveEntry() {
     setStatus('✗ ' + e.message, 'err');
   } finally {
     btn.disabled = false;
+  }
+}
+
+// Avvisa GitHub (repository_dispatch) di tradurre subito la nuova nota via DeepL
+async function triggerTranslation() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/dispatches`, {
+      method: 'POST',
+      headers: { ...ghHeaders(), 'Accept': 'application/vnd.github.v3+json' },
+      body: JSON.stringify({ event_type: 'translate-diario' })
+    });
+    if (!res.ok) {
+      const errBody = await res.text();
+      console.error('Traduzione automatica: GitHub ha rifiutato la richiesta.', res.status, errBody);
+      setStatus(`✓ Nota salvata (traduzione EN non avviata: errore ${res.status} — controlla i permessi del token)`, 'err');
+      return;
+    }
+    console.log('Richiesta di traduzione inviata correttamente (status ' + res.status + ').');
+  } catch (e) {
+    console.error('Traduzione automatica: richiesta di rete fallita.', e.message);
+    setStatus('✓ Nota salvata (traduzione EN non avviata: errore di rete)', 'err');
   }
 }
 
