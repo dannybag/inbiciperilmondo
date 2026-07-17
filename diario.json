@@ -1,3 +1,15 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "day": 1,
+      "date": "2026-07-17",
+      "title": "Test di traduzione diario",
+      "text": "Provo a vedere se la traduzione automatica che ho predisposto sul diario sta funzionando.",
+      "photos": [
+        "diario/img/2026-07-17-1784293387715-n86b1-WhatsApp_Image_2026-05-15_at_11_41_52__1__jpeg.jpg"
+      ],
+      "videos": [],
+      "published": true
+    }
+  ]
 }
