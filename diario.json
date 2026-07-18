@@ -1,3 +1,15 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "day": 1,
+      "date": "2026-07-18",
+      "title": "Doveva essere una",
+      "text": "Un banale giro a Zelo Buon Persico per recuperare gli occhiali di Emil  si  è trasformato in un bella avventura, tra sabbie mobili e belle sorprese, ma del resto la bici è sempre avventura.",
+      "photos": [],
+      "videos": [
+        "https://youtube.com/shorts/DbGyINzKo4A?is=rnDIoV41Z1pCbfty"
+      ],
+      "published": true
+    }
+  ]
 }
