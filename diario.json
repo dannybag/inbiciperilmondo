@@ -1,18 +1,3 @@
 {
-  "entries": [
-    {
-      "day": 1,
-      "date": "2026-07-17",
-      "title": "Test di traduzione diario",
-      "text": "Provo a vedere se la traduzione automatica che ho predisposto sul diario sta funzionando.",
-      "photos": [
-        "diario/img/2026-07-17-1784293387715-n86b1-WhatsApp_Image_2026-05-15_at_11_41_52__1__jpeg.jpg",
-        "diario/img/2026-07-17-1784293498035-zs0sa-WhatsApp_Image_2026-05-15_at_11_41_51_jpeg.jpg"
-      ],
-      "videos": [],
-      "published": true,
-      "title_en": "Translation test: diary",
-      "text_en": "I’ll have a go at seeing if the machine translation I’ve set up on the diary is working."
-    }
-  ]
+  "entries": []
 }
