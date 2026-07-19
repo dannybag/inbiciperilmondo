@@ -1,17 +1,3 @@
 {
-  "entries": [
-    {
-      "day": 1,
-      "date": "2026-07-18",
-      "title": "Doveva essere un semplice giretto",
-      "text": "Un banale giro a Zelo Buon Persico per recuperare gli occhiali di Emil  si  è trasformato in un bella avventura, tra sabbie mobili e belle sorprese, ma del resto la bici è sempre avventura.",
-      "photos": [],
-      "videos": [
-        "https://www.instagram.com/reel/Da6aE90K9q2/?igsh=bzdkbjAxaHU2bHpy"
-      ],
-      "published": true,
-      "title_en": "It was supposed to be a",
-      "text_en": "A simple trip to Zelo Buon Persico to fetch Emil’s glasses turned into quite an adventure, complete with quicksand and lovely surprises – but then again, cycling is always an adventure."
-    }
-  ]
+  "entries": []
 }
