@@ -4,32 +4,9 @@
     "goal": 1700
   },
   "tappa": {
-    "day": 1,
-    "from": "Duomo ",
-    "to": "Darsena",
-    "km": 2,
-    "dislivello": 2,
-    "name": "Duomo alla Darsena",
-    "polyline": "msntGqfbw@?lGH?At@V?B?v@B@BnBB?h@@XAF@HIzCBf@?PFd@bA|DFHk@|@GFHJd@l@b@l@DF^h@d@r@Xd@JPNVz@vAFLh@~AX`B@LRnCBZHlB@LJnANr@JXRZf@b@D_@p@uBFFrC?NBVBv@DEpCR@F?B?F?JLhAF?KG?@i@[AZ@Ah@F??JJ@D?b@BFAHCZBT@@?H@CPR@bFb@F@jDVJ@r@DfCRH@|@FjBNP@ZBN@N@HJ`@J`@\\`@DD??DC`ACv@@z@L`CBh@@VD`A?x@Ir@M`AAHBFBM",
-    "date": "2026-08-30T22:00:00.000Z",
-    "updated": "2026-07-20T14:25:03.402Z",
-    "totKm": 2,
-    "totDis": 2,
-    "tappe": 1
+    "day": 0
   },
-  "tappe": [
-    {
-      "day": 1,
-      "from": "Duomo ",
-      "to": "Darsena",
-      "km": 2,
-      "dislivello": 2,
-      "name": "Duomo alla Darsena",
-      "polyline": "msntGqfbw@?lGH?At@V?B?v@B@BnBB?h@@XAF@HIzCBf@?PFd@bA|DFHk@|@GFHJd@l@b@l@DF^h@d@r@Xd@JPNVz@vAFLh@~AX`B@LRnCBZHlB@LJnANr@JXRZf@b@D_@p@uBFFrC?NBVBv@DEpCR@F?B?F?JLhAF?KG?@i@[AZ@Ah@F??JJ@D?b@BFAHCZBT@@?H@CPR@bFb@F@jDVJ@r@DfCRH@|@FjBNP@ZBN@N@HJ`@J`@\\`@DD??DC`ACv@@z@L`CBh@@VD`A?x@Ir@M`AAHBFBM",
-      "date": "2026-08-30T22:00:00.000Z",
-      "updated": "2026-07-20T14:25:03.402Z"
-    }
-  ],
+  "tappe": [],
   "next_stages": [
     {
       "day": 1,
