@@ -1540,8 +1540,8 @@
       const color = TAPPE_COLORS[i % TAPPE_COLORS.length];
       return `<div style="display:flex; align-items:center; gap:0.8rem; padding:0.8rem 0; border-bottom:1px solid rgba(240,90,40,0.1); flex-wrap:wrap;">
         <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:${color}; min-width:1.8rem; flex-shrink:0;">${i+1}</span>
-        <span style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); min-width:4rem; flex-shrink:0;">${dateStr}</span>
-        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:#FFF8F4;">${route} <span style="font-family:var(--mono);font-size:0.75rem;color:${color};margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0}m</span></span>
+        <span style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:rgba(255,248,244,0.35); min-width:4rem; flex-shrink:0;">${dateStr}</span>
+        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:${color};">${route} <span style="font-family:var(--mono);font-size:0.75rem;color:${color};margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0}m</span></span>
       </div>`;
     }).join('');
   }
@@ -1599,8 +1599,8 @@
       const dayNum = ns.day || (idx + 1);
       return `<div style="display:flex; align-items:center; gap:0.8rem; padding:0.8rem 0; border-bottom:1px solid rgba(79,195,247,0.1); flex-wrap:wrap;">
         <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:${color}; min-width:1.8rem; flex-shrink:0;">${dayNum}</span>
-        <span style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); min-width:4rem; flex-shrink:0;">${dateStr}</span>
-        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:#FFF8F4;">${label} <span style="font-family:var(--mono);font-size:0.75rem;color:${color};margin-left:0.3rem;">${ns.km||0} km · ↑${ns.dislivello||0}m</span></span>
+        <span style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:rgba(255,248,244,0.35); min-width:4rem; flex-shrink:0;">${dateStr}</span>
+        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:${color};">${label} <span style="font-family:var(--mono);font-size:0.75rem;color:${color};margin-left:0.3rem;">${ns.km||0} km · ↑${ns.dislivello||0}m</span></span>
       </div>`;
     }).join('');
 
