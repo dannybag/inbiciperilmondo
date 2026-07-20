@@ -1,3 +1,15 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "day": 1,
+      "date": "2026-07-20",
+      "title": "Un piccolo vezzo",
+      "text": "Sono stato nominato nella trasmissione radiofonica  OnTheRoad di RadioDJ",
+      "photos": [],
+      "videos": [
+        "https://youtube.com/shorts/qrj3-6jBZZY?feature=share"
+      ],
+      "published": true
+    }
+  ]
 }
