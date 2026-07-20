@@ -1481,17 +1481,6 @@
     return pts;
   }
 
-  // Riduce il numero di punti se sono troppi (tracce GPX/Strava ad alta risoluzione),
-  // mantenendo primo/ultimo punto e la forma generale del percorso — velocizza molto il rendering.
-  function simplifyPts(pts, maxPts) {
-    if (!pts || pts.length <= maxPts) return pts;
-    const step = Math.ceil(pts.length / maxPts);
-    const out = [];
-    for (let i = 0; i < pts.length; i += step) out.push(pts[i]);
-    if (out[out.length - 1] !== pts[pts.length - 1]) out.push(pts[pts.length - 1]);
-    return out;
-  }
-
   async function geocodeCity(city) {
     if(!city) return null;
     try {
@@ -1521,7 +1510,7 @@
       const color = TAPPE_COLORS[i % TAPPE_COLORS.length];
       const tip=`<b>${i+1}.</b> ${t.from||''} → ${t.to||''}<br>${t.km} km · ↑${t.dislivello||0}m`;
       if(t.polyline){
-        const pts=simplifyPts(decodePolyline(t.polyline), 800);
+        const pts=decodePolyline(t.polyline);
         if(pts.length){
           L.polyline(pts,{color,weight:4,opacity:i===tappe.length-1?1:0.75}).bindTooltip(tip,{sticky:true}).addTo(layer);
           L.marker(pts[0],{icon:L.divIcon({html:`<div style="background:${color};color:#fff;font-family:'Bebas Neue',sans-serif;font-size:0.6rem;width:1.2rem;height:1.2rem;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1.5px solid #fff;">${i+1}</div>`,className:'',iconSize:[20,20],iconAnchor:[10,10]})}).addTo(layer);
@@ -1641,7 +1630,7 @@
     const allPts = [];
     nextStages.forEach((ns, idx) => {
       if (ns.polyline) {
-        const pts = simplifyPts(decodePolyline(ns.polyline), 800);
+        const pts = decodePolyline(ns.polyline);
         if (pts.length) {
           const color = NEXT_STAGE_COLORS[idx % NEXT_STAGE_COLORS.length];
           const dayNum = ns.day || (idx + 1);
