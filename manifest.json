@@ -3,12 +3,12 @@
   "short_name": "UnaBiciPerIlMondo",
   "icons": [
     {
-      "src": "img/BikeIconBlack.png",
+      "src": "img/BikeIconBlack192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "img/BikeIconBW.png",
+      "src": "img/BikeIconBlack512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
