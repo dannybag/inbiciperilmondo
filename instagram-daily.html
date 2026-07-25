@@ -957,11 +957,7 @@ function applyDailyTappa(tappa, actName) {
 
   // Aggiorna caption slide 2 con frase random
   const cap2 = document.getElementById('s-caption');
-  if (cap2 && (!cap2.textContent || cap2.textContent === cap2.dataset.auto)) {
-    const p = getNextPhrase();
-    cap2.textContent = p;
-    cap2.dataset.auto = p;
-  }
+  // caption vuota - usa il bottone FRASI per scegliere
 }
 
 // Gestione callback OAuth Strava
@@ -1515,7 +1511,7 @@ const BG_COLORS = [
   { label:'Giallo',    val:'rgba(255,214,0,0.85)' },
 ];
 
-const EMOJIS = ['🚴','🚵','🏔️','🌄','🌅','🛣️','⛰️','🌿','☀️','🌊','💪','🔥','❤️','🧡','💛','💚','💙','⭐','✨','🏅','🎯','🤟','👊','🙏','📍','📸','🇮🇹','🌍','🐃','🦓'];
+const EMOJIS = ['🚴','🚵','🏔️','🌄','🌅','🛣️','⛰️','🌿','☀️','🌊','💪','🔥','❤️','🧡','💛','💚','💙','⭐','✨','🏅','🎯','🤟','👊','🙏','📍','📸','🇮🇹','🌍','🐃','🦓','😄','😅','😎','🤣','😤','🫠','😮‍💨','😑','🙃','😬','🥵','😵','🤯','😤','😩','😫','🥴','😴','🤤','😛','🤪','😜'];
 
 let styleTargetId = 's-caption';
 let currentSlideWrapId = 'wrapStory2';
@@ -1669,16 +1665,21 @@ document.getElementById('style-overlay').addEventListener('click', e => {
 
 // ---- GESTIONE FRASI ----
 let photoMsgs = [
-  "Ogni km conta.",
-  "La strada chiama.",
-  "Si pedala!",
-  "Testa bassa e gambe girare.",
-  "Il vento in faccia? Meglio così.",
-  "Un passo alla volta... in bici.",
-  "Non guardo indietro.",
-  "Il Sud si avvicina.",
-  "Asfalto e silenzio.",
-  "Questa è la mia risposta."
+  "Ogni km conta. 🚴",
+  "La strada chiama. 📣",
+  "Si pedala! 💪",
+  "Testa bassa e gambe girare. 🌀",
+  "Il vento in faccia? Meglio così. 😤",
+  "Un passo alla volta... in bici. 😅",
+  "Non guardo indietro. 😎",
+  "Il Sud si avvicina. 🌞",
+  "Asfalto e silenzio. 🤫",
+  "Questa è la mia risposta. ✊",
+  "Dolori? Quali dolori? 🤣",
+  "Ogni salita ha una discesa. 😮‍💨",
+  "Oggi era dura. Ce l\'ho fatta. 💪",
+  "Fa male, ma ne vale la pena. 🫠",
+  "Ancora vivo. Ancora in bici. 😄",
 ];
 let currentPhrase = photoMsgs[0];
 
@@ -1838,7 +1839,7 @@ function addPhotoSlide(isRestoring) {
     if (badge)   document.getElementById('s-badge-extra'+extraSlideCount).textContent = badge.textContent;
     if (prog)    document.getElementById('s-prog-extra'+extraSlideCount).style.width = prog.style.width;
     // Frase sempre nuova - non copiare dalla slide 2
-    document.getElementById('s-caption-extra'+extraSlideCount).textContent = getNextPhrase();
+    // caption extra vuota
   }
 }
 
@@ -2027,7 +2028,7 @@ function loadPhoto(input) {
 shufflePhrases();
 // Assegna frase iniziale alla slide 2
 const cap2 = document.getElementById('s-caption');
-if (cap2) cap2.textContent = getNextPhrase();
+// caption vuota all'avvio
 update();
 // ---- SESSION PERSISTENCE ----
 var SESSION_KEY = 'ig-session-daily';
