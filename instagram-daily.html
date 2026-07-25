@@ -666,29 +666,6 @@
 
     <!-- Aggiungi frase -->
     <div style="margin-bottom:1rem;">
-      <label style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Emoji rapide</label>
-      <div style="display:flex; flex-wrap:wrap; gap:0.3rem; margin-bottom:0.8rem;">
-        <button onclick="insertEmoji('😄')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">😄</button>
-        <button onclick="insertEmoji('😅')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">😅</button>
-        <button onclick="insertEmoji('😎')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">😎</button>
-        <button onclick="insertEmoji('🤣')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">🤣</button>
-        <button onclick="insertEmoji('😤')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">😤</button>
-        <button onclick="insertEmoji('🫠')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">🫠</button>
-        <button onclick="insertEmoji('😮‍💨')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">😮‍💨</button>
-        <button onclick="insertEmoji('🙏')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">🙏</button>
-        <button onclick="insertEmoji('🚴')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">🚴</button>
-        <button onclick="insertEmoji('🚲')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">🚲</button>
-        <button onclick="insertEmoji('💪')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">💪</button>
-        <button onclick="insertEmoji('❤️')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">❤️</button>
-        <button onclick="insertEmoji('🌍')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">🌍</button>
-        <button onclick="insertEmoji('🌞')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">🌞</button>
-        <button onclick="insertEmoji('🏁')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">🏁</button>
-        <button onclick="insertEmoji('✊')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">✊</button>
-        <button onclick="insertEmoji('📍')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">📍</button>
-        <button onclick="insertEmoji('🤫')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">🤫</button>
-        <button onclick="insertEmoji('😑')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">😑</button>
-        <button onclick="insertEmoji('🗻')" style="background:rgba(255,248,244,0.1); border:none; border-radius:3px; padding:0.25rem 0.4rem; cursor:pointer; font-size:1.1rem;">🗻</button>
-      </div>
       <label style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Aggiungi nuova frase</label>
       <div style="display:flex; gap:0.5rem;">
         <input id="phrase-new" type="text" placeholder="Scrivi qui..." style="flex:1; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.9rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;" onkeydown="if(event.key==='Enter') addPhrase()">
@@ -992,12 +969,7 @@ function applyDailyTappa(tappa, actName) {
   // Extra slides
   document.querySelectorAll('[id^="s-badge-extra"]').forEach(el => el.textContent = dateStr);
 
-  // Caption slide 2 lasciata vuota - l'utente sceglie con il bottone 💬
-  const cap2 = document.getElementById('s-caption');
-  if (cap2 && (!cap2.textContent || cap2.dataset.auto)) {
-    cap2.textContent = '';
-    cap2.dataset.auto = '';
-  }
+  // Caption lasciata vuota — scegli tu con il bottone 💬
 }
 
 // Gestione callback OAuth Strava
@@ -1723,16 +1695,6 @@ function shufflePhrases() {
   }
 }
 
-function insertEmoji(emoji) {
-  const input = document.getElementById('phrase-new');
-  if (input) {
-    const pos = input.selectionStart || input.value.length;
-    input.value = input.value.slice(0, pos) + emoji + input.value.slice(pos);
-    input.focus();
-    input.selectionStart = input.selectionEnd = pos + emoji.length;
-  }
-}
-
 function getNextPhrase() {
   if (phraseQueue.length === 0) shufflePhrases();
   return phraseQueue.shift();
@@ -1874,7 +1836,7 @@ function addPhotoSlide() {
   if (badge)   document.getElementById('s-badge-extra'+extraSlideCount).textContent = badge.textContent;
   if (prog)    document.getElementById('s-prog-extra'+extraSlideCount).style.width = prog.style.width;
   // Frase sempre nuova - non copiare dalla slide 2
-  document.getElementById('s-caption-extra'+extraSlideCount).textContent = '';
+  // caption extra vuota all'avvio
 }
 
 function removeExtraSlide(id) {
@@ -2029,7 +1991,7 @@ function loadPhoto(input) {
 shufflePhrases();
 // Assegna frase iniziale alla slide 2
 const cap2 = document.getElementById('s-caption');
-if (cap2 && !cap2.textContent) cap2.textContent = '';
+// caption vuota all'avvio
 update();
 // ---- SESSION PERSISTENCE ----
 var SESSION_KEY = 'ig-session-daily';
