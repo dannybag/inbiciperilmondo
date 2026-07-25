@@ -764,7 +764,7 @@
           <div class="media-tag" id="s-media-tag" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none; display:flex; align-items:center; gap:0.4rem;">#UnaBiciPerIlMondo</div>
         </div>
         <!-- Caption trascinabile + bottone frase -->
-        <div class="media-caption" id="s-caption" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare">Ogni km conta.</div>
+        <div class="media-caption" id="s-caption" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
           <button onclick="openPhrasePanel('s-caption'); styleTargetId='s-caption';" style="background:rgba(240,90,40,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">💬 frase</button>
           <button onclick="styleTargetId='s-caption'; openStylePanel('s-caption','wrapStory2');" style="background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
@@ -1661,7 +1661,7 @@ const BG_COLORS = [
   { label:'Giallo',    val:'rgba(255,214,0,0.85)' },
 ];
 
-const EMOJIS = ['🚴','🚵','🏔️','🌄','🌅','🛣️','⛰️','🌿','☀️','🌊','💪','🔥','❤️','🧡','💛','💚','💙','⭐','✨','🏅','🎯','🤟','👊','🙏','📍','📸','🇮🇹','🌍','🐃','🦓'];
+const EMOJIS = ['🚴','🚵','🏔️','🌄','🌅','🛣️','⛰️','🌿','☀️','🌊','💪','🔥','❤️','🧡','💛','💚','💙','⭐','✨','🏅','🎯','🤟','👊','🙏','📍','📸','🇮🇹','🌍','🐃','🦓','😄','😅','😎','🤣','😤','🫠','😮‍💨','😑','🙃','😬','🥵','😵','🤯','😩','😫','🥴','😴','😛','🤪','😜'];
 
 let styleTargetId = 's-caption';
 let currentSlideWrapId = 'wrapStory2';
@@ -1813,18 +1813,7 @@ document.getElementById('style-overlay').addEventListener('click', e => {
 });
 
 // ---- GESTIONE FRASI ----
-let photoMsgs = [
-  "Ogni km conta.",
-  "La strada chiama.",
-  "Si pedala!",
-  "Testa bassa e gambe girare.",
-  "Il vento in faccia? Meglio così.",
-  "Un passo alla volta... in bici.",
-  "Non guardo indietro.",
-  "Il Sud si avvicina.",
-  "Asfalto e silenzio.",
-  "Questa è la mia risposta."
-];
+let photoMsgs = [];
 let currentPhrase = photoMsgs[0];
 
 let usedPhraseSet = new Set();
