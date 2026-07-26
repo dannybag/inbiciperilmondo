@@ -144,7 +144,10 @@
 
   <label style="display:flex; align-items:center; justify-content:space-between;">
     <span>Testo del ricordo</span>
-    <button type="button" id="mic-btn" onclick="toggleDictation()" style="font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em; text-transform:none; background:none; border:1px solid rgba(255,248,244,0.25); color:var(--cream); padding:0.25rem 0.6rem; border-radius:12px; cursor:pointer;">🎤 Detta</button>
+    <div style="display:flex; gap:0.4rem; align-items:center;">
+      <button type="button" onclick="insertLink()" style="font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em; text-transform:none; background:none; border:1px solid rgba(255,248,244,0.25); color:var(--cream); padding:0.25rem 0.6rem; border-radius:12px; cursor:pointer;">🔗 Link</button>
+      <button type="button" id="mic-btn" onclick="toggleDictation()" style="font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em; text-transform:none; background:none; border:1px solid rgba(255,248,244,0.25); color:var(--cream); padding:0.25rem 0.6rem; border-radius:12px; cursor:pointer;">🎤 Detta</button>
+    </div>
   </label>
   <textarea id="f-text" placeholder="Racconta cosa è successo oggi..."></textarea>
   <div id="mic-status" class="token-help" style="display:none;"></div>
@@ -401,6 +404,19 @@ function initDictation() {
   r.continuous = false;
   r.interimResults = true;
   return r;
+}
+
+function insertLink() {
+  const url = prompt('URL del link (es. https://...)');
+  if (!url || !url.trim()) return;
+  const label = prompt('Testo da mostrare (lascia vuoto per usare l\'URL)') || url;
+  const md = `[${label}](${url.trim()})`;
+  const ta = document.getElementById('f-text');
+  const start = ta.selectionStart;
+  const end = ta.selectionEnd;
+  ta.value = ta.value.slice(0, start) + md + ta.value.slice(end);
+  ta.selectionStart = ta.selectionEnd = start + md.length;
+  ta.focus();
 }
 
 function toggleDictation() {
