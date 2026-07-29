@@ -743,6 +743,9 @@
 <div class="sticky-bar">
   <div class="sticky-group">
     <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" class="btn-sticky-orange" target="_blank" data-i18n="dona_ora">Dona ora</a>
+    <a href="https://www.instagram.com/dannybag" target="_blank" style="display:inline-flex; align-items:center; justify-content:center; padding:0.45rem 0.6rem; background:linear-gradient(45deg,#F58529,#DD2A7B,#8134AF); border-radius:2px; text-decoration:none;" title="@dannybag su Instagram">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
     <button onclick="toggleLang()" id="lang-btn" style="cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.85rem; letter-spacing:0.08em; background:transparent; color:var(--offwhite); border:1px solid rgba(255,248,244,0.4); border-radius:2px; padding:0.45rem 1.1rem; -webkit-appearance:none; appearance:none;">EN</button>
   </div>
 </div>
@@ -825,8 +828,8 @@
       <span class="live-stat"><span id="cnt-dis">↑0 m</span></span>
     </div>
     <div style="margin-top:1.4rem; display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center;">
-      <button onclick="toggleViaggio()" id="viaggio-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; color:#FFF8F4; background:var(--orange); border:1px solid var(--orange); padding:0.6rem 1.3rem; border-radius:3px; cursor:pointer; white-space:nowrap;"><span data-i18n="guarda_viaggio">Segui il Viaggio</span> <span id="viaggio-arrow">↓</span></button>
-      <button onclick="toggleDiario()" id="diario-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:rgba(255,248,244,0.18); border:2px solid var(--orange); padding:0.6rem 1.3rem; border-radius:3px; cursor:pointer; white-space:nowrap;"><span data-i18n="leggi_diario">Storie in Sella</span> <span id="diario-arrow">↓</span></button>
+        <button onclick="toggleViaggio()" id="viaggio-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; color:#FFF8F4; background:var(--orange); border:1px solid var(--orange); padding:0.6rem 1.3rem; border-radius:3px; cursor:pointer; white-space:nowrap;"><span data-i18n="guarda_viaggio">Il Viaggio</span> <span id="viaggio-arrow">↓</span></button>
+        <button onclick="toggleDiario()" id="diario-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:rgba(255,248,244,0.18); border:2px solid var(--orange); padding:0.6rem 1.3rem; border-radius:3px; cursor:pointer; white-space:nowrap;"><span data-i18n="leggi_diario">Storie in Sella</span> <span id="diario-arrow">↓</span></button>
     </div>
   </div>
 
@@ -1896,7 +1899,14 @@
           <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.08em; color:var(--orange); text-transform:uppercase; margin-bottom:0.4rem;">${dateStr}</div>
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:400; color:#FFF8F4; margin-bottom:0.5rem;">${title}</div>
           <div style="font-family:'Barlow',sans-serif; font-size:0.92rem; line-height:1.55; color:rgba(255,248,244,0.8); margin-bottom:${(photos.length||videos.length)?'0.8rem':'0'};">${text}</div>
-          ${photos.length ? `<div class="dia-photos">${photos.map((p, i) => `<div class="dia-photo" onclick='openDiaLightbox(${JSON.stringify(photos)}, ${i})'><img src="${p}" loading="lazy"></div>`).join('')}</div>` : ''}
+          ${photos.length ? `<div class="dia-photos">${photos.map((p, i) => {
+            const link = (e.photoLinks && e.photoLinks[i]) ? e.photoLinks[i] : '';
+            const click = link
+              ? `onclick="window.open('${link}','_blank')"`
+              : `onclick='openDiaLightbox(${JSON.stringify(photos)}, ${i})'`;
+            const cursor = link ? 'cursor:pointer; outline:2px solid var(--orange);' : '';
+            return `<div class="dia-photo" ${click} style="${cursor}" title="${link ? 'Apri link' : 'Ingrandisci'}"><img src="${p}" loading="lazy"></div>`;
+          }).join('')}</div>` : ''}
           ${videos.length ? `<div class="dia-videos">${videos.map(v => _diaRenderVideo(v)).join('')}</div>` : ''}
         </div>
       `;
@@ -2489,7 +2499,7 @@
       tappa_giorno: 'Tappa del giorno',
       in_sella_da: 'In sella da:',
       tappe_word: 'tappe',
-      guarda_viaggio: 'Segui il Viaggio',
+      guarda_viaggio: 'Il Viaggio',
       leggi_diario: 'Storie in Sella',
       espandi: '⤢ Espandi',
       tappe_percorse: '← Tappe percorse',
@@ -2583,7 +2593,7 @@
       tappa_giorno: "Today's Stage",
       in_sella_da: 'In the saddle since:',
       tappe_word: 'stages',
-      guarda_viaggio: 'Follow the Journey',
+      guarda_viaggio: 'The Journey',
       leggi_diario: 'Saddle Stories',
       espandi: '⤢ Expand',
       tappe_percorse: '← Stages completed',
