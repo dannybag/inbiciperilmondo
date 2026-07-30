@@ -187,14 +187,13 @@
     padding: 0;
     overflow: hidden;
   }
-  /* Sfondo diagonale - solo parte superiore sinistra */
+  /* Sfondo diagonale - da angolo destro in alto a angolo sinistro in basso */
   .slide-open::after {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 55%;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(240,90,40,0.12);
-    clip-path: polygon(0 0, 100% 0, 100% 55%, 0 100%);
+    clip-path: polygon(30% 0, 100% 0, 70% 100%, 0 100%);
     pointer-events: none;
   }
   .open-tag {
@@ -709,26 +708,26 @@
         </div>
 
         <!-- TOP OVERLAY con gradiente scuro -->
-        <div style="position:absolute; top:0; left:0; right:0; height:45%; z-index:3; background:linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, transparent 100%); pointer-events:none;"></div>
+        <div style="position:absolute; top:0; left:0; right:0; height:55%; z-index:3; background:linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%); pointer-events:none;"></div>
 
         <!-- HASHTAG in alto a sinistra -->
         <div class="open-tag" id="s-open-tag" contenteditable="true" style="position:absolute; top:0.8rem; left:1.2rem; z-index:4; cursor:grab; outline:none;">
           #UnaBiciPerIlMondo
         </div>
 
-        <!-- DATA - grigio scuro, draggabile -->
-        <div id="s-date" contenteditable="true" style="position:absolute; top:2.8rem; left:1.2rem; z-index:4; cursor:grab; touch-action:none; outline:none; font-family:'IBM Plex Mono',monospace; font-size:0.8rem; font-weight:600; letter-spacing:0.05em; color:rgba(80,80,80,0.95);"></div>
+        <!-- DATA - bianco caldo, più grande, draggabile -->
+        <div id="s-date" contenteditable="true" style="position:absolute; top:2.6rem; left:1.2rem; z-index:4; cursor:grab; touch-action:none; outline:none; font-family:'IBM Plex Mono',monospace; font-size:1rem; font-weight:600; letter-spacing:0.06em; color:#FFF8F4;"></div>
 
-        <!-- TAPPA + NUMERO - grandi, in alto -->
-        <div style="position:absolute; top:3.8rem; left:1.2rem; z-index:4; display:flex; align-items:baseline; gap:0.4rem; cursor:grab;" id="s-info-group">
-          <div class="open-day-label" style="margin:0; padding:0; font-size:0.9rem;">Tappa</div>
-          <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; cursor:text; padding:0;">01</div>
+        <!-- TAPPA + NUMERO - più grandi -->
+        <div style="position:absolute; top:4rem; left:1.2rem; z-index:4; display:flex; align-items:baseline; gap:0.3rem; cursor:grab;" id="s-info-group">
+          <div class="open-day-label" style="margin:0; padding:0; font-size:1.1rem; letter-spacing:0.15em;">Tappa</div>
+          <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; cursor:text; padding:0; font-size:2.6rem;">01</div>
         </div>
 
-        <!-- BARRA ARANCIO con titolo dentro - a metà slide -->
-        <div style="position:absolute; left:0; right:0; top:52%; z-index:4; background:var(--orange); padding:0.7rem 1.2rem;">
+        <!-- BARRA ARANCIO con titolo - subito dopo TAPPA 01 -->
+        <div style="position:absolute; left:0; right:0; top:7.2rem; z-index:4; background:var(--orange); padding:0.6rem 1.2rem;">
           <div id="s-route-title-1" contenteditable="true" title="Tocca per modificare" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:#FFF8F4; text-transform:uppercase; line-height:1.1;"></div>
-          <div id="s-km-day" style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.7); margin-top:0.2rem;"></div>
+          <div id="s-km-day" style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.7); margin-top:0.15rem;"></div>
         </div>
 
         <div class="open-from-to" id="s-from-to" style="display:none;">Milano → Bologna</div>
