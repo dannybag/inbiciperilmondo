@@ -716,7 +716,7 @@
         </div>
 
         <!-- DATA - bianco caldo, più grande, draggabile -->
-        <div id="s-date" contenteditable="true" style="position:absolute; top:2.5rem; left:1.2rem; z-index:4; cursor:grab; touch-action:none; outline:none; font-family:'IBM Plex Mono',monospace; font-size:1rem; font-weight:600; letter-spacing:0.06em; color:#FFF8F4;"></div>
+        <div id="s-date" contenteditable="true" style="position:absolute; top:2.9rem; left:1.2rem; z-index:4; cursor:grab; touch-action:none; outline:none; font-family:'IBM Plex Mono',monospace; font-size:1rem; font-weight:600; letter-spacing:0.06em; color:#FFF8F4;"></div>
 
         <!-- TAPPA + NUMERO - più grandi -->
         <div style="position:absolute; top:3.2rem; left:1.2rem; z-index:4; display:flex; align-items:baseline; gap:0.3rem; cursor:grab;" id="s-info-group">
@@ -1027,14 +1027,10 @@ function applyWbrTappa(tappa) {
   document.getElementById('kmDay').value      = km;
   document.getElementById('dislivello').value = dis;
 
-  // Titolo: NON sovrascrivere se è da GitHub, solo se vuoto
+  // Titolo: aggiorna sempre da Strava quando carico un'attività
   const title1 = document.getElementById('s-route-title-1');
-  console.log('applyWbrTappa - titleFromGitHub:', titleFromGitHub, 'titolo attuale:', title1?.textContent, 'Strava name:', name);
-  if (title1 && !titleFromGitHub && !title1.textContent.trim()) {
-    console.log('✅ Impostando titolo da Strava:', name);
-    title1.textContent = name;  // Usa Strava solo se vuoto E non da GitHub
-  } else {
-    console.log('❌ Titolo NON impostato (già da GitHub o non vuoto)');
+  if (title1 && name) {
+    title1.textContent = name;
   }
 
   const d1 = document.getElementById('s-date'); if (d1) d1.textContent = dateStr;
@@ -2224,7 +2220,8 @@ function saveSession(showMsg) {
   // Elementi "fissi"/handle: NON ripristinare il loro style al reload,
   // altrimenti si rompe il drag (simpleDrag) già attivo su quegli elementi.
   // Per questi salviamo solo il TESTO, non lo style.
-  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-route-title-1','s-close-hashtag','s-close-msg'];
+  // s-route-title-1 escluso: viene sempre aggiornato da Strava/GPX al caricamento
+  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-close-hashtag','s-close-msg'];
 
   allSlideIds.forEach(slideId => {
     const wrap = document.getElementById(slideId);
