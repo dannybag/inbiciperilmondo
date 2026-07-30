@@ -722,17 +722,10 @@
             <div class="open-day-label" style="margin-bottom:0; padding:0;">Tappa</div>
             <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; cursor:text; padding:0;">01</div>
           </div>
+          <div id="s-date" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; font-weight:600; letter-spacing:0.05em; color:rgba(255,248,244,0.6); margin-top:0.2rem;"></div>
           <div class="open-from-to" id="s-from-to" style="display:none;">Milano → Bologna</div>
+          <div id="s-route-title-1" contenteditable="true" title="Tocca per modificare il titolo (es. nome tappa Strava)" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:rgba(255,248,244,0.7); margin-top:0.3rem; text-transform:uppercase;"></div>
           <div id="s-km-day" style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.25rem;"></div>
-        </div>
-
-        <!-- DATA - draggabile e editabile indipendentemente -->
-        <div id="s-date" contenteditable="true" style="position:absolute; bottom:4rem; left:1.2rem; z-index:3; cursor:grab; touch-action:none; outline:none; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; font-weight:600; letter-spacing:0.05em; color:rgba(255,248,244,0.6);"></div>
-
-        <!-- TITOLO TRACCIA - draggabile e editabile indipendentemente -->
-        <div id="s-route-title-1" contenteditable="true" title="Tocca per modificare" style="position:absolute; bottom:2.2rem; left:1.2rem; z-index:3; cursor:grab; touch-action:none; outline:none; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:rgba(255,248,244,0.7); text-transform:uppercase;"></div>
-
-        <!-- placeholder per chiudere il div s-info-group rimosso inline -->
         </div>
 
         <div class="open-bar"></div>
@@ -1616,16 +1609,6 @@ document.addEventListener('DOMContentLoaded', () => {
   var closeHashtag = document.getElementById('s-close-hashtag'); if (closeHashtag) simpleDrag(closeHashtag);
   var closeMsg = document.getElementById('s-close-msg'); if (closeMsg) simpleDrag(closeMsg);
   var infoGrp = document.getElementById('s-info-group'); if (infoGrp) simpleDrag(infoGrp);
-  var sDate = document.getElementById('s-date'); if (sDate) {
-    simpleDrag(sDate);
-    // Quando si edita la data sulla slide 1, sincronizza tutte le altre slide
-    sDate.addEventListener('input', function() {
-      const val = sDate.textContent;
-      const d2 = document.getElementById('s-date-2'); if (d2) d2.textContent = val;
-      document.querySelectorAll('[id^="s-date-extra"]').forEach(el => el.textContent = val);
-    });
-  }
-  var sTitle = document.getElementById('s-route-title-1'); if (sTitle) simpleDrag(sTitle);
   var h2 = document.getElementById('s-handle-2'); if (h2) simpleDrag(h2);
   // Sync handles
   // Sync handle Una Bici per il Mondo su tutte le slide
