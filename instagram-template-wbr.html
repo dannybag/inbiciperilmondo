@@ -712,19 +712,28 @@
         </div>
 
         <!-- TOP OVERLAY: logo -->
-        <div class="open-tag" id="s-open-tag" contenteditable="true" style="position:absolute; top:1rem; left:1.2rem; z-index:2; cursor:grab; outline:none;">
+        <div class="open-tag" id="s-open-tag" contenteditable="true" style="position:absolute; top:1rem; left:1.2rem; z-index:4; cursor:grab; outline:none;">
           #UnaBiciPerIlMondo
         </div>
 
-        <!-- BOTTOM OVERLAY: tappa info - draggabile -->
-        <div id="s-info-group" style="position:absolute; bottom:0; left:0; right:0; z-index:2; padding:2.5rem 1.2rem 1.2rem; background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, transparent 100%); cursor:grab;">
+        <!-- BANDA TRASVERSALE colorata che copre tutta la slide -->
+        <div style="position:absolute; top:0; left:0; right:0; bottom:0; z-index:1; pointer-events:none; overflow:hidden;">
+          <div style="position:absolute; left:-20%; right:-20%; top:28%; height:22%; background:rgba(240,90,40,0.82); transform:rotate(-8deg); transform-origin:center;"></div>
+        </div>
+
+        <!-- DATA - in alto, draggabile e editabile -->
+        <div id="s-date" contenteditable="true" style="position:absolute; top:3.5rem; left:1.2rem; z-index:4; cursor:grab; touch-action:none; outline:none; font-family:'IBM Plex Mono',monospace; font-size:0.8rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.9);"></div>
+
+        <!-- TITOLO TRACCIA - sotto la data, draggabile e editabile -->
+        <div id="s-route-title-1" contenteditable="true" title="Tocca per modificare" style="position:absolute; top:5.2rem; left:1.2rem; right:1.2rem; z-index:4; cursor:grab; touch-action:none; outline:none; font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:0.02em; color:#FFF8F4; text-transform:uppercase; line-height:1.1;"></div>
+
+        <!-- INFO GRUPPO (tappa + km) in basso -->
+        <div id="s-info-group" style="position:absolute; bottom:0; left:0; right:0; z-index:2; padding:1.5rem 1.2rem 1rem; background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%); cursor:grab;">
           <div style="display:flex; align-items:baseline; gap:0.6rem;">
             <div class="open-day-label" style="margin-bottom:0; padding:0;">Tappa</div>
             <div class="open-day-num" id="s-day-num" contenteditable="true" style="outline:none; cursor:text; padding:0;">01</div>
           </div>
-          <div id="s-date" contenteditable="true" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; font-weight:600; letter-spacing:0.05em; color:rgba(255,248,244,0.6); margin-top:0.2rem;"></div>
           <div class="open-from-to" id="s-from-to" style="display:none;">Milano → Bologna</div>
-          <div id="s-route-title-1" contenteditable="true" title="Tocca per modificare il titolo (es. nome tappa Strava)" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:rgba(255,248,244,0.7); margin-top:0.3rem; text-transform:uppercase;"></div>
           <div id="s-km-day" style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.25rem;"></div>
         </div>
 
@@ -912,7 +921,7 @@
 
 
 // ---- DEFAULT IMAGE SLIDE 1 ----
-var DEFAULT_OPEN_IMG = 'https://mipa.dannybag.org/img/BiciDB.jpeg';
+var DEFAULT_OPEN_IMG = 'https://mipa.dannybag.org/img/BiciDB_new.jpg';
 
 function loadDefaultOpenPhoto() {
   var img = document.getElementById('openPhotoPreview');
@@ -1609,6 +1618,16 @@ document.addEventListener('DOMContentLoaded', () => {
   var closeHashtag = document.getElementById('s-close-hashtag'); if (closeHashtag) simpleDrag(closeHashtag);
   var closeMsg = document.getElementById('s-close-msg'); if (closeMsg) simpleDrag(closeMsg);
   var infoGrp = document.getElementById('s-info-group'); if (infoGrp) simpleDrag(infoGrp);
+  var sDate = document.getElementById('s-date'); if (sDate) {
+    simpleDrag(sDate);
+    // Quando si edita la data sulla slide 1, sincronizza tutte le altre slide
+    sDate.addEventListener('input', function() {
+      const val = sDate.textContent;
+      const d2 = document.getElementById('s-date-2'); if (d2) d2.textContent = val;
+      document.querySelectorAll('[id^="s-date-extra"]').forEach(el => el.textContent = val);
+    });
+  }
+  var sTitle = document.getElementById('s-route-title-1'); if (sTitle) simpleDrag(sTitle);
   var h2 = document.getElementById('s-handle-2'); if (h2) simpleDrag(h2);
   // Sync handles
   // Sync handle Una Bici per il Mondo su tutte le slide
