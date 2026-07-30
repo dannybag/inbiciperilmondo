@@ -1,7 +1,87 @@
 {
   "fundraising": {
     "raised": 315,
-    "goal": 1700
+    "goal": 1700,
+    "donors": [
+      {
+        "name": "Mirko T",
+        "amount": 20,
+        "time": "",
+        "message": "Buona pedalata!"
+      },
+      {
+        "name": "Mirko T",
+        "amount": 20,
+        "time": "",
+        "message": "Buona pedalata!"
+      },
+      {
+        "name": "Mirko T",
+        "amount": 20,
+        "time": "",
+        "message": "Buona pedalata!"
+      },
+      {
+        "name": "Anonymous",
+        "amount": 20,
+        "time": "",
+        "message": ""
+      },
+      {
+        "name": "Patrizia F",
+        "amount": 147,
+        "time": "",
+        "message": "Grazie a Daniele … la fatica fisica sarà tutta sua 👍🍀👍"
+      },
+      {
+        "name": "Patrizia F",
+        "amount": 147,
+        "time": "",
+        "message": "Grazie a Daniele … la fatica fisica sarà tutta sua 👍🍀👍"
+      },
+      {
+        "name": "Anonymous",
+        "amount": 147,
+        "time": "",
+        "message": ""
+      },
+      {
+        "name": "Anonymous",
+        "amount": 1476,
+        "time": "",
+        "message": "Danny bag bean lo es you"
+      },
+      {
+        "name": "Anonymous",
+        "amount": 1476,
+        "time": "",
+        "message": "Danny bag bean lo es you"
+      },
+      {
+        "name": "Anonymous",
+        "amount": 147,
+        "time": "",
+        "message": ""
+      },
+      {
+        "name": "Anonymous",
+        "amount": 1,
+        "time": "",
+        "message": ""
+      },
+      {
+        "name": "Anonymous",
+        "amount": 1,
+        "time": "",
+        "message": ""
+      },
+      {
+        "name": "Anonymous",
+        "amount": 1,
+        "time": "",
+        "message": ""
+      }
+    ]
   },
   "tappa": {
     "day": 0
