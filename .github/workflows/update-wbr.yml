@@ -2,12 +2,12 @@ name: Aggiorna raccolta fondi WBR
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # ogni 6 ore (più affidabile su GitHub free)
+    - cron: '0 * * * *'   # ogni ora (sufficiente per raccolta fondi, sicuro per GitHub)
   push:
     branches: [ main ]
     paths:
-      - 'tap.trigger'        # parte solo quando TAP aggiorna questo file
-  workflow_dispatch:        # avvio manuale dal pannello Actions
+      - 'tap.trigger'
+  workflow_dispatch:
 
 jobs:
   update-data:
@@ -26,7 +26,17 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Installa Playwright
+      - name: Cache Playwright + Chromium
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            node_modules
+          key: playwright-chromium-${{ runner.os }}-v1
+
+      - name: Installa Playwright (solo se non in cache)
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: |
           npm install playwright @playwright/test
           npx playwright install chromium --with-deps
@@ -54,11 +64,10 @@ jobs:
             console.log('\n--- TESTO PAGINA ---');
             console.log(bodyText.slice(0, 2000));
 
-            // Cerca "collected" nel testo e prendi il numero prima
+            // ---- IMPORTO RACCOLTO ----
             let raised = 0;
             let goal = 1700;
 
-            // Cerca pattern tipo "EUR 0 collected" o "€0 collected" o "0 collected"
             const collectedMatch = bodyText.match(/(?:EUR|€|euro)?\s*([\d,.']+)\s*collected/i);
             if (collectedMatch) {
               raised = parseInt(collectedMatch[1].replace(/[,.']/g, '')) || 0;
@@ -67,13 +76,63 @@ jobs:
               console.log('\n⚠ Pattern "collected" non trovato nel testo');
             }
 
-            // Cerca anche il goal per aggiornarlo se cambia
             const goalMatch = bodyText.match(/(?:EUR|€|euro)?\s*([\d,.']+)\s*goal/i);
             if (goalMatch) {
               const g = parseInt(goalMatch[1].replace(/[,.']/g, '')) || 0;
               if (g > 0) goal = g;
               console.log('Trovato "goal":', goalMatch[0], '→ €' + goal);
             }
+
+            // ---- LISTA DONATORI ----
+            console.log('\n--- Scraping donatori ---');
+            const donors = await page.evaluate(() => {
+              const results = [];
+              // Prova selettori comuni per liste donatori su piattaforme fundraising
+              const selectors = [
+                '[class*="donor"]', '[class*="donation"]', '[class*="supporter"]',
+                '[class*="backer"]', '[class*="pledge"]', '[class*="contribution"]'
+              ];
+              let items = [];
+              for (const sel of selectors) {
+                items = document.querySelectorAll(sel);
+                if (items.length > 0) break;
+              }
+              // Fallback: cerca per pattern testo EUR nel DOM
+              if (items.length === 0) {
+                const allEls = document.querySelectorAll('li, [class*="item"], [class*="row"]');
+                items = [...allEls].filter(el => /EUR\s*\d+/.test(el.textContent));
+              }
+              items.forEach(el => {
+                const text = el.innerText || el.textContent || '';
+                const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+                if (!lines.length) return;
+
+                // Cerca importo EUR
+                const amountMatch = text.match(/EUR\s*([\d,.']+)/i);
+                if (!amountMatch) return;
+                const amount = parseInt(amountMatch[1].replace(/[,.']/g, '')) || 0;
+
+                // Prima riga non-amount = nome
+                const name = lines.find(l => !l.match(/EUR|€|\d+\s*(hours?|days?|months?|minutes?|ago)/i)) || 'Anonymous';
+
+                // Cerca tempo (es. "about 7 hours", "6 days", "2 months")
+                const timeMatch = text.match(/(?:about\s+)?(\d+\s+(?:hours?|days?|months?|minutes?)\s*ago?|\d+[hd])/i);
+                const time = timeMatch ? timeMatch[0].trim() : '';
+
+                // Messaggio: riga non nome, non amount, non time
+                const msg = lines.find(l =>
+                  l !== name &&
+                  !l.match(/EUR|€/) &&
+                  !l.match(/(?:about\s+)?\d+\s+(?:hours?|days?|months?)/i)
+                ) || '';
+
+                results.push({ name, amount, time, message: msg });
+              });
+              return results;
+            });
+
+            console.log('Donatori trovati:', donors.length);
+            donors.forEach(d => console.log(` - ${d.name}: €${d.amount} (${d.time}) ${d.message ? '"' + d.message.slice(0,40) + '"' : ''}`));
 
             await browser.close();
 
@@ -90,13 +149,24 @@ jobs:
               console.log('data.json non trovato, uso default');
             }
 
-            // Aggiorna sempre raised (anche se 0) e goal
-            const changed = (raised !== data.fundraising.raised) || (goal !== data.fundraising.goal);
-            if (changed) {
+            // Aggiorna raised, goal e donatori
+            const raisedChanged = raised !== data.fundraising.raised || goal !== data.fundraising.goal;
+            if (raisedChanged) {
               data.fundraising.raised = raised;
               data.fundraising.goal = goal;
+            }
+
+            // Salva donatori sempre se ne troviamo
+            let donorsChanged = false;
+            if (donors.length > 0) {
+              const prev = JSON.stringify(data.fundraising.donors || []);
+              data.fundraising.donors = donors;
+              donorsChanged = prev !== JSON.stringify(donors);
+            }
+
+            if (raisedChanged || donorsChanged) {
               fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
-              console.log('✓ data.json aggiornato');
+              console.log('✓ data.json aggiornato (raised:' + raisedChanged + ' donors:' + donorsChanged + ')');
             } else {
               console.log('= Nessuna variazione');
             }
