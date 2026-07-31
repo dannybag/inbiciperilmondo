@@ -75,8 +75,10 @@ jobs:
             // Formato nel testo: "EUR 147about 10 hours" o "EUR 1476 days"
             // dove amount e time sono concatenati senza spazio
             const TIME_UNITS = 'second|minute|hour|day|month|year';
-            const TIME_RE = new RegExp(`((?:about\\s+)?\\d+\\s+(?:${TIME_UNITS})s?(?:\\s+ago)?)`, 'i');
-            const EUR_LINE = new RegExp(`^EUR\\s*([\\d,.']+)((?:about\\s+)?\\d+\\s+(?:${TIME_UNITS})s?(?:\\s+ago)?)?\\s*$`, 'i');
+            // Singola cifra per time concatenato (es "1476 days" → "6 days"), \d+ per "about X"
+            const TIME_RE = new RegExp(
+              `(about\\s+\\d+\\s+(?:${TIME_UNITS})s?(?:\\s+ago)?|\\d\\s+(?:${TIME_UNITS})s?(?:\\s+ago)?)`, 'i'
+            );
 
             const lines = bodyText.split('\n').map(l => l.trim()).filter(Boolean);
             const donors = [];
