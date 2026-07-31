@@ -4,82 +4,34 @@
     "goal": 1700,
     "donors": [
       {
-        "name": "Mirko T",
-        "amount": 20,
+        "name": "19%",
+        "amount": 315,
         "time": "",
-        "message": "Buona pedalata!"
-      },
-      {
-        "name": "Mirko T",
-        "amount": 20,
-        "time": "",
-        "message": "Buona pedalata!"
-      },
-      {
-        "name": "Mirko T",
-        "amount": 20,
-        "time": "",
-        "message": "Buona pedalata!"
+        "message": ""
       },
       {
         "name": "Anonymous",
-        "amount": 20,
+        "amount": 1700,
         "time": "",
         "message": ""
+      },
+      {
+        "name": "Mirko T",
+        "amount": 20,
+        "time": "about 14 hours",
+        "message": "Buona pedalata!"
       },
       {
         "name": "Patrizia F",
         "amount": 147,
-        "time": "",
-        "message": "Grazie a Daniele … la fatica fisica sarà tutta sua 👍🍀👍"
-      },
-      {
-        "name": "Patrizia F",
-        "amount": 147,
-        "time": "",
+        "time": "about 17 hours",
         "message": "Grazie a Daniele … la fatica fisica sarà tutta sua 👍🍀👍"
       },
       {
         "name": "Anonymous",
-        "amount": 147,
-        "time": "",
-        "message": ""
-      },
-      {
-        "name": "Anonymous",
-        "amount": 1476,
-        "time": "",
-        "message": "Danny bag bean lo es you"
-      },
-      {
-        "name": "Anonymous",
-        "amount": 1476,
-        "time": "",
-        "message": "Danny bag bean lo es you"
-      },
-      {
-        "name": "Anonymous",
-        "amount": 147,
-        "time": "",
-        "message": ""
-      },
-      {
-        "name": "Anonymous",
         "amount": 1,
-        "time": "",
-        "message": ""
-      },
-      {
-        "name": "Anonymous",
-        "amount": 1,
-        "time": "",
-        "message": ""
-      },
-      {
-        "name": "Anonymous",
-        "amount": 1,
-        "time": "",
-        "message": ""
+        "time": "about 2 months",
+        "message": "World Bicycle Relief"
       }
     ]
   },
