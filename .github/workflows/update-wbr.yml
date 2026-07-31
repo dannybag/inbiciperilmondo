@@ -81,6 +81,7 @@ jobs:
             const lines = bodyText.split('\n').map(l => l.trim()).filter(Boolean);
             const donors = [];
             const seen = new Set();
+            let anonCount = 0;
 
             for (let i = 0; i < lines.length; i++) {
               const line = lines[i];
@@ -114,10 +115,12 @@ jobs:
               const message = (nextLine && !nextLine.match(/^EUR|collected|goal|donate|support|show|view|load|login|about|share|world bicycle relief/i))
                 ? nextLine : '';
 
-              // Per gli Anonymous usiamo anche l'indice di riga come discriminante
-              // così due Anonymous con stesso importo ma diversa posizione restano distinti
+              // Deduplicazione:
+              // - Donatori con nome: chiave = nome|importo|messaggio
+              // - Anonymous: chiave = importo|tempo (identità reale del donatore)
+              //   se tempo vuoto, usa importo|messaggio come fallback
               const key = name === 'Anonymous'
-                ? `${name}|${amount}|${message}|${i}`
+                ? `anon|${amount}|${time || message}`
                 : `${name}|${amount}|${message}`;
               if (seen.has(key)) continue;
               seen.add(key);
