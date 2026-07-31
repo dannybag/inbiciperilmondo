@@ -2,7 +2,7 @@ name: Aggiorna raccolta fondi WBR
 
 on:
   schedule:
-    - cron: '0 * * * *'   # ogni ora (sufficiente per raccolta fondi, sicuro per GitHub)
+    - cron: '0 * * * *'   # ogni ora
   push:
     branches: [ main ]
     paths:
@@ -43,136 +43,105 @@ jobs:
 
       - name: Leggi dati da WBR e aggiorna data.json
         run: |
-          cat << 'EOF' > fetch_wbr.js
+          node << 'JSEOF'
           const { chromium } = require('playwright');
           const fs = require('fs');
 
           (async () => {
             const browser = await chromium.launch();
             const page = await browser.newPage();
-
-            console.log('--- WBR Fundraising Scraper ---');
-            console.log('Data/ora:', new Date().toISOString());
+            console.log('=== WBR Scraper v3 ===', new Date().toISOString());
 
             await page.goto('https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo?tab=overview', {
-              waitUntil: 'networkidle',
-              timeout: 30000
+              waitUntil: 'networkidle', timeout: 30000
             });
 
-            // Dump testo visibile per debug
             const bodyText = await page.evaluate(() => document.body.innerText);
-            console.log('\n--- TESTO PAGINA ---');
-            console.log(bodyText.slice(0, 2000));
 
-            // ---- IMPORTO RACCOLTO ----
-            let raised = 0;
-            let goal = 1700;
+            // Stampa tutto il testo per debug
+            console.log('\n=== TESTO COMPLETO (10000 chars) ===');
+            console.log(bodyText.slice(0, 10000));
+            console.log('=== FINE TESTO ===\n');
 
-            const collectedMatch = bodyText.match(/(?:EUR|€|euro)?\s*([\d,.']+)\s*collected/i);
-            if (collectedMatch) {
-              raised = parseInt(collectedMatch[1].replace(/[,.']/g, '')) || 0;
-              console.log('\nTrovato "collected":', collectedMatch[0], '→ €' + raised);
-            } else {
-              console.log('\n⚠ Pattern "collected" non trovato nel testo');
-            }
+            // --- RACCOLTO E GOAL ---
+            let raised = 0, goal = 1700;
+            const mRaised = bodyText.match(/EUR\s*([\d,.']+)\s*collected/i);
+            if (mRaised) raised = parseInt(mRaised[1].replace(/[,.']/g, '')) || 0;
+            const mGoal = bodyText.match(/EUR\s*([\d,.']+)\s*goal/i);
+            if (mGoal) { const g = parseInt(mGoal[1].replace(/[,.']/g, '')) || 0; if (g > 0) goal = g; }
+            console.log('Raccolto:', raised, '/ Goal:', goal);
 
-            const goalMatch = bodyText.match(/(?:EUR|€|euro)?\s*([\d,.']+)\s*goal/i);
-            if (goalMatch) {
-              const g = parseInt(goalMatch[1].replace(/[,.']/g, '')) || 0;
-              if (g > 0) goal = g;
-              console.log('Trovato "goal":', goalMatch[0], '→ €' + goal);
-            }
+            // --- DONATORI ---
+            // Formato nel testo: "EUR 147about 10 hours" o "EUR 1476 days"
+            // dove amount e time sono concatenati senza spazio
+            const TIME_UNITS = 'second|minute|hour|day|month|year';
+            const TIME_RE = new RegExp(`((?:about\\s+)?\\d+\\s+(?:${TIME_UNITS})s?(?:\\s+ago)?)`, 'i');
+            const EUR_LINE = new RegExp(`^EUR\\s*([\\d,.']+)((?:about\\s+)?\\d+\\s+(?:${TIME_UNITS})s?(?:\\s+ago)?)?\\s*$`, 'i');
 
-            // ---- LISTA DONATORI ----
-            console.log('\n--- Scraping donatori ---');
-            const donors = await page.evaluate(() => {
-              const results = [];
-              // Prova selettori comuni per liste donatori su piattaforme fundraising
-              const selectors = [
-                '[class*="donor"]', '[class*="donation"]', '[class*="supporter"]',
-                '[class*="backer"]', '[class*="pledge"]', '[class*="contribution"]'
-              ];
-              let items = [];
-              for (const sel of selectors) {
-                items = document.querySelectorAll(sel);
-                if (items.length > 0) break;
+            const lines = bodyText.split('\n').map(l => l.trim()).filter(Boolean);
+            const donors = [];
+            const seen = new Set();
+
+            for (let i = 0; i < lines.length; i++) {
+              const line = lines[i];
+              if (!line.match(/^EUR\s*[\d,.']+/i)) continue;
+
+              // Prova a separare importo e tempo dalla stessa riga
+              // es "1476 days" → amount=147, time="6 days"
+              // es "20about 7 hours" → amount=20, time="about 7 hours"
+              const raw = line.replace(/^EUR\s*/i, '');
+              const timeInRaw = raw.match(TIME_RE);
+              let amount, time;
+              if (timeInRaw) {
+                const timeStart = raw.indexOf(timeInRaw[1]);
+                amount = parseInt(raw.slice(0, timeStart).replace(/[,.']/g, '')) || 0;
+                time = timeInRaw[1].trim();
+              } else {
+                amount = parseInt(raw.replace(/[,.']/g, '')) || 0;
+                time = '';
               }
-              // Fallback: cerca per pattern testo EUR nel DOM
-              if (items.length === 0) {
-                const allEls = document.querySelectorAll('li, [class*="item"], [class*="row"]');
-                items = [...allEls].filter(el => /EUR\s*\d+/.test(el.textContent));
-              }
-              items.forEach(el => {
-                const text = el.innerText || el.textContent || '';
-                const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-                if (!lines.length) return;
+              if (!amount) continue;
 
-                // Cerca importo EUR
-                const amountMatch = text.match(/EUR\s*([\d,.']+)/i);
-                if (!amountMatch) return;
-                const amount = parseInt(amountMatch[1].replace(/[,.']/g, '')) || 0;
+              // Nome: riga precedente
+              const nameLine = (lines[i-1] || '').trim();
+              const name = (nameLine && !nameLine.match(/^EUR|collected|goal|donate|support|login|about|create|share|overview|update|description|english/i))
+                ? nameLine : 'Anonymous';
 
-                // Prima riga non-amount = nome
-                const name = lines.find(l => !l.match(/EUR|€|\d+\s*(hours?|days?|months?|minutes?|ago)/i)) || 'Anonymous';
+              // Messaggio: riga successiva
+              const nextLine = (lines[i+1] || '').trim();
+              const message = (nextLine && !nextLine.match(/^EUR|collected|goal|donate|support|show|view|load|login|about|share/i))
+                ? nextLine : '';
 
-                // Cerca tempo (es. "about 7 hours", "6 days", "2 months")
-                const timeMatch = text.match(/(?:about\s+)?(\d+\s+(?:hours?|days?|months?|minutes?)\s*ago?|\d+[hd])/i);
-                const time = timeMatch ? timeMatch[0].trim() : '';
+              const key = `${name}|${amount}|${message}`;
+              if (seen.has(key)) continue;
+              seen.add(key);
 
-                // Messaggio: riga non nome, non amount, non time
-                const msg = lines.find(l =>
-                  l !== name &&
-                  !l.match(/EUR|€/) &&
-                  !l.match(/(?:about\s+)?\d+\s+(?:hours?|days?|months?)/i)
-                ) || '';
-
-                results.push({ name, amount, time, message: msg });
-              });
-              return results;
-            });
-
-            console.log('Donatori trovati:', donors.length);
-            donors.forEach(d => console.log(` - ${d.name}: €${d.amount} (${d.time}) ${d.message ? '"' + d.message.slice(0,40) + '"' : ''}`));
+              donors.push({ name, amount, time, message });
+              console.log(`+ ${name} | €${amount} | ${time || '?'} | "${message.slice(0,40)}"`);
+            }
 
             await browser.close();
+            console.log('\nDonatori unici:', donors.length);
 
-            console.log('\n--- RISULTATO ---');
-            console.log('Importo raccolto: €' + raised);
-            console.log('Goal: €' + goal);
+            let data = { fundraising: { raised: 0, goal: 1700 } };
+            try { data = JSON.parse(fs.readFileSync('data.json', 'utf8')); } catch(e) {}
 
-            // Leggi data.json corrente
-            let data = { fundraising: { raised: 0, goal: 1700 }, tappa: {} };
-            try {
-              data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
-              console.log('Valore attuale in data.json: €' + data.fundraising.raised);
-            } catch(e) {
-              console.log('data.json non trovato, uso default');
-            }
+            const changed = data.fundraising.raised !== raised
+              || data.fundraising.goal !== goal
+              || JSON.stringify(data.fundraising.donors||[]) !== JSON.stringify(donors.length ? donors : data.fundraising.donors||[]);
 
-            // Aggiorna raised, goal e donatori
-            const raisedChanged = raised !== data.fundraising.raised || goal !== data.fundraising.goal;
-            if (raisedChanged) {
-              data.fundraising.raised = raised;
-              data.fundraising.goal = goal;
-            }
+            data.fundraising.raised = raised;
+            data.fundraising.goal = goal;
+            if (donors.length > 0) data.fundraising.donors = donors;
 
-            // Salva donatori sempre se ne troviamo
-            let donorsChanged = false;
-            if (donors.length > 0) {
-              const prev = JSON.stringify(data.fundraising.donors || []);
-              data.fundraising.donors = donors;
-              donorsChanged = prev !== JSON.stringify(donors);
-            }
-
-            if (raisedChanged || donorsChanged) {
+            if (changed) {
               fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
-              console.log('✓ data.json aggiornato (raised:' + raisedChanged + ' donors:' + donorsChanged + ')');
+              console.log('✓ data.json aggiornato');
             } else {
               console.log('= Nessuna variazione');
             }
           })();
-          EOF
-          node fetch_wbr.js
+          JSEOF
 
       - name: Commit e push se ci sono modifiche
         run: |
