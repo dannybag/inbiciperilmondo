@@ -114,7 +114,11 @@ jobs:
               const message = (nextLine && !nextLine.match(/^EUR|collected|goal|donate|support|show|view|load|login|about|share|world bicycle relief/i))
                 ? nextLine : '';
 
-              const key = `${name}|${amount}|${message}`;
+              // Per gli Anonymous usiamo anche l'indice di riga come discriminante
+              // così due Anonymous con stesso importo ma diversa posizione restano distinti
+              const key = name === 'Anonymous'
+                ? `${name}|${amount}|${message}|${i}`
+                : `${name}|${amount}|${message}`;
               if (seen.has(key)) continue;
               seen.add(key);
 
