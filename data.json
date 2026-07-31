@@ -4,18 +4,6 @@
     "goal": 1700,
     "donors": [
       {
-        "name": "19%",
-        "amount": 315,
-        "time": "",
-        "message": ""
-      },
-      {
-        "name": "Anonymous",
-        "amount": 1700,
-        "time": "",
-        "message": ""
-      },
-      {
         "name": "Mirko T",
         "amount": 20,
         "time": "about 14 hours",
@@ -31,7 +19,7 @@
         "name": "Anonymous",
         "amount": 1,
         "time": "about 2 months",
-        "message": "World Bicycle Relief"
+        "message": ""
       }
     ]
   },
