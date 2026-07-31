@@ -948,6 +948,20 @@
   <div class="bikes-count">
     <span class="bikes-count-label" data-i18n="quote_gambe">"Io ci metto le gambe. Voi metteteci il cuore."</span>
   </div>
+
+  <!-- BOTTONE CONTRIBUTORI -->
+  <div style="margin-top:1.2rem; display:flex; gap:0.6rem; justify-content:center;">
+    <a href="https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo" target="_blank" style="display:inline-flex; align-items:center; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; color:#FFF8F4; background:var(--orange); border:1px solid var(--orange); padding:0.55rem 1.3rem; border-radius:3px; text-decoration:none; white-space:nowrap;" data-i18n="dona_btn">Dona</a>
+    <button onclick="toggleDonors()" id="donors-btn" style="display:inline-flex; align-items:center; gap:0.5rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); padding:0.55rem 1.3rem; border-radius:3px; cursor:pointer; white-space:nowrap;">
+      <span data-i18n="chi_ha_donato">Contributori</span> <span id="donors-arrow">↓</span>
+    </button>
+  </div>
+
+  <!-- LISTA CONTRIBUTORI (espandibile) -->
+  <div id="donors-section" style="display:none; margin-top:1rem;">
+    <div id="donors-list" style="display:flex; flex-direction:column; gap:0.6rem;"></div>
+  </div>
+
 </div>
 
 <hr class="div">
@@ -1929,7 +1943,11 @@
       if (!res.ok) throw new Error('fetch ' + res.status);
       const meta = await res.json();
       const data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(meta.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
-      if (data.fundraising) updateBar(data.fundraising.raised || 0, data.fundraising.goal || 1700);
+      if (data.fundraising) {
+        updateBar(data.fundraising.raised || 0, data.fundraising.goal || 1700);
+        window._donors = data.fundraising.donors || [];
+        if (_donorsOpen) renderDonors();
+      }
       // next_stages va sempre letto, indipendentemente da quante tappe percorse ci siano
       window._nextStages = data.next_stages || [];
       // Compatibilità: usa tappe[] se esiste, altrimenti usa tappa legacy
@@ -2512,6 +2530,9 @@
       raccolta_corso: 'Raccolta fondi in corso',
       di_word: 'di',
       quote_gambe: '"Io ci metto le gambe. Voi metteteci il cuore."',
+      dona_btn: 'Dona',
+      chi_ha_donato: 'Contributori',
+      no_donatori: 'Ancora nessun contributore.',
       missione_label: 'La mia missione',
       missione_title: '1.700 km. Per chi una bici può migliorare la vita.',
       missione_p1: `C'è un momento in cui leggere non basta. In cui firmare una petizione non basta.
@@ -2606,6 +2627,9 @@
       raccolta_corso: 'Fundraising in progress',
       di_word: 'of',
       quote_gambe: '"I bring the legs. You bring the heart."',
+      dona_btn: 'Donate',
+      chi_ha_donato: 'Contributors',
+      no_donatori: 'No supporters yet.',
       missione_label: 'My mission',
       missione_title: "1,700 km. To change people's lives with bikes.",
       missione_p1: `There's a moment when reading isn't enough. When signing a petition isn't enough.
@@ -2747,6 +2771,36 @@
     document.getElementById('frame-content').src = '';
     overlay.style.display = 'none';
     document.body.style.overflow = '';
+  }
+
+  // ---- CONTRIBUTORI ----
+  let _donorsOpen = false;
+
+  function toggleDonors() {
+    _donorsOpen = !_donorsOpen;
+    document.getElementById('donors-section').style.display = _donorsOpen ? 'block' : 'none';
+    document.getElementById('donors-arrow').textContent = _donorsOpen ? '↑' : '↓';
+    if (_donorsOpen) renderDonors();
+  }
+
+  function renderDonors() {
+    const list = document.getElementById('donors-list');
+    const donors = window._donors || [];
+    const lang = localStorage.getItem('site-lang') || 'it';
+    if (!donors.length) {
+      list.innerHTML = `<div style="font-family:var(--mono); font-size:0.65rem; color:var(--muted); text-align:center; padding:0.8rem 0;" data-i18n="no_donatori">${lang === 'en' ? 'No supporters yet.' : 'Ancora nessun contributore.'}</div>`;
+      return;
+    }
+    list.innerHTML = donors.map(d => `
+      <div style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:3px; padding:0.75rem 1rem; display:flex; flex-direction:column; gap:0.2rem;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+          <span style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; color:#FFF8F4;">${d.name || 'Anonymous'}</span>
+          <span style="font-family:var(--mono); font-size:0.75rem; color:var(--orange); font-weight:700;">€${d.amount}</span>
+        </div>
+        ${d.message ? `<div style="font-family:'Barlow',sans-serif; font-size:0.85rem; color:rgba(255,248,244,0.6); font-style:italic;">"${d.message}"</div>` : ''}
+        ${d.time ? `<div style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.3); letter-spacing:0.05em;">${d.time}</div>` : ''}
+      </div>
+    `).join('');
   }
 
   loadFromGitHub();
