@@ -1050,6 +1050,8 @@ function resetData() {
   const d1 = document.getElementById('s-date'); if (d1) d1.textContent = dateStr;
   const d2 = document.getElementById('s-date-2'); if (d2) d2.textContent = dateStr;
   document.querySelectorAll('[id^="s-date-extra"]').forEach(el => el.textContent = dateStr);
+  // Azzera il titolo della slide 1
+  const t1 = document.getElementById('s-route-title-1'); if (t1) t1.textContent = '';
   const msg = document.getElementById('strava-msg');
   if (msg) msg.textContent = 'Seleziona traccia da Strava';
   const picker = document.getElementById('strava-picker');
@@ -1876,13 +1878,27 @@ function addPhrase() {
   if (!val) return;
   photoMsgs.push(val);
   document.getElementById('phrase-new').value = '';
+  savePhrases();
   renderPhraseList();
 }
 
 function removePhrase(idx) {
   photoMsgs.splice(idx, 1);
+  savePhrases();
   renderPhraseList();
 }
+
+function savePhrases() {
+  try { localStorage.setItem('wbr-phrases', JSON.stringify(photoMsgs)); } catch(e) {}
+}
+
+function loadPhrases() {
+  try {
+    const saved = localStorage.getItem('wbr-phrases');
+    if (saved) { const p = JSON.parse(saved); if (Array.isArray(p)) photoMsgs = p; }
+  } catch(e) {}
+}
+loadPhrases();
 
 function renderPhraseList() {
   const list = document.getElementById('phrase-list');
