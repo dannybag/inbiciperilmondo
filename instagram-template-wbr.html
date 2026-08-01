@@ -1052,6 +1052,9 @@ function resetData() {
   document.querySelectorAll('[id^="s-date-extra"]').forEach(el => el.textContent = dateStr);
   // Azzera il titolo della slide 1
   const t1 = document.getElementById('s-route-title-1'); if (t1) t1.textContent = '';
+  // Azzera tutte le caption (testo + formattazione)
+  clearCaption(document.getElementById('s-caption'));
+  document.querySelectorAll('[id^="s-caption-extra"]').forEach(el => clearCaption(el));
   const msg = document.getElementById('strava-msg');
   if (msg) msg.textContent = 'Seleziona traccia da Strava';
   const picker = document.getElementById('strava-picker');
@@ -1860,6 +1863,7 @@ function applyPhrase(phrase) {
   currentPhrase = phrase;
   const el = document.getElementById(targetCaptionId);
   if (!el) return;
+  clearCaption(el);
   el.textContent = phrase;
   // Stile di default: Pacifico, bianco su sfondo arancio, doppia dimensione
   el.style.fontFamily = "'Pacifico', cursive";
@@ -1929,10 +1933,23 @@ function renderPhraseList() {
     </div>`).join('');
 }
 
+// Rimuove testo e formattazione inline da un elemento caption
+function clearCaption(el) {
+  if (!el) return;
+  el.textContent = '';
+  el.removeAttribute('style');
+  // Riapplica solo le proprietà base della classe .media-caption
+  el.style.display = 'inline-block';
+  el.style.outline = 'none';
+  el.style.fontFamily = "'Bebas Neue', sans-serif";
+}
+
 function openPhrasePanel(captionId) {
   if (captionId) targetCaptionId = captionId;
   const el = document.getElementById(targetCaptionId);
-  document.getElementById('phrase-current').value = el ? el.textContent : currentPhrase;
+  // Pulisce testo e formattazione precedente prima di aprire il pannello
+  clearCaption(el);
+  document.getElementById('phrase-current').value = '';
   renderPhraseList();
   document.getElementById('phrase-overlay').style.display = 'flex';
 }
