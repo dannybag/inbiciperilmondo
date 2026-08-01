@@ -1518,10 +1518,17 @@
         document.getElementById('tap-dis').value = dis;
         tapRefresh();
         picker.style.display = 'none';
-        // Popola from (ultimo to salvato) e to (vuoto, da completare)
-        const lastTo = _tappeList.length > 0 ? _tappeList[_tappeList.length - 1].to : (localStorage.getItem('tap-last-to') || '');
-        document.getElementById('tap-from').value = lastTo;
-        document.getElementById('tap-to').value = '';
+        // Prova a ricavare DA e A dal titolo Strava (es. "Darsena - Garlate")
+        const nameParts = act.name.split(/\s*(?:<->|→|–|—|-)\s*/);
+        if (nameParts.length >= 2) {
+          document.getElementById('tap-from').value = nameParts[0].trim();
+          document.getElementById('tap-to').value   = nameParts[nameParts.length - 1].trim();
+        } else {
+          // Nessun separatore: DA = ultimo TO salvato, A = vuoto
+          const lastTo = _tappeList.length > 0 ? _tappeList[_tappeList.length - 1].to : (localStorage.getItem('tap-last-to') || '');
+          document.getElementById('tap-from').value = lastTo;
+          document.getElementById('tap-to').value = '';
+        }
         if (msgEl) msgEl.textContent = '✓ ' + act.name + ' · ' + km + ' km · ↑' + dis + 'm' + (polyline.length > 0 ? ' · GPS ✓' : '');
       };
       picker.appendChild(btn);
