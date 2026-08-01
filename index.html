@@ -1231,9 +1231,10 @@
     <!-- HEADER con tabs -->
     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem;">
       <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:#F05A28;">🚴 TAP · Tappe</div>
-      <div style="display:flex; gap:0.4rem;">
+      <div style="display:flex; gap:0.4rem; align-items:center;">
         <button id="tap-tab-new" onclick="tapShowForm(null)" style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:3px; cursor:pointer; background:#F05A28; color:#FFF8F4; border:none;">+ Nuova</button>
         <button id="tap-tab-hist" onclick="tapShowHistory()" style="font-family:'Barlow Condensed',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:3px; cursor:pointer; background:transparent; color:rgba(255,248,244,0.4); border:1px solid rgba(255,248,244,0.15);">Storico</button>
+        <button onclick="tapClose()" style="background:transparent; border:1px solid rgba(255,248,244,0.3); color:rgba(255,248,244,0.6); font-size:1rem; line-height:1; width:2rem; height:2rem; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
       </div>
     </div>
 
@@ -1969,6 +1970,11 @@
         _tappeList = data.tappe;
         const tots = tapCalcTotals(_tappeList);
         _prev = { totKm: tots.totKm, totDis: tots.totDis, tappe: tots.tappe };
+        // Aggiorna il campo DA con l'ultimo TO appena i dati sono caricati
+        const fromField = document.getElementById('tap-from');
+        if (fromField && !fromField.dataset.userEdited) {
+          fromField.value = _tappeList[_tappeList.length - 1].to || '';
+        }
       } else if (data.tappa && data.tappa.day > 0) {
         _tappeList = [data.tappa];
         _prev = { totKm: data.tappa.totKm || 0, totDis: data.tappa.totDis || 0, tappe: data.tappa.tappe || 1 };
@@ -2389,7 +2395,7 @@
             renderNextStageMap();
           }
           msg.textContent = `✓ Prossima tappa aggiunta · ${km} km`;
-          setTimeout(() => tapClose(), 1200);
+          msg.textContent += " · Premi X per chiudere";
         }
       } catch(e) { msg.textContent = '✗ Errore: ' + e.message; }
       return;
@@ -2443,7 +2449,7 @@
     if (ok) {
       updateTappa(tappa);
       await writeTriggerFile(token);
-      setTimeout(() => tapClose(), 1200);
+      msg.textContent += " · Premi X per chiudere";
     }
   }
 
