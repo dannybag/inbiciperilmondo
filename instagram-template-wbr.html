@@ -1823,6 +1823,18 @@ document.getElementById('style-overlay').addEventListener('click', e => {
 });
 
 // ---- GESTIONE FRASI ----
+const DEFAULT_PHRASES = [
+  "Ogni km conta.",
+  "La strada chiama.",
+  "Si pedala!",
+  "Testa bassa e gambe girare.",
+  "Il vento in faccia? Meglio così.",
+  "Un passo alla volta... in bici.",
+  "Non guardo indietro.",
+  "Il Sud si avvicina.",
+  "Asfalto e silenzio.",
+  "Questa è la mia risposta."
+];
 let photoMsgs = [];
 let currentPhrase = photoMsgs[0];
 
@@ -1895,8 +1907,13 @@ function savePhrases() {
 function loadPhrases() {
   try {
     const saved = localStorage.getItem('wbr-phrases');
-    if (saved) { const p = JSON.parse(saved); if (Array.isArray(p)) photoMsgs = p; }
+    if (saved) {
+      const p = JSON.parse(saved);
+      if (Array.isArray(p) && p.length > 0) { photoMsgs = p; return; }
+    }
   } catch(e) {}
+  // Nessuna frase salvata: usa le frasi di default
+  photoMsgs = [...DEFAULT_PHRASES];
 }
 loadPhrases();
 
