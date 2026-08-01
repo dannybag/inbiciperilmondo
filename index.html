@@ -1254,7 +1254,7 @@
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem;">
         <div>
           <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:rgba(255,248,244,0.4); text-transform:uppercase; display:block; margin-bottom:0.4rem;">Da</label>
-          <input id="tap-from" type="text" value="Milano"
+          <input id="tap-from" type="text" value=""
             style="width:100%; background:#2A2A2A; border:1px solid rgba(240,90,40,0.4); color:#FFF8F4; font-family:'Barlow',sans-serif; font-size:0.95rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
         </div>
         <div>
@@ -1518,6 +1518,10 @@
         document.getElementById('tap-dis').value = dis;
         tapRefresh();
         picker.style.display = 'none';
+        // Popola from (ultimo to salvato) e to (vuoto, da completare)
+        const lastTo = _tappeList.length > 0 ? _tappeList[_tappeList.length - 1].to : (localStorage.getItem('tap-last-to') || '');
+        document.getElementById('tap-from').value = lastTo;
+        document.getElementById('tap-to').value = '';
         if (msgEl) msgEl.textContent = '✓ ' + act.name + ' · ' + km + ' km · ↑' + dis + 'm' + (polyline.length > 0 ? ' · GPS ✓' : '');
       };
       picker.appendChild(btn);
@@ -2097,7 +2101,7 @@
       document.getElementById('tap-day').value  = nextDay;
       document.getElementById('tap-km').value   = 0;
       document.getElementById('tap-dis').value  = 0;
-      document.getElementById('tap-from').value = _tappeList.length > 0 ? _tappeList[_tappeList.length - 1].to : (localStorage.getItem('tap-last-to') || 'Milano');
+      document.getElementById('tap-from').value = _tappeList.length > 0 ? _tappeList[_tappeList.length - 1].to : (localStorage.getItem('tap-last-to') || '');
       document.getElementById('tap-to').value   = '';
       // Inizializza data a oggi per nuova tappa
       const today = new Date().toISOString().split('T')[0];
@@ -2327,8 +2331,9 @@
     const day  = parseInt(document.getElementById('tap-day').value)  || 1;
     const km   = parseInt(document.getElementById('tap-km').value)   || 0;
     const dis  = parseInt(document.getElementById('tap-dis').value)  || 0;
-    const from = document.getElementById('tap-from').value || 'Milano';
-    const to   = document.getElementById('tap-to').value   || '';
+    const sel  = window._tapStravaSelected || {};
+    const from = document.getElementById('tap-from').value.trim() || sel.name || '';
+    const to   = document.getElementById('tap-to').value.trim()   || '';
     const msg  = document.getElementById('tap-msg');
     const isNext = document.getElementById('tap-is-next').checked;
 
@@ -2338,7 +2343,6 @@
         msg.textContent = '✗ Inserisci i km (o carica GPX/Strava) prima di salvare';
         return;
       }
-      const sel = window._tapStravaSelected || {};
       const token = localStorage.getItem('gh-token') || document.getElementById('tap-token').value.trim();
       if (!token) { msg.textContent = '✗ Token GitHub mancante'; return; }
       localStorage.setItem('gh-token', token);
@@ -2398,7 +2402,6 @@
 
     // Aggiorna array locale (sostituisce o aggiunge)
     _tappeList = _tappeList.filter(t => t.day !== day);
-    const sel = window._tapStravaSelected || {};
     
     // Leggi data dal campo tap-gpx-date se disponibile, altrimenti da sel.date o oggi
     let tappDate = sel.date || new Date().toISOString();
