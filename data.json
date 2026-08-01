@@ -30,18 +30,18 @@
     ]
   },
   "tappa": {
-    "day": 1,
+    "day": 2,
     "from": "Celle",
-    "to": "Capo Noli",
+    "to": "Sassello",
     "km": 52,
-    "dislivello": 234,
-    "name": "Celle <-> Capo Noli",
-    "polyline": "}`tmGsxcs@`@|ATFvC{A|@@lC~AvAjBlFwAzDlDtA{@bA?pGpFlEiAbB?n@p@hC~LhClTfAzPjDrSl@lCjCrEVfABzS\\nMe@fNh@tA`J`e@CtAf@z@jH``@~Mze@nEtFzPzIzClF~C|HnEpB|CvE|FvERUzHjKlEfCtBfF~C|EnAd@|DJdE`HtHtG~Gf@~EuBlA`@dBlBjGnMjCjTl@NnHsB`@LrDhNnCzE`AtCdLlb@NjBIfHbC|M~Ufj@`B|EfJ~OlAj@|VzZ~Xr[bv@f_@vLfDzFAvT}IxA?xBmB`HoCpByAxO_^b@aC]}Lb@yCx@uBhCqDlCgBpBYdEXrIpF`Gx@zD~DvH`@bAnAzAfF|DzDvEzB~ItGbHzBbDvCrGrCzAA`DaDxFkBtBvAtDhAhCvErCzB~@FdC}@hBj@x@vCKbH[|AoBnDK|BzE~Q~ElOzK`X`AvArDlBnA~EhCdGfNxWvArEpApIzApDzDhFdKbIzEtAvDPnQo@nAs@pNq@xEiAfG{DhL}A`EkElAg@~F`BvLK|HzDtNlCdHFnIcDxDaEjAcFvC}G]uIfB_H`AyBdCwCfBk@B`@r@q@zE`Bl@xBhAz@r@hB|Cr@fChDP~BlDtH`@bL\\zBfFrL~@|FPKXl@jIxSxAlBqBkD{E{MeAuAJy@_Aw@i@gBIgBoFyL_@qBa@mLiDkHSeCeCeDeDeAq@eBiAgAa@eBiBw@_Bl@oA[_@_A{Ad@wCxDgAtCsAzE\\|Io@lCcBrCkAjFkDzDgI|CoHAqOuC}GgDkMAuF}AmA^wExE_KjAoHjEiFhAyIr@sDYgBfA_Oh@uDOqEqAwJwHcEkFyAoDgDeP_CyDaDaImFeJ{DiLoFwDqKiWcMsb@HaCbBeDb@yBRsFq@aEcC_AyBv@mAKcCiBeCqEqHgDeG|AcDjDmBIyAqAqDcAkCiCsH}BkJkHqFkCsC_DyBuGmE}@yAyBsFgEmAE_D~@}HwE_Fi@uBTwBlAqC~CqBrFUvDXvGYbE{Nz\\cCvBud@dReEBkMcDii@{XgMsFiEcEag@an@qFyFwGeLcBaF_Uyg@_DsNFwIUiBeKc`@cByEwBoDeGwTm@I_GxBi@IaBcOyDsIGiB}@OsBgCuAk@{FzBsG_AkHaG}DuGmGq@aDaFwBgFiEeC_HgIkAg@aCeD{BuAiC}DsE{BeDgIwC_FmPoImEcFwN_h@yTqjAKcH_@{Bi@_NJq@d@KPaBBsQkDaIgEyUeAkPiB_PmD{Ri@}@m@MqGlAuGqF{@?cB`A_DcDcD\\kDgHWE",
-    "date": "2026-07-30T22:00:00.000Z",
-    "updated": "2026-08-01T00:46:36.990Z",
-    "totKm": 52,
-    "totDis": 234,
-    "tappe": 1
+    "dislivello": 748,
+    "name": "Celle <-> Sassello",
+    "polyline": "opsmG{qcs@`FqAdDfDlDw@lGnFjHiAtAzCtEb[fB`V~DtUpDxHYd\\lAvK{@xGpKrh@}BjB@vB|@nEg@nBaBSD|@uDrAsAsCwDjAmA{DkSnIaPeJgW|DyJ_GkC`@sIrGuNaJoDgEkFcBwAv@mBzJaElDuBrGu`@hYmViGmJpDeEWwEmCkRs@cI`BmEq@eBvEmWnB{FvCyHaAoLQ_I~BkDS}FbIVrDsAmBcBLyApOk@OYkHkB~@}C`EyAdJuDk@uBfBwDoH}BDwApEoCvCQ|EyKdMqC|GyDxDwLGsGzIwBz@kO{G{DC{D`HwD|Bg@~FwAhDv@hBI~A}B\\}EbFaOsBsDbGuIEsCzCkD|HeGfEo@lGgAyBsK{B@nAbCGzDnEaDhBNhFoB~@eDcAo@zBbAtAOx@uGTj@jD_@fA_JyGmB|@yGjF{BvCoDCkB}B{G_A{DaFeBqFn@aH}AqFqIaCeRuL{[cNwKE_DdAsH`LeN~[mCfAuP_KuGzAgFwFoFqBwBd@_GqAkHhCqHyJqQiFcMb@}FeG{F_DmKdB_F]iTgQ_Fl@{DxFoBJmCkCoAgMkD}@{@wECmA~@nHjDdAhAxLzCrChBSnDwGvEGxTbQvR}@nN~K|Li@jQhFzHbKhHiCfGlA|Bc@hExA|FjGxGsAxP~JbDgBnMqZ|HuL`C}@fL@j\\lNlQdLnIxB~AdFk@fH~E~KlFtCfCCdAfBrDTlC{CpDmAzD}EzDjA`EfE`@aAs@}BPaAtGO{@_Dp@kBhClAdCaAKoF`Cu@\\cBsE{DcB\\?iAvJxBpAdCr@{G~GgFxC}GjCwCpIPzDiG`C|@jEa@|C`BjFiFrBO^_Bq@eCzBgLlDoBlD_HxBYxHlCr@oAhBrBjCHnEyGD_DzDcMbDlBbB_AhA_Ef@sFEoG~FcDnFyHlAyC~AsK}@oHpCIfFiEh@sFq@eGi@yQtDmAfBlAjECpBmL~AwCTkJsAiCWeJmEeENyHt@uA]_Ey@qCeCs@PeC~ETj@qGrFgBpAcDrPsKdCa@|@iG~AoBNkFeD}DqE{BvDcE`AmLfDwBSsBx@}@t@eIaBqDoGaDnGkBRqDfCmB`A{FcBsD_CeAaDhChA{BC_BsI_EdCoB{Bm@u@eJ~C_BzF?x@cA`H}X~FkL|BiOxGeMvFkFdBgHhJqG`Fi@tB}MdJgAdBqUfDeJjEeCpHC~A`AjB`EdGrBtC{@tBaJxXw@rGsDtG`X|HvSrKfMxErC~HvAfIqAzCuFhEsAzA`A~AzJpJ`CPtCy@~CfBhD`BdR~CdEJ`c@|AdGjIrNR`Ee@jD|@tEsGvE",
+    "date": "2026-07-29T22:00:00.000Z",
+    "updated": "2026-08-01T00:47:03.137Z",
+    "totKm": 104,
+    "totDis": 982,
+    "tappe": 2
   },
   "tappe": [
     {
@@ -54,6 +54,17 @@
       "polyline": "}`tmGsxcs@`@|ATFvC{A|@@lC~AvAjBlFwAzDlDtA{@bA?pGpFlEiAbB?n@p@hC~LhClTfAzPjDrSl@lCjCrEVfABzS\\nMe@fNh@tA`J`e@CtAf@z@jH``@~Mze@nEtFzPzIzClF~C|HnEpB|CvE|FvERUzHjKlEfCtBfF~C|EnAd@|DJdE`HtHtG~Gf@~EuBlA`@dBlBjGnMjCjTl@NnHsB`@LrDhNnCzE`AtCdLlb@NjBIfHbC|M~Ufj@`B|EfJ~OlAj@|VzZ~Xr[bv@f_@vLfDzFAvT}IxA?xBmB`HoCpByAxO_^b@aC]}Lb@yCx@uBhCqDlCgBpBYdEXrIpF`Gx@zD~DvH`@bAnAzAfF|DzDvEzB~ItGbHzBbDvCrGrCzAA`DaDxFkBtBvAtDhAhCvErCzB~@FdC}@hBj@x@vCKbH[|AoBnDK|BzE~Q~ElOzK`X`AvArDlBnA~EhCdGfNxWvArEpApIzApDzDhFdKbIzEtAvDPnQo@nAs@pNq@xEiAfG{DhL}A`EkElAg@~F`BvLK|HzDtNlCdHFnIcDxDaEjAcFvC}G]uIfB_H`AyBdCwCfBk@B`@r@q@zE`Bl@xBhAz@r@hB|Cr@fChDP~BlDtH`@bL\\zBfFrL~@|FPKXl@jIxSxAlBqBkD{E{MeAuAJy@_Aw@i@gBIgBoFyL_@qBa@mLiDkHSeCeCeDeDeAq@eBiAgAa@eBiBw@_Bl@oA[_@_A{Ad@wCxDgAtCsAzE\\|Io@lCcBrCkAjFkDzDgI|CoHAqOuC}GgDkMAuF}AmA^wExE_KjAoHjEiFhAyIr@sDYgBfA_Oh@uDOqEqAwJwHcEkFyAoDgDeP_CyDaDaImFeJ{DiLoFwDqKiWcMsb@HaCbBeDb@yBRsFq@aEcC_AyBv@mAKcCiBeCqEqHgDeG|AcDjDmBIyAqAqDcAkCiCsH}BkJkHqFkCsC_DyBuGmE}@yAyBsFgEmAE_D~@}HwE_Fi@uBTwBlAqC~CqBrFUvDXvGYbE{Nz\\cCvBud@dReEBkMcDii@{XgMsFiEcEag@an@qFyFwGeLcBaF_Uyg@_DsNFwIUiBeKc`@cByEwBoDeGwTm@I_GxBi@IaBcOyDsIGiB}@OsBgCuAk@{FzBsG_AkHaG}DuGmGq@aDaFwBgFiEeC_HgIkAg@aCeD{BuAiC}DsE{BeDgIwC_FmPoImEcFwN_h@yTqjAKcH_@{Bi@_NJq@d@KPaBBsQkDaIgEyUeAkPiB_PmD{Ri@}@m@MqGlAuGqF{@?cB`A_DcDcD\\kDgHWE",
       "date": "2026-07-30T22:00:00.000Z",
       "updated": "2026-08-01T00:46:36.990Z"
+    },
+    {
+      "day": 2,
+      "from": "Celle",
+      "to": "Sassello",
+      "km": 52,
+      "dislivello": 748,
+      "name": "Celle <-> Sassello",
+      "polyline": "opsmG{qcs@`FqAdDfDlDw@lGnFjHiAtAzCtEb[fB`V~DtUpDxHYd\\lAvK{@xGpKrh@}BjB@vB|@nEg@nBaBSD|@uDrAsAsCwDjAmA{DkSnIaPeJgW|DyJ_GkC`@sIrGuNaJoDgEkFcBwAv@mBzJaElDuBrGu`@hYmViGmJpDeEWwEmCkRs@cI`BmEq@eBvEmWnB{FvCyHaAoLQ_I~BkDS}FbIVrDsAmBcBLyApOk@OYkHkB~@}C`EyAdJuDk@uBfBwDoH}BDwApEoCvCQ|EyKdMqC|GyDxDwLGsGzIwBz@kO{G{DC{D`HwD|Bg@~FwAhDv@hBI~A}B\\}EbFaOsBsDbGuIEsCzCkD|HeGfEo@lGgAyBsK{B@nAbCGzDnEaDhBNhFoB~@eDcAo@zBbAtAOx@uGTj@jD_@fA_JyGmB|@yGjF{BvCoDCkB}B{G_A{DaFeBqFn@aH}AqFqIaCeRuL{[cNwKE_DdAsH`LeN~[mCfAuP_KuGzAgFwFoFqBwBd@_GqAkHhCqHyJqQiFcMb@}FeG{F_DmKdB_F]iTgQ_Fl@{DxFoBJmCkCoAgMkD}@{@wECmA~@nHjDdAhAxLzCrChBSnDwGvEGxTbQvR}@nN~K|Li@jQhFzHbKhHiCfGlA|Bc@hExA|FjGxGsAxP~JbDgBnMqZ|HuL`C}@fL@j\\lNlQdLnIxB~AdFk@fH~E~KlFtCfCCdAfBrDTlC{CpDmAzD}EzDjA`EfE`@aAs@}BPaAtGO{@_Dp@kBhClAdCaAKoF`Cu@\\cBsE{DcB\\?iAvJxBpAdCr@{G~GgFxC}GjCwCpIPzDiG`C|@jEa@|C`BjFiFrBO^_Bq@eCzBgLlDoBlD_HxBYxHlCr@oAhBrBjCHnEyGD_DzDcMbDlBbB_AhA_Ef@sFEoG~FcDnFyHlAyC~AsK}@oHpCIfFiEh@sFq@eGi@yQtDmAfBlAjECpBmL~AwCTkJsAiCWeJmEeENyHt@uA]_Ey@qCeCs@PeC~ETj@qGrFgBpAcDrPsKdCa@|@iG~AoBNkFeD}DqE{BvDcE`AmLfDwBSsBx@}@t@eIaBqDoGaDnGkBRqDfCmB`A{FcBsD_CeAaDhChA{BC_BsI_EdCoB{Bm@u@eJ~C_BzF?x@cA`H}X~FkL|BiOxGeMvFkFdBgHhJqG`Fi@tB}MdJgAdBqUfDeJjEeCpHC~A`AjB`EdGrBtC{@tBaJxXw@rGsDtG`X|HvSrKfMxErC~HvAfIqAzCuFhEsAzA`A~AzJpJ`CPtCy@~CfBhD`BdR~CdEJ`c@|AdGjIrNR`Ee@jD|@tEsGvE",
+      "date": "2026-07-29T22:00:00.000Z",
+      "updated": "2026-08-01T00:47:03.137Z"
     }
   ],
   "next_stages": [
