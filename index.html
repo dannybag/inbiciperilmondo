@@ -413,8 +413,11 @@
     border-radius: 2px;
     text-decoration: none;
   }
+  .footer-email-link { display: block; text-align: right; }
   @media (max-width: 700px) {
     .dona-steps { grid-template-columns: 1fr; }
+    .footer-email-br { display: none; }
+    .footer-email-link { display: inline; text-align: left; }
   }
 
   /* ---- FOOTER ---- */
@@ -1184,8 +1187,8 @@
     <strong>100% dei fondi devoluti</strong>
   </div>
   <div style="margin-top:0.8rem; font-size:0.8rem;">
-    <span style="color:#FFF8F4;">Per info, idee o solo per dire ciao</span><br>
-    <a href="mailto:sd.sacco@gmail.com" style="color:var(--orange); text-decoration:none; display:block; text-align:right;">sd.sacco@gmail.com</a>
+    <span style="color:#FFF8F4;">Per info, idee o solo per dire ciao</span><br class="footer-email-br">
+    <a href="mailto:sd.sacco@gmail.com" class="footer-email-link" style="color:var(--orange); text-decoration:none;">sd.sacco@gmail.com</a>
   </div>
 </div>
 
