@@ -75,10 +75,37 @@ jobs:
             // Formato nel testo: "EUR 147about 10 hours" o "EUR 1476 days"
             // dove amount e time sono concatenati senza spazio
             const TIME_UNITS = 'second|minute|hour|day|month|year';
-            // Singola cifra per time concatenato (es "1476 days" → "6 days"), \d+ per "about X"
-            const TIME_RE = new RegExp(
-              `(about\\s+\\d+\\s+(?:${TIME_UNITS})s?(?:\\s+ago)?|\\d\\s+(?:${TIME_UNITS})s?(?:\\s+ago)?)`, 'i'
-            );
+            const MAX_TIME = { second: 59, minute: 59, hour: 23, day: 30, month: 12, year: 5 };
+
+            function parseEurLine(raw) {
+              const aboutM = raw.match(new RegExp(`(about\\s+\\d+\\s+(?:${TIME_UNITS})s?(?:\\s+ago)?)`, 'i'));
+              if (aboutM) {
+                const ts = raw.indexOf(aboutM[1]);
+                const amount = parseInt(raw.slice(0, ts).replace(/[,.\']/g, '')) || 0;
+                return { amount, time: aboutM[1].trim() };
+              }
+              const unitM = raw.match(new RegExp(`((?:${TIME_UNITS})s?(?:\\s+ago)?)`, 'i'));
+              if (unitM) {
+                const unitStart = raw.indexOf(unitM[0]);
+                const before = raw.slice(0, unitStart).trim();
+                const base = unitM[0].toLowerCase().replace(/s?\\s*ago\\s*$/, '').replace(/s$/, '').trim();
+                const max = MAX_TIME[base] || 99;
+                for (const digits of [2, 1]) {
+                  if (before.length > digits) {
+                    const tnStr = before.slice(-digits);
+                    if (tnStr.startsWith('0')) continue;
+                    const tn = parseInt(tnStr);
+                    if (tn > 0 && tn <= max) {
+                      const amount = parseInt(before.slice(0, -digits).replace(/[,.\']/g, '')) || 0;
+                      if (amount > 0) return { amount, time: tnStr + ' ' + unitM[0] };
+                    }
+                  }
+                }
+                const amount = parseInt(before.replace(/[,.\']/g, '')) || 0;
+                return { amount, time: '' };
+              }
+              return { amount: parseInt(raw.replace(/[,.\']/g, '')) || 0, time: '' };
+            }
 
             const lines = bodyText.split('\n').map(l => l.trim()).filter(Boolean);
             const donors = [];
@@ -91,20 +118,11 @@ jobs:
               // Salta righe di sistema (raccolto/goal)
               if (line.match(/collected|goal/i)) continue;
 
-              // Prova a separare importo e tempo dalla stessa riga
-              // es "1476 days" → amount=147, time="6 days"
-              // es "20about 7 hours" → amount=20, time="about 7 hours"
+              // Prova a separare importo e tempo dalla stessa riga con parser domain-validated
               const raw = line.replace(/^EUR\s*/i, '');
-              const timeInRaw = raw.match(TIME_RE);
-              let amount, time;
-              if (timeInRaw) {
-                const timeStart = raw.indexOf(timeInRaw[1]);
-                amount = parseInt(raw.slice(0, timeStart).replace(/[,.']/g, '')) || 0;
-                time = timeInRaw[1].trim();
-              } else {
-                amount = parseInt(raw.replace(/[,.']/g, '')) || 0;
-                time = '';
-              }
+              const parsed = parseEurLine(raw);
+              const amount = parsed.amount;
+              const time = parsed.time;
               if (!amount) continue;
 
               // Nome: riga precedente
