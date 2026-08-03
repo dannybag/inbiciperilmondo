@@ -112,9 +112,12 @@ jobs:
               const name = (nameLine && !nameLine.match(/^EUR|collected|goal|donate|support|login|about|create|share|overview|update|description|english|^\d+%/i))
                 ? nameLine : 'Anonymous';
 
-              // Messaggio: riga successiva
+              // Messaggio: riga successiva, MA solo se la riga dopo ancora non inizia con EUR
+              // (altrimenti la "presunta" riga messaggio è in realtà il nome del donatore successivo)
               const nextLine = (lines[i+1] || '').trim();
-              const message = (nextLine && !nextLine.match(/^EUR|collected|goal|donate|support|show|view|load|login|about|share|world bicycle relief/i))
+              const lineAfterNext = (lines[i+2] || '').trim();
+              const nextLineIsDonorName = lineAfterNext.match(/^EUR/i);
+              const message = (nextLine && !nextLineIsDonorName && !nextLine.match(/^EUR|collected|goal|donate|support|show|view|load|login|about|share|world bicycle relief/i))
                 ? nextLine : '';
 
               // Deduplicazione:
