@@ -1,8 +1,14 @@
 {
   "fundraising": {
-    "raised": 315,
+    "raised": 345,
     "goal": 1700,
     "donors": [
+      {
+        "name": "Lorenzo V",
+        "amount": 30,
+        "time": "about 1 hour",
+        "message": "Mirko T"
+      },
       {
         "name": "Mirko T",
         "amount": 20,
@@ -17,8 +23,8 @@
       },
       {
         "name": "Anonymous",
-        "amount": 147,
-        "time": "9 days",
+        "amount": 1471,
+        "time": "0 days",
         "message": "Danny bag bean lo es you"
       },
       {
