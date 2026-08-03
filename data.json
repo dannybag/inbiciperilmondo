@@ -1,12 +1,18 @@
 {
   "fundraising": {
-    "raised": 345,
+    "raised": 355,
     "goal": 1700,
     "donors": [
       {
+        "name": "Anonymous",
+        "amount": 103,
+        "time": "5 minutes",
+        "message": ""
+      },
+      {
         "name": "Lorenzo V",
         "amount": 30,
-        "time": "about 5 hours",
+        "time": "about 8 hours",
         "message": ""
       },
       {
