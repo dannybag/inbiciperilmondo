@@ -2015,7 +2015,7 @@ function addPhotoSlide() {
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge-extra${extraSlideCount}" style="display:none;">TAPPA 01</div>
           <div id="s-date-extra${extraSlideCount}" contenteditable="true" style="display:none; outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;">${document.getElementById('s-date-2')?.textContent || ''}</div>
-          <div class="media-tag" id="s-media-tag-extra${extraSlideCount}" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none; display:flex; align-items:center; gap:0.4rem;">${(document.getElementById('s-open-tag')||{}).textContent||'#UnaBiciPerIlMondo'}</div>
+          <div class="media-tag" id="s-media-tag-extra${extraSlideCount}" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none; display:flex; align-items:center; gap:0.4rem;">${(document.getElementById('s-open-tag')?.innerText||'#UnaBiciPerIlMondo').trim()}</div>
         </div>
         <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
@@ -2432,32 +2432,35 @@ setInterval(function() { if (_sessionDirty) saveSession(false); }, 5000);
 // torniamo allo stato fittizio invece di uscire dall'app.
 history.pushState({ mipa: true }, '');
 window.addEventListener('popstate', function(e) {
-  // Riaggiungi subito lo stato per bloccare l'uscita
   history.pushState({ mipa: true }, '');
   saveSession(false);
-  // Chiedi conferma
-  setTimeout(function() {
-    if (confirm('Vuoi davvero chiudere? La sessione è stata salvata.')) {
-      history.go(-2);
-    }
-  }, 50);
+  showCloseConfirm();
 });
 
-// Salva anche quando la pagina va in background (mobile)
 document.addEventListener('visibilitychange', function() {
   if (document.visibilityState === 'hidden') saveSession(false);
 });
 
-// Ripristina sessione se la pagina torna dal bfcache (Safari back)
 window.addEventListener('pageshow', function(e) {
   if (e.persisted) restoreSession();
 });
 
+function showCloseConfirm() {
+  var ov = document.getElementById('close-confirm-overlay');
+  if (!ov) {
+    ov = document.createElement('div');
+    ov.id = 'close-confirm-overlay';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.75);display:flex;align-items:center;justify-content:center;';
+    ov.innerHTML = '<div style="background:#1A1A1A;border:2px solid #F05A28;border-radius:8px;padding:2rem 1.8rem;text-align:center;max-width:280px;width:90%;"><div style="font-family:Barlow Condensed,sans-serif;font-size:1.1rem;font-weight:700;color:#FFF8F4;margin-bottom:0.5rem;">Vuoi chiudere?</div><div style="font-family:Barlow,sans-serif;font-size:0.85rem;color:rgba(255,248,244,0.5);margin-bottom:1.4rem;">La sessione è stata salvata.</div><div style="display:flex;gap:0.8rem;justify-content:center;"><button onclick="document.getElementById("close-confirm-overlay").style.display="none"" style="font-family:Barlow Condensed,sans-serif;font-weight:800;font-size:0.85rem;text-transform:uppercase;padding:0.5rem 1.2rem;background:transparent;color:rgba(255,248,244,0.5);border:1px solid rgba(255,248,244,0.2);border-radius:3px;cursor:pointer;">Rimani</button><button onclick="history.go(-2)" style="font-family:Barlow Condensed,sans-serif;font-weight:800;font-size:0.85rem;text-transform:uppercase;padding:0.5rem 1.2rem;background:#F05A28;color:#FFF8F4;border:none;border-radius:3px;cursor:pointer;">Chiudi</button></div></div>';
+    document.body.appendChild(ov);
+  } else {
+    ov.style.display = 'flex';
+  }
+}
+
 function confirmClose() {
   saveSession(false);
-  if (confirm('Sessione salvata. Vuoi davvero chiudere?')) {
-    history.go(-2); // torna indietro di 2 (supera lo stato fittizio)
-  }
+  showCloseConfirm();
 }
 
 // Bottone reset sessione
