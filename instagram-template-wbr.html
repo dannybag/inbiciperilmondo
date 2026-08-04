@@ -1617,6 +1617,12 @@ document.addEventListener('DOMContentLoaded', () => {
   var closeHashtag = document.getElementById('s-close-hashtag'); if (closeHashtag) simpleDrag(closeHashtag);
   var closeMsg = document.getElementById('s-close-msg'); if (closeMsg) simpleDrag(closeMsg);
   var infoGrp = document.getElementById('s-info-group'); if (infoGrp) simpleDrag(infoGrp);
+  var sOpenTag2 = document.getElementById('s-open-tag'); if (sOpenTag2) {
+    sOpenTag2.addEventListener('input', function() {
+      var val = sOpenTag2.textContent.trim();
+      document.querySelectorAll('[id^="s-media-tag-extra"]').forEach(function(el) { el.textContent = val; });
+    });
+  }
   var sDate = document.getElementById('s-date'); if (sDate) {
     simpleDrag(sDate);
     sDate.addEventListener('input', function() {
@@ -2009,7 +2015,7 @@ function addPhotoSlide() {
         <div class="media-overlay-top" style="position:absolute; top:0; left:0; right:0; z-index:2;">
           <div class="media-day-badge" id="s-badge-extra${extraSlideCount}" style="display:none;">TAPPA 01</div>
           <div id="s-date-extra${extraSlideCount}" contenteditable="true" style="display:none; outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.5); margin-top:0.2rem;">${document.getElementById('s-date-2')?.textContent || ''}</div>
-          <div class="media-tag" id="s-media-tag-extra${extraSlideCount}" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none; display:flex; align-items:center; gap:0.4rem;">#UnaBiciPerIlMondo</div>
+          <div class="media-tag" id="s-media-tag-extra${extraSlideCount}" contenteditable="true" style="color:var(--orange); cursor:grab; outline:none; display:flex; align-items:center; gap:0.4rem;">${(document.getElementById('s-open-tag')||{}).textContent||'#UnaBiciPerIlMondo'}</div>
         </div>
         <div class="media-caption" id="s-caption-extra${extraSlideCount}" contenteditable="true" style="display:inline-block; outline:none; font-family:'Bebas Neue',sans-serif;" title="Tocca per modificare"></div>
         <div style="position:absolute; bottom:0.4rem; left:0.4rem; z-index:5; display:flex; gap:0.4rem;">
@@ -2426,20 +2432,15 @@ setInterval(function() { if (_sessionDirty) saveSession(false); }, 5000);
 // torniamo allo stato fittizio invece di uscire dall'app.
 history.pushState({ mipa: true }, '');
 window.addEventListener('popstate', function(e) {
-  saveSession(false);
-  // Riaggiungi lo stato fittizio per proteggere la prossima pressione
+  // Riaggiungi subito lo stato per bloccare l'uscita
   history.pushState({ mipa: true }, '');
-  // Mostra brevemente un messaggio
-  const msg = document.createElement('div');
-  msg.textContent = 'Usa ✕ per chiudere';
-  Object.assign(msg.style, {
-    position:'fixed', bottom:'1.5rem', left:'50%', transform:'translateX(-50%)',
-    background:'rgba(240,90,40,0.92)', color:'#FFF8F4', padding:'0.5rem 1.2rem',
-    borderRadius:'4px', fontFamily:"'Barlow Condensed',sans-serif", fontSize:'0.9rem',
-    letterSpacing:'0.05em', zIndex:'9999', pointerEvents:'none'
-  });
-  document.body.appendChild(msg);
-  setTimeout(() => msg.remove(), 2000);
+  saveSession(false);
+  // Chiedi conferma
+  setTimeout(function() {
+    if (confirm('Vuoi davvero chiudere? La sessione è stata salvata.')) {
+      history.go(-2);
+    }
+  }, 50);
 });
 
 // Salva anche quando la pagina va in background (mobile)
