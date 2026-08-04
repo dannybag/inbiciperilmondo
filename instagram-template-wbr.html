@@ -545,6 +545,9 @@
 <h1>Una Bici per il Mondo · Instagram Kit</h1>
 <div class="subtitle">Milano → Palermo · World Bicycle Relief · Template giornaliero</div>
 
+<!-- X CHIUDI fisso in alto a destra -->
+<button onclick="confirmClose()" title="Chiudi" style="position:fixed; top:0.8rem; right:0.8rem; z-index:9999; background:rgba(240,90,40,0.9); color:#FFF8F4; border:none; border-radius:50%; width:2.4rem; height:2.4rem; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.4);">✕</button>
+
 <!-- RESET SESSIONE -->
 <div id="reset-banner" style="display:none; background:rgba(240,90,40,0.12); border:1px solid rgba(240,90,40,0.4); border-radius:6px; padding:0.7rem 1.2rem; margin-bottom:1rem; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; color:rgba(255,248,244,0.7); letter-spacing:0.05em;">
   Sessione precedente trovata.
@@ -2418,8 +2421,43 @@ function clearAllCaptions() {
 
 // Auto-salvataggio ogni 5 secondi se ci sono modifiche, + salvataggio di sicurezza alla chiusura
 setInterval(function() { if (_sessionDirty) saveSession(false); }, 5000);
-window.addEventListener('beforeunload', function() { if (!_resetting) saveSession(false); });
-window.addEventListener('pagehide', function() { if (!_resetting) saveSession(false); });
+// ---- PROTEZIONE TASTO INDIETRO ----
+// Aggiungiamo uno stato fittizio alla history: se l'utente preme Indietro
+// torniamo allo stato fittizio invece di uscire dall'app.
+history.pushState({ mipa: true }, '');
+window.addEventListener('popstate', function(e) {
+  saveSession(false);
+  // Riaggiungi lo stato fittizio per proteggere la prossima pressione
+  history.pushState({ mipa: true }, '');
+  // Mostra brevemente un messaggio
+  const msg = document.createElement('div');
+  msg.textContent = 'Usa ✕ per chiudere';
+  Object.assign(msg.style, {
+    position:'fixed', bottom:'1.5rem', left:'50%', transform:'translateX(-50%)',
+    background:'rgba(240,90,40,0.92)', color:'#FFF8F4', padding:'0.5rem 1.2rem',
+    borderRadius:'4px', fontFamily:"'Barlow Condensed',sans-serif", fontSize:'0.9rem',
+    letterSpacing:'0.05em', zIndex:'9999', pointerEvents:'none'
+  });
+  document.body.appendChild(msg);
+  setTimeout(() => msg.remove(), 2000);
+});
+
+// Salva anche quando la pagina va in background (mobile)
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'hidden') saveSession(false);
+});
+
+// Ripristina sessione se la pagina torna dal bfcache (Safari back)
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) restoreSession();
+});
+
+function confirmClose() {
+  saveSession(false);
+  if (confirm('Sessione salvata. Vuoi davvero chiudere?')) {
+    history.go(-2); // torna indietro di 2 (supera lo stato fittizio)
+  }
+}
 
 // Bottone reset sessione
 function clearSession() {
