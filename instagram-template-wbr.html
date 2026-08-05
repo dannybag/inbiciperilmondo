@@ -1066,8 +1066,9 @@ function resetData() {
 }
 
 function resetWbrSession() {
+  _resetting = true;
   localStorage.removeItem('wbr-tappa');
-  localStorage.removeItem('ig-session-wbr'); // hardcoded: SESSION_KEY è dichiarata più avanti nel file
+  localStorage.removeItem('ig-session-wbr');
   const banner = document.getElementById('reset-banner');
   if (banner) banner.style.display = 'none';
   location.reload();
@@ -2430,15 +2431,17 @@ setInterval(function() { if (_sessionDirty) saveSession(false); }, 5000);
 // ---- PROTEZIONE TASTO INDIETRO ----
 // Aggiungiamo uno stato fittizio alla history: se l'utente preme Indietro
 // torniamo allo stato fittizio invece di uscire dall'app.
+var _allowClose = false;
 history.pushState({ mipa: true }, '');
 window.addEventListener('popstate', function(e) {
+  if (_allowClose) return;
   history.pushState({ mipa: true }, '');
   saveSession(false);
   showCloseConfirm();
 });
 
 document.addEventListener('visibilitychange', function() {
-  if (document.visibilityState === 'hidden') saveSession(false);
+  if (document.visibilityState === 'hidden' && !_resetting) saveSession(false);
 });
 
 window.addEventListener('pageshow', function(e) {
@@ -2451,13 +2454,41 @@ function showCloseConfirm() {
     ov = document.createElement('div');
     ov.id = 'close-confirm-overlay';
     ov.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.75);display:flex;align-items:center;justify-content:center;';
-    ov.innerHTML = '<div style="background:#1A1A1A;border:2px solid #F05A28;border-radius:8px;padding:2rem 1.8rem;text-align:center;max-width:280px;width:90%;"><div style="font-family:Barlow Condensed,sans-serif;font-size:1.1rem;font-weight:700;color:#FFF8F4;margin-bottom:0.5rem;">Vuoi chiudere?</div><div style="font-family:Barlow,sans-serif;font-size:0.85rem;color:rgba(255,248,244,0.5);margin-bottom:1.4rem;">La sessione è stata salvata.</div><div style="display:flex;gap:0.8rem;justify-content:center;"><button onclick="document.getElementById("close-confirm-overlay").style.display="none"" style="font-family:Barlow Condensed,sans-serif;font-weight:800;font-size:0.85rem;text-transform:uppercase;padding:0.5rem 1.2rem;background:transparent;color:rgba(255,248,244,0.5);border:1px solid rgba(255,248,244,0.2);border-radius:3px;cursor:pointer;">Rimani</button><button onclick="history.go(-2)" style="font-family:Barlow Condensed,sans-serif;font-weight:800;font-size:0.85rem;text-transform:uppercase;padding:0.5rem 1.2rem;background:#F05A28;color:#FFF8F4;border:none;border-radius:3px;cursor:pointer;">Chiudi</button></div></div>';
+    var box = document.createElement('div');
+    box.style.cssText = 'background:#1A1A1A;border:2px solid #F05A28;border-radius:8px;padding:2rem 1.8rem;text-align:center;max-width:280px;width:90%;';
+    var title = document.createElement('div');
+    title.style.cssText = 'font-family:Barlow Condensed,sans-serif;font-size:1.1rem;font-weight:700;color:#FFF8F4;margin-bottom:0.5rem;';
+    title.textContent = 'Vuoi chiudere?';
+    var sub = document.createElement('div');
+    sub.style.cssText = 'font-family:Barlow,sans-serif;font-size:0.85rem;color:rgba(255,248,244,0.5);margin-bottom:1.4rem;';
+    sub.textContent = 'La sessione è stata salvata.';
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:0.8rem;justify-content:center;';
+    var btnStay = document.createElement('button');
+    btnStay.style.cssText = 'font-family:Barlow Condensed,sans-serif;font-weight:800;font-size:0.85rem;text-transform:uppercase;padding:0.5rem 1.2rem;background:transparent;color:rgba(255,248,244,0.5);border:1px solid rgba(255,248,244,0.2);border-radius:3px;cursor:pointer;';
+    btnStay.textContent = 'Rimani';
+    btnStay.onclick = function() { ov.style.display = 'none'; };
+    var btnClose = document.createElement('button');
+    btnClose.style.cssText = 'font-family:Barlow Condensed,sans-serif;font-weight:800;font-size:0.85rem;text-transform:uppercase;padding:0.5rem 1.2rem;background:#F05A28;color:#FFF8F4;border:none;border-radius:3px;cursor:pointer;';
+    btnClose.textContent = 'Chiudi';
+    btnClose.onclick = function() { doClose(); };
+    row.appendChild(btnStay);
+    row.appendChild(btnClose);
+    box.appendChild(title);
+    box.appendChild(sub);
+    box.appendChild(row);
+    ov.appendChild(box);
     document.body.appendChild(ov);
   } else {
     ov.style.display = 'flex';
   }
 }
 
+function doClose() {
+  _allowClose = true;
+  saveSession(false);
+  history.back();
+}
 function confirmClose() {
   saveSession(false);
   showCloseConfirm();
@@ -2465,11 +2496,9 @@ function confirmClose() {
 
 // Bottone reset sessione
 function clearSession() {
-  if (confirm('Cancella sessione salvata e ricomincia da capo?')) {
-    _resetting = true;
-    localStorage.removeItem(SESSION_KEY);
-    location.reload();
-  }
+  _resetting = true;
+  localStorage.removeItem(SESSION_KEY);
+  location.reload();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
