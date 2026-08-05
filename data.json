@@ -1,12 +1,18 @@
 {
   "fundraising": {
-    "raised": 380,
+    "raised": 390,
     "goal": 1700,
     "donors": [
       {
+        "name": "Anonymous",
+        "amount": 10,
+        "time": "about 1 hour",
+        "message": ""
+      },
+      {
         "name": "Roberto t",
         "amount": 25,
-        "time": "about 2 hours",
+        "time": "about 3 hours",
         "message": "Adesso devi partire!"
       },
       {
