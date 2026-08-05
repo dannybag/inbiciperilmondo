@@ -1,12 +1,18 @@
 {
   "fundraising": {
-    "raised": 355,
+    "raised": 380,
     "goal": 1700,
     "donors": [
       {
+        "name": "Roberto t",
+        "amount": 25,
+        "time": "about 1 hour",
+        "message": "Adesso devi partire!"
+      },
+      {
         "name": "Anonymous",
         "amount": 10,
-        "time": "1 day",
+        "time": "2 days",
         "message": ""
       },
       {
@@ -30,7 +36,7 @@
       {
         "name": "Anonymous",
         "amount": 147,
-        "time": "11 days",
+        "time": "12 days",
         "message": "Danny bag bean lo es you"
       },
       {
