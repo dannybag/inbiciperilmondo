@@ -1,30 +1,36 @@
 {
   "fundraising": {
-    "raised": 547,
+    "raised": 694,
     "goal": 1700,
     "donors": [
       {
+        "name": "Alessandro V",
+        "amount": 147,
+        "time": "about 2 hours",
+        "message": ""
+      },
+      {
         "name": "gianluca b",
         "amount": 10,
-        "time": "35 minutes",
+        "time": "about 4 hours",
         "message": ""
       },
       {
         "name": "Anonymous",
         "amount": 147,
-        "time": "about 14 hours",
+        "time": "about 17 hours",
         "message": "Grazie Daniele"
       },
       {
         "name": "Anonymous",
         "amount": 10,
-        "time": "about 17 hours",
+        "time": "about 20 hours",
         "message": ""
       },
       {
         "name": "Roberto t",
         "amount": 25,
-        "time": "about 20 hours",
+        "time": "about 23 hours",
         "message": "Adesso devi partire!"
       },
       {
@@ -56,12 +62,6 @@
         "amount": 147,
         "time": "12 days",
         "message": "Danny bag bean lo es you"
-      },
-      {
-        "name": "Anonymous",
-        "amount": 1,
-        "time": "2 months",
-        "message": ""
       }
     ]
   },
