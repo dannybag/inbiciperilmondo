@@ -1,30 +1,36 @@
 {
   "fundraising": {
-    "raised": 537,
+    "raised": 547,
     "goal": 1700,
     "donors": [
       {
+        "name": "gianluca b",
+        "amount": 10,
+        "time": "35 minutes",
+        "message": ""
+      },
+      {
         "name": "Anonymous",
         "amount": 147,
-        "time": "about 11 hours",
+        "time": "about 14 hours",
         "message": "Grazie Daniele"
       },
       {
         "name": "Anonymous",
         "amount": 10,
-        "time": "about 14 hours",
+        "time": "about 17 hours",
         "message": ""
       },
       {
         "name": "Roberto t",
         "amount": 25,
-        "time": "about 16 hours",
+        "time": "about 20 hours",
         "message": "Adesso devi partire!"
       },
       {
         "name": "Anonymous",
         "amount": 10,
-        "time": "2 days",
+        "time": "3 days",
         "message": ""
       },
       {
@@ -36,7 +42,7 @@
       {
         "name": "Mirko T",
         "amount": 20,
-        "time": "6 days",
+        "time": "7 days",
         "message": "Buona pedalata!"
       },
       {
