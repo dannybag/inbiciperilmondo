@@ -171,6 +171,17 @@ https://www.instagram.com/reel/..."></textarea>
     <span class="status-msg" id="save-status"></span>
   </div>
 
+  <!-- VIDEO IN EVIDENZA -->
+  <div style="margin-top:2rem; padding:1.2rem; background:rgba(240,90,40,0.06); border:1px solid rgba(240,90,40,0.2); border-radius:6px;">
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1rem; letter-spacing:0.1em; text-transform:uppercase; color:#F05A28; margin-bottom:0.4rem;">▶ Video YouTube in evidenza</div>
+    <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,248,244,0.4); display:block; margin-bottom:0.6rem;">Appare accanto alla sezione "La mia missione". Lascia vuoto per nasconderlo.</label>
+    <div style="display:flex; gap:0.5rem;">
+      <input id="admin-video-url" type="url" placeholder="https://youtube.com/watch?v=..." style="flex:1; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'IBM Plex Mono',monospace; font-size:0.8rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
+      <button onclick="saveVideoUrl()" style="background:#F05A28; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.5rem 1rem; border:none; border-radius:4px; cursor:pointer;">Salva</button>
+    </div>
+    <div id="video-url-msg" style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:#F05A28; margin-top:0.4rem;"></div>
+  </div>
+
   <div class="section-label">Note già pubblicate</div>
   <div id="entry-list"><div class="empty">Caricamento...</div></div>
 
@@ -694,9 +705,42 @@ async function deleteEntry(idx) {
 }
 
 // ---- INIT ----
+async function saveVideoUrl() {
+  const url = document.getElementById('admin-video-url').value.trim();
+  const msg = document.getElementById('video-url-msg');
+  const token = getToken();
+  if (!token) { msg.textContent = '✗ Token mancante'; return; }
+  msg.textContent = 'Salvataggio...';
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/data.json`, { headers: ghHeaders() });
+    const meta = await res.json();
+    const data = JSON.parse(atob(meta.content.replace(/\n/g,'')));
+    data.featured_video = url;
+    await fetch(`https://api.github.com/repos/${REPO}/contents/data.json`, {
+      method: 'PUT',
+      headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Aggiorna video in evidenza', content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), sha: meta.sha })
+    });
+    msg.textContent = url ? '✓ Video aggiornato sul sito' : '✓ Video rimosso dal sito';
+  } catch(e) { msg.textContent = '✗ ' + e.message; }
+}
+
+async function loadVideoUrl() {
+  const token = getToken();
+  if (!token) return;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/data.json`, { headers: ghHeaders() });
+    const meta = await res.json();
+    const data = JSON.parse(atob(meta.content.replace(/\n/g,'')));
+    const el = document.getElementById('admin-video-url');
+    if (el && data.featured_video) el.value = data.featured_video;
+  } catch(e) {}
+}
+
 document.getElementById('f-date').valueAsDate = new Date();
 updateTokenStatus();
 loadEntryList();
+loadVideoUrl();
 (function checkDictationSupport() {
   if (!(window.SpeechRecognition || window.webkitSpeechRecognition)) {
     const micBtn = document.getElementById('mic-btn');
