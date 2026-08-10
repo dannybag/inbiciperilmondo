@@ -970,10 +970,10 @@
 <hr class="div">
 
 <!-- MISSIONE + VIDEO IN EVIDENZA -->
-<div style="display:flex; flex-wrap:wrap; gap:2rem; align-items:flex-start; padding:3rem 5vw;">
+<div style="display:flex; flex-wrap:wrap; gap:0; align-items:flex-start;">
 
   <!-- MISSIONE -->
-  <section style="flex:1; min-width:280px;" id="missione">
+  <section class="section" id="missione" style="flex:1; min-width:280px; max-width:100%;">
     <div class="section-label" data-i18n="missione_label">La mia missione</div>
     <h2 class="section-title" data-i18n="missione_title">1.700 km. Per chi una bici può migliorare la vita.</h2>
     <p class="section-text" data-i18n="missione_p1">
@@ -994,8 +994,8 @@
     </p>
   </section>
 
-  <!-- VIDEO IN EVIDENZA -->
-  <div id="featured-video-box" style="flex:1; min-width:280px; display:none;">
+  <!-- VIDEO IN EVIDENZA (visibile solo se impostato nel TAP) -->
+  <div id="featured-video-box" style="flex:1; min-width:280px; padding:5rem 5vw; display:none;">
     <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:0.8rem;" data-i18n="video_live_label">Video dal viaggio</div>
     <div style="position:relative; width:100%; padding-bottom:56.25%; background:#111; border-radius:4px; overflow:hidden; border:1px solid rgba(240,90,40,0.2);">
       <iframe id="featured-video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; inset:0; width:100%; height:100%;"></iframe>
