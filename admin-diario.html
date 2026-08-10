@@ -145,6 +145,7 @@
   <label style="display:flex; align-items:center; justify-content:space-between;">
     <span>Testo del ricordo</span>
     <div style="display:flex; gap:0.4rem; align-items:center;">
+      <button type="button" onclick="insertNewLine()" style="font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em; text-transform:none; background:none; border:1px solid rgba(255,248,244,0.25); color:var(--cream); padding:0.25rem 0.6rem; border-radius:12px; cursor:pointer;">↵ A capo</button>
       <button type="button" onclick="insertLink()" style="font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em; text-transform:none; background:none; border:1px solid rgba(255,248,244,0.25); color:var(--cream); padding:0.25rem 0.6rem; border-radius:12px; cursor:pointer;">🔗 Link</button>
       <button type="button" id="mic-btn" onclick="toggleDictation()" style="font-family:var(--mono); font-size:0.65rem; letter-spacing:0.05em; text-transform:none; background:none; border:1px solid rgba(255,248,244,0.25); color:var(--cream); padding:0.25rem 0.6rem; border-radius:12px; cursor:pointer;">🎤 Detta</button>
     </div>
@@ -169,6 +170,17 @@ https://www.instagram.com/reel/..."></textarea>
     <button class="btn-primary" id="btn-save" onclick="saveEntry()">Pubblica nota</button>
     <button class="btn-ghost" id="btn-cancel" onclick="cancelEdit()" style="display:none;">Annulla modifica</button>
     <span class="status-msg" id="save-status"></span>
+  </div>
+
+  <!-- VIDEO IN EVIDENZA -->
+  <div style="margin-top:2rem; padding:1.2rem; background:rgba(240,90,40,0.06); border:1px solid rgba(240,90,40,0.2); border-radius:6px;">
+    <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); margin-bottom:0.4rem;">▶ Video YouTube in evidenza</div>
+    <label style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,248,244,0.4); display:block; margin-bottom:0.6rem;">Il video apparirà accanto alla sezione "La mia missione" sul sito. Lascia vuoto per nasconderlo.</label>
+    <div style="display:flex; gap:0.5rem;">
+      <input id="admin-video-url" type="url" placeholder="https://youtube.com/watch?v=..." style="flex:1; background:#2A2A2A; border:1px solid rgba(240,90,40,0.3); color:#FFF8F4; font-family:'IBM Plex Mono',monospace; font-size:0.8rem; padding:0.5rem 0.7rem; border-radius:4px; outline:none;">
+      <button onclick="saveVideoUrl()" style="background:#F05A28; color:#fff; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.5rem 1rem; border:none; border-radius:4px; cursor:pointer;">Salva</button>
+    </div>
+    <div id="video-url-msg" style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:#F05A28; margin-top:0.4rem;"></div>
   </div>
 
   <div class="section-label">Note già pubblicate</div>
@@ -259,13 +271,17 @@ function compressImage(file, maxDim = 1600, quality = 0.75) {
 
 // ---- PHOTO PREVIEW (unifica galleria + archiviazione esterna) ----
 let selectedPhotoFiles = [];
+let newPhotoLinks = [];   // URL opzionali per le nuove foto
 
 function renderNewPhotoPreview() {
   const wrap = document.getElementById('photo-preview');
   wrap.innerHTML = selectedPhotoFiles.map((file, i) => `
-    <div class="photo-thumb">
-      <img src="${URL.createObjectURL(file)}">
-      <div class="rm" onclick="removeSelectedPhoto(${i})">✕</div>
+    <div class="photo-thumb" style="display:flex; flex-direction:column; gap:0.3rem; width:80px;">
+      <div style="position:relative;">
+        <img src="${URL.createObjectURL(file)}" style="width:80px; height:80px; object-fit:cover; border-radius:3px;">
+        <div class="rm" onclick="removeSelectedPhoto(${i})">✕</div>
+      </div>
+      <input type="url" placeholder="link..." value="${newPhotoLinks[i]||''}" oninput="newPhotoLinks[${i}]=this.value" style="width:80px; font-size:0.55rem; background:#1A1A1A; border:1px solid rgba(255,255,255,0.15); color:#FFF8F4; padding:0.15rem 0.3rem; border-radius:2px; outline:none;">
     </div>
   `).join('');
   const countEl = document.getElementById('photo-count');
@@ -274,10 +290,13 @@ function renderNewPhotoPreview() {
 }
 function removeSelectedPhoto(i) {
   selectedPhotoFiles.splice(i, 1);
+  newPhotoLinks.splice(i, 1);
   renderNewPhotoPreview();
 }
 function addPhotoFiles(fileList) {
-  selectedPhotoFiles.push(...[...fileList].filter(f => f.type.startsWith('image/')));
+  const newFiles = [...fileList].filter(f => f.type.startsWith('image/'));
+  selectedPhotoFiles.push(...newFiles);
+  newFiles.forEach(() => newPhotoLinks.push(''));
   renderNewPhotoPreview();
 }
 
@@ -406,6 +425,14 @@ function initDictation() {
   return r;
 }
 
+function insertNewLine() {
+  const ta = document.getElementById('f-text');
+  const start = ta.selectionStart;
+  ta.value = ta.value.slice(0, start) + '\n' + ta.value.slice(start);
+  ta.selectionStart = ta.selectionEnd = start + 1;
+  ta.focus();
+}
+
 function insertLink() {
   const url = prompt('URL del link (es. https://...)');
   if (!url || !url.trim()) return;
@@ -484,13 +511,17 @@ function toggleDictation() {
 // ---- STATO EDITING ----
 let editingIndex = null;   // indice nell'array entries (non ordinato) se stiamo modificando
 let keptPhotos = [];       // path delle foto esistenti mantenute durante la modifica
+let keptPhotoLinks = [];   // URL opzionali per le foto esistenti
 
 function renderExistingPhotos() {
   const wrap = document.getElementById('existing-photos');
   wrap.innerHTML = keptPhotos.map((p, i) => `
-    <div class="photo-thumb">
-      <img src="${p}">
-      <div class="rm" onclick="removeExistingPhoto(${i})">✕</div>
+    <div class="photo-thumb" style="display:flex; flex-direction:column; gap:0.3rem; width:80px;">
+      <div style="position:relative;">
+        <img src="${p}" style="width:80px; height:80px; object-fit:cover; border-radius:3px;">
+        <div class="rm" onclick="removeExistingPhoto(${i})">✕</div>
+      </div>
+      <input type="url" placeholder="link..." value="${keptPhotoLinks[i]||''}" oninput="keptPhotoLinks[${i}]=this.value" style="width:80px; font-size:0.55rem; background:#1A1A1A; border:1px solid rgba(255,255,255,0.15); color:#FFF8F4; padding:0.15rem 0.3rem; border-radius:2px; outline:none;">
     </div>
   `).join('');
   const countEl = document.getElementById('photo-count');
@@ -499,6 +530,7 @@ function renderExistingPhotos() {
 }
 function removeExistingPhoto(i) {
   keptPhotos.splice(i, 1);
+  keptPhotoLinks.splice(i, 1);
   renderExistingPhotos();
 }
 
@@ -506,6 +538,7 @@ function editEntry(idx) {
   const e = window.cachedEntries[idx];
   editingIndex = idx;
   keptPhotos = [...(e.photos || [])];
+  keptPhotoLinks = [...(e.photoLinks || e.photos.map(() => ''))];
   document.getElementById('f-date').value = e.date;
   document.getElementById('f-title').value = e.title;
   document.getElementById('f-text').value = e.text;
@@ -523,12 +556,14 @@ function editEntry(idx) {
 function cancelEdit() {
   editingIndex = null;
   keptPhotos = [];
+  keptPhotoLinks = [];
   document.getElementById('f-date').valueAsDate = new Date();
   document.getElementById('f-title').value = '';
   document.getElementById('f-text').value = '';
   document.getElementById('f-video').value = '';
   document.getElementById('f-photos').value = '';
   selectedPhotoFiles = [];
+  newPhotoLinks = [];
   document.getElementById('photo-preview').innerHTML = '';
   document.getElementById('existing-photos').innerHTML = '';
   document.getElementById('btn-save').textContent = 'Pubblica nota';
@@ -561,6 +596,7 @@ async function saveEntry() {
       newPhotoBlobs.push(await preparePhoto(file, date));
     }
     const photoPaths = [...keptPhotos, ...newPhotoBlobs.map(p => p.path)];
+    const photoLinks = [...keptPhotoLinks, ...newPhotoLinks].map(l => l||'');
 
     setStatus('Leggo il diario...', 'wait');
     const { entries } = await readDiario();
@@ -568,12 +604,13 @@ async function saveEntry() {
     let message;
     let removedPhotos = [];
     if (editingIndex !== null && entries[editingIndex]) {
-      const { video: _old, ...rest } = entries[editingIndex]; // rimuovo eventuale vecchio campo singolare
+      const { video: _old, ...rest } = entries[editingIndex];
       removedPhotos = (rest.photos || []).filter(p => !keptPhotos.includes(p));
       entries[editingIndex] = {
         ...rest,
         date, title, text,
         photos: photoPaths,
+        photoLinks,
         videos
       };
       message = `Diario: modifico nota "${title}"`;
@@ -582,6 +619,7 @@ async function saveEntry() {
         day: entries.length + 1,
         date, title, text,
         photos: photoPaths,
+        photoLinks,
         videos,
         published: true
       });
@@ -633,8 +671,40 @@ function setStatus(msg, kind) {
 }
 
 // ---- LISTA NOTE + ELIMINA ----
+async function saveVideoUrl() {
+  const url = document.getElementById('admin-video-url').value.trim();
+  const msg = document.getElementById('video-url-msg');
+  const token = getToken();
+  if (!token) { msg.textContent = '✗ Token mancante'; return; }
+  msg.textContent = 'Salvataggio...';
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/data.json`, {
+      headers: ghHeaders()
+    });
+    const meta = await res.json();
+    const data = JSON.parse(atob(meta.content.replace(/\n/g,'')));
+    data.featured_video = url;
+    await fetch(`https://api.github.com/repos/${REPO}/contents/data.json`, {
+      method: 'PUT',
+      headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'Aggiorna video in evidenza', content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), sha: meta.sha })
+    });
+    msg.textContent = url ? '✓ Video aggiornato sul sito' : '✓ Video rimosso dal sito';
+  } catch(e) { msg.textContent = '✗ ' + e.message; }
+}
+
+async function loadVideoUrl() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/data.json`, { headers: ghHeaders() });
+    const meta = await res.json();
+    const data = JSON.parse(atob(meta.content.replace(/\n/g,'')));
+    const el = document.getElementById('admin-video-url');
+    if (el && data.featured_video) el.value = data.featured_video;
+  } catch(e) {}
+}
+loadVideoUrl();
+
 async function loadEntryList() {
-  const list = document.getElementById('entry-list');
   if (!getToken()) { list.innerHTML = '<div class="empty">Configura il token per vedere le note</div>'; return; }
   try {
     const { entries } = await readDiario();
