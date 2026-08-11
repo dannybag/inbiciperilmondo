@@ -995,8 +995,15 @@
   </section>
 
   <!-- VIDEO IN EVIDENZA — TV anni '70 -->
-  <div id="featured-video-box" style="flex:1; min-width:280px; padding:3rem 3vw; display:none;">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:1.2rem; text-align:center;" data-i18n="video_live_label">Video dal viaggio</div>
+  <div id="featured-video-box" style="flex:1; min-width:280px; padding:3rem 3vw 3rem; display:none;">
+    <style>
+      @media (max-width:600px) {
+        #featured-video-box { padding-top:1rem !important; }
+      }
+    </style>
+
+    <!-- TITOLO SOPRA LE ANTENNE -->
+    <div style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:0.25em; color:var(--orange); text-align:center; margin-bottom:0.6rem;" data-i18n="video_live_label">Video Viaggio</div>
 
     <!-- TV BODY -->
     <div style="position:relative; max-width:420px; margin:0 auto;">
@@ -2636,7 +2643,7 @@
       chi_ha_donato: 'Sostenitori',
       no_donatori: 'Ancora nessun contributore.',
       missione_label: 'La mia missione',
-      video_live_label: 'Video dal viaggio',
+      video_live_label: 'Video Viaggio',
       missione_title: '1.700 km. Per chi una bici può migliorare la vita.',
       missione_p1: `C'è un momento in cui leggere non basta. In cui firmare una petizione non basta.
       In cui senti che devi fare qualcosa con il corpo, non solo con la testa.
@@ -2734,7 +2741,7 @@
       chi_ha_donato: 'Contributors',
       no_donatori: 'No supporters yet.',
       missione_label: 'My mission',
-      video_live_label: 'Video from the ride',
+      video_live_label: 'Journey Video',
       missione_title: "1,700 km. To change people's lives with bikes.",
       missione_p1: `There's a moment when reading isn't enough. When signing a petition isn't enough.
       When you feel you have to do something with your body, not just your mind.
