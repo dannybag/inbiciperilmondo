@@ -994,16 +994,68 @@
     </p>
   </section>
 
-  <!-- VIDEO IN EVIDENZA (visibile solo se impostato nel TAP) -->
-  <div id="featured-video-box" style="flex:1; min-width:280px; padding:5rem 5vw; display:none;">
-    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:0.8rem;" data-i18n="video_live_label">Video dal viaggio</div>
-    <div style="position:relative; width:100%; padding-bottom:56.25%; background:#111; border-radius:4px; overflow:hidden; border:1px solid rgba(240,90,40,0.2);">
-      <iframe id="featured-video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; inset:0; width:100%; height:100%;"></iframe>
+  <!-- VIDEO IN EVIDENZA — TV anni '70 -->
+  <div id="featured-video-box" style="flex:1; min-width:280px; padding:3rem 3vw; display:none;">
+    <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:1.2rem; text-align:center;" data-i18n="video_live_label">Video dal viaggio</div>
+
+    <!-- TV BODY -->
+    <div style="position:relative; max-width:420px; margin:0 auto;">
+
+      <!-- ANTENNA -->
+      <div style="position:absolute; top:-2.8rem; left:50%; transform:translateX(-50%); display:flex; gap:1.8rem; z-index:2;">
+        <div style="width:3px; height:2.6rem; background:#8B6914; transform:rotate(-18deg); transform-origin:bottom center; border-radius:2px;"></div>
+        <div style="width:3px; height:2.6rem; background:#8B6914; transform:rotate(18deg); transform-origin:bottom center; border-radius:2px;"></div>
+      </div>
+
+      <!-- CORPO TV: legno con gradiente -->
+      <div style="background:linear-gradient(145deg, #A0722A 0%, #8B5E1A 30%, #7A5015 60%, #8B6914 100%); border-radius:20px 20px 24px 24px; padding:1.4rem 1.4rem 1rem; box-shadow:0 8px 32px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -2px 4px rgba(0,0,0,0.3);">
+
+        <!-- VENATURA LEGNO (effetto) -->
+        <div style="position:absolute; inset:0; border-radius:20px 20px 24px 24px; background:repeating-linear-gradient(90deg, transparent, transparent 8px, rgba(0,0,0,0.04) 8px, rgba(0,0,0,0.04) 9px); pointer-events:none;"></div>
+
+        <!-- SCHERMO CRT -->
+        <div style="position:relative; border-radius:12px; overflow:hidden; background:#000; box-shadow:inset 0 0 30px rgba(0,0,0,0.9), inset 0 0 8px rgba(0,100,255,0.08);">
+          <!-- Effetto curvatura CRT -->
+          <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.45) 100%); z-index:3; pointer-events:none; border-radius:12px;"></div>
+          <!-- Effetto scanlines -->
+          <div style="position:absolute; inset:0; background:repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px); z-index:3; pointer-events:none;"></div>
+          <!-- VIDEO -->
+          <div style="position:relative; padding-bottom:56.25%;">
+            <iframe id="featured-video-iframe" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute; inset:0; width:100%; height:100%; border-radius:10px;"></iframe>
+          </div>
+        </div>
+
+        <!-- PANNELLO INFERIORE: manopole + logo -->
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.9rem; padding:0 0.3rem;">
+          <!-- MANOPOLE SX -->
+          <div style="display:flex; gap:0.6rem; align-items:center;">
+            <div style="width:1.1rem; height:1.1rem; border-radius:50%; background:radial-gradient(circle at 35% 35%, #5A3C0A, #2A1A04); box-shadow:0 2px 4px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1); position:relative;">
+              <div style="position:absolute; top:50%; left:50%; width:2px; height:40%; background:#8B6914; transform:translate(-50%,-80%) rotate(0deg); border-radius:1px;"></div>
+            </div>
+            <div style="width:0.85rem; height:0.85rem; border-radius:50%; background:radial-gradient(circle at 35% 35%, #5A3C0A, #2A1A04); box-shadow:0 2px 4px rgba(0,0,0,0.6);"></div>
+          </div>
+          <!-- LOGO CENTRALE -->
+          <div style="font-family:'Bebas Neue',sans-serif; font-size:0.65rem; letter-spacing:0.2em; color:rgba(255,220,120,0.5); text-align:center;">MIPA · TV</div>
+          <!-- MANOPOLE DX -->
+          <div style="display:flex; gap:0.5rem; align-items:center;">
+            <div style="width:0.85rem; height:0.85rem; border-radius:50%; background:radial-gradient(circle at 35% 35%, #5A3C0A, #2A1A04); box-shadow:0 2px 4px rgba(0,0,0,0.6);"></div>
+            <div style="width:1.1rem; height:1.1rem; border-radius:50%; background:radial-gradient(circle at 35% 35%, #5A3C0A, #2A1A04); box-shadow:0 2px 4px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1); position:relative;">
+              <div style="position:absolute; top:50%; left:50%; width:2px; height:40%; background:#8B6914; transform:translate(-50%,-80%) rotate(45deg); border-radius:1px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PIEDINI TV -->
+        <div style="display:flex; justify-content:space-between; padding:0 1rem; margin-top:0.6rem;">
+          <div style="width:2.5rem; height:0.5rem; background:linear-gradient(to bottom, #6B4A0E, #4A3008); border-radius:0 0 6px 6px; box-shadow:0 3px 6px rgba(0,0,0,0.5);"></div>
+          <div style="width:2.5rem; height:0.5rem; background:linear-gradient(to bottom, #6B4A0E, #4A3008); border-radius:0 0 6px 6px; box-shadow:0 3px 6px rgba(0,0,0,0.5);"></div>
+        </div>
+
+      </div>
     </div>
   </div>
 
 </div>
-
 <!-- DATA BOXES -->
 <div class="data-boxes">
   <div class="data-box">
