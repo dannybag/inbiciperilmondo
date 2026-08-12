@@ -1,8 +1,14 @@
 {
   "fundraising": {
-    "raised": 694,
+    "raised": 703,
     "goal": 1700,
     "donors": [
+      {
+        "name": "Anonymous",
+        "amount": 9,
+        "time": "about 1 hour",
+        "message": ""
+      },
       {
         "name": "Alessandro V",
         "amount": 147,
@@ -56,12 +62,6 @@
         "amount": 147,
         "time": "13 days",
         "message": "Grazie a Daniele … la fatica fisica sarà tutta sua 👍🍀👍"
-      },
-      {
-        "name": "Anonymous",
-        "amount": 147,
-        "time": "19 days",
-        "message": "Danny bag bean lo es you"
       }
     ]
   },
