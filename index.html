@@ -1958,6 +1958,7 @@
       window._diarioEntries = entries;
       renderDiarioEntries(entries);
     checkStoryHash();
+    scrollToPendingStory();
     } catch (e) {
       wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; color:rgba(224,85,85,0.6); text-align:center; padding:1rem 0;">Diario non ancora disponibile</div>';
     }
@@ -2000,6 +2001,7 @@
         </div>
       `;
     }).join('');
+    scrollToPendingStory();
   }
 
   handleStravaCallback();
@@ -2936,36 +2938,30 @@
   }
 
   // Apri diario e scorri alla storia se c'è un hash #storia-* nell'URL
+  window._pendingStoryHash = null;
+
   function checkStoryHash() {
     const hash = window.location.hash;
     if (!hash.startsWith('#storia-')) return;
-    const id = hash.slice(1);
+    window._pendingStoryHash = hash.slice(1);
+    // Simula click sul bottone se il diario è chiuso
+    if (!_diarioOpen) toggleDiario();
+  }
 
-    // Apri la sezione diario direttamente (senza ri-caricare il diario che sovrascrive gli id)
-    if (!_diarioOpen) {
-      _diarioOpen = true;
-      _diarioLoaded = true; // impedisce a toggleDiario di ri-renderizzare
-      const sec = document.getElementById('diario-section');
-      const arrow = document.getElementById('diario-arrow');
-      if (sec) sec.style.display = 'block';
-      if (arrow) arrow.textContent = '↑';
-    }
-
-    // Riprova a trovare l'elemento per max 4 secondi
-    const start = Date.now();
-    const tryScroll = () => {
-      const el = document.getElementById(id);
-      if (el) {
+  function scrollToPendingStory() {
+    const id = window._pendingStoryHash;
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (el) {
+      window._pendingStoryHash = null;
+      setTimeout(() => {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        el.style.transition = 'border-color 0.3s, box-shadow 0.3s';
+        el.style.transition = 'border-color 0.4s, box-shadow 0.4s';
         el.style.borderColor = 'var(--orange)';
         el.style.boxShadow = '0 0 0 2px rgba(240,90,40,0.3)';
         setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
-      } else if (Date.now() - start < 4000) {
-        setTimeout(tryScroll, 200);
-      }
-    };
-    setTimeout(tryScroll, 300);
+      }, 100);
+    }
   }
 
   loadFromGitHub();
