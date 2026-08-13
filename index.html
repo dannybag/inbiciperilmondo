@@ -1957,8 +1957,6 @@
       }
       window._diarioEntries = entries;
       renderDiarioEntries(entries);
-    checkStoryHash();
-    scrollToPendingStory();
     } catch (e) {
       wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; color:rgba(224,85,85,0.6); text-align:center; padding:1rem 0;">Diario non ancora disponibile</div>';
     }
@@ -2944,8 +2942,11 @@
     const hash = window.location.hash;
     if (!hash.startsWith('#storia-')) return;
     window._pendingStoryHash = hash.slice(1);
-    // Simula click sul bottone se il diario è chiuso
-    if (!_diarioOpen) toggleDiario();
+    if (!_diarioOpen) {
+      _diarioLoaded = true; // blocca loadDiarioPreview: il diario è già renderizzato
+      toggleDiario();
+    }
+    setTimeout(scrollToPendingStory, 200);
   }
 
   function scrollToPendingStory() {
@@ -2954,13 +2955,11 @@
     const el = document.getElementById(id);
     if (el) {
       window._pendingStoryHash = null;
-      setTimeout(() => {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        el.style.transition = 'border-color 0.4s, box-shadow 0.4s';
-        el.style.borderColor = 'var(--orange)';
-        el.style.boxShadow = '0 0 0 2px rgba(240,90,40,0.3)';
-        setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
-      }, 100);
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.style.transition = 'border-color 0.4s, box-shadow 0.4s';
+      el.style.borderColor = 'var(--orange)';
+      el.style.boxShadow = '0 0 0 2px rgba(240,90,40,0.3)';
+      setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
     }
   }
 
