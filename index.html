@@ -1957,6 +1957,7 @@
       }
       window._diarioEntries = entries;
       renderDiarioEntries(entries);
+      scrollToPendingStory();
     } catch (e) {
       wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; color:rgba(224,85,85,0.6); text-align:center; padding:1rem 0;">Diario non ancora disponibile</div>';
     }
@@ -1999,7 +2000,6 @@
         </div>
       `;
     }).join('');
-    scrollToPendingStory();
   }
 
   handleStravaCallback();
@@ -2942,25 +2942,20 @@
     const hash = window.location.hash;
     if (!hash.startsWith('#storia-')) return;
     window._pendingStoryHash = hash.slice(1);
-    if (!_diarioOpen) {
-      _diarioLoaded = true; // blocca loadDiarioPreview: il diario è già renderizzato
-      toggleDiario();
-    }
-    setTimeout(scrollToPendingStory, 200);
+    if (!_diarioOpen) toggleDiario(); // loadDiarioPreview girerà normalmente
   }
 
   function scrollToPendingStory() {
     const id = window._pendingStoryHash;
     if (!id) return;
     const el = document.getElementById(id);
-    if (el) {
-      window._pendingStoryHash = null;
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      el.style.transition = 'border-color 0.4s, box-shadow 0.4s';
-      el.style.borderColor = 'var(--orange)';
-      el.style.boxShadow = '0 0 0 2px rgba(240,90,40,0.3)';
-      setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
-    }
+    if (!el) return;
+    window._pendingStoryHash = null;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.style.transition = 'border-color 0.4s, box-shadow 0.4s';
+    el.style.borderColor = 'var(--orange)';
+    el.style.boxShadow = '0 0 0 2px rgba(240,90,40,0.3)';
+    setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
   }
 
   loadFromGitHub();
