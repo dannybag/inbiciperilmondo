@@ -1957,6 +1957,7 @@
       }
       window._diarioEntries = entries;
       renderDiarioEntries(entries);
+    checkStoryHash();
     } catch (e) {
       wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; color:rgba(224,85,85,0.6); text-align:center; padding:1rem 0;">Diario non ancora disponibile</div>';
     }
@@ -1978,9 +1979,13 @@
       const text = (rawText || '')
         .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--orange); text-decoration:underline;">$1</a>')
         .replace(/\n/g, '<br>');
+      const storyId = `storia-${e.day || (e.date||'').replace(/[^0-9]/g,'-') || i}`;
       return `
-        <div style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:4px; padding:1.2rem 1.3rem;">
-          <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.08em; color:var(--orange); text-transform:uppercase; margin-bottom:0.4rem;">${dateStr}</div>
+        <div id="${storyId}" style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:4px; padding:1.2rem 1.3rem; scroll-margin-top:5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.08em; color:var(--orange); text-transform:uppercase;">${dateStr}</div>
+            <button onclick="copyStoryLink('${storyId}', this)" title="Copia link a questa storia" style="background:none; border:none; color:rgba(255,248,244,0.25); font-size:0.8rem; cursor:pointer; padding:0.2rem; line-height:1; transition:color 0.2s;">🔗</button>
+          </div>
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:400; color:#FFF8F4; margin-bottom:0.5rem;">${title}</div>
           <div style="font-family:'Barlow',sans-serif; font-size:0.92rem; line-height:1.55; color:rgba(255,248,244,0.8); margin-bottom:${(photos.length||videos.length)?'0.8rem':'0'};">${text}</div>
           ${photos.length ? `<div class="dia-photos">${photos.map((p, i) => {
@@ -2918,6 +2923,36 @@
       });
       msg.textContent = url ? '✓ Video aggiornato' : '✓ Video rimosso';
     } catch(e) { msg.textContent = '✗ ' + e.message; }
+  }
+
+  // ---- LINK DIRETTO A STORIA ----
+  function copyStoryLink(id, btn) {
+    const url = window.location.origin + window.location.pathname + '#' + id;
+    navigator.clipboard.writeText(url).then(() => {
+      if (btn) { const old = btn.textContent; btn.textContent = '✓'; btn.style.color = 'var(--orange)'; setTimeout(() => { btn.textContent = old; btn.style.color = ''; }, 1800); }
+    }).catch(() => {
+      prompt('Copia questo link:', url);
+    });
+  }
+
+  // Apri diario e scorri alla storia se c'è un hash #storia-* nell'URL
+  function checkStoryHash() {
+    const hash = window.location.hash;
+    if (!hash.startsWith('#storia-')) return;
+    // Apri il diario se chiuso
+    const sec = document.getElementById('diario-section');
+    if (sec && sec.style.display === 'none') toggleDiario();
+    // Attendi render e scrolla
+    setTimeout(() => {
+      const el = document.getElementById(hash.slice(1));
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Evidenzia brevemente
+        el.style.borderColor = 'var(--orange)';
+        el.style.boxShadow = '0 0 0 2px rgba(240,90,40,0.3)';
+        setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
+      }
+    }, 600);
   }
 
   loadFromGitHub();
