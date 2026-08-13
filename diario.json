@@ -57,7 +57,9 @@
       "text": "Test test",
       "photos": [],
       "videos": [],
-      "published": true
+      "published": true,
+      "title_en": "Test",
+      "text_en": "Test test"
     }
   ]
 }
