@@ -2940,10 +2940,20 @@
     const hash = window.location.hash;
     if (!hash.startsWith('#storia-')) return;
     const id = hash.slice(1);
-    // Apri il diario se chiuso
-    if (!_diarioOpen) toggleDiario();
-    // Attendi render e scrolla
-    const tryScroll = (attempts) => {
+
+    // Apri la sezione diario direttamente (senza ri-caricare il diario che sovrascrive gli id)
+    if (!_diarioOpen) {
+      _diarioOpen = true;
+      _diarioLoaded = true; // impedisce a toggleDiario di ri-renderizzare
+      const sec = document.getElementById('diario-section');
+      const arrow = document.getElementById('diario-arrow');
+      if (sec) sec.style.display = 'block';
+      if (arrow) arrow.textContent = '↑';
+    }
+
+    // Riprova a trovare l'elemento per max 4 secondi
+    const start = Date.now();
+    const tryScroll = () => {
       const el = document.getElementById(id);
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -2951,11 +2961,11 @@
         el.style.borderColor = 'var(--orange)';
         el.style.boxShadow = '0 0 0 2px rgba(240,90,40,0.3)';
         setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
-      } else if (attempts > 0) {
-        setTimeout(() => tryScroll(attempts - 1), 300);
+      } else if (Date.now() - start < 4000) {
+        setTimeout(tryScroll, 200);
       }
     };
-    setTimeout(() => tryScroll(10), 400);
+    setTimeout(tryScroll, 300);
   }
 
   loadFromGitHub();
