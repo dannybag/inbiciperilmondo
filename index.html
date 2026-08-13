@@ -1975,7 +1975,9 @@
       const videos = e.videos || (e.video ? [e.video] : []);
       const title = (lang === 'en' && e.title_en) ? e.title_en : e.title;
       const rawText = (lang === 'en' && e.text_en) ? e.text_en : e.text;
-      const text = (rawText || '').replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--orange); text-decoration:underline;">$1</a>');
+      const text = (rawText || '')
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--orange); text-decoration:underline;">$1</a>')
+        .replace(/\n/g, '<br>');
       return `
         <div style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:4px; padding:1.2rem 1.3rem;">
           <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.08em; color:var(--orange); text-transform:uppercase; margin-bottom:0.4rem;">${dateStr}</div>
