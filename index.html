@@ -2939,20 +2939,23 @@
   function checkStoryHash() {
     const hash = window.location.hash;
     if (!hash.startsWith('#storia-')) return;
+    const id = hash.slice(1);
     // Apri il diario se chiuso
-    const sec = document.getElementById('diario-section');
-    if (sec && sec.style.display === 'none') toggleDiario();
+    if (!_diarioOpen) toggleDiario();
     // Attendi render e scrolla
-    setTimeout(() => {
-      const el = document.getElementById(hash.slice(1));
+    const tryScroll = (attempts) => {
+      const el = document.getElementById(id);
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Evidenzia brevemente
+        el.style.transition = 'border-color 0.3s, box-shadow 0.3s';
         el.style.borderColor = 'var(--orange)';
         el.style.boxShadow = '0 0 0 2px rgba(240,90,40,0.3)';
         setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 2500);
+      } else if (attempts > 0) {
+        setTimeout(() => tryScroll(attempts - 1), 300);
       }
-    }, 600);
+    };
+    setTimeout(() => tryScroll(10), 400);
   }
 
   loadFromGitHub();
