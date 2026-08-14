@@ -165,6 +165,19 @@
   <label>Video (link YouTube o Instagram, uno per riga — lascia vuoto se nessuno)</label>
   <textarea id="f-video" style="min-height:70px;" placeholder="https://youtube.com/watch?v=...
 https://www.instagram.com/reel/..."></textarea>
+
+  <!-- VOCALE -->
+  <label style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;">
+    <span>Vocale</span>
+    <span id="rec-timer" style="font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:#F05A28; display:none;">⏺ 0:00</span>
+  </label>
+  <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+    <button type="button" id="rec-btn" onclick="toggleRecording()" style="display:inline-flex; align-items:center; gap:0.4rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.45rem 0.9rem; background:#F05A28; color:#FFF8F4; border:none; border-radius:4px; cursor:pointer;">🎙 Registra</button>
+    <button type="button" id="rec-clear" onclick="clearAudio()" style="display:none; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.8rem; text-transform:uppercase; padding:0.45rem 0.7rem; background:rgba(255,255,255,0.07); color:rgba(255,248,244,0.5); border:1px solid rgba(255,248,244,0.15); border-radius:4px; cursor:pointer;">✕ Cancella</button>
+  </div>
+  <audio id="rec-preview" controls style="display:none; width:100%; margin-top:0.5rem; height:36px;"></audio>
+  <div id="rec-msg" style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:rgba(255,248,244,0.4); margin-top:0.3rem;"></div>
+
   <div class="btn-save-row">
     <button class="btn-primary" id="btn-save" onclick="saveEntry()">Pubblica nota</button>
     <button class="btn-ghost" id="btn-cancel" onclick="cancelEdit()" style="display:none;">Annulla modifica</button>
@@ -535,6 +548,7 @@ function editEntry(idx) {
 function cancelEdit() {
   editingIndex = null;
   keptPhotos = [];
+  clearAudio();
   document.getElementById('f-date').valueAsDate = new Date();
   document.getElementById('f-title').value = '';
   document.getElementById('f-text').value = '';
@@ -574,19 +588,23 @@ async function saveEntry() {
     }
     const photoPaths = [...keptPhotos, ...newPhotoBlobs.map(p => p.path)];
 
+    setStatus('Carico vocale...', 'wait');
+    const audioPath = await uploadAudio(date).catch(() => null);
+
     setStatus('Leggo il diario...', 'wait');
     const { entries } = await readDiario();
 
     let message;
     let removedPhotos = [];
     if (editingIndex !== null && entries[editingIndex]) {
-      const { video: _old, ...rest } = entries[editingIndex]; // rimuovo eventuale vecchio campo singolare
+      const { video: _old, ...rest } = entries[editingIndex];
       removedPhotos = (rest.photos || []).filter(p => !keptPhotos.includes(p));
       entries[editingIndex] = {
         ...rest,
         date, title, text,
         photos: photoPaths,
-        videos
+        videos,
+        ...(audioPath ? { audio: audioPath } : {})
       };
       message = `Diario: modifico nota "${title}"`;
     } else {
@@ -595,6 +613,7 @@ async function saveEntry() {
         date, title, text,
         photos: photoPaths,
         videos,
+        ...(audioPath ? { audio: audioPath } : {}),
         published: true
       });
       message = `Diario: nuova nota "${title}"`;
@@ -706,6 +725,88 @@ async function deleteEntry(idx) {
 }
 
 // ---- INIT ----
+// ---- REGISTRAZIONE VOCALE ----
+let _mediaRecorder = null;
+let _audioChunks = [];
+let _audioBlob = null;
+let _recInterval = null;
+let _recSeconds = 0;
+
+async function toggleRecording() {
+  const btn = document.getElementById('rec-btn');
+  const timer = document.getElementById('rec-timer');
+  const msg = document.getElementById('rec-msg');
+  if (_mediaRecorder && _mediaRecorder.state === 'recording') {
+    _mediaRecorder.stop();
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const mimeType = MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' :
+                     MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : '';
+    _audioChunks = [];
+    _audioBlob = null;
+    _recSeconds = 0;
+    _mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
+    _mediaRecorder.ondataavailable = e => { if (e.data.size > 0) _audioChunks.push(e.data); };
+    _mediaRecorder.onstop = () => {
+      stream.getTracks().forEach(t => t.stop());
+      clearInterval(_recInterval);
+      _audioBlob = new Blob(_audioChunks, { type: _mediaRecorder.mimeType });
+      const url = URL.createObjectURL(_audioBlob);
+      const preview = document.getElementById('rec-preview');
+      preview.src = url;
+      preview.style.display = 'block';
+      document.getElementById('rec-clear').style.display = 'inline-flex';
+      btn.textContent = '🎙 Registra di nuovo';
+      timer.style.display = 'none';
+      const mb = (_audioBlob.size / 1048576).toFixed(1);
+      msg.textContent = `✓ Vocale pronto — ${formatTime(_recSeconds)} · ${mb} MB`;
+    };
+    _mediaRecorder.start(1000);
+    btn.textContent = '⏹ Stop';
+    timer.style.display = 'inline';
+    msg.textContent = '';
+    _recInterval = setInterval(() => {
+      _recSeconds++;
+      timer.textContent = '⏺ ' + formatTime(_recSeconds);
+    }, 1000);
+  } catch(e) {
+    msg.textContent = '✗ Microfono non disponibile: ' + e.message;
+  }
+}
+
+function formatTime(s) {
+  return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0');
+}
+
+function clearAudio() {
+  _audioBlob = null;
+  _audioChunks = [];
+  const preview = document.getElementById('rec-preview');
+  preview.src = '';
+  preview.style.display = 'none';
+  document.getElementById('rec-clear').style.display = 'none';
+  document.getElementById('rec-btn').textContent = '🎙 Registra';
+  document.getElementById('rec-timer').style.display = 'none';
+  document.getElementById('rec-msg').textContent = '';
+}
+
+async function uploadAudio(date) {
+  if (!_audioBlob) return null;
+  const ext = _audioBlob.type.includes('mp4') ? 'mp4' : 'webm';
+  const filename = `audio/vocale-${date}-${Date.now()}.${ext}`;
+  const reader = new FileReader();
+  const b64 = await new Promise(res => { reader.onload = () => res(reader.result.split(',')[1]); reader.readAsDataURL(_audioBlob); });
+  const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${filename}`, {
+    method: 'PUT',
+    headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: `Vocale ${date}`, content: b64 })
+  });
+  if (!res.ok) throw new Error('Upload vocale fallito: ' + res.status);
+  return filename;
+}
+
 async function saveVideoUrl() {
   const url = document.getElementById('admin-video-url').value.trim();
   const msg = document.getElementById('video-url-msg');

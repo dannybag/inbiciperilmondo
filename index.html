@@ -1997,6 +1997,7 @@
             return `<div class="dia-photo" ${click} style="${cursor}" title="${link ? 'Apri link' : 'Ingrandisci'}"><img src="${p}" loading="lazy"></div>`;
           }).join('')}</div>` : ''}
           ${videos.length ? `<div class="dia-videos">${videos.map(v => _diaRenderVideo(v)).join('')}</div>` : ''}
+          ${e.audio ? `<div style="margin-top:0.6rem;"><audio controls src="https://raw.githubusercontent.com/dannybag/inbiciperilmondo/main/${e.audio}" style="width:100%; height:36px; border-radius:4px;"></audio></div>` : ''}
         </div>
       `;
     }).join('');
