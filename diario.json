@@ -58,7 +58,9 @@
       "photos": [],
       "videos": [],
       "audio": "audio/vocale-2026-08-14-1786714148282.mp4",
-      "published": true
+      "published": true,
+      "title_en": "Audio test",
+      "text_en": "Audio test today"
     }
   ]
 }
