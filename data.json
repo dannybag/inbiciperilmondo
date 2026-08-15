@@ -6,7 +6,7 @@
       {
         "name": "Umberto C",
         "amount": 147,
-        "time": "about 5 hours",
+        "time": "about 6 hours",
         "message": "Bravo Daniele pedalo con te. E spero che saranno tanti i ragazzi che potranno farlo grazie a te"
       },
       {
@@ -62,6 +62,24 @@
         "amount": 20,
         "time": "16 days",
         "message": "Buona pedalata!"
+      },
+      {
+        "name": "Patrizia F",
+        "amount": 147,
+        "time": "16 days",
+        "message": "Grazie a Daniele … la fatica fisica sarà tutta sua 👍🍀👍"
+      },
+      {
+        "name": "Anonymous",
+        "amount": 147,
+        "time": "22 days",
+        "message": "Danny bag bean lo es you"
+      },
+      {
+        "name": "Anonymous",
+        "amount": 1,
+        "time": "2 months",
+        "message": "1"
       }
     ]
   },
