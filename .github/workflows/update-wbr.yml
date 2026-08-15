@@ -56,6 +56,18 @@ jobs:
               waitUntil: 'networkidle', timeout: 30000
             });
 
+            // Clicca "Load more" / "Show more" finché ci sono donatori nascosti
+            let loadMoreClicks = 0;
+            while (loadMoreClicks < 20) {
+              const btn = await page.$('button:has-text("more"), button:has-text("More"), a:has-text("more"), a:has-text("More"), [class*="load-more"], [class*="loadmore"], [class*="show-more"]');
+              if (!btn) break;
+              const visible = await btn.isVisible();
+              if (!visible) break;
+              console.log('Clicco Load more #' + (++loadMoreClicks));
+              await btn.click();
+              await page.waitForTimeout(1500);
+            }
+
             const bodyText = await page.evaluate(() => document.body.innerText);
 
             // Stampa tutto il testo per debug
