@@ -56,6 +56,23 @@ jobs:
               waitUntil: 'networkidle', timeout: 30000
             });
 
+            // Debug: stampa HTML intorno alla sezione donatori
+            const donorHtml = await page.evaluate(() => {
+              const body = document.body.innerHTML;
+              const idx = body.toLowerCase().indexOf('eur');
+              if (idx < 0) return 'EUR non trovato nel DOM';
+              return body.slice(Math.max(0, idx - 200), idx + 2000);
+            });
+            console.log('\n=== HTML SEZIONE DONATORI ===');
+            console.log(donorHtml.slice(0, 3000));
+            console.log('=== FINE HTML ===\n');
+
+            // Cerca bottoni con testo variabile
+            const allBtns = await page.evaluate(() =>
+              [...document.querySelectorAll('button, a')].map(el => el.textContent.trim()).filter(t => t.length > 0 && t.length < 50)
+            );
+            console.log('Bottoni/link trovati:', JSON.stringify(allBtns.slice(0, 30)));
+
             // Clicca "Load more" / "Show more" finché ci sono donatori nascosti
             let loadMoreClicks = 0;
             while (loadMoreClicks < 20) {
