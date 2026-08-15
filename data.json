@@ -1,8 +1,14 @@
 {
   "fundraising": {
-    "raised": 703,
+    "raised": 850,
     "goal": 1700,
     "donors": [
+      {
+        "name": "Umberto C",
+        "amount": 147,
+        "time": "11 minutes",
+        "message": "Bravo Daniele pedalo con te. E spero che saranno tanti i ragazzi che potranno farlo grazie a te"
+      },
       {
         "name": "Anonymous",
         "amount": 9,
@@ -18,7 +24,7 @@
       {
         "name": "gianluca b",
         "amount": 10,
-        "time": "9 days",
+        "time": "10 days",
         "message": ""
       },
       {
@@ -56,12 +62,6 @@
         "amount": 20,
         "time": "16 days",
         "message": "Buona pedalata!"
-      },
-      {
-        "name": "Patrizia F",
-        "amount": 147,
-        "time": "16 days",
-        "message": "Grazie a Daniele … la fatica fisica sarà tutta sua 👍🍀👍"
       }
     ]
   },
