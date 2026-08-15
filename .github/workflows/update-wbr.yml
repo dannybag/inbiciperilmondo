@@ -56,43 +56,29 @@ jobs:
               waitUntil: 'networkidle', timeout: 30000
             });
 
-            // Debug: stampa HTML intorno alla sezione donatori
-            const donorHtml = await page.evaluate(() => {
-              const body = document.body.innerHTML;
-              const idx = body.toLowerCase().indexOf('eur');
-              if (idx < 0) return 'EUR non trovato nel DOM';
-              return body.slice(Math.max(0, idx - 200), idx + 2000);
-            });
-            console.log('\n=== HTML SEZIONE DONATORI ===');
-            console.log(donorHtml.slice(0, 3000));
-            console.log('=== FINE HTML ===\n');
-
-            // Cerca bottoni con testo variabile
-            const allBtns = await page.evaluate(() =>
-              [...document.querySelectorAll('button, a')].map(el => el.textContent.trim()).filter(t => t.length > 0 && t.length < 50)
-            );
-            console.log('Bottoni/link trovati:', JSON.stringify(allBtns.slice(0, 30)));
-
-            // Clicca "Load more" / "Show more" finché ci sono donatori nascosti
-            let loadMoreClicks = 0;
-            while (loadMoreClicks < 20) {
-              const btn = await page.$('button:has-text("more"), button:has-text("More"), a:has-text("more"), a:has-text("More"), [class*="load-more"], [class*="loadmore"], [class*="show-more"]');
-              if (!btn) break;
-              const visible = await btn.isVisible();
-              if (!visible) break;
-              console.log('Clicco Load more #' + (++loadMoreClicks));
-              await btn.click();
-              await page.waitForTimeout(1500);
+            // Scraping paginato: clicca pagina 2, 3, 4... finché esistono
+            const allPageTexts = [await page.evaluate(() => document.body.innerText)];
+            let pageNum = 2;
+            while (pageNum <= 20) {
+              // Cerca il link/bottone con il numero di pagina
+              const pageBtn = await page.$(`ul.pagination a:has-text("${pageNum}"), button:has-text("${pageNum}"), a[aria-label="Page ${pageNum}"]`);
+              if (!pageBtn) break;
+              const isVisible = await pageBtn.isVisible();
+              if (!isVisible) break;
+              console.log('Carico pagina donatori #' + pageNum);
+              await pageBtn.click();
+              await page.waitForTimeout(2000);
+              allPageTexts.push(await page.evaluate(() => document.body.innerText));
+              pageNum++;
             }
+            console.log('Pagine donatori caricate:', allPageTexts.length);
 
-            const bodyText = await page.evaluate(() => document.body.innerText);
-
-            // Stampa tutto il testo per debug
+            const bodyText = allPageTexts[0];
             console.log('\n=== TESTO COMPLETO (10000 chars) ===');
             console.log(bodyText.slice(0, 10000));
             console.log('=== FINE TESTO ===\n');
 
-            // --- RACCOLTO E GOAL ---
+            // Raccolto e goal dal testo pagina 1
             let raised = 0, goal = 1700;
             const mRaised = bodyText.match(/EUR\s*([\d,.']+)\s*collected/i);
             if (mRaised) raised = parseInt(mRaised[1].replace(/[,.']/g, '')) || 0;
@@ -136,7 +122,9 @@ jobs:
               return { amount: parseInt(raw.replace(/[,.\']/g, '')) || 0, time: '' };
             }
 
-            const lines = bodyText.split('\n').map(l => l.trim()).filter(Boolean);
+            // Combina testo di tutte le pagine per trovare tutti i donatori
+            const combinedText = allPageTexts.join('\n');
+            const lines = combinedText.split('\n').map(l => l.trim()).filter(Boolean);
             const donors = [];
             const seen = new Set();
             let anonCount = 0;
