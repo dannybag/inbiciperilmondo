@@ -2888,7 +2888,7 @@
       list.innerHTML = `<div style="font-family:var(--mono); font-size:0.65rem; color:var(--muted); text-align:center; padding:0.8rem 0;" data-i18n="no_donatori">${lang === 'en' ? 'No supporters yet.' : 'Ancora nessun contributore.'}</div>`;
       return;
     }
-    list.innerHTML = donors.map(d => `
+    const renderCard = d => `
       <div style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:3px; padding:0.75rem 1rem; display:flex; flex-direction:column; gap:0.2rem;">
         <div style="display:flex; justify-content:space-between; align-items:baseline;">
           <span style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; color:#FFF8F4;">${d.name || 'Anonymous'}</span>
@@ -2896,8 +2896,31 @@
         </div>
         ${d.message ? `<div style="font-family:'Barlow',sans-serif; font-size:0.85rem; color:rgba(255,248,244,0.6); font-style:italic;">"${d.message}"</div>` : ''}
         ${d.time ? `<div style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.3); letter-spacing:0.05em;">${d.time}</div>` : ''}
-      </div>
-    `).join('');
+      </div>`;
+
+    const PREVIEW = 5;
+    const hasMore = donors.length > PREVIEW;
+    list.innerHTML = donors.map(renderCard).join('');
+
+    if (hasMore) {
+      // Nascondi i donatori oltre i primi PREVIEW
+      const cards = list.querySelectorAll(':scope > div');
+      cards.forEach((c, i) => { if (i >= PREVIEW) c.style.display = 'none'; });
+      // Bottone espandi
+      const btn = document.createElement('button');
+      btn.dataset.expanded = '0';
+      btn.textContent = lang === 'en' ? `Show all (${donors.length})` : `Mostra tutti (${donors.length})`;
+      Object.assign(btn.style, { marginTop:'0.5rem', background:'transparent', border:'1px solid rgba(240,90,40,0.3)', color:'rgba(255,248,244,0.5)', fontFamily:"'Barlow Condensed',sans-serif", fontWeight:'700', fontSize:'0.8rem', letterSpacing:'0.08em', textTransform:'uppercase', padding:'0.4rem 0.9rem', borderRadius:'3px', cursor:'pointer', width:'100%' });
+      btn.onclick = () => {
+        const expanded = btn.dataset.expanded === '1';
+        cards.forEach((c, i) => { if (i >= PREVIEW) c.style.display = expanded ? 'none' : ''; });
+        btn.dataset.expanded = expanded ? '0' : '1';
+        btn.textContent = expanded
+          ? (lang === 'en' ? `Show all (${donors.length})` : `Mostra tutti (${donors.length})`)
+          : (lang === 'en' ? 'Show less' : 'Mostra meno');
+      };
+      list.appendChild(btn);
+    }
   }
 
   // ---- SALVA VIDEO IN EVIDENZA ----
