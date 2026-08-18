@@ -786,6 +786,30 @@
   </div>
 
   <div class="frame-wrap" id="wrapStory3">
+
+  <!-- COUNTDOWN SLIDE — scompare dopo il 31 agosto 2026 -->
+  <div class="frame-wrap" id="wrapCountdown">
+    <div class="frame-name">Countdown</div>
+    <div class="frame-story" style="position:relative; overflow:hidden; background:#0A0A0A;">
+      <!-- Sfondo diagonale come slide 1 -->
+      <div style="position:absolute; inset:0; background:rgba(240,90,40,0.13); clip-path:polygon(30% 0, 100% 0, 70% 100%, 0 100%); pointer-events:none; z-index:1;"></div>
+      <!-- Hashtag -->
+      <div style="position:absolute; top:1rem; left:1.2rem; font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:#F05A28; z-index:2;">#UnaBiciPerIlMondo</div>
+      <!-- Contenuto centrato -->
+      <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:2; gap:0.2rem;">
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:#FFF8F4;">mancano</div>
+        <div id="cd-num" contenteditable="true" title="Tocca per modificare" style="font-family:'Bebas Neue',sans-serif; font-size:5rem; font-weight:900; color:#F05A28; line-height:1; outline:none; cursor:text; min-width:2ch; text-align:center;">--</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:#FFF8F4;">giorni al via</div>
+        <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.12em; color:rgba(255,248,244,0.7); margin-top:0.6rem;">31 agosto 2026 · Milano</div>
+        <!-- Reset al valore automatico -->
+        <button onclick="resetCountdown()" style="margin-top:0.8rem; background:transparent; border:1px solid rgba(255,248,244,0.2); color:rgba(255,248,244,0.4); font-family:'IBM Plex Mono',monospace; font-size:0.5rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.2rem 0.6rem; border-radius:2px; cursor:pointer;">↺ auto</button>
+      </div>
+      <!-- MIPA watermark -->
+      <div style="position:absolute; bottom:1rem; left:0; right:0; text-align:center; font-family:'Bebas Neue',sans-serif; font-size:0.9rem; letter-spacing:0.4em; color:rgba(255,248,244,0.45); z-index:2;">MIPA</div>
+    </div>
+  </div>
+
+
     <div class="frame-story">
       <div class="slide-close">
         <div class="close-day" id="s-close-day">01</div>
@@ -1864,6 +1888,28 @@ function shufflePhrases() {
     const j = Math.floor(Math.random() * (i + 1));
     [phraseQueue[i], phraseQueue[j]] = [phraseQueue[j], phraseQueue[i]];
   }
+}
+
+// ---- COUNTDOWN ----
+(function initCountdown() {
+  const TARGET = new Date('2026-08-31T00:00:00');
+  const now = new Date();
+  // Nascondi la slide se siamo oltre il 31 agosto
+  if (now >= TARGET) {
+    const wrap = document.getElementById('wrapCountdown');
+    if (wrap) wrap.style.display = 'none';
+    return;
+  }
+  const days = Math.ceil((TARGET - now) / 86400000);
+  const el = document.getElementById('cd-num');
+  if (el && el.textContent === '--') el.textContent = days;
+})();
+
+function resetCountdown() {
+  const TARGET = new Date('2026-08-31T00:00:00');
+  const days = Math.max(0, Math.ceil((TARGET - new Date()) / 86400000));
+  const el = document.getElementById('cd-num');
+  if (el) el.textContent = days;
 }
 
 function getNextPhrase() {
