@@ -1180,6 +1180,8 @@ async function loadFromGitHub() {
     const meta = await res.json();
     const data = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(meta.content.replace(/\n/g,'')), c => c.charCodeAt(0))));
     console.log('GitHub data loaded:', data);
+    // Aggiorna sempre raccolta fondi, indipendentemente dalla tappa
+    if (data.fundraising) populateFromTappa(null, [], data.fundraising);
     if (data.tappa && data.tappa.day > 0) {
       console.log('Tappa trovata:', data.tappa);
       populateFromTappa(data.tappa, data.tappe || [], data.fundraising || null);
@@ -1192,6 +1194,7 @@ async function loadFromGitHub() {
 }
 
 function populateFromTappa(tappa, tappeList, fundraising) {
+  if (tappa) {
   document.getElementById('dayNum').value    = tappa.day || 1;
   document.getElementById('fromCity').value  = tappa.from || 'Milano';
   document.getElementById('toCity').value    = tappa.to || '';
@@ -1235,8 +1238,9 @@ function populateFromTappa(tappa, tappeList, fundraising) {
   const d1 = document.getElementById('s-date'); if (d1) d1.textContent = dateStr;
   const d2 = document.getElementById('s-date-2'); if (d2) d2.textContent = dateStr;
   document.querySelectorAll('[id^="s-date-extra"]').forEach(el => el.textContent = dateStr);
+  } // end if (tappa)
 
-  // Mini barra raccolta fondi
+  // Mini barra raccolta fondi — aggiornata sempre
   if (fundraising) {
     const raised = fundraising.raised || 0;
     const goal   = fundraising.goal   || 1700;
