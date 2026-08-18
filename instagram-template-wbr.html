@@ -785,8 +785,6 @@
     </div>
   </div>
 
-  <div class="frame-wrap" id="wrapStory3">
-
   <!-- COUNTDOWN SLIDE — scompare dopo il 31 agosto 2026 -->
   <div class="frame-wrap" id="wrapCountdown">
     <div class="frame-name"></div>
@@ -809,7 +807,7 @@
     </div>
   </div>
 
-
+  <div class="frame-wrap" id="wrapStory3">
     <div class="frame-story">
       <div class="slide-close">
         <div class="close-day" id="s-close-day">01</div>
@@ -1385,8 +1383,13 @@ async function downloadSlides() {
     { id: 'wrapStory',  name: `giorno${pad(day)}_01_apertura` },
     { id: 'wrapStory2', name: `giorno${pad(day)}_02_foto` },
   ];
+  // Countdown (solo se visibile, cioè prima del 31 agosto)
+  const cdWrap = document.getElementById('wrapCountdown');
+  if (cdWrap && cdWrap.style.display !== 'none') {
+    slides.push({ id: 'wrapCountdown', name: `giorno${pad(day)}_03_countdown` });
+  }
   // Extra dinamiche
-  let n = 3;
+  let n = cdWrap && cdWrap.style.display !== 'none' ? 4 : 3;
   for (let i = 1; i <= extraSlideCount; i++) {
     if (document.getElementById('wrapExtra'+i)) {
       slides.push({ id: 'wrapExtra'+i, name: `giorno${pad(day)}_0${n}_extra${i}` });
