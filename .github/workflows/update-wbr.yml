@@ -193,6 +193,14 @@ jobs:
             } else {
               console.log('= Nessuna variazione');
             }
+
+            // Genera sempre il CSV sostenitori aggiornato
+            const donors = data.fundraising.donors || [];
+            const rows = [['Nome','Importo (€)','Tempo','Messaggio']];
+            donors.forEach(d => rows.push([d.name||'', d.amount||0, d.time||'', d.message||'']));
+            const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+            fs.writeFileSync('sostenitori-mipa.csv', '\uFEFF' + csv, 'utf8');
+            console.log('✓ sostenitori-mipa.csv generato (' + donors.length + ' righe)');
           })();
           JSEOF
 
@@ -200,8 +208,8 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet data.json || (
-            git add data.json &&
+          git diff --quiet data.json sostenitori-mipa.csv || (
+            git add data.json sostenitori-mipa.csv &&
             git commit -m "Auto: aggiornamento raccolta fondi WBR" &&
             git pull --rebase &&
             git push
