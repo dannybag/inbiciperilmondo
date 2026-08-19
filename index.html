@@ -3032,13 +3032,58 @@
   <a href="instagram-daily.html" target="_blank" style="background:#1A1A1A; border:1px solid rgba(240,90,40,0.3); color:rgba(240,90,40,0.7); font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.55rem 1.1rem; border-radius:20px; cursor:pointer; backdrop-filter:blur(6px); white-space:nowrap; box-shadow:0 2px 10px rgba(0,0,0,0.4); text-decoration:none;">
     🚴 Daily Stories
   </a>
-  <a href="https://raw.githubusercontent.com/dannybag/inbiciperilmondo/main/sostenitori-mipa.csv" download="sostenitori-mipa.csv" style="background:#1A1A1A; border:1px solid rgba(240,90,40,0.3); color:rgba(240,90,40,0.7); font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.55rem 1.1rem; border-radius:20px; cursor:pointer; backdrop-filter:blur(6px); white-space:nowrap; box-shadow:0 2px 10px rgba(0,0,0,0.4); text-decoration:none;">
+  <a href="#" onclick="downloadCSV(event)" style="background:#1A1A1A; border:1px solid rgba(240,90,40,0.3); color:rgba(240,90,40,0.7); font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.55rem 1.1rem; border-radius:20px; cursor:pointer; backdrop-filter:blur(6px); white-space:nowrap; box-shadow:0 2px 10px rgba(0,0,0,0.4); text-decoration:none;">
     📋 Sostenitori CSV
   </a>
 
 </div>
 
 <script>
+  async function downloadCSV(e) {
+    e.preventDefault();
+    try {
+      const res = await fetch('https://raw.githubusercontent.com/dannybag/inbiciperilmondo/main/sostenitori-mipa.csv?t=' + Date.now());
+      const text = await res.text();
+      // Parse CSV
+      const rows = text.trim().split('\n').map(r => r.split(',').map(c => c.replace(/^"|"$/g, '')));
+      const header = rows[0];
+      const data = rows.slice(1);
+      const total = data.reduce((s, r) => s + (parseFloat(r[1]) || 0), 0);
+      // Genera HTML formattato
+      const html = `<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8">
+<title>Sostenitori MIPA</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #0A0A0A; color: #FFF8F4; padding: 2rem; }
+  h1 { font-size: 1.4rem; letter-spacing: 0.1em; text-transform: uppercase; color: #F05A28; margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th { text-align: left; padding: 0.5rem 0.8rem; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: #F05A28; border-bottom: 1px solid rgba(240,90,40,0.3); }
+  td { padding: 0.55rem 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  td:nth-child(2) { text-align: right; font-weight: 700; color: #F05A28; }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+  .total-row td { border-top: 2px solid rgba(240,90,40,0.4); font-weight: 800; font-size: 1rem; padding-top: 0.8rem; }
+  .total-row td:nth-child(2) { font-size: 1.2rem; }
+</style></head><body>
+<h1>📋 Sostenitori MIPA — Una Bici per il Mondo</h1>
+<table>
+  <thead><tr>${header.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+  <tbody>
+    ${data.map(r => `<tr>${r.map((c,i) => `<td>${i===1 ? '€'+c : c}</td>`).join('')}</tr>`).join('')}
+    <tr class="total-row">
+      <td>Totale</td>
+      <td>€${total}</td>
+      <td colspan="${header.length - 2}"></td>
+    </tr>
+  </tbody>
+</table>
+</body></html>`;
+      const w = window.open('', '_blank');
+      w.document.write(html);
+      w.document.close();
+    } catch(err) {
+      alert('Errore: ' + err.message);
+    }
+  }
+
   // Password offuscata — i codici sono charCode+7, non leggibile direttamente
   const _k = [73,112,114,108,57,55,57,61];
   const _chk = (s) => s.length === _k.length && [...s].every((c,i) => c.charCodeAt(0)+7 === _k[i]);
