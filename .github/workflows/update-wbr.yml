@@ -196,10 +196,10 @@ jobs:
 
             // Genera sempre il CSV sostenitori aggiornato
             const csvDonors = data.fundraising.donors || [];
-            const rows = [['Nome','Importo (€)','Tempo','Messaggio']];
+            const rows = [['Nome','Importo','Tempo','Messaggio']];
             csvDonors.forEach(d => rows.push([d.name||'', d.amount||0, d.time||'', d.message||'']));
             const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
-            fs.writeFileSync('sostenitori-mipa.csv', '\uFEFF' + csv, 'utf8');
+            fs.writeFileSync('sostenitori-mipa.csv', csv, 'utf8');
             console.log('✓ sostenitori-mipa.csv generato (' + csvDonors.length + ' righe)');
           })();
           JSEOF
