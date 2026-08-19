@@ -181,17 +181,8 @@ jobs:
 
             data.fundraising.raised = raised;
             data.fundraising.goal = goal;
-            // Merge: unisci nuovi donatori con quelli già in data.json
-            if (donors.length > 0) {
-              const existing = data.fundraising.donors || [];
-              const seen = new Set(donors.map(d => `${d.name}|${d.amount}|${d.message}`));
-              // Aggiungi vecchi donatori non presenti nei nuovi
-              for (const d of existing) {
-                const k = `${d.name}|${d.amount}|${d.message}`;
-                if (!seen.has(k)) { donors.push(d); seen.add(k); }
-              }
-              data.fundraising.donors = donors;
-            }
+            // Sostituisci sempre — la paginazione garantisce che lo scraper trovi tutti i donatori
+            if (donors.length > 0) data.fundraising.donors = donors;
 
             if (changed) {
               fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
