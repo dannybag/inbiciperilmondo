@@ -4,15 +4,21 @@
     "goal": 1700,
     "donors": [
       {
+        "name": "Alessandro N",
+        "amount": 15,
+        "time": "20 minutes",
+        "message": "Go go go"
+      },
+      {
         "name": "Walter I",
         "amount": 25,
-        "time": "about 2 hours",
+        "time": "about 3 hours",
         "message": ""
       },
       {
         "name": "Anonymous",
         "amount": 25,
-        "time": "about 7 hours",
+        "time": "about 8 hours",
         "message": ""
       },
       {
