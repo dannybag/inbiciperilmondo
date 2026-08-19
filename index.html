@@ -3054,7 +3054,10 @@
 <title>Sostenitori MIPA</title>
 <style>
   body { font-family: 'Segoe UI', sans-serif; background: #0A0A0A; color: #FFF8F4; padding: 2rem; }
-  h1 { font-size: 1.4rem; letter-spacing: 0.1em; text-transform: uppercase; color: #F05A28; margin-bottom: 1.5rem; }
+  h1 { font-size: 1.4rem; letter-spacing: 0.1em; text-transform: uppercase; color: #F05A28; margin-bottom: 0.8rem; }
+  .toolbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; }
+  .btn-dl { background:#F05A28; color:#FFF8F4; border:none; font-family:'Segoe UI',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.5rem 1.2rem; border-radius:4px; cursor:pointer; }
+  .btn-dl:hover { background:#d04a1a; }
   table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
   th { text-align: left; padding: 0.5rem 0.8rem; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: #F05A28; border-bottom: 1px solid rgba(240,90,40,0.3); }
   td { padding: 0.55rem 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
@@ -3063,7 +3066,10 @@
   .total-row td { border-top: 2px solid rgba(240,90,40,0.4); font-weight: 800; font-size: 1rem; padding-top: 0.8rem; }
   .total-row td:nth-child(2) { font-size: 1.2rem; }
 </style></head><body>
-<h1>📋 Sostenitori MIPA — Una Bici per il Mondo</h1>
+<div class="toolbar">
+  <h1>📋 Sostenitori MIPA — Una Bici per il Mondo</h1>
+  <button class="btn-dl" onclick="dlCSV()">⬇ Scarica CSV</button>
+</div>
 <table>
   <thead><tr>${header.map(h => `<th>${h}</th>`).join('')}</tr></thead>
   <tbody>
@@ -3075,6 +3081,16 @@
     </tr>
   </tbody>
 </table>
+<script>
+const csvText = ${JSON.stringify(text)};
+function dlCSV() {
+  const blob = new Blob([csvText], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'sostenitori-mipa.csv';
+  a.click();
+}
+</script>
 </body></html>`;
       const w = window.open('', '_blank');
       w.document.write(html);
