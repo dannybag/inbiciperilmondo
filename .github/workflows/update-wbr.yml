@@ -107,7 +107,12 @@ jobs:
                 const before = raw.slice(0, unitStart).trim();
                 const base = unitM[0].toLowerCase().replace(/s?\\s*ago\\s*$/, '').replace(/s$/, '').trim();
                 const max = MAX_TIME[base] || 99;
-                for (const digits of [1, 2]) {
+                // Ordine cifre dipende dall'unità:
+                // minuti/ore/secondi → 1 cifra prima (es. "256 min" → €25, 6 min)
+                // giorni/mesi/anni   → 2 cifre prima (es. "14726 days" → €147, 26 days)
+                const shortUnits = ['second','minute','hour'];
+                const digitOrder = shortUnits.some(u => base.startsWith(u)) ? [1, 2] : [2, 1];
+                for (const digits of digitOrder) {
                   if (before.length > digits) {
                     const tnStr = before.slice(-digits);
                     if (tnStr.startsWith('0')) continue;
@@ -198,7 +203,7 @@ jobs:
             const csvDonors = data.fundraising.donors || [];
             const rows = [['Nome','Importo','Tempo','Messaggio']];
             csvDonors.forEach(d => rows.push([d.name||'', d.amount||0, d.time||'', d.message||'']));
-            const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+            const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\r\n');
             fs.writeFileSync('sostenitori-mipa.csv', csv, 'utf8');
             console.log('✓ sostenitori-mipa.csv generato (' + csvDonors.length + ' righe)');
           })();
