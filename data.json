@@ -6,7 +6,7 @@
       {
         "name": "Walter I",
         "amount": 25,
-        "time": "56 minutes",
+        "time": "about 1 hour",
         "message": ""
       },
       {
@@ -30,7 +30,7 @@
       {
         "name": "Giorgio F",
         "amount": 50,
-        "time": "1 day",
+        "time": "2 days",
         "message": "Ottima iniziativa"
       },
       {
@@ -61,48 +61,48 @@
         "name": "Sergio M",
         "amount": 25,
         "time": "9 days",
-        "message": "1"
+        "message": ""
       },
       {
         "name": "Alessandro V",
-        "amount": 147,
-        "time": "13 days",
+        "amount": 1471,
+        "time": "3 days",
         "message": ""
       },
       {
         "name": "gianluca b",
-        "amount": 10,
-        "time": "13 days",
+        "amount": 101,
+        "time": "3 days",
         "message": ""
       },
       {
         "name": "Anonymous",
-        "amount": 147,
-        "time": "14 days",
+        "amount": 1471,
+        "time": "4 days",
         "message": "Grazie Daniele"
       },
       {
         "name": "Anonymous",
-        "amount": 10,
-        "time": "14 days",
+        "amount": 101,
+        "time": "4 days",
         "message": ""
       },
       {
         "name": "Roberto t",
-        "amount": 25,
-        "time": "14 days",
+        "amount": 251,
+        "time": "4 days",
         "message": "Adesso devi partire!"
       },
       {
         "name": "Anonymous",
-        "amount": 10,
-        "time": "16 days",
+        "amount": 101,
+        "time": "6 days",
         "message": ""
       },
       {
         "name": "Lorenzo V",
-        "amount": 30,
-        "time": "16 days",
+        "amount": 301,
+        "time": "6 days",
         "message": ""
       },
       {
@@ -119,15 +119,15 @@
       },
       {
         "name": "Anonymous",
-        "amount": 147,
-        "time": "26 days",
+        "amount": 1472,
+        "time": "6 days",
         "message": "Danny bag bean lo es you"
       },
       {
         "name": "Anonymous",
         "amount": 1,
         "time": "3 months",
-        "message": "1"
+        "message": ""
       }
     ]
   },
