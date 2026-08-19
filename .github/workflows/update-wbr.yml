@@ -53,8 +53,10 @@ jobs:
             console.log('=== WBR Scraper v3 ===', new Date().toISOString());
 
             await page.goto('https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo?tab=overview', {
-              waitUntil: 'networkidle', timeout: 30000
+              waitUntil: 'domcontentloaded', timeout: 30000
             });
+            // Aspetta che la lista donatori sia nel DOM
+            await page.waitForTimeout(3000);
 
             // Scraping paginato: clicca pagina 2, 3, 4... finché esistono
             const allPageTexts = [await page.evaluate(() => document.body.innerText)];
@@ -105,7 +107,7 @@ jobs:
                 const before = raw.slice(0, unitStart).trim();
                 const base = unitM[0].toLowerCase().replace(/s?\\s*ago\\s*$/, '').replace(/s$/, '').trim();
                 const max = MAX_TIME[base] || 99;
-                for (const digits of [2, 1]) {
+                for (const digits of [1, 2]) {
                   if (before.length > digits) {
                     const tnStr = before.slice(-digits);
                     if (tnStr.startsWith('0')) continue;
@@ -152,7 +154,8 @@ jobs:
               const nextLine = (lines[i+1] || '').trim();
               const lineAfterNext = (lines[i+2] || '').trim();
               const nextLineIsDonorName = lineAfterNext.match(/^EUR/i);
-              const message = (nextLine && !nextLineIsDonorName && !nextLine.match(/^EUR|collected|goal|donate|support|show|view|load|login|about|share|world bicycle relief/i))
+              const nextLineIsPagination = /^\d$/.test(nextLine); // singola cifra = bottone pagina
+              const message = (nextLine && !nextLineIsDonorName && !nextLineIsPagination && !nextLine.match(/^EUR|collected|goal|donate|support|show|view|load|login|about|share|world bicycle relief/i))
                 ? nextLine : '';
 
               // Deduplicazione:
