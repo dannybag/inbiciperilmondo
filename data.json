@@ -1,12 +1,18 @@
 {
   "fundraising": {
-    "raised": 1060,
+    "raised": 1085,
     "goal": 1700,
     "donors": [
       {
+        "name": "Walter I",
+        "amount": 2,
+        "time": "56 minutes",
+        "message": ""
+      },
+      {
         "name": "Anonymous",
         "amount": 25,
-        "time": "about 5 hours",
+        "time": "about 6 hours",
         "message": ""
       },
       {
@@ -55,13 +61,13 @@
         "name": "Sergio M",
         "amount": 25,
         "time": "9 days",
-        "message": ""
+        "message": "1"
       },
       {
         "name": "Alessandro V",
         "amount": 147,
         "time": "13 days",
-        "message": "1"
+        "message": ""
       },
       {
         "name": "gianluca b",
