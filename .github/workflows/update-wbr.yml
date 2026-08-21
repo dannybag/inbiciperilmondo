@@ -50,37 +50,61 @@ jobs:
           (async () => {
             const browser = await chromium.launch();
             const page = await browser.newPage();
-            console.log('=== WBR Scraper v3 ===', new Date().toISOString());
+            console.log('=== WBR Scraper v4 ===', new Date().toISOString());
 
             await page.goto('https://fund.worldbicyclerelief.org/en-GB/project/in-bici-per-il-mondo?tab=overview', {
               waitUntil: 'domcontentloaded', timeout: 30000
             });
-            // Aspetta che la lista donatori sia nel DOM
-            await page.waitForTimeout(3000);
 
-            // Scraping paginato: clicca pagina 2, 3, 4... finché esistono
+            // Aspetta che la lista donatori sia effettivamente presente nel DOM
+            try {
+              await page.waitForSelector('ul.pagination, .donation-list, .supporters-list', { timeout: 8000 });
+            } catch (e) {
+              console.log('Nessun selettore paginazione trovato, procedo comunque');
+            }
+            await page.waitForTimeout(2000);
+
+            // Snapshot pagina 1
             const allPageTexts = [await page.evaluate(() => document.body.innerText)];
+            console.log('Pagina 1 caricata, chars:', allPageTexts[0].length);
+
+            // Paginazione: clicca pagina 2, 3, ... finché esistono
             let pageNum = 2;
             while (pageNum <= 20) {
-              // Cerca il link/bottone con il numero di pagina
-              const pageBtn = await page.$(`ul.pagination a:has-text("${pageNum}"), button:has-text("${pageNum}"), a[aria-label="Page ${pageNum}"]`);
-              if (!pageBtn) break;
+              const pageBtn = await page.$(
+                `ul.pagination a:has-text("${pageNum}"), ` +
+                `button:has-text("${pageNum}"), ` +
+                `a[aria-label="Page ${pageNum}"]`
+              );
+              if (!pageBtn) { console.log('Nessun bottone per pagina', pageNum); break; }
               const isVisible = await pageBtn.isVisible();
-              if (!isVisible) break;
-              console.log('Carico pagina donatori #' + pageNum);
+              if (!isVisible) { console.log('Bottone pagina', pageNum, 'non visibile'); break; }
+
+              console.log('Clicco pagina donatori #' + pageNum);
               await pageBtn.click();
-              await page.waitForTimeout(2000);
-              allPageTexts.push(await page.evaluate(() => document.body.innerText));
+
+              // Aspetta che il DOM si aggiorni: riprova fino a 5 secondi
+              let newText = '';
+              for (let attempt = 0; attempt < 5; attempt++) {
+                await page.waitForTimeout(1000);
+                newText = await page.evaluate(() => document.body.innerText);
+                // Controlla che la pagina sia diversa dall'ultima (almeno 50 chars di differenza)
+                const prev = allPageTexts[allPageTexts.length - 1];
+                const diff = [...newText].filter((c, i) => c !== prev[i]).length;
+                if (diff > 50) break;
+                console.log('  Attesa aggiornamento DOM, tentativo', attempt + 1);
+              }
+
+              const eurLines = (newText.match(/^EUR/gim) || []).length;
+              console.log('  Righe EUR trovate in pagina', pageNum, ':', eurLines);
+              allPageTexts.push(newText);
               pageNum++;
             }
-            console.log('Pagine donatori caricate:', allPageTexts.length);
 
+            console.log('Pagine totali caricate:', allPageTexts.length);
+
+            // Raccolto e goal dalla prima pagina
             const bodyText = allPageTexts[0];
-            console.log('\n=== TESTO COMPLETO (10000 chars) ===');
-            console.log(bodyText.slice(0, 10000));
-            console.log('=== FINE TESTO ===\n');
-
-            // Raccolto e goal dal testo pagina 1
             let raised = 0, goal = 1700;
             const mRaised = bodyText.match(/EUR\s*([\d,.']+)\s*collected/i);
             if (mRaised) raised = parseInt(mRaised[1].replace(/[,.']/g, '')) || 0;
@@ -88,9 +112,7 @@ jobs:
             if (mGoal) { const g = parseInt(mGoal[1].replace(/[,.']/g, '')) || 0; if (g > 0) goal = g; }
             console.log('Raccolto:', raised, '/ Goal:', goal);
 
-            // --- DONATORI ---
-            // Formato nel testo: "EUR 147about 10 hours" o "EUR 1476 days"
-            // dove amount e time sono concatenati senza spazio
+            // --- PARSER DONATORI ---
             const TIME_UNITS = 'second|minute|hour|day|month|year';
             const MAX_TIME = { second: 59, minute: 59, hour: 23, day: 30, month: 12, year: 5 };
 
@@ -105,12 +127,9 @@ jobs:
               if (unitM) {
                 const unitStart = raw.indexOf(unitM[0]);
                 const before = raw.slice(0, unitStart).trim();
-                const base = unitM[0].toLowerCase().replace(/s?\\s*ago\\s*$/, '').replace(/s$/, '').trim();
+                const base = unitM[0].toLowerCase().replace(/s?\s*ago\s*$/, '').replace(/s$/, '').trim();
                 const max = MAX_TIME[base] || 99;
-                // Ordine cifre dipende dall'unità:
-                // minuti/ore/secondi → 1 cifra prima (es. "256 min" → €25, 6 min)
-                // giorni/mesi/anni   → 2 cifre prima (es. "14726 days" → €147, 26 days)
-                const shortUnits = ['second','minute','hour'];
+                const shortUnits = ['second', 'minute', 'hour'];
                 const digitOrder = shortUnits.some(u => base.startsWith(u)) ? [1, 2] : [2, 1];
                 for (const digits of digitOrder) {
                   if (before.length > digits) {
@@ -129,44 +148,52 @@ jobs:
               return { amount: parseInt(raw.replace(/[,.\']/g, '')) || 0, time: '' };
             }
 
-            // Combina testo di tutte le pagine per trovare tutti i donatori
-            const combinedText = allPageTexts.join('\n');
+            // Combina tutte le pagine, ma de-duplica il testo comune (header/footer)
+            // Strategia: per ogni pagina successiva alla prima, prendi solo la parte
+            // che inizia dalla lista donatori (dopo "Thanks to all supporters" o simile)
+            function extractDonorSection(text) {
+              const markers = [
+                'Thanks to all supporters',
+                'supporters',
+                'contributions to this project'
+              ];
+              for (const marker of markers) {
+                const idx = text.toLowerCase().indexOf(marker.toLowerCase());
+                if (idx !== -1) return text.slice(idx);
+              }
+              return text;
+            }
+
+            const sections = allPageTexts.map((t, i) => i === 0 ? t : extractDonorSection(t));
+            const combinedText = sections.join('\n');
             const lines = combinedText.split('\n').map(l => l.trim()).filter(Boolean);
+
             const donors = [];
             const seen = new Set();
-            let anonCount = 0;
 
             for (let i = 0; i < lines.length; i++) {
               const line = lines[i];
-              if (!line.match(/^EUR\s*[\d,'.']+/i)) continue;
-              // Salta righe di sistema (raccolto/goal)
+              if (!line.match(/^EUR\s*[\d,.']+/i)) continue;
               if (line.match(/collected|goal/i)) continue;
 
-              // Prova a separare importo e tempo dalla stessa riga con parser domain-validated
               const raw = line.replace(/^EUR\s*/i, '');
               const parsed = parseEurLine(raw);
               const amount = parsed.amount;
               const time = parsed.time;
               if (!amount) continue;
 
-              // Nome: riga precedente
-              const nameLine = (lines[i-1] || '').trim();
+              const nameLine = (lines[i - 1] || '').trim();
               const name = (nameLine && !nameLine.match(/^EUR|collected|goal|donate|support|login|about|create|share|overview|update|description|english|^\d+%/i))
                 ? nameLine : 'Anonymous';
 
-              // Messaggio: riga successiva, MA solo se la riga dopo ancora non inizia con EUR
-              // (altrimenti la "presunta" riga messaggio è in realtà il nome del donatore successivo)
-              const nextLine = (lines[i+1] || '').trim();
-              const lineAfterNext = (lines[i+2] || '').trim();
+              const nextLine = (lines[i + 1] || '').trim();
+              const lineAfterNext = (lines[i + 2] || '').trim();
               const nextLineIsDonorName = lineAfterNext.match(/^EUR/i);
-              const nextLineIsPagination = /^\d$/.test(nextLine); // singola cifra = bottone pagina
-              const message = (nextLine && !nextLineIsDonorName && !nextLineIsPagination && !nextLine.match(/^EUR|collected|goal|donate|support|show|view|load|login|about|share|world bicycle relief/i))
+              const nextLineIsPagination = /^\d$/.test(nextLine);
+              const message = (nextLine && !nextLineIsDonorName && !nextLineIsPagination &&
+                !nextLine.match(/^EUR|collected|goal|donate|support|show|view|load|login|about|share|world bicycle relief|thanks to all|contributions/i))
                 ? nextLine : '';
 
-              // Deduplicazione:
-              // - Donatori con nome: chiave = nome|importo|messaggio
-              // - Anonymous: chiave = importo|tempo (identità reale del donatore)
-              //   se tempo vuoto, usa importo|messaggio come fallback
               const key = name === 'Anonymous'
                 ? `anon|${amount}|${time || message}`
                 : `${name}|${amount}|${message}`;
@@ -174,22 +201,22 @@ jobs:
               seen.add(key);
 
               donors.push({ name, amount, time, message });
-              console.log(`+ ${name} | €${amount} | ${time || '?'} | "${message.slice(0,40)}"`);
+              console.log(`+ ${name} | €${amount} | ${time || '?'} | "${message.slice(0, 40)}"`);
             }
 
             await browser.close();
             console.log('\nDonatori unici:', donors.length);
 
             let data = { fundraising: { raised: 0, goal: 1700 } };
-            try { data = JSON.parse(fs.readFileSync('data.json', 'utf8')); } catch(e) {}
+            try { data = JSON.parse(fs.readFileSync('data.json', 'utf8')); } catch (e) {}
 
+            const prevDonors = data.fundraising.donors || [];
             const changed = data.fundraising.raised !== raised
               || data.fundraising.goal !== goal
-              || JSON.stringify(data.fundraising.donors||[]) !== JSON.stringify(donors.length ? donors : data.fundraising.donors||[]);
+              || JSON.stringify(prevDonors) !== JSON.stringify(donors.length ? donors : prevDonors);
 
             data.fundraising.raised = raised;
             data.fundraising.goal = goal;
-            // Sostituisci sempre — la paginazione garantisce che lo scraper trovi tutti i donatori
             if (donors.length > 0) data.fundraising.donors = donors;
 
             if (changed) {
@@ -199,11 +226,10 @@ jobs:
               console.log('= Nessuna variazione');
             }
 
-            // Genera sempre il CSV sostenitori aggiornato
             const csvDonors = data.fundraising.donors || [];
-            const rows = [['Nome','Importo','Tempo','Messaggio']];
-            csvDonors.forEach(d => rows.push([d.name||'', d.amount||0, d.time||'', d.message||'']));
-            const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\r\n');
+            const rows = [['Nome', 'Importo', 'Tempo', 'Messaggio']];
+            csvDonors.forEach(d => rows.push([d.name || '', d.amount || 0, d.time || '', d.message || '']));
+            const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
             fs.writeFileSync('sostenitori-mipa.csv', csv, 'utf8');
             console.log('✓ sostenitori-mipa.csv generato (' + csvDonors.length + ' righe)');
           })();
