@@ -129,18 +129,26 @@ jobs:
                 const before = raw.slice(0, unitStart).trim();
                 const base = unitM[0].toLowerCase().replace(/s?\s*ago\s*$/, '').replace(/s$/, '').trim();
                 const max = MAX_TIME[base] || 99;
-                const shortUnits = ['second', 'minute', 'hour'];
-                const digitOrder = shortUnits.some(u => base.startsWith(u)) ? [1, 2] : [2, 1];
-                for (const digits of digitOrder) {
+                // Calcola tutte le parse valide (1 o 2 cifre per il tempo)
+                const validParses = [];
+                for (const digits of [1, 2]) {
                   if (before.length > digits) {
                     const tnStr = before.slice(-digits);
                     if (tnStr.startsWith('0')) continue;
                     const tn = parseInt(tnStr);
                     if (tn > 0 && tn <= max) {
                       const amount = parseInt(before.slice(0, -digits).replace(/[,.\']/g, '')) || 0;
-                      if (amount > 0) return { amount, time: tnStr + ' ' + unitM[0] };
+                      if (amount >= 1) validParses.push({ amount, time: tnStr + ' ' + unitM[0] });
                     }
                   }
+                }
+                if (validParses.length === 1) return validParses[0];
+                if (validParses.length > 1) {
+                  // Preferisci l'importo nell'intervallo plausibile [3, 500]
+                  const inRange = validParses.filter(p => p.amount >= 3 && p.amount <= 500);
+                  if (inRange.length === 1) return inRange[0];
+                  if (inRange.length > 1) return inRange.reduce((a,b) => a.amount < b.amount ? a : b);
+                  return validParses.reduce((a,b) => a.amount < b.amount ? a : b);
                 }
                 const amount = parseInt(before.replace(/[,.\']/g, '')) || 0;
                 return { amount, time: '' };
