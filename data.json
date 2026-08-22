@@ -1,12 +1,18 @@
 {
   "fundraising": {
-    "raised": 1110,
+    "raised": 1257,
     "goal": 1700,
     "donors": [
       {
+        "name": "Giorgia G",
+        "amount": 1474,
+        "time": "2 minutes",
+        "message": "Bravo Daniele!"
+      },
+      {
         "name": "Raian E",
         "amount": 10,
-        "time": "about 13 hours",
+        "time": "about 14 hours",
         "message": "🍀🍀🫡"
       },
       {
