@@ -1,18 +1,24 @@
 {
   "fundraising": {
-    "raised": 1257,
+    "raised": 1404,
     "goal": 1700,
     "donors": [
       {
+        "name": "Emanuele B",
+        "amount": 1471,
+        "time": "4 minutes",
+        "message": "Buone pedalate Daniele"
+      },
+      {
         "name": "Giorgia G",
         "amount": 147,
-        "time": "about 4 hours",
+        "time": "about 5 hours",
         "message": "Bravo Daniele!"
       },
       {
         "name": "Raian E",
         "amount": 10,
-        "time": "about 17 hours",
+        "time": "about 18 hours",
         "message": "🍀🍀🫡"
       },
       {
