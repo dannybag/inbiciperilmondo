@@ -3035,10 +3035,40 @@
   <a href="#" onclick="downloadCSV(event)" style="background:#1A1A1A; border:1px solid rgba(240,90,40,0.3); color:rgba(240,90,40,0.7); font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.55rem 1.1rem; border-radius:20px; cursor:pointer; backdrop-filter:blur(6px); white-space:nowrap; box-shadow:0 2px 10px rgba(0,0,0,0.4); text-decoration:none;">
     📋 Sostenitori CSV
   </a>
+  <a href="#" onclick="triggerWBR(event)" id="wbr-trigger-btn" style="background:#1A1A1A; border:1px solid rgba(240,90,40,0.3); color:rgba(240,90,40,0.7); font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.55rem 1.1rem; border-radius:20px; cursor:pointer; backdrop-filter:blur(6px); white-space:nowrap; box-shadow:0 2px 10px rgba(0,0,0,0.4); text-decoration:none;">
+    🔄 Aggiorna WBR
+  </a>
 
 </div>
 
 <script>
+  async function triggerWBR(e) {
+    e.preventDefault();
+    const token = localStorage.getItem('gh-token');
+    if (!token) { alert('Token GitHub mancante — aprire prima il pannello TAP.'); return; }
+    const btn = document.getElementById('wbr-trigger-btn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '⏳ Avvio...';
+    try {
+      const res = await fetch('https://api.github.com/repos/dannybag/inbiciperilmondo/actions/workflows/update-wbr.yml/dispatches', {
+        method: 'POST',
+        headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ref: 'main' })
+      });
+      if (res.status === 204) {
+        btn.innerHTML = '✓ Avviato!';
+        setTimeout(() => { btn.innerHTML = orig; }, 3000);
+      } else {
+        const err = await res.json().catch(() => ({}));
+        btn.innerHTML = orig;
+        alert('Errore: ' + (err.message || res.status));
+      }
+    } catch(err) {
+      btn.innerHTML = orig;
+      alert('Errore: ' + err.message);
+    }
+  }
+
   async function downloadCSV(e) {
     e.preventDefault();
     try {
