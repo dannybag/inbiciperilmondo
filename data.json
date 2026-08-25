@@ -1,12 +1,18 @@
 {
   "fundraising": {
-    "raised": 1429,
+    "raised": 1479,
     "goal": 1700,
     "donors": [
       {
+        "name": "Tiziano B",
+        "amount": 50,
+        "time": "43 minutes",
+        "message": ""
+      },
+      {
         "name": "Chiara C",
         "amount": 25,
-        "time": "2 days",
+        "time": "3 days",
         "message": ""
       },
       {
