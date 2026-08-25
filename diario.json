@@ -62,6 +62,17 @@
       "published": true,
       "title_en": "A present from my mates at the Gomarasca Bike Club",
       "text_en": "The lads from the Gomarasca Bike Club have gone to great lengths to produce this lovely promotional video, and for that I am infinitely grateful to them."
+    },
+    {
+      "day": 6,
+      "date": "2026-08-25",
+      "title": "Lugo della partenza deciso!",
+      "text": "Finalmente ho deciso da quale luogo della città partire, guardate il video allegato!",
+      "photos": [],
+      "videos": [
+        "https://youtube.com/shorts/TVWzDllZRXU?si=qoR37fdZnTphAY6b"
+      ],
+      "published": true
     }
   ]
 }
