@@ -2479,7 +2479,7 @@ function clearAllCaptions() {
 }
 
 // Auto-salvataggio ogni 5 secondi se ci sono modifiche, + salvataggio di sicurezza alla chiusura
-setInterval(function() { if (_sessionDirty) saveSession(false); }, 5000);
+setInterval(function() { if (_sessionDirty) saveSession(false); }, 2000);
 // ---- PROTEZIONE TASTO INDIETRO ----
 // Aggiungiamo uno stato fittizio alla history: se l'utente preme Indietro
 // torniamo allo stato fittizio invece di uscire dall'app.
@@ -2494,6 +2494,11 @@ window.addEventListener('popstate', function(e) {
 
 document.addEventListener('visibilitychange', function() {
   if (document.visibilityState === 'hidden' && !_resetting) saveSession(false);
+});
+
+// pagehide: più affidabile su iOS/Android quando il browser viene chiuso o sospeso
+window.addEventListener('pagehide', function() {
+  if (!_resetting) saveSession(false);
 });
 
 window.addEventListener('pageshow', function(e) {
