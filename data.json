@@ -1,54 +1,60 @@
 {
   "fundraising": {
-    "raised": 1879,
+    "raised": 1904,
     "goal": 2500,
     "donors": [
       {
+        "name": "Alessandro T",
+        "amount": 25,
+        "time": "20 minutes",
+        "message": "Go Dannybag, go! :-)"
+      },
+      {
         "name": "Anonymous",
         "amount": 15,
-        "time": "24 minutes",
+        "time": "about 1 hour",
         "message": ""
       },
       {
         "name": "Anonymous",
         "amount": 10,
-        "time": "about 4 hours",
+        "time": "about 5 hours",
         "message": ""
       },
       {
         "name": "Nicolò Z",
         "amount": 25,
-        "time": "about 5 hours",
+        "time": "about 6 hours",
         "message": "Alé alè!"
       },
       {
         "name": "Anonymous",
         "amount": 25,
-        "time": "about 5 hours",
+        "time": "about 6 hours",
         "message": "Bellissima iniziativa di una bellissima persona"
       },
       {
         "name": "Luca G",
         "amount": 50,
-        "time": "about 5 hours",
+        "time": "about 6 hours",
         "message": "Enjoy your trip"
       },
       {
         "name": "Monica P",
         "amount": 50,
-        "time": "about 9 hours",
+        "time": "about 10 hours",
         "message": "Buona avventura Daniele, tienici aggiornati!"
       },
       {
         "name": "Gomarasca B",
         "amount": 150,
-        "time": "about 11 hours",
+        "time": "about 12 hours",
         "message": ""
       },
       {
         "name": "Romina M",
         "amount": 25,
-        "time": "about 12 hours",
+        "time": "about 13 hours",
         "message": "Complimenti! Siamo con te"
       },
       {
@@ -102,7 +108,7 @@
       {
         "name": "Anonymous",
         "amount": 25,
-        "time": "9 days",
+        "time": "10 days",
         "message": ""
       },
       {
@@ -156,7 +162,7 @@
       {
         "name": "Alessandro V",
         "amount": 147,
-        "time": "22 days",
+        "time": "23 days",
         "message": ""
       },
       {
