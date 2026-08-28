@@ -836,7 +836,7 @@
           </div>
           <div style="display:flex; justify-content:space-between; align-items:baseline; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.05em; color:var(--cream); margin-top:0.3rem;">
             <span id="close-raised-amt" style="color:var(--orange);">€0</span>
-            <span style="color:#4CAF50;">€1.700</span>
+            <span id="close-goal-amt" style="color:#4CAF50;">€---</span>
           </div>
           <div style="display:flex; align-items:baseline; gap:0.4rem; margin-top:1rem;">
             <span id="close-bikes-num" style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:var(--orange); line-height:1;">0</span>
@@ -1265,7 +1265,7 @@ function populateFromTappa(tappa, tappeList, fundraising) {
   // Mini barra raccolta fondi — aggiornata sempre
   if (fundraising) {
     const raised = fundraising.raised || 0;
-    const goal   = fundraising.goal   || 1700;
+    const goal   = fundraising.goal   || 2500;
     const pct    = Math.min(100, Math.round(raised / goal * 100));
     const fill   = document.getElementById('close-bar-fill');
     const pctEl  = document.getElementById('close-raised-pct');
@@ -1276,6 +1276,8 @@ function populateFromTappa(tappa, tappeList, fundraising) {
     if (amtEl) amtEl.textContent = '€' + raised;
     const bikesEl = document.getElementById('close-bikes-num');
     if (bikesEl) bikesEl.textContent = bikes;
+    const goalEl = document.getElementById('close-goal-amt');
+    if (goalEl) goalEl.textContent = '€' + goal.toLocaleString('it-IT');
   }
   update();
 }
@@ -1288,7 +1290,7 @@ function update() {
   const dislivello = parseInt(document.getElementById('dislivello').value) || 0;
   const tot = parseInt(document.getElementById('kmTot').value) || 0;
   const disTot = parseInt(document.getElementById('dislivelloTot').value) || 0;
-  const pct = Math.min(100, Math.round(tot / 1700 * 100));
+  const pct = Math.min(100, Math.round(tot / 2500 * 100));
   const dayStr = pad(day);
   const route = `${from} → ${to}`;
   const kmStr = `${km} km`;
