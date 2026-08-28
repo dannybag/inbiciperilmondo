@@ -836,7 +836,7 @@
           </div>
           <div style="display:flex; justify-content:space-between; align-items:baseline; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.05em; color:var(--cream); margin-top:0.3rem;">
             <span id="close-raised-amt" style="color:var(--orange);">€0</span>
-            <span id="close-goal-amt" style="color:#4CAF50;">€1.700</span>
+            <span style="color:#4CAF50;">€1.700</span>
           </div>
           <div style="display:flex; align-items:baseline; gap:0.4rem; margin-top:1rem;">
             <span id="close-bikes-num" style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; color:var(--orange); line-height:1;">0</span>
@@ -1276,8 +1276,6 @@ function populateFromTappa(tappa, tappeList, fundraising) {
     if (amtEl) amtEl.textContent = '€' + raised;
     const bikesEl = document.getElementById('close-bikes-num');
     if (bikesEl) bikesEl.textContent = bikes;
-    const goalEl = document.getElementById('close-goal-amt');
-    if (goalEl) goalEl.textContent = '€' + goal.toLocaleString('it-IT');
   }
   update();
 }
@@ -1691,7 +1689,7 @@ const FONTS = [
   { name: 'Racing Sans One',  label: 'Racing Sans',       style: "'Racing Sans One', cursive" },
   { name: 'Russo One',        label: 'RUSSO ONE',         style: "'Russo One', sans-serif" },
   { name: 'Outfit',           label: 'Outfit Clean',      style: "'Outfit', sans-serif" },
-  { name: 'Pacifico',         label: 'Pacifico fun',      style: "'Pacifico', cursive" },
+  { name: 'Pacifico',         label: 'Pacifico fun',      style: "'Pacifico', cursive" }, // mantenuto nel picker ma default cambiato
   { name: 'Permanent Marker', label: 'Marker!',           style: "'Permanent Marker', cursive" },
 ];
 
@@ -1930,13 +1928,13 @@ function applyPhrase(phrase) {
   if (!el) return;
   clearCaption(el);
   el.textContent = phrase;
-  // Stile di default: Pacifico, bianco su sfondo arancio, doppia dimensione
-  el.style.fontFamily = "'Pacifico', cursive";
+  // Stile di default: Bebas Neue, bianco su sfondo arancio
+  el.style.fontFamily = "'Bebas Neue', sans-serif";
   el.style.color = '#FFF8F4';
   el.style.backgroundColor = 'var(--orange)';
   el.style.padding = '0.3rem 0.7rem';
   el.style.borderRadius = '4px';
-  el.style.fontSize = '2rem';
+  el.style.fontSize = '1rem';
   el.style.lineHeight = '1.2';
   el.style.textShadow = 'none';
   el.style.letterSpacing = '0.02em';
@@ -2345,7 +2343,7 @@ function saveSession(showMsg) {
     // Captions (qui SI ripristina lo style: posizione/rotazione/scala della frase)
     wrap.querySelectorAll('[id^="s-caption"], [id^="s-from-to"]').forEach(el => {
       session.slides[slideId][el.id] = {
-        text: el.textContent,
+        html: el.innerHTML,
         style: el.style.cssText,
         transform: captionState[el.id] || null,
         isCaption: true
@@ -2368,7 +2366,7 @@ function saveSession(showMsg) {
       ['s-caption-extra'].forEach(base => {
         const el = document.getElementById(base + suffix);
         if (el) session.slides[slideId][base+suffix] = {
-          text: el.textContent,
+          html: el.innerHTML,
           style: el.style.cssText,
           transform: captionState[el.id] || null,
           isCaption: true
@@ -2452,9 +2450,13 @@ async function restoreSession() {
       }
       const el = document.getElementById(elId);
       if (!el) return;
-      if (state.text !== undefined) el.textContent = state.text;
-      // Lo style si ripristina SOLO per le caption (vedi nota in saveSession)
-      if (state.isCaption && state.style) el.style.cssText = state.style;
+      if (state.isCaption) {
+        if (state.html !== undefined) el.innerHTML = state.html;
+        else if (state.text !== undefined) el.textContent = state.text; // fallback vecchio formato
+        if (state.style) el.style.cssText = state.style;
+      } else if (state.text !== undefined) {
+        el.textContent = state.text;
+      }
       if (state.transform && captionState[elId]) {
         captionState[elId] = state.transform;
         applyTransform(elId);
