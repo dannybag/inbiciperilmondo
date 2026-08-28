@@ -1,42 +1,48 @@
 {
   "fundraising": {
-    "raised": 1854,
+    "raised": 1864,
     "goal": 2500,
     "donors": [
       {
+        "name": "Anonymous",
+        "amount": 10,
+        "time": "23 minutes",
+        "message": ""
+      },
+      {
         "name": "Nicolò Z",
         "amount": 25,
-        "time": "3 minutes",
+        "time": "about 1 hour",
         "message": "Alé alè!"
       },
       {
         "name": "Anonymous",
         "amount": 25,
-        "time": "26 minutes",
+        "time": "about 1 hour",
         "message": "Bellissima iniziativa di una bellissima persona"
       },
       {
         "name": "Luca G",
         "amount": 50,
-        "time": "28 minutes",
+        "time": "about 1 hour",
         "message": "Enjoy your trip"
       },
       {
         "name": "Monica P",
         "amount": 50,
-        "time": "about 4 hours",
+        "time": "about 5 hours",
         "message": "Buona avventura Daniele, tienici aggiornati!"
       },
       {
         "name": "Gomarasca B",
         "amount": 150,
-        "time": "about 6 hours",
+        "time": "about 7 hours",
         "message": ""
       },
       {
         "name": "Romina M",
         "amount": 25,
-        "time": "about 7 hours",
+        "time": "about 8 hours",
         "message": "Complimenti! Siamo con te"
       },
       {
