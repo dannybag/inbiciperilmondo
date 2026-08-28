@@ -1,12 +1,18 @@
 {
   "fundraising": {
-    "raised": 1554,
+    "raised": 1704,
     "goal": 2500,
     "donors": [
       {
+        "name": "Gomarasca B",
+        "amount": 150,
+        "time": "about 2 hours",
+        "message": ""
+      },
+      {
         "name": "Romina M",
         "amount": 25,
-        "time": "2 minutes",
+        "time": "about 2 hours",
         "message": "Complimenti! Siamo con te"
       },
       {
@@ -42,7 +48,7 @@
       {
         "name": "Raian E",
         "amount": 10,
-        "time": "6 days",
+        "time": "7 days",
         "message": "🍀🍀🫡"
       },
       {
@@ -78,7 +84,7 @@
       {
         "name": "Giorgio F",
         "amount": 50,
-        "time": "10 days",
+        "time": "11 days",
         "message": "Ottima iniziativa"
       },
       {
@@ -102,7 +108,7 @@
       {
         "name": "Anonymous",
         "amount": 9,
-        "time": "15 days",
+        "time": "16 days",
         "message": ""
       },
       {
