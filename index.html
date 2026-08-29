@@ -2244,7 +2244,7 @@
         el.innerHTML = `
           <div class="milestone-label">€${m.toLocaleString('it-IT')}</div>
           <div class="milestone-circle milestone-desktop">${reached ? '<span style="font-size:1.5em;">🏅</span> ' : ''}${m.toLocaleString('it-IT')} €</div>
-          <div class="milestone-circle milestone-mobile">${reached ? '<span style="font-size:2em;">🏅</span> ' : ''}${m >= 1000 ? (m/1000).toFixed(1).replace('.',',')+'k' : m} €</div>
+          <div class="milestone-circle milestone-mobile">${reached ? '🏅' : ''}${m >= 1000 ? (m/1000).toFixed(1).replace('.',',')+'k' : m}</div>
           <div class="milestone-tick"></div>`;
         container.appendChild(el);
       });
