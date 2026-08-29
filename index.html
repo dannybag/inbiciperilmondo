@@ -579,7 +579,8 @@
   }
   .milestone.reached .milestone-tick { background: #4CAF50; }
 
-  .milestone-mobile {
+  .milestone-mobile { display: none; }
+  .milestone-desktop {
     display: flex;
     width: auto;
     height: 22px;
@@ -595,8 +596,7 @@
     justify-content: center;
     gap: 3px;
   }
-  .milestone-desktop { display: none; }
-  .milestone.reached .milestone-mobile {
+  .milestone.reached .milestone-desktop {
     background: #4CAF50;
     color: #FFF8F4;
     box-shadow: 0 0 0 3px rgba(76,175,80,0.2);
@@ -604,14 +604,25 @@
   @media (max-width: 600px) {
     .milestone-desktop { display: none; }
     .milestone-mobile {
+      display: flex;
+      width: auto;
       height: 12px;
       border-radius: 6px;
       font-size: 7px;
+      font-weight: 700;
       padding: 0 3px;
+      border: none;
+      background: #333;
+      color: #888;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
       gap: 1px;
-      box-shadow: none;
     }
-    .milestone.reached .milestone-mobile { box-shadow: none; }
+    .milestone.reached .milestone-mobile {
+      background: #4CAF50;
+      color: #FFF8F4;
+    }
     .milestone-label { display: none; }
     .milestone-tick { display: none; }
   }
@@ -2232,8 +2243,8 @@
         el.style.left = mPct + '%';
         el.innerHTML = `
           <div class="milestone-label">€${m.toLocaleString('it-IT')}</div>
-          <div class="milestone-circle milestone-desktop">${reached ? '✓' : '○'}</div>
-          <div class="milestone-circle milestone-mobile">${reached ? '<span style="font-size:1.5em;">🏅</span> ' : ''}${m.toLocaleString('it-IT')} €</div>
+          <div class="milestone-circle milestone-desktop">${reached ? '<span style="font-size:1.5em;">🏅</span> ' : ''}${m.toLocaleString('it-IT')} €</div>
+          <div class="milestone-circle milestone-mobile">${reached ? '<span style="font-size:2em;">🏅</span> ' : ''}${m >= 1000 ? (m/1000).toFixed(1).replace('.',',')+'k' : m} €</div>
           <div class="milestone-tick"></div>`;
         container.appendChild(el);
       });
