@@ -577,6 +577,11 @@
     transition: background 0.5s;
   }
   .milestone.reached .milestone-tick { background: #4CAF50; }
+
+  @media (max-width: 600px) {
+    .milestone-circle { width: 20px; height: 20px; font-size: 10px; }
+    .milestone-label { font-size: 0.6rem; top: -1.4rem; }
+  }
   .progress-footer {
     display: flex;
     justify-content: space-between;
@@ -986,7 +991,7 @@
     <div class="progress-label" data-i18n="raccolta_corso">Raccolta fondi in corso</div>
     <div class="progress-amounts"><span class="progress-raised">€0</span> <span class="progress-sep" data-i18n="di_word">di</span> <span class="progress-goal">€1.700</span></div>
   </div>
-  <div class="progress-track">
+  <div class="progress-track" style="margin-top:2rem;">
     <div class="progress-fill" style="width:0%"></div>
     <div id="progress-milestones"></div>
     <div class="progress-bike"><img src="https://mipa.dannybag.org/img/Buffalo.jpg" alt="bici" style="height:3rem; width:3rem; object-fit:cover; object-position:center center; border-radius:50%; border:2px solid var(--orange); display:block;"></div>
