@@ -531,6 +531,52 @@
   @media (max-width: 600px) {
     .progress-bike img { height: 2rem !important; width: 2rem !important; }
   }
+  /* ── MILESTONE MARKERS ── */
+  .milestone {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+  }
+  .milestone-circle {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 2px solid #555;
+    background: #1A1A1A;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: #555; font-weight: 900;
+    transition: all 0.5s ease;
+  }
+  .milestone.reached .milestone-circle {
+    border-color: #4CAF50;
+    background: #4CAF50;
+    color: #FFF8F4;
+    box-shadow: 0 0 0 4px rgba(76,175,80,0.25);
+  }
+  .milestone-label {
+    position: absolute;
+    top: -1.9rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #555;
+    white-space: nowrap;
+    transition: color 0.5s;
+  }
+  .milestone.reached .milestone-label { color: #4CAF50; }
+  .milestone-tick {
+    position: absolute;
+    bottom: -5px;
+    width: 1.5px; height: 5px;
+    background: #555;
+    transition: background 0.5s;
+  }
+  .milestone.reached .milestone-tick { background: #4CAF50; }
   .progress-footer {
     display: flex;
     justify-content: space-between;
@@ -942,6 +988,7 @@
   </div>
   <div class="progress-track">
     <div class="progress-fill" style="width:0%"></div>
+    <div id="progress-milestones"></div>
     <div class="progress-bike"><img src="https://mipa.dannybag.org/img/Buffalo.jpg" alt="bici" style="height:3rem; width:3rem; object-fit:cover; object-position:center center; border-radius:50%; border:2px solid var(--orange); display:block;"></div>
   </div>
   <div class="progress-footer">
@@ -2132,6 +2179,26 @@
     if (bikesEl)  bikesEl.innerHTML    = lang === 'en' ? '= ' + bikes + ' <strong>Buffalo</strong> bikes donated' : '= ' + bikes + ' bici <strong>Buffalo</strong> donate';
     const bikesNum = document.getElementById('bikes-count-num');
     if (bikesNum) bikesNum.textContent = bikes;
+
+    // ── MILESTONE MARKERS ──
+    const MILESTONES = [1700, 2500]; // aggiungi qui i target futuri
+    const container = document.getElementById('progress-milestones');
+    if (container) {
+      container.innerHTML = '';
+      MILESTONES.forEach(m => {
+        if (m >= goal) return; // non mostrare se oltre il goal attuale
+        const mPct = Math.min(100, Math.round(m / goal * 100));
+        const reached = raised >= m;
+        const el = document.createElement('div');
+        el.className = 'milestone' + (reached ? ' reached' : '');
+        el.style.left = mPct + '%';
+        el.innerHTML = `
+          <div class="milestone-label">€${m.toLocaleString('it-IT')}</div>
+          <div class="milestone-circle">${reached ? '✓' : '○'}</div>
+          <div class="milestone-tick"></div>`;
+        container.appendChild(el);
+      });
+    }
   }
 
   // ---- AGGIORNA CONTATORI TAPPA ----
