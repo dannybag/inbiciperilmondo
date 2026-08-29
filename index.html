@@ -578,8 +578,27 @@
   }
   .milestone.reached .milestone-tick { background: #4CAF50; }
 
+  .milestone-mobile { display: none; }
+  .milestone-desktop { display: flex; }
   @media (max-width: 600px) {
-    .milestone-circle { width: 12px; height: 12px; font-size: 8px; border-width: 1.5px; }
+    .milestone-desktop { display: none; }
+    .milestone-mobile {
+      display: flex;
+      width: auto;
+      height: 12px;
+      border-radius: 6px;
+      font-size: 7px;
+      padding: 0 3px;
+      border-width: 0;
+      background: #333;
+      color: #888;
+      white-space: nowrap;
+    }
+    .milestone.reached .milestone-mobile {
+      background: #4CAF50;
+      color: #FFF8F4;
+      box-shadow: none;
+    }
     .milestone-label { display: none; }
     .milestone-tick { display: none; }
   }
@@ -2200,7 +2219,8 @@
         el.style.left = mPct + '%';
         el.innerHTML = `
           <div class="milestone-label">€${m.toLocaleString('it-IT')}</div>
-          <div class="milestone-circle">${reached ? '✓' : '○'}</div>
+          <div class="milestone-circle milestone-desktop">${reached ? '✓' : '○'}</div>
+          <div class="milestone-circle milestone-mobile">${reached ? '🏅' : ''} ${m >= 1000 ? (m/1000).toFixed(1).replace('.',',')+'k' : m}</div>
           <div class="milestone-tick"></div>`;
         container.appendChild(el);
       });
