@@ -741,46 +741,6 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 1B: stessa apertura senza data/tappa ── -->
-  <div class="frame-wrap" id="wrapStory1b">
-    <div class="frame-name">Slide libera</div>
-    <div class="frame-story">
-      <div class="slide-open">
-
-        <!-- FOTO OPZIONALE -->
-        <div id="openPhotoArea1b" style="position:absolute; inset:0; overflow:hidden;">
-          <input type="file" id="openPhotoInput1b" accept="image/*" style="display:none" onchange="loadOpenPhoto1b(this)">
-          <div id="openPhotoHint1b" onclick="document.getElementById('openPhotoInput1b').click()" style="position:absolute; inset:0; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.3rem;">
-            <span style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.4);">📷 tocca per foto</span>
-          </div>
-          <img id="openPhotoPreview1b" src="" style="display:none; position:absolute; top:50%; left:50%; cursor:grab; max-width:none; width:auto; height:auto;">
-          <div id="openPhotoControls1b" style="display:none; position:absolute; top:0.3rem; right:0.3rem; z-index:10; flex-direction:column; gap:0.3rem;">
-            <button onclick="event.stopPropagation(); zoomOpenPhoto1b(1.3)" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; font-size:0.9rem; cursor:pointer; line-height:1;">+</button>
-            <button onclick="event.stopPropagation(); zoomOpenPhoto1b(0.77)" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:#fff; border:none; border-radius:50%; font-size:0.9rem; cursor:pointer; line-height:1;">−</button>
-            <button onclick="event.stopPropagation(); removeOpenPhoto1b()" style="width:1.8rem; height:1.8rem; background:rgba(0,0,0,0.7); color:rgba(255,255,255,0.5); border:none; border-radius:50%; font-size:0.7rem; cursor:pointer; line-height:1;">✕</button>
-          </div>
-        </div>
-
-        <!-- gradiente top -->
-        <div style="position:absolute; top:0; left:0; right:0; height:55%; z-index:3; background:linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%); pointer-events:none;"></div>
-
-        <!-- HASHTAG -->
-        <div class="open-tag" id="s1b-open-tag" contenteditable="true" style="position:absolute; top:0.8rem; left:1.2rem; z-index:4; cursor:grab; outline:none;">
-          #UnaBiciPerIlMondo
-        </div>
-
-        <!-- BARRA ARANCIO editabile — senza data/tappa, posizionata in alto -->
-        <div style="position:absolute; left:0; right:0; top:4rem; z-index:4; background:rgba(220,75,30,0.78); padding:0.6rem 1.2rem;">
-          <div id="s1b-title" contenteditable="true" title="Tocca per modificare" style="outline:none; cursor:text; font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.02em; color:#FFF8F4; text-transform:uppercase; line-height:1.1;"></div>
-          <div id="s1b-subtitle" contenteditable="true" title="Sottotitolo opzionale" style="outline:none; cursor:text; font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.7); margin-top:0.15rem;"></div>
-        </div>
-
-        <div class="open-bar"></div>
-        <button onclick="openStylePanel(null,'wrapStory1b')" style="position:absolute; bottom:0.4rem; right:0.4rem; z-index:5; background:rgba(26,26,26,0.85); color:#fff; border:none; border-radius:3px; font-family:'Barlow Condensed',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.6rem; cursor:pointer;">🎨 stile</button>
-      </div>
-    </div>
-  </div>
-
   <div class="frame-wrap" id="wrapStory2">
     <div class="frame-story">
       <div class="slide-media">
