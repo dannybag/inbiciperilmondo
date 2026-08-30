@@ -733,6 +733,12 @@
           <div id="s-km-day" style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; font-weight:600; letter-spacing:0.08em; color:rgba(255,248,244,0.7); margin-top:0.15rem;"></div>
         </div>
 
+        <!-- AFORISMA — area separata, spaziatura ridotta -->
+        <div id="s-aforisma-wrap" style="position:absolute; left:0; right:0; top:10.6rem; z-index:4; padding:0 1.2rem;">
+          <div style="width:100%; height:1px; background:rgba(240,90,40,0.25); margin-bottom:0.45rem;"></div>
+          <div id="s-aforisma" contenteditable="true" title="Tocca per inserire un aforisma" style="outline:none; cursor:text; border-left:2px solid #F05A28; padding-left:0.5rem; font-family:'Barlow',sans-serif; font-style:italic; font-size:0.62rem; color:rgba(255,248,244,0.78); line-height:1.45; display:block; min-height:0.8rem;"></div>
+        </div>
+
         <div class="open-from-to" id="s-from-to" style="display:none;">Milano → Bologna</div>
 
         <div class="open-bar"></div>
@@ -1084,6 +1090,7 @@ function resetData() {
   const t1 = document.getElementById('s-route-title-1'); if (t1) t1.textContent = '';
   // Azzera tutte le caption (testo + formattazione)
   clearCaption(document.getElementById('s-caption'));
+  const aforismaEl = document.getElementById('s-aforisma'); if (aforismaEl) aforismaEl.innerHTML = '';
   document.querySelectorAll('[id^="s-caption-extra"]').forEach(el => clearCaption(el));
   const msg = document.getElementById('strava-msg');
   if (msg) msg.textContent = 'Seleziona traccia da Strava';
@@ -2340,7 +2347,7 @@ function saveSession(showMsg) {
   // altrimenti si rompe il drag (simpleDrag) già attivo su quegli elementi.
   // Per questi salviamo solo il TESTO, non lo style.
   // s-route-title-1 escluso: viene sempre aggiornato da Strava/GPX al caricamento
-  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-close-hashtag','s-close-msg'];
+  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-close-hashtag','s-close-msg','s-aforisma'];
 
   allSlideIds.forEach(slideId => {
     const wrap = document.getElementById(slideId);
