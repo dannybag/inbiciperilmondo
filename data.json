@@ -1,18 +1,24 @@
 {
   "fundraising": {
-    "raised": 1979,
+    "raised": 2004,
     "goal": 2500,
     "donors": [
       {
+        "name": "Antonio C",
+        "amount": 25,
+        "time": "about 3 hours",
+        "message": ""
+      },
+      {
         "name": "Antonio T",
         "amount": 50,
-        "time": "about 7 hours",
+        "time": "about 11 hours",
         "message": "Bellissima iniziativa, buona strada Daniele!"
       },
       {
         "name": "Elena G",
         "amount": 25,
-        "time": "about 7 hours",
+        "time": "about 11 hours",
         "message": ""
       },
       {
@@ -60,13 +66,13 @@
       {
         "name": "Gomarasca B",
         "amount": 150,
-        "time": "3 days",
+        "time": "4 days",
         "message": ""
       },
       {
         "name": "Romina M",
         "amount": 25,
-        "time": "3 days",
+        "time": "4 days",
         "message": "Complimenti! Siamo con te"
       },
       {
@@ -78,7 +84,7 @@
       {
         "name": "Tiziano B",
         "amount": 50,
-        "time": "6 days",
+        "time": "7 days",
         "message": ""
       },
       {
@@ -96,7 +102,7 @@
       {
         "name": "Giorgia G",
         "amount": 147,
-        "time": "9 days",
+        "time": "10 days",
         "message": "Bravo Daniele!"
       },
       {
@@ -120,7 +126,7 @@
       {
         "name": "Anonymous",
         "amount": 25,
-        "time": "12 days",
+        "time": "13 days",
         "message": ""
       },
       {
@@ -150,7 +156,7 @@
       {
         "name": "Alberto C",
         "amount": 10,
-        "time": "14 days",
+        "time": "15 days",
         "message": "Grande Dany, ottima iniziativa... buona pedalata!!!"
       },
       {
@@ -174,13 +180,13 @@
       {
         "name": "Alessandro V",
         "amount": 147,
-        "time": "25 days",
+        "time": "26 days",
         "message": ""
       },
       {
         "name": "gianluca b",
         "amount": 10,
-        "time": "25 days",
+        "time": "26 days",
         "message": ""
       },
       {
