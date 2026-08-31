@@ -1,24 +1,30 @@
 {
   "fundraising": {
-    "raised": 2004,
+    "raised": 2029,
     "goal": 2500,
     "donors": [
       {
+        "name": "Chiara C",
+        "amount": 25,
+        "time": "19 minutes",
+        "message": "Forza Dani che a Palermo ti aspetta la caponata ;-)"
+      },
+      {
         "name": "Antonio C",
         "amount": 25,
-        "time": "about 3 hours",
+        "time": "about 5 hours",
         "message": ""
       },
       {
         "name": "Antonio T",
         "amount": 50,
-        "time": "about 11 hours",
+        "time": "about 12 hours",
         "message": "Bellissima iniziativa, buona strada Daniele!"
       },
       {
         "name": "Elena G",
         "amount": 25,
-        "time": "about 11 hours",
+        "time": "about 13 hours",
         "message": ""
       },
       {
@@ -60,7 +66,7 @@
       {
         "name": "Monica P",
         "amount": 50,
-        "time": "3 days",
+        "time": "4 days",
         "message": "Buona avventura Daniele, tienici aggiornati!"
       },
       {
@@ -204,7 +210,7 @@
       {
         "name": "Roberto t",
         "amount": 25,
-        "time": "26 days",
+        "time": "27 days",
         "message": "Adesso devi partire!"
       },
       {
@@ -216,7 +222,7 @@
       {
         "name": "Lorenzo V",
         "amount": 30,
-        "time": "28 days",
+        "time": "29 days",
         "message": ""
       },
       {
