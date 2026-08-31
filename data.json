@@ -1,12 +1,24 @@
 {
   "fundraising": {
-    "raised": 1904,
+    "raised": 1979,
     "goal": 2500,
     "donors": [
       {
+        "name": "Antonio T",
+        "amount": 50,
+        "time": "about 1 hour",
+        "message": "Bellissima iniziativa, buona strada Daniele!"
+      },
+      {
+        "name": "Elena G",
+        "amount": 25,
+        "time": "about 2 hours",
+        "message": ""
+      },
+      {
         "name": "Alessandro T",
         "amount": 25,
-        "time": "2 days",
+        "time": "3 days",
         "message": "Go Dannybag, go! :-)"
       },
       {
@@ -72,7 +84,7 @@
       {
         "name": "Chiara C",
         "amount": 25,
-        "time": "8 days",
+        "time": "9 days",
         "message": ""
       },
       {
@@ -90,7 +102,7 @@
       {
         "name": "Raian E",
         "amount": 10,
-        "time": "9 days",
+        "time": "10 days",
         "message": "🍀🍀🫡"
       },
       {
@@ -120,7 +132,7 @@
       {
         "name": "Ilaria V",
         "amount": 25,
-        "time": "13 days",
+        "time": "14 days",
         "message": ""
       },
       {
@@ -150,7 +162,7 @@
       {
         "name": "Anonymous",
         "amount": 9,
-        "time": "18 days",
+        "time": "19 days",
         "message": ""
       },
       {
