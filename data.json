@@ -1,30 +1,42 @@
 {
   "fundraising": {
-    "raised": 2554,
+    "raised": 2629,
     "goal": 3000,
     "donors": [
       {
+        "name": "Sara D",
+        "amount": 25,
+        "time": "about 1 hour",
+        "message": ""
+      },
+      {
+        "name": "Mauro V",
+        "amount": 50,
+        "time": "about 3 hours",
+        "message": ""
+      },
+      {
         "name": "Gianluca P",
         "amount": 500,
-        "time": "22 minutes",
+        "time": "about 4 hours",
         "message": "Pedala pedala che lo fai per un bellissimo obiettivo !"
       },
       {
         "name": "silvia s",
         "amount": 25,
-        "time": "about 2 hours",
+        "time": "about 6 hours",
         "message": ""
       },
       {
         "name": "Chiara C",
         "amount": 25,
-        "time": "about 15 hours",
+        "time": "about 18 hours",
         "message": "Forza Dani che a Palermo ti aspetta la caponata ;-)"
       },
       {
         "name": "Antonio C",
         "amount": 25,
-        "time": "about 19 hours",
+        "time": "about 23 hours",
         "message": ""
       },
       {
