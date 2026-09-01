@@ -1,12 +1,12 @@
 {
   "fundraising": {
     "raised": 2554,
-    "goal": 2500,
+    "goal": 3000,
     "donors": [
       {
         "name": "Gianluca P",
         "amount": 500,
-        "time": "10 minutes",
+        "time": "22 minutes",
         "message": "Pedala pedala che lo fai per un bellissimo obiettivo !"
       },
       {
@@ -18,7 +18,7 @@
       {
         "name": "Chiara C",
         "amount": 25,
-        "time": "about 14 hours",
+        "time": "about 15 hours",
         "message": "Forza Dani che a Palermo ti aspetta la caponata ;-)"
       },
       {
