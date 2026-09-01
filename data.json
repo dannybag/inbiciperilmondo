@@ -1,36 +1,42 @@
 {
   "fundraising": {
-    "raised": 2029,
+    "raised": 2054,
     "goal": 2500,
     "donors": [
       {
+        "name": "silvia s",
+        "amount": 25,
+        "time": "about 1 hour",
+        "message": ""
+      },
+      {
         "name": "Chiara C",
         "amount": 25,
-        "time": "about 8 hours",
+        "time": "about 14 hours",
         "message": "Forza Dani che a Palermo ti aspetta la caponata ;-)"
       },
       {
         "name": "Antonio C",
         "amount": 25,
-        "time": "about 13 hours",
+        "time": "about 18 hours",
         "message": ""
       },
       {
         "name": "Antonio T",
         "amount": 50,
-        "time": "about 21 hours",
+        "time": "1 day",
         "message": "Bellissima iniziativa, buona strada Daniele!"
       },
       {
         "name": "Elena G",
         "amount": 25,
-        "time": "about 21 hours",
+        "time": "1 day",
         "message": ""
       },
       {
         "name": "Alessandro T",
         "amount": 25,
-        "time": "3 days",
+        "time": "4 days",
         "message": "Go Dannybag, go! :-)"
       },
       {
@@ -96,7 +102,7 @@
       {
         "name": "Chiara C",
         "amount": 25,
-        "time": "9 days",
+        "time": "10 days",
         "message": ""
       },
       {
@@ -114,7 +120,7 @@
       {
         "name": "Raian E",
         "amount": 10,
-        "time": "10 days",
+        "time": "11 days",
         "message": "🍀🍀🫡"
       },
       {
@@ -138,19 +144,19 @@
       {
         "name": "Roberta G",
         "amount": 25,
-        "time": "14 days",
+        "time": "15 days",
         "message": ""
       },
       {
         "name": "Ilaria V",
         "amount": 25,
-        "time": "14 days",
+        "time": "15 days",
         "message": ""
       },
       {
         "name": "Giorgio F",
         "amount": 50,
-        "time": "14 days",
+        "time": "15 days",
         "message": "Ottima iniziativa"
       },
       {
@@ -174,7 +180,7 @@
       {
         "name": "Anonymous",
         "amount": 9,
-        "time": "19 days",
+        "time": "20 days",
         "message": ""
       },
       {
