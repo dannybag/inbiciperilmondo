@@ -1,12 +1,18 @@
 {
   "fundraising": {
-    "raised": 2054,
+    "raised": 2554,
     "goal": 2500,
     "donors": [
       {
+        "name": "Gianluca P",
+        "amount": 500,
+        "time": "10 minutes",
+        "message": "Pedala pedala che lo fai per un bellissimo obiettivo !"
+      },
+      {
         "name": "silvia s",
         "amount": 25,
-        "time": "about 1 hour",
+        "time": "about 2 hours",
         "message": ""
       },
       {
@@ -18,7 +24,7 @@
       {
         "name": "Antonio C",
         "amount": 25,
-        "time": "about 18 hours",
+        "time": "about 19 hours",
         "message": ""
       },
       {
