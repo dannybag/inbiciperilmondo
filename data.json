@@ -282,18 +282,18 @@
     ]
   },
   "tappa": {
-    "day": 2,
-    "from": "Parma",
-    "to": "Bologna",
-    "km": 111,
-    "dislivello": 711,
-    "name": "Parma - Bologna",
-    "polyline": "_j~oGidi~@iLLq]lNrOwz@l^k@xJ}[nu@kp@tc@{dAhEuBnIjD|Ua_@rTwpAs@sLNqHuFoEuEwHvKkr@iFkZLkOgF_Bx@{H{@o@|AkN}@wAJ{[rGc|@fI}h@fBmCiAeGe@wm@jBik@hSokBaEaC`EbCaEiDf@cWsEeTaAck@zCca@qEkDrEePzK}WxLw_AxBcBpKam@pC{Vd@mo@jEmBLwKcCc@LeF|Ha\\{AgNn@k\\tJge@`CmHnBh@fTeu@~MzLpT{fA`McZvGgIhAdPo@gTWbBiJeMsH_QcEsVgB\\pBq@uA{SfBqB@yGgAsVmCe@MuCbH@bC{NlBaBAaIlCnBs@nEfF_\\nG|Cx@{FzBd@tGqUi@{CfGuENmEZbC|@uDrK{DtGGlR`Hr@qDjO`Btb@wFz{@yk@jPcj@lRuEv~@cv@~XkPhL{M|b@_A`XgNpE{IbGs]r]{w@tMvKp@cAxZymAbH`@hPu[`OsGvTwc@fIaZlH}DRoJrH{StTu^dJiZ~NyTxLc\\~I|Cj]qPjY}ZxLo]bAmWcCuEdFyOxJuMlF|@bJwH~Nix@jJhCbDmLpBH`CyJsAmBtAiN`FgDjD~@hPyu@gAga@|Am@{Ei@_@iEzAaIdBsE}@aGfBcWoA{]hHwZe@}XtJel@jD{u@pKom@lCsDhJcr@xM_f@fKww@EeJiEwOaKq|@NmTfIug@[iLb[i_At\\cw@lLxBnEmJvKxFpo@{sAzDsv@oAuWdEuPNiK`Ks@vMom@pa@}NdQ{V~RaIjTicAtGuJpC{b@mCgLpGkM|AaTq@kWhDqLUyHpB~CdCcFcPgTlCwRmHkFpUibAaj@cM}DbA_DhN_XmArALgg@jRmt@uh@o_A}NsRwJwj@~Eig@yNfDec@iCbTgF}@d@eIeAk@zH}m@D_ZiLyy@GuIh@m`AxCoPjHmV}`A{g@nKc[~R{{A|EuQhBwUsGaGcC_VeDyGjFg[ZuPoHsO_HgFyGaMgAySwOa]aNoF?oHqCkF~HsSiGy@kKuK|Q_bA}D_GhW_nAcc@gVn\\u{Ag\\cOtEwQbCPbG_YvC~AaCuAdAeFeAgDp~@knDdOkm@fRa_AnOoi@|CwDPcGba@c_BaEgCbEtBjRu~@nLub@jCx@jHaYoByClEaP~Oy^jMqd@fCgBePoD~@iIuAgB|SkgAjBsB[iC{RyIbCoMxLwQbd@wXa@mPnCi[xC`Cs@oClBeIbHd@tCwRqCg_@cKaH",
-    "date": "2026-08-31T22:00:00.000Z",
-    "updated": "2026-09-01T17:50:54.758Z",
-    "totKm": 253,
-    "totDis": 1069,
-    "tappe": 2
+    "day": 3,
+    "from": "Bologna",
+    "to": "Firenze",
+    "km": 110,
+    "dislivello": 1416,
+    "name": "Bologna - Firenze",
+    "polyline": "atqnGggjdAiE\\n@lMyCtEkAbNtWmAyAh`AjARuAhNnIfB{AIe@pFbMxBHxCuAjMmIpSyGdk@oMfEEvt@pAr@jDtj@hBzNp_@nrA|Gxj@vBfAvHp\\vYnW`U`JH|PzTaClOxNdq@vZvMwLbT|IjJ[ju@qRlb@xE|g@cDrWvLj^rG`[ba@x`@zT`h@hLnPt[bh@zZva@zAz\\zL~y@w`@vJnAjLoIfMdA~QqFrRie@tIkDjE`DzBwHxJuHh^iEj_Ay[|e@mD~StCnm@kJdHdFfThf@rQnCd[`O`MjW|Ca@dOcTsJtObW|ZbL~E|BhF}@vDbFfIxTfMt^~\\pJ`TpDj^vM}D~@hLrFzFtHnYlK~k@~@nKsAtHtV|W~LzYfMbBlUla@~V|E`^hMnD|JxJw@|PrRpThCxTrOrSpBpU}D`PdRhAvAlGgDfQ|DdR|I|JhM|D}Bnq@hCfDkCfPrB|CrDvEmAnHrFoEaImJoBvIHU_E`LwFfBmEbMqDzGwNlTa@lMiLhHOpAwDpDx@lKwGfMjExNeDtJbGlGkCpBkKtP|J~KI`AqFjH}FbXzCzItCmJtDnM~FbGc@vDjEnEaFxOQ|TdDdH`KpJsBpC|LvIhN|ExAdXkFjEwG`LxGnMjW~V`MvNUv@cHpEiFy@zLrKvZ\\xKrMxMvD`NtW`FVtEt@yE_GiJkAmIxOyNrJ|KxIfCdFiC~T~AlFkEpBqNxLvKvJ}@lQpEtBzBhEzb@~CwJbK{C~VjL~EfMn@tOi@|KfDxLrA{^zJkG|BgJxD|C`GyEzCrH~KhGvHOxLsL~Wa@dNnIfGw@XwHfSsUbOo]n[e`@nc@uRlDmNbGfItDqD|B`AtCiFPkPjIy@dCrEdGNvBrGzOej@pElItCH~DkH~B~AfFsKlBsNbLrAdDgGfIuBr@qF`HxD~HuI~DpIbHnCx@_Nj[q\\|HiTbFb@~@yH~UwY~s@mRbF}OnGjAnLiMkJeLhX}HjDcH~MwHI_IrC{Fj\\cd@hGyFlm@{Ir_@Fb^qJlJjArFjZhWrN|h@jC`C~e@fZ`Lj@rThEhJxM`Kny@f@fb@pSh\\@xJjKfCjLxDaHbHPdFcNlKmC~Q}SfAdAkAtHtM_DfUlHzTnK`\\lYrXE~`@px@btAp{@tX~Alr@bc@dhAnPbNzVj[zWpIfPpLoRjj@{RVmHjEyCjOcCpFhF`LsFbElE}A{DncAcIxOlMhA`I~IxGj\\adAlEmFkKcQ|G}O_C_Ehi@qlAuHcKfG_Rrb@eo@rTgLle@gs@vLeKvCkKn_@WvUuYzM}FrBkU",
+    "date": "2026-09-01T22:00:00.000Z",
+    "updated": "2026-09-02T17:28:41.996Z",
+    "totKm": 363,
+    "totDis": 2485,
+    "tappe": 3
   },
   "tappe": [
     {
@@ -317,6 +317,17 @@
       "polyline": "_j~oGidi~@iLLq]lNrOwz@l^k@xJ}[nu@kp@tc@{dAhEuBnIjD|Ua_@rTwpAs@sLNqHuFoEuEwHvKkr@iFkZLkOgF_Bx@{H{@o@|AkN}@wAJ{[rGc|@fI}h@fBmCiAeGe@wm@jBik@hSokBaEaC`EbCaEiDf@cWsEeTaAck@zCca@qEkDrEePzK}WxLw_AxBcBpKam@pC{Vd@mo@jEmBLwKcCc@LeF|Ha\\{AgNn@k\\tJge@`CmHnBh@fTeu@~MzLpT{fA`McZvGgIhAdPo@gTWbBiJeMsH_QcEsVgB\\pBq@uA{SfBqB@yGgAsVmCe@MuCbH@bC{NlBaBAaIlCnBs@nEfF_\\nG|Cx@{FzBd@tGqUi@{CfGuENmEZbC|@uDrK{DtGGlR`Hr@qDjO`Btb@wFz{@yk@jPcj@lRuEv~@cv@~XkPhL{M|b@_A`XgNpE{IbGs]r]{w@tMvKp@cAxZymAbH`@hPu[`OsGvTwc@fIaZlH}DRoJrH{StTu^dJiZ~NyTxLc\\~I|Cj]qPjY}ZxLo]bAmWcCuEdFyOxJuMlF|@bJwH~Nix@jJhCbDmLpBH`CyJsAmBtAiN`FgDjD~@hPyu@gAga@|Am@{Ei@_@iEzAaIdBsE}@aGfBcWoA{]hHwZe@}XtJel@jD{u@pKom@lCsDhJcr@xM_f@fKww@EeJiEwOaKq|@NmTfIug@[iLb[i_At\\cw@lLxBnEmJvKxFpo@{sAzDsv@oAuWdEuPNiK`Ks@vMom@pa@}NdQ{V~RaIjTicAtGuJpC{b@mCgLpGkM|AaTq@kWhDqLUyHpB~CdCcFcPgTlCwRmHkFpUibAaj@cM}DbA_DhN_XmArALgg@jRmt@uh@o_A}NsRwJwj@~Eig@yNfDec@iCbTgF}@d@eIeAk@zH}m@D_ZiLyy@GuIh@m`AxCoPjHmV}`A{g@nKc[~R{{A|EuQhBwUsGaGcC_VeDyGjFg[ZuPoHsO_HgFyGaMgAySwOa]aNoF?oHqCkF~HsSiGy@kKuK|Q_bA}D_GhW_nAcc@gVn\\u{Ag\\cOtEwQbCPbG_YvC~AaCuAdAeFeAgDp~@knDdOkm@fRa_AnOoi@|CwDPcGba@c_BaEgCbEtBjRu~@nLub@jCx@jHaYoByClEaP~Oy^jMqd@fCgBePoD~@iIuAgB|SkgAjBsB[iC{RyIbCoMxLwQbd@wXa@mPnCi[xC`Cs@oClBeIbHd@tCwRqCg_@cKaH",
       "date": "2026-08-31T22:00:00.000Z",
       "updated": "2026-09-01T17:50:54.758Z"
+    },
+    {
+      "day": 3,
+      "from": "Bologna",
+      "to": "Firenze",
+      "km": 110,
+      "dislivello": 1416,
+      "name": "Bologna - Firenze",
+      "polyline": "atqnGggjdAiE\\n@lMyCtEkAbNtWmAyAh`AjARuAhNnIfB{AIe@pFbMxBHxCuAjMmIpSyGdk@oMfEEvt@pAr@jDtj@hBzNp_@nrA|Gxj@vBfAvHp\\vYnW`U`JH|PzTaClOxNdq@vZvMwLbT|IjJ[ju@qRlb@xE|g@cDrWvLj^rG`[ba@x`@zT`h@hLnPt[bh@zZva@zAz\\zL~y@w`@vJnAjLoIfMdA~QqFrRie@tIkDjE`DzBwHxJuHh^iEj_Ay[|e@mD~StCnm@kJdHdFfThf@rQnCd[`O`MjW|Ca@dOcTsJtObW|ZbL~E|BhF}@vDbFfIxTfMt^~\\pJ`TpDj^vM}D~@hLrFzFtHnYlK~k@~@nKsAtHtV|W~LzYfMbBlUla@~V|E`^hMnD|JxJw@|PrRpThCxTrOrSpBpU}D`PdRhAvAlGgDfQ|DdR|I|JhM|D}Bnq@hCfDkCfPrB|CrDvEmAnHrFoEaImJoBvIHU_E`LwFfBmEbMqDzGwNlTa@lMiLhHOpAwDpDx@lKwGfMjExNeDtJbGlGkCpBkKtP|J~KI`AqFjH}FbXzCzItCmJtDnM~FbGc@vDjEnEaFxOQ|TdDdH`KpJsBpC|LvIhN|ExAdXkFjEwG`LxGnMjW~V`MvNUv@cHpEiFy@zLrKvZ\\xKrMxMvD`NtW`FVtEt@yE_GiJkAmIxOyNrJ|KxIfCdFiC~T~AlFkEpBqNxLvKvJ}@lQpEtBzBhEzb@~CwJbK{C~VjL~EfMn@tOi@|KfDxLrA{^zJkG|BgJxD|C`GyEzCrH~KhGvHOxLsL~Wa@dNnIfGw@XwHfSsUbOo]n[e`@nc@uRlDmNbGfItDqD|B`AtCiFPkPjIy@dCrEdGNvBrGzOej@pElItCH~DkH~B~AfFsKlBsNbLrAdDgGfIuBr@qF`HxD~HuI~DpIbHnCx@_Nj[q\\|HiTbFb@~@yH~UwY~s@mRbF}OnGjAnLiMkJeLhX}HjDcH~MwHI_IrC{Fj\\cd@hGyFlm@{Ir_@Fb^qJlJjArFjZhWrN|h@jC`C~e@fZ`Lj@rThEhJxM`Kny@f@fb@pSh\\@xJjKfCjLxDaHbHPdFcNlKmC~Q}SfAdAkAtHtM_DfUlHzTnK`\\lYrXE~`@px@btAp{@tX~Alr@bc@dhAnPbNzVj[zWpIfPpLoRjj@{RVmHjEyCjOcCpFhF`LsFbElE}A{DncAcIxOlMhA`I~IxGj\\adAlEmFkKcQ|G}O_C_Ehi@qlAuHcKfG_Rrb@eo@rTgLle@gs@vLeKvCkKn_@WvUuYzM}FrBkU",
+      "date": "2026-09-01T22:00:00.000Z",
+      "updated": "2026-09-02T17:28:41.996Z"
     }
   ],
   "next_stages": [
