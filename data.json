@@ -1,12 +1,24 @@
 {
   "fundraising": {
-    "raised": 2654,
+    "raised": 2656,
     "goal": 3000,
     "donors": [
       {
+        "name": "Laura B",
+        "amount": 1,
+        "time": "about 2 hours",
+        "message": "Prove tecniche di spiegazione! 🤣"
+      },
+      {
+        "name": "Laura B",
+        "amount": 1,
+        "time": "about 2 hours",
+        "message": "Un 1€ per volta!"
+      },
+      {
         "name": "Mariagrazia L",
         "amount": 25,
-        "time": "about 11 hours",
+        "time": "about 14 hours",
         "message": "Ottima idea!"
       },
       {
@@ -48,13 +60,13 @@
       {
         "name": "Antonio T",
         "amount": 50,
-        "time": "2 days",
+        "time": "3 days",
         "message": "Bellissima iniziativa, buona strada Daniele!"
       },
       {
         "name": "Elena G",
         "amount": 25,
-        "time": "2 days",
+        "time": "3 days",
         "message": ""
       },
       {
@@ -96,13 +108,13 @@
       {
         "name": "Monica P",
         "amount": 50,
-        "time": "5 days",
+        "time": "6 days",
         "message": "Buona avventura Daniele, tienici aggiornati!"
       },
       {
         "name": "Gomarasca B",
         "amount": 150,
-        "time": "5 days",
+        "time": "6 days",
         "message": ""
       },
       {
@@ -120,7 +132,7 @@
       {
         "name": "Tiziano B",
         "amount": 50,
-        "time": "8 days",
+        "time": "9 days",
         "message": ""
       },
       {
@@ -138,7 +150,7 @@
       {
         "name": "Giorgia G",
         "amount": 147,
-        "time": "11 days",
+        "time": "12 days",
         "message": "Bravo Daniele!"
       },
       {
@@ -192,7 +204,7 @@
       {
         "name": "Alberto C",
         "amount": 10,
-        "time": "16 days",
+        "time": "17 days",
         "message": "Grande Dany, ottima iniziativa... buona pedalata!!!"
       },
       {
@@ -216,7 +228,7 @@
       {
         "name": "Alessandro V",
         "amount": 147,
-        "time": "27 days",
+        "time": "28 days",
         "message": ""
       },
       {
