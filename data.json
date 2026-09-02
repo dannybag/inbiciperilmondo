@@ -1,30 +1,36 @@
 {
   "fundraising": {
-    "raised": 2629,
+    "raised": 2654,
     "goal": 3000,
     "donors": [
       {
+        "name": "Mariagrazia L",
+        "amount": 25,
+        "time": "about 3 hours",
+        "message": "Ottima idea!"
+      },
+      {
         "name": "Sara D",
         "amount": 25,
-        "time": "about 15 hours",
+        "time": "about 20 hours",
         "message": ""
       },
       {
         "name": "Mauro V",
         "amount": 50,
-        "time": "about 17 hours",
+        "time": "about 22 hours",
         "message": ""
       },
       {
         "name": "Gianluca P",
         "amount": 500,
-        "time": "about 17 hours",
+        "time": "about 23 hours",
         "message": "Pedala pedala che lo fai per un bellissimo obiettivo !"
       },
       {
         "name": "silvia s",
         "amount": 25,
-        "time": "about 19 hours",
+        "time": "1 day",
         "message": ""
       },
       {
@@ -54,13 +60,13 @@
       {
         "name": "Alessandro T",
         "amount": 25,
-        "time": "4 days",
+        "time": "5 days",
         "message": "Go Dannybag, go! :-)"
       },
       {
         "name": "Anonymous",
         "amount": 15,
-        "time": "4 days",
+        "time": "5 days",
         "message": ""
       },
       {
@@ -120,7 +126,7 @@
       {
         "name": "Chiara C",
         "amount": 25,
-        "time": "10 days",
+        "time": "11 days",
         "message": ""
       },
       {
@@ -138,7 +144,7 @@
       {
         "name": "Raian E",
         "amount": 10,
-        "time": "11 days",
+        "time": "12 days",
         "message": "🍀🍀🫡"
       },
       {
@@ -168,13 +174,13 @@
       {
         "name": "Ilaria V",
         "amount": 25,
-        "time": "15 days",
+        "time": "16 days",
         "message": ""
       },
       {
         "name": "Giorgio F",
         "amount": 50,
-        "time": "15 days",
+        "time": "16 days",
         "message": "Ottima iniziativa"
       },
       {
@@ -198,7 +204,7 @@
       {
         "name": "Anonymous",
         "amount": 9,
-        "time": "20 days",
+        "time": "21 days",
         "message": ""
       },
       {
@@ -246,7 +252,7 @@
       {
         "name": "Lorenzo V",
         "amount": 30,
-        "time": "30 days",
+        "time": "about 1 month",
         "message": ""
       },
       {
