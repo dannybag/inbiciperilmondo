@@ -1,30 +1,36 @@
 {
   "fundraising": {
-    "raised": 2828,
+    "raised": 2878,
     "goal": 3000,
     "donors": [
       {
+        "name": "Silvia e Marco G",
+        "amount": 50,
+        "time": "22 minutes",
+        "message": ""
+      },
+      {
         "name": "Anonymous",
         "amount": 147,
-        "time": "about 12 hours",
+        "time": "about 13 hours",
         "message": "Proud to participate to this enabling project!"
       },
       {
         "name": "franco v",
         "amount": 25,
-        "time": "about 12 hours",
+        "time": "about 13 hours",
         "message": ""
       },
       {
         "name": "Laura B",
         "amount": 1,
-        "time": "about 24 hours",
+        "time": "1 day",
         "message": "Prove tecniche di spiegazione! 🤣"
       },
       {
         "name": "Laura B",
         "amount": 1,
-        "time": "about 24 hours",
+        "time": "1 day",
         "message": "Un 1€ per volta!"
       },
       {
@@ -144,7 +150,7 @@
       {
         "name": "Tiziano B",
         "amount": 50,
-        "time": "9 days",
+        "time": "10 days",
         "message": ""
       },
       {
