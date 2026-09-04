@@ -1,24 +1,30 @@
 {
   "fundraising": {
-    "raised": 2878,
+    "raised": 3025,
     "goal": 3000,
     "donors": [
       {
+        "name": "Chiara B",
+        "amount": 147,
+        "time": "about 2 hours",
+        "message": "Dai, dai, dai! Ce l’hai quasi fatta 🍀"
+      },
+      {
         "name": "Silvia e Marco G",
         "amount": 50,
-        "time": "about 2 hours",
+        "time": "about 5 hours",
         "message": ""
       },
       {
         "name": "Anonymous",
         "amount": 147,
-        "time": "about 15 hours",
+        "time": "about 17 hours",
         "message": "Proud to participate to this enabling project!"
       },
       {
         "name": "franco v",
         "amount": 25,
-        "time": "about 15 hours",
+        "time": "about 17 hours",
         "message": ""
       },
       {
@@ -54,7 +60,7 @@
       {
         "name": "Gianluca P",
         "amount": 500,
-        "time": "2 days",
+        "time": "3 days",
         "message": "Pedala pedala che lo fai per un bellissimo obiettivo !"
       },
       {
@@ -144,7 +150,7 @@
       {
         "name": "Ema&Gio C",
         "amount": 50,
-        "time": "9 days",
+        "time": "10 days",
         "message": ""
       },
       {
@@ -186,7 +192,7 @@
       {
         "name": "Walter I",
         "amount": 25,
-        "time": "15 days",
+        "time": "16 days",
         "message": ""
       },
       {
@@ -264,7 +270,7 @@
       {
         "name": "Anonymous",
         "amount": 10,
-        "time": "29 days",
+        "time": "30 days",
         "message": ""
       },
       {
