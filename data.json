@@ -1,7 +1,7 @@
 {
   "fundraising": {
     "raised": 3025,
-    "goal": 3000,
+    "goal": 3500,
     "donors": [
       {
         "name": "Chiara B",
@@ -54,7 +54,7 @@
       {
         "name": "Mauro V",
         "amount": 50,
-        "time": "2 days",
+        "time": "3 days",
         "message": ""
       },
       {
