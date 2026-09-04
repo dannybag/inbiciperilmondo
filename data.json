@@ -324,18 +324,18 @@
     ]
   },
   "tappa": {
-    "day": 3,
-    "from": "Bologna",
-    "to": "Firenze",
-    "km": 110,
-    "dislivello": 1416,
-    "name": "Bologna - Firenze",
-    "polyline": "atqnGggjdAiE\\n@lMyCtEkAbNtWmAyAh`AjARuAhNnIfB{AIe@pFbMxBHxCuAjMmIpSyGdk@oMfEEvt@pAr@jDtj@hBzNp_@nrA|Gxj@vBfAvHp\\vYnW`U`JH|PzTaClOxNdq@vZvMwLbT|IjJ[ju@qRlb@xE|g@cDrWvLj^rG`[ba@x`@zT`h@hLnPt[bh@zZva@zAz\\zL~y@w`@vJnAjLoIfMdA~QqFrRie@tIkDjE`DzBwHxJuHh^iEj_Ay[|e@mD~StCnm@kJdHdFfThf@rQnCd[`O`MjW|Ca@dOcTsJtObW|ZbL~E|BhF}@vDbFfIxTfMt^~\\pJ`TpDj^vM}D~@hLrFzFtHnYlK~k@~@nKsAtHtV|W~LzYfMbBlUla@~V|E`^hMnD|JxJw@|PrRpThCxTrOrSpBpU}D`PdRhAvAlGgDfQ|DdR|I|JhM|D}Bnq@hCfDkCfPrB|CrDvEmAnHrFoEaImJoBvIHU_E`LwFfBmEbMqDzGwNlTa@lMiLhHOpAwDpDx@lKwGfMjExNeDtJbGlGkCpBkKtP|J~KI`AqFjH}FbXzCzItCmJtDnM~FbGc@vDjEnEaFxOQ|TdDdH`KpJsBpC|LvIhN|ExAdXkFjEwG`LxGnMjW~V`MvNUv@cHpEiFy@zLrKvZ\\xKrMxMvD`NtW`FVtEt@yE_GiJkAmIxOyNrJ|KxIfCdFiC~T~AlFkEpBqNxLvKvJ}@lQpEtBzBhEzb@~CwJbK{C~VjL~EfMn@tOi@|KfDxLrA{^zJkG|BgJxD|C`GyEzCrH~KhGvHOxLsL~Wa@dNnIfGw@XwHfSsUbOo]n[e`@nc@uRlDmNbGfItDqD|B`AtCiFPkPjIy@dCrEdGNvBrGzOej@pElItCH~DkH~B~AfFsKlBsNbLrAdDgGfIuBr@qF`HxD~HuI~DpIbHnCx@_Nj[q\\|HiTbFb@~@yH~UwY~s@mRbF}OnGjAnLiMkJeLhX}HjDcH~MwHI_IrC{Fj\\cd@hGyFlm@{Ir_@Fb^qJlJjArFjZhWrN|h@jC`C~e@fZ`Lj@rThEhJxM`Kny@f@fb@pSh\\@xJjKfCjLxDaHbHPdFcNlKmC~Q}SfAdAkAtHtM_DfUlHzTnK`\\lYrXE~`@px@btAp{@tX~Alr@bc@dhAnPbNzVj[zWpIfPpLoRjj@{RVmHjEyCjOcCpFhF`LsFbElE}A{DncAcIxOlMhA`I~IxGj\\adAlEmFkKcQ|G}O_C_Ehi@qlAuHcKfG_Rrb@eo@rTgLle@gs@vLeKvCkKn_@WvUuYzM}FrBkU",
-    "date": "2026-09-01T22:00:00.000Z",
-    "updated": "2026-09-02T17:28:41.996Z",
-    "totKm": 363,
-    "totDis": 2485,
-    "tappe": 3
+    "day": 4,
+    "from": "Firenze",
+    "to": "Arezzo",
+    "km": 81,
+    "dislivello": 1024,
+    "name": "Firenze - Arezzo",
+    "polyline": "mqijGi{rcAd@sBvCtBrMrPdVeLhKiItd@uSv@yA?wV|BaDOeBZdBvIeDnEbEtEiMjHrFl@qDp@@_@{@rEcQnKpGbGrAHvCv@?d@{A}AaAi@iHlAuBjOeAvJ`EhE_NvLxC`FedArDsJj@cj@`CgA\\wBxDiBpOaT~Ng\\|@sLIuSvDq_@nCgi@lAsAm@kCnH_eA~CqThLcQlFuRpAwQDmPaAoGjJmQlL_N|D}IfM}OlIs_@jL{EtDaGpIkGlE{LNuVkA{HbAqKlEuN\\aUcCsWkHqMBiBbDsJbH_LvMyC~C{CzDBfBcBtClCpHa@nDgDdCi@lFH~GnD~AuAOwD{EkQ}IuMaAeDK}DfCqERuDu@OiBpBmBi@x@{OYoGz@wChHkE`JkLhCaAhElH|IvDxX`ErRgHrRiKhIuMxIgSjRkBhJyN`AyF|HuD`IgMTqMgBgGGuGhAyMqCmF{@cIxBkG|BoNzJ}RbFiBnCqTfGiHpGuA|FyHzFgD`DTjCuO~CgCrCwFvYqOpHsKzJ}G~ZkDdE^nA|@nAlIdDdDjCf@|FoEdBuE`MeFnStFbGVfSqGeAC[`ArAPAcAjD]xM_Hla@xA`WqG`JUtDoBt\\sZlCiHfz@gv@cB}QRyFpJcXpJqQwGcOKuB|Ma`@GcFqEi\\\\aFjBaEdFuCxPmBlO_Qrb@eNpIcHrHqAbKyMxBkMtEaKbRuQdSwPhKiBxF~AzBgAdAxBtASbFfEbGaAvi@_{@xJyYrEkFvLeY~CyCfBZrPjNhDv@p^sUuH}n@oDkLtAmRtEoH|CiPe@a`@cB{FdBoHqGuVxB}O`JkP`F}DjG`CpMiF`HyTlNgBjEuEpMaGtEiKrHm[bDeB]TLuAmMwc@FiAuJuYpAaE_AaCMmHd@uDxEmJpDeYpC_IdD}b@tEaF`@qDi@}AaB_@gPvJuD{@{Kc[aBqSeHgHwCsYp@yr@pDoCtFkIjFoRrByEkBiSmBeF^iRnEuIjAqGlGsOT_SxCeS}AmQ|@wEJsLlByDaf@o[i@mDxEgD~AwFrEsFt@qGvDkCxCqOdDmE|CcHlEkM~@_K~DoDt@kG~BwG\\{GtC_DoKuh@wCoGsDsBoAyJaCcGMiLuIe@sAmAkC_XrBiK^uP|FmZlGIbRyLbGeIfGsOzD{BrDqM|AM~IxGpIy@bm@yk@rZi{@NkXvBeJdBqPpKwXt`@ox@nDoCrUaGfBeE~AeMxE}I|ZaXbCkF?}FfCaSCaTjGeM~FkQhCyOtVgWhH{n@jG}IzAcFTqTgGec@`@aEjEwKMkIzAuGj~@{{BnFmGdBqKpl@gxAxBqANyDjMuZjTyL|N}DvJV",
+    "date": "2026-09-03T22:00:00.000Z",
+    "updated": "2026-09-04T15:15:29.409Z",
+    "totKm": 444,
+    "totDis": 3509,
+    "tappe": 4
   },
   "tappe": [
     {
@@ -370,6 +370,17 @@
       "polyline": "atqnGggjdAiE\\n@lMyCtEkAbNtWmAyAh`AjARuAhNnIfB{AIe@pFbMxBHxCuAjMmIpSyGdk@oMfEEvt@pAr@jDtj@hBzNp_@nrA|Gxj@vBfAvHp\\vYnW`U`JH|PzTaClOxNdq@vZvMwLbT|IjJ[ju@qRlb@xE|g@cDrWvLj^rG`[ba@x`@zT`h@hLnPt[bh@zZva@zAz\\zL~y@w`@vJnAjLoIfMdA~QqFrRie@tIkDjE`DzBwHxJuHh^iEj_Ay[|e@mD~StCnm@kJdHdFfThf@rQnCd[`O`MjW|Ca@dOcTsJtObW|ZbL~E|BhF}@vDbFfIxTfMt^~\\pJ`TpDj^vM}D~@hLrFzFtHnYlK~k@~@nKsAtHtV|W~LzYfMbBlUla@~V|E`^hMnD|JxJw@|PrRpThCxTrOrSpBpU}D`PdRhAvAlGgDfQ|DdR|I|JhM|D}Bnq@hCfDkCfPrB|CrDvEmAnHrFoEaImJoBvIHU_E`LwFfBmEbMqDzGwNlTa@lMiLhHOpAwDpDx@lKwGfMjExNeDtJbGlGkCpBkKtP|J~KI`AqFjH}FbXzCzItCmJtDnM~FbGc@vDjEnEaFxOQ|TdDdH`KpJsBpC|LvIhN|ExAdXkFjEwG`LxGnMjW~V`MvNUv@cHpEiFy@zLrKvZ\\xKrMxMvD`NtW`FVtEt@yE_GiJkAmIxOyNrJ|KxIfCdFiC~T~AlFkEpBqNxLvKvJ}@lQpEtBzBhEzb@~CwJbK{C~VjL~EfMn@tOi@|KfDxLrA{^zJkG|BgJxD|C`GyEzCrH~KhGvHOxLsL~Wa@dNnIfGw@XwHfSsUbOo]n[e`@nc@uRlDmNbGfItDqD|B`AtCiFPkPjIy@dCrEdGNvBrGzOej@pElItCH~DkH~B~AfFsKlBsNbLrAdDgGfIuBr@qF`HxD~HuI~DpIbHnCx@_Nj[q\\|HiTbFb@~@yH~UwY~s@mRbF}OnGjAnLiMkJeLhX}HjDcH~MwHI_IrC{Fj\\cd@hGyFlm@{Ir_@Fb^qJlJjArFjZhWrN|h@jC`C~e@fZ`Lj@rThEhJxM`Kny@f@fb@pSh\\@xJjKfCjLxDaHbHPdFcNlKmC~Q}SfAdAkAtHtM_DfUlHzTnK`\\lYrXE~`@px@btAp{@tX~Alr@bc@dhAnPbNzVj[zWpIfPpLoRjj@{RVmHjEyCjOcCpFhF`LsFbElE}A{DncAcIxOlMhA`I~IxGj\\adAlEmFkKcQ|G}O_C_Ehi@qlAuHcKfG_Rrb@eo@rTgLle@gs@vLeKvCkKn_@WvUuYzM}FrBkU",
       "date": "2026-09-01T22:00:00.000Z",
       "updated": "2026-09-02T17:28:41.996Z"
+    },
+    {
+      "day": 4,
+      "from": "Firenze",
+      "to": "Arezzo",
+      "km": 81,
+      "dislivello": 1024,
+      "name": "Firenze - Arezzo",
+      "polyline": "mqijGi{rcAd@sBvCtBrMrPdVeLhKiItd@uSv@yA?wV|BaDOeBZdBvIeDnEbEtEiMjHrFl@qDp@@_@{@rEcQnKpGbGrAHvCv@?d@{A}AaAi@iHlAuBjOeAvJ`EhE_NvLxC`FedArDsJj@cj@`CgA\\wBxDiBpOaT~Ng\\|@sLIuSvDq_@nCgi@lAsAm@kCnH_eA~CqThLcQlFuRpAwQDmPaAoGjJmQlL_N|D}IfM}OlIs_@jL{EtDaGpIkGlE{LNuVkA{HbAqKlEuN\\aUcCsWkHqMBiBbDsJbH_LvMyC~C{CzDBfBcBtClCpHa@nDgDdCi@lFH~GnD~AuAOwD{EkQ}IuMaAeDK}DfCqERuDu@OiBpBmBi@x@{OYoGz@wChHkE`JkLhCaAhElH|IvDxX`ErRgHrRiKhIuMxIgSjRkBhJyN`AyF|HuD`IgMTqMgBgGGuGhAyMqCmF{@cIxBkG|BoNzJ}RbFiBnCqTfGiHpGuA|FyHzFgD`DTjCuO~CgCrCwFvYqOpHsKzJ}G~ZkDdE^nA|@nAlIdDdDjCf@|FoEdBuE`MeFnStFbGVfSqGeAC[`ArAPAcAjD]xM_Hla@xA`WqG`JUtDoBt\\sZlCiHfz@gv@cB}QRyFpJcXpJqQwGcOKuB|Ma`@GcFqEi\\\\aFjBaEdFuCxPmBlO_Qrb@eNpIcHrHqAbKyMxBkMtEaKbRuQdSwPhKiBxF~AzBgAdAxBtASbFfEbGaAvi@_{@xJyYrEkFvLeY~CyCfBZrPjNhDv@p^sUuH}n@oDkLtAmRtEoH|CiPe@a`@cB{FdBoHqGuVxB}O`JkP`F}DjG`CpMiF`HyTlNgBjEuEpMaGtEiKrHm[bDeB]TLuAmMwc@FiAuJuYpAaE_AaCMmHd@uDxEmJpDeYpC_IdD}b@tEaF`@qDi@}AaB_@gPvJuD{@{Kc[aBqSeHgHwCsYp@yr@pDoCtFkIjFoRrByEkBiSmBeF^iRnEuIjAqGlGsOT_SxCeS}AmQ|@wEJsLlByDaf@o[i@mDxEgD~AwFrEsFt@qGvDkCxCqOdDmE|CcHlEkM~@_K~DoDt@kG~BwG\\{GtC_DoKuh@wCoGsDsBoAyJaCcGMiLuIe@sAmAkC_XrBiK^uP|FmZlGIbRyLbGeIfGsOzD{BrDqM|AM~IxGpIy@bm@yk@rZi{@NkXvBeJdBqPpKwXt`@ox@nDoCrUaGfBeE~AeMxE}I|ZaXbCkF?}FfCaSCaTjGeM~FkQhCyOtVgWhH{n@jG}IzAcFTqTgGec@`@aEjEwKMkIzAuGj~@{{BnFmGdBqKpl@gxAxBqANyDjMuZjTyL|N}DvJV",
+      "date": "2026-09-03T22:00:00.000Z",
+      "updated": "2026-09-04T15:15:29.409Z"
     }
   ],
   "next_stages": [],
