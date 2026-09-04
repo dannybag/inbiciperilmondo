@@ -1,30 +1,36 @@
 {
   "fundraising": {
-    "raised": 3025,
+    "raised": 3055,
     "goal": 3500,
     "donors": [
       {
+        "name": "Emiliana V",
+        "amount": 30,
+        "time": "about 1 hour",
+        "message": ""
+      },
+      {
         "name": "Chiara B",
         "amount": 147,
-        "time": "about 7 hours",
+        "time": "about 12 hours",
         "message": "Dai, dai, dai! Ce l’hai quasi fatta 🍀"
       },
       {
         "name": "Silvia e Marco G",
         "amount": 50,
-        "time": "about 9 hours",
+        "time": "about 14 hours",
         "message": ""
       },
       {
         "name": "Anonymous",
         "amount": 147,
-        "time": "about 22 hours",
+        "time": "1 day",
         "message": "Proud to participate to this enabling project!"
       },
       {
         "name": "franco v",
         "amount": 25,
-        "time": "about 22 hours",
+        "time": "1 day",
         "message": ""
       },
       {
@@ -72,7 +78,7 @@
       {
         "name": "Chiara C",
         "amount": 25,
-        "time": "3 days",
+        "time": "4 days",
         "message": "Forza Dani che a Palermo ti aspetta la caponata ;-)"
       },
       {
@@ -96,13 +102,13 @@
       {
         "name": "Alessandro T",
         "amount": 25,
-        "time": "6 days",
+        "time": "7 days",
         "message": "Go Dannybag, go! :-)"
       },
       {
         "name": "Anonymous",
         "amount": 15,
-        "time": "6 days",
+        "time": "7 days",
         "message": ""
       },
       {
@@ -162,7 +168,7 @@
       {
         "name": "Chiara C",
         "amount": 25,
-        "time": "12 days",
+        "time": "13 days",
         "message": ""
       },
       {
@@ -180,7 +186,7 @@
       {
         "name": "Raian E",
         "amount": 10,
-        "time": "13 days",
+        "time": "14 days",
         "message": "🍀🍀🫡"
       },
       {
@@ -210,13 +216,13 @@
       {
         "name": "Ilaria V",
         "amount": 25,
-        "time": "17 days",
+        "time": "18 days",
         "message": ""
       },
       {
         "name": "Giorgio F",
         "amount": 50,
-        "time": "17 days",
+        "time": "18 days",
         "message": "Ottima iniziativa"
       },
       {
@@ -240,7 +246,7 @@
       {
         "name": "Anonymous",
         "amount": 9,
-        "time": "22 days",
+        "time": "23 days",
         "message": ""
       },
       {
@@ -276,7 +282,7 @@
       {
         "name": "Roberto t",
         "amount": 25,
-        "time": "30 days",
+        "time": "about 1 month",
         "message": "Adesso devi partire!"
       },
       {
