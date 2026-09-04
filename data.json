@@ -1,24 +1,30 @@
 {
   "fundraising": {
-    "raised": 3055,
+    "raised": 3060,
     "goal": 3500,
     "donors": [
       {
+        "name": "Stefano B",
+        "amount": 5,
+        "time": "43 minutes",
+        "message": ""
+      },
+      {
         "name": "Emiliana V",
         "amount": 30,
-        "time": "about 2 hours",
+        "time": "about 5 hours",
         "message": ""
       },
       {
         "name": "Chiara B",
         "amount": 147,
-        "time": "about 12 hours",
+        "time": "about 15 hours",
         "message": "Dai, dai, dai! Ce l’hai quasi fatta 🍀"
       },
       {
         "name": "Silvia e Marco G",
         "amount": 50,
-        "time": "about 14 hours",
+        "time": "about 17 hours",
         "message": ""
       },
       {
@@ -210,7 +216,7 @@
       {
         "name": "Roberta G",
         "amount": 25,
-        "time": "17 days",
+        "time": "18 days",
         "message": ""
       },
       {
@@ -276,7 +282,7 @@
       {
         "name": "Anonymous",
         "amount": 10,
-        "time": "30 days",
+        "time": "about 1 month",
         "message": ""
       },
       {
@@ -284,12 +290,6 @@
         "amount": 25,
         "time": "about 1 month",
         "message": "Adesso devi partire!"
-      },
-      {
-        "name": "Anonymous",
-        "amount": 10,
-        "time": "about 1 month",
-        "message": ""
       },
       {
         "name": "Lorenzo V",
