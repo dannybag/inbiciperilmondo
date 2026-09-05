@@ -324,18 +324,18 @@
     ]
   },
   "tappa": {
-    "day": 4,
-    "from": "Firenze",
-    "to": "Arezzo",
-    "km": 81,
-    "dislivello": 1024,
-    "name": "Firenze - Arezzo",
-    "polyline": "mqijGi{rcAd@sBvCtBrMrPdVeLhKiItd@uSv@yA?wV|BaDOeBZdBvIeDnEbEtEiMjHrFl@qDp@@_@{@rEcQnKpGbGrAHvCv@?d@{A}AaAi@iHlAuBjOeAvJ`EhE_NvLxC`FedArDsJj@cj@`CgA\\wBxDiBpOaT~Ng\\|@sLIuSvDq_@nCgi@lAsAm@kCnH_eA~CqThLcQlFuRpAwQDmPaAoGjJmQlL_N|D}IfM}OlIs_@jL{EtDaGpIkGlE{LNuVkA{HbAqKlEuN\\aUcCsWkHqMBiBbDsJbH_LvMyC~C{CzDBfBcBtClCpHa@nDgDdCi@lFH~GnD~AuAOwD{EkQ}IuMaAeDK}DfCqERuDu@OiBpBmBi@x@{OYoGz@wChHkE`JkLhCaAhElH|IvDxX`ErRgHrRiKhIuMxIgSjRkBhJyN`AyF|HuD`IgMTqMgBgGGuGhAyMqCmF{@cIxBkG|BoNzJ}RbFiBnCqTfGiHpGuA|FyHzFgD`DTjCuO~CgCrCwFvYqOpHsKzJ}G~ZkDdE^nA|@nAlIdDdDjCf@|FoEdBuE`MeFnStFbGVfSqGeAC[`ArAPAcAjD]xM_Hla@xA`WqG`JUtDoBt\\sZlCiHfz@gv@cB}QRyFpJcXpJqQwGcOKuB|Ma`@GcFqEi\\\\aFjBaEdFuCxPmBlO_Qrb@eNpIcHrHqAbKyMxBkMtEaKbRuQdSwPhKiBxF~AzBgAdAxBtASbFfEbGaAvi@_{@xJyYrEkFvLeY~CyCfBZrPjNhDv@p^sUuH}n@oDkLtAmRtEoH|CiPe@a`@cB{FdBoHqGuVxB}O`JkP`F}DjG`CpMiF`HyTlNgBjEuEpMaGtEiKrHm[bDeB]TLuAmMwc@FiAuJuYpAaE_AaCMmHd@uDxEmJpDeYpC_IdD}b@tEaF`@qDi@}AaB_@gPvJuD{@{Kc[aBqSeHgHwCsYp@yr@pDoCtFkIjFoRrByEkBiSmBeF^iRnEuIjAqGlGsOT_SxCeS}AmQ|@wEJsLlByDaf@o[i@mDxEgD~AwFrEsFt@qGvDkCxCqOdDmE|CcHlEkM~@_K~DoDt@kG~BwG\\{GtC_DoKuh@wCoGsDsBoAyJaCcGMiLuIe@sAmAkC_XrBiK^uP|FmZlGIbRyLbGeIfGsOzD{BrDqM|AM~IxGpIy@bm@yk@rZi{@NkXvBeJdBqPpKwXt`@ox@nDoCrUaGfBeE~AeMxE}I|ZaXbCkF?}FfCaSCaTjGeM~FkQhCyOtVgWhH{n@jG}IzAcFTqTgGec@`@aEjEwKMkIzAuGj~@{{BnFmGdBqKpl@gxAxBqANyDjMuZjTyL|N}DvJV",
-    "date": "2026-09-03T22:00:00.000Z",
-    "updated": "2026-09-04T15:15:29.409Z",
-    "totKm": 444,
-    "totDis": 3509,
-    "tappe": 4
+    "day": 5,
+    "from": "Arezzo",
+    "to": "Capodimonte (Lago di Bolsena)",
+    "km": 133,
+    "dislivello": 1096,
+    "name": "Arezzo - Capodimonte (Lago di Bolsena)",
+    "polyline": "}qehGyqlgAdUj^zd@lj@j_@lSrSlj@jMtNlIfRpdAloC~Ep@`ClHxB{ByB_El@aBxgHe_At`AyDnxAPfnBqf@hc@aPe@cDfYwGbJeKfArAsElI~hCcXxdEnNn{B`Et]fHhUzNtq@zAwHzg@nCkEtI}]EsDtINnjBs\\dv@qh@dm@aQh_@{c@nb@uVtf@}v@pR}f@pH_IpHaPfU{TrT{`@jvAiu@t@jBfaBis@fmAmtAjpBy@fFbE`Od\\zg@b`@dH|J[|BpKuLCwOnfA_q@iCqLhQcHeOa[tWuTdnA{p@nFiLpLmE~BoIgAon@`BgKDwRtFyQD{BaFm@tG|D`IiUfG|FvJ_N`a@kR|CxQdVoAGgHzVkFvJ{V|t@pO`d@lCfCtBtFfIbk@d\\nAoFlObH`CuN`UzDxDfJdSlBl_@iE|AyE`E|AmD{ADmBvNCxE|BhK`Pt[zKnb@ePpJkLzsAcPz}@uRlw@iIzSbC|IsIrMoAzBrJbYhd@xHiAtDnDdk@jsAhKpQfGfXrOh[jf@bTfAdViMpy@s@nT`FnTbErC^zPzErOL|FqF~KlGx@tA~FpN|OJrKrQpK`CdL_@dExDvEgBvGpCj@bOtStESdCfDbE}C|RlC`D_DpKyAxKhJhOhCrJuFpKOlLjQvJjWf[aC|AxGbJjDlEoLv\\`MvAy@ZaFjBe@hFvR|KbEvIeHxHoNhPgDnCqRzJsRfDmBjP~XpBdJbRk@rSvZbSoi@fPcO|EgHtAgHpGsArAhDxJfAj@vLgD`HjEEpFzHmAzDeFzADrQjKjKm@fJzHlSpGh@b@nIhc@rc@nJdVnc@ra@|MrGfFEhD~FbDx@rH{ClDkGx@oNrAoBnZpPrBmCfSk@pNrCaJwIwJeCsEgGBoErFvHbLGbIfGdTlD|EbF?pIgFhNAdFtSaL|C{EzEkOpk@u@|BcOtB_Cns@uFxKgKhSwGrEuOn]jAl[yDl@wGuAy@pWqQ_@cL~Lkz@g@iC@zCzWjNt_@jEfUf@t`@|J~X{Lho@iMqFqq@dMaDzKwJvKic@oBo_@`jBoWl]mTFcFFpEiKzGbPiFzIxRp@|IjBr@`~@yQrByGzCqBfj@f@rSwChUhClH|FfERrZgIdAlC^gBs@tAbCxLjBWpEbGnEtn@dLn\\|J`IhQ|@hIvDtKhYxP|PpTp^jf@`RjMf@xf@na@vN`B`Y}Ez|@fTd_@tXrNjPbGhBnN_GfM_N|[yk@lE`Fji@mVdS}QfO_]fl@gj@xJqVtSez@xFw@",
+    "date": "2026-09-04T22:00:00.000Z",
+    "updated": "2026-09-05T17:15:02.214Z",
+    "totKm": 577,
+    "totDis": 4605,
+    "tappe": 5
   },
   "tappe": [
     {
@@ -381,6 +381,17 @@
       "polyline": "mqijGi{rcAd@sBvCtBrMrPdVeLhKiItd@uSv@yA?wV|BaDOeBZdBvIeDnEbEtEiMjHrFl@qDp@@_@{@rEcQnKpGbGrAHvCv@?d@{A}AaAi@iHlAuBjOeAvJ`EhE_NvLxC`FedArDsJj@cj@`CgA\\wBxDiBpOaT~Ng\\|@sLIuSvDq_@nCgi@lAsAm@kCnH_eA~CqThLcQlFuRpAwQDmPaAoGjJmQlL_N|D}IfM}OlIs_@jL{EtDaGpIkGlE{LNuVkA{HbAqKlEuN\\aUcCsWkHqMBiBbDsJbH_LvMyC~C{CzDBfBcBtClCpHa@nDgDdCi@lFH~GnD~AuAOwD{EkQ}IuMaAeDK}DfCqERuDu@OiBpBmBi@x@{OYoGz@wChHkE`JkLhCaAhElH|IvDxX`ErRgHrRiKhIuMxIgSjRkBhJyN`AyF|HuD`IgMTqMgBgGGuGhAyMqCmF{@cIxBkG|BoNzJ}RbFiBnCqTfGiHpGuA|FyHzFgD`DTjCuO~CgCrCwFvYqOpHsKzJ}G~ZkDdE^nA|@nAlIdDdDjCf@|FoEdBuE`MeFnStFbGVfSqGeAC[`ArAPAcAjD]xM_Hla@xA`WqG`JUtDoBt\\sZlCiHfz@gv@cB}QRyFpJcXpJqQwGcOKuB|Ma`@GcFqEi\\\\aFjBaEdFuCxPmBlO_Qrb@eNpIcHrHqAbKyMxBkMtEaKbRuQdSwPhKiBxF~AzBgAdAxBtASbFfEbGaAvi@_{@xJyYrEkFvLeY~CyCfBZrPjNhDv@p^sUuH}n@oDkLtAmRtEoH|CiPe@a`@cB{FdBoHqGuVxB}O`JkP`F}DjG`CpMiF`HyTlNgBjEuEpMaGtEiKrHm[bDeB]TLuAmMwc@FiAuJuYpAaE_AaCMmHd@uDxEmJpDeYpC_IdD}b@tEaF`@qDi@}AaB_@gPvJuD{@{Kc[aBqSeHgHwCsYp@yr@pDoCtFkIjFoRrByEkBiSmBeF^iRnEuIjAqGlGsOT_SxCeS}AmQ|@wEJsLlByDaf@o[i@mDxEgD~AwFrEsFt@qGvDkCxCqOdDmE|CcHlEkM~@_K~DoDt@kG~BwG\\{GtC_DoKuh@wCoGsDsBoAyJaCcGMiLuIe@sAmAkC_XrBiK^uP|FmZlGIbRyLbGeIfGsOzD{BrDqM|AM~IxGpIy@bm@yk@rZi{@NkXvBeJdBqPpKwXt`@ox@nDoCrUaGfBeE~AeMxE}I|ZaXbCkF?}FfCaSCaTjGeM~FkQhCyOtVgWhH{n@jG}IzAcFTqTgGec@`@aEjEwKMkIzAuGj~@{{BnFmGdBqKpl@gxAxBqANyDjMuZjTyL|N}DvJV",
       "date": "2026-09-03T22:00:00.000Z",
       "updated": "2026-09-04T15:15:29.409Z"
+    },
+    {
+      "day": 5,
+      "from": "Arezzo",
+      "to": "Capodimonte (Lago di Bolsena)",
+      "km": 133,
+      "dislivello": 1096,
+      "name": "Arezzo - Capodimonte (Lago di Bolsena)",
+      "polyline": "}qehGyqlgAdUj^zd@lj@j_@lSrSlj@jMtNlIfRpdAloC~Ep@`ClHxB{ByB_El@aBxgHe_At`AyDnxAPfnBqf@hc@aPe@cDfYwGbJeKfArAsElI~hCcXxdEnNn{B`Et]fHhUzNtq@zAwHzg@nCkEtI}]EsDtINnjBs\\dv@qh@dm@aQh_@{c@nb@uVtf@}v@pR}f@pH_IpHaPfU{TrT{`@jvAiu@t@jBfaBis@fmAmtAjpBy@fFbE`Od\\zg@b`@dH|J[|BpKuLCwOnfA_q@iCqLhQcHeOa[tWuTdnA{p@nFiLpLmE~BoIgAon@`BgKDwRtFyQD{BaFm@tG|D`IiUfG|FvJ_N`a@kR|CxQdVoAGgHzVkFvJ{V|t@pO`d@lCfCtBtFfIbk@d\\nAoFlObH`CuN`UzDxDfJdSlBl_@iE|AyE`E|AmD{ADmBvNCxE|BhK`Pt[zKnb@ePpJkLzsAcPz}@uRlw@iIzSbC|IsIrMoAzBrJbYhd@xHiAtDnDdk@jsAhKpQfGfXrOh[jf@bTfAdViMpy@s@nT`FnTbErC^zPzErOL|FqF~KlGx@tA~FpN|OJrKrQpK`CdL_@dExDvEgBvGpCj@bOtStESdCfDbE}C|RlC`D_DpKyAxKhJhOhCrJuFpKOlLjQvJjWf[aC|AxGbJjDlEoLv\\`MvAy@ZaFjBe@hFvR|KbEvIeHxHoNhPgDnCqRzJsRfDmBjP~XpBdJbRk@rSvZbSoi@fPcO|EgHtAgHpGsArAhDxJfAj@vLgD`HjEEpFzHmAzDeFzADrQjKjKm@fJzHlSpGh@b@nIhc@rc@nJdVnc@ra@|MrGfFEhD~FbDx@rH{ClDkGx@oNrAoBnZpPrBmCfSk@pNrCaJwIwJeCsEgGBoErFvHbLGbIfGdTlD|EbF?pIgFhNAdFtSaL|C{EzEkOpk@u@|BcOtB_Cns@uFxKgKhSwGrEuOn]jAl[yDl@wGuAy@pWqQ_@cL~Lkz@g@iC@zCzWjNt_@jEfUf@t`@|J~X{Lho@iMqFqq@dMaDzKwJvKic@oBo_@`jBoWl]mTFcFFpEiKzGbPiFzIxRp@|IjBr@`~@yQrByGzCqBfj@f@rSwChUhClH|FfERrZgIdAlC^gBs@tAbCxLjBWpEbGnEtn@dLn\\|J`IhQ|@hIvDtKhYxP|PpTp^jf@`RjMf@xf@na@vN`B`Y}Ez|@fTd_@tXrNjPbGhBnN_GfM_N|[yk@lE`Fji@mVdS}QfO_]fl@gj@xJqVtSez@xFw@",
+      "date": "2026-09-04T22:00:00.000Z",
+      "updated": "2026-09-05T17:15:02.214Z"
     }
   ],
   "next_stages": [
