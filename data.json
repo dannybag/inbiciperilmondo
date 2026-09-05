@@ -1,12 +1,18 @@
 {
   "fundraising": {
-    "raised": 3060,
+    "raised": 3085,
     "goal": 3500,
     "donors": [
       {
+        "name": "Patrizia D",
+        "amount": 25,
+        "time": "about 2 hours",
+        "message": "Happy to have known this initiative, thanks Daniele!"
+      },
+      {
         "name": "Stefano B",
         "amount": 5,
-        "time": "about 21 hours",
+        "time": "1 day",
         "message": ""
       },
       {
@@ -216,7 +222,7 @@
       {
         "name": "Roberta G",
         "amount": 25,
-        "time": "18 days",
+        "time": "19 days",
         "message": ""
       },
       {
