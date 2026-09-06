@@ -324,18 +324,18 @@
     ]
   },
   "tappa": {
-    "day": 5,
-    "from": "Arezzo",
-    "to": "Capodimonte (Lago di Bolsena)",
-    "km": 133,
-    "dislivello": 1096,
-    "name": "Arezzo - Capodimonte (Lago di Bolsena)",
-    "polyline": "}qehGyqlgAdUj^zd@lj@j_@lSrSlj@jMtNlIfRpdAloC~Ep@`ClHxB{ByB_El@aBxgHe_At`AyDnxAPfnBqf@hc@aPe@cDfYwGbJeKfArAsElI~hCcXxdEnNn{B`Et]fHhUzNtq@zAwHzg@nCkEtI}]EsDtINnjBs\\dv@qh@dm@aQh_@{c@nb@uVtf@}v@pR}f@pH_IpHaPfU{TrT{`@jvAiu@t@jBfaBis@fmAmtAjpBy@fFbE`Od\\zg@b`@dH|J[|BpKuLCwOnfA_q@iCqLhQcHeOa[tWuTdnA{p@nFiLpLmE~BoIgAon@`BgKDwRtFyQD{BaFm@tG|D`IiUfG|FvJ_N`a@kR|CxQdVoAGgHzVkFvJ{V|t@pO`d@lCfCtBtFfIbk@d\\nAoFlObH`CuN`UzDxDfJdSlBl_@iE|AyE`E|AmD{ADmBvNCxE|BhK`Pt[zKnb@ePpJkLzsAcPz}@uRlw@iIzSbC|IsIrMoAzBrJbYhd@xHiAtDnDdk@jsAhKpQfGfXrOh[jf@bTfAdViMpy@s@nT`FnTbErC^zPzErOL|FqF~KlGx@tA~FpN|OJrKrQpK`CdL_@dExDvEgBvGpCj@bOtStESdCfDbE}C|RlC`D_DpKyAxKhJhOhCrJuFpKOlLjQvJjWf[aC|AxGbJjDlEoLv\\`MvAy@ZaFjBe@hFvR|KbEvIeHxHoNhPgDnCqRzJsRfDmBjP~XpBdJbRk@rSvZbSoi@fPcO|EgHtAgHpGsArAhDxJfAj@vLgD`HjEEpFzHmAzDeFzADrQjKjKm@fJzHlSpGh@b@nIhc@rc@nJdVnc@ra@|MrGfFEhD~FbDx@rH{ClDkGx@oNrAoBnZpPrBmCfSk@pNrCaJwIwJeCsEgGBoErFvHbLGbIfGdTlD|EbF?pIgFhNAdFtSaL|C{EzEkOpk@u@|BcOtB_Cns@uFxKgKhSwGrEuOn]jAl[yDl@wGuAy@pWqQ_@cL~Lkz@g@iC@zCzWjNt_@jEfUf@t`@|J~X{Lho@iMqFqq@dMaDzKwJvKic@oBo_@`jBoWl]mTFcFFpEiKzGbPiFzIxRp@|IjBr@`~@yQrByGzCqBfj@f@rSwChUhClH|FfERrZgIdAlC^gBs@tAbCxLjBWpEbGnEtn@dLn\\|J`IhQ|@hIvDtKhYxP|PpTp^jf@`RjMf@xf@na@vN`B`Y}Ez|@fTd_@tXrNjPbGhBnN_GfM_N|[yk@lE`Fji@mVdS}QfO_]fl@gj@xJqVtSez@xFw@",
-    "date": "2026-09-04T22:00:00.000Z",
-    "updated": "2026-09-05T17:15:02.214Z",
-    "totKm": 577,
-    "totDis": 4605,
-    "tappe": 5
+    "day": 6,
+    "from": "Capodimonte",
+    "to": "Ladispoli",
+    "km": 94,
+    "dislivello": 467,
+    "name": "Capodimonte - Ladispoli",
+    "polyline": "i|ubGgdsgAnBuG|@m@nEgQ`GdDnAwDdGdCxDeQjE^vCqF~CcDrQ{IfCgCfDsI[oMzC}RrA{BlKeJfC}GJoIpGiGdc@|IlDtCxDxGzD|CpGnHjBz@fG|@fAGbFcCdUCdVqElAd@pBzD`At@`Fh@rE_BrJiAjNgFzDGhtEtm@pAr@|@xAf[tbArH`Ov_@hf@pX~SxD`Bha@rIx@zBhBdYzAfDxdA`Uzq@xHdOdP`HlA~FtBzD\\jM`Hp@nBEpJjE~a@hCvMhB~R?jF`@bBf`@zf@zVjUbHrRfKxJzFvGvIlOpI|K`JhFlb@~N|gBxuAdAlAjDxHrBjBdwAne@zD`C`D|F~Jd_@zHln@lCnJbe@lq@nQnMhKnNvD~ClEtAnDMzBcAhMoJhEq@`IJlGmDxDu@`N`@hOoBnf@c@bPuAne@lDd`@eAnKnC~f@iJjNv@zEzB`KnLlArCjClM|@xApR`GvU~EpDdBvBxCbPv]rR`Ld_@`IdItBnBlA|BpEtEbY|Mt\\tDdMrF|GpKnWvRzRrD{EtCqClCv@LgE`FuE`AcErEeJnAgE|IiGxCaFpBk@h@}AnFoFpB_DnDyJtAy@pJqAl^xJdc@fJfAv@rHo@dGz@tW~I`PxJrMtFtSnR|U~MbUdDp]aF`ET`CrAnBvC~HtUTjB^L`CmBhxDgmBnBqBnZ{e@xCyCbJ{DtCZ`MdLxWfYrJzLfAR`Ag@fBuDd@KBi@j@g@rbCy{AvDyDnEg@~NZ~B`AvFbF|R~EvE]vLiEpKzAvBQx\\m`@xMuGrCeChBwChEeMpImLvCaF`BoE~@cAtAk@|IFrEi@jJsJpJgDXiCjCkHh@yIrC_E`@kCpCeBlDcHX|@[yAzEaQlK{PtJ}HtAk@pRgBtDxAjHsHbLyEfb@aJrW_JlEyBpQqMlNu@zMcI`AGTy@hDmC`IcCdL}LxUmCtO[`KiBlCeCzL_R|FwLzLwCpDgB`HwFtGwMhByBxC_BvH{A|AwAbH}MvDwMlAcK~@e[yEwg@mBsZaCmPwA_WuCmWeBqLoE_NkGuk@y@eOk@iAmFeDo@mBAsD|DeU}DgWDwObBsP~CkJHyHs@{HuEcF_AyCqAuIk@_MpDqa@jCoSfDuHzH}U`CwIrCoP`Vep@zgAgsDrG}WdN{a@z[qgAfNma@r]iiAtDcQbBqVz@gEtIaQnXmq@dxAcyEj@]hAZ|@xAl@C`B~ALcBzA_F`@CI}@nF_QzAi@lAj@hWaKjHlIhFtCrEvDjVrVzb@n\\tA_CtMca@~BfA",
+    "date": "2026-09-05T22:00:00.000Z",
+    "updated": "2026-09-06T14:56:18.490Z",
+    "totKm": 671,
+    "totDis": 5072,
+    "tappe": 6
   },
   "tappe": [
     {
@@ -392,6 +392,17 @@
       "polyline": "}qehGyqlgAdUj^zd@lj@j_@lSrSlj@jMtNlIfRpdAloC~Ep@`ClHxB{ByB_El@aBxgHe_At`AyDnxAPfnBqf@hc@aPe@cDfYwGbJeKfArAsElI~hCcXxdEnNn{B`Et]fHhUzNtq@zAwHzg@nCkEtI}]EsDtINnjBs\\dv@qh@dm@aQh_@{c@nb@uVtf@}v@pR}f@pH_IpHaPfU{TrT{`@jvAiu@t@jBfaBis@fmAmtAjpBy@fFbE`Od\\zg@b`@dH|J[|BpKuLCwOnfA_q@iCqLhQcHeOa[tWuTdnA{p@nFiLpLmE~BoIgAon@`BgKDwRtFyQD{BaFm@tG|D`IiUfG|FvJ_N`a@kR|CxQdVoAGgHzVkFvJ{V|t@pO`d@lCfCtBtFfIbk@d\\nAoFlObH`CuN`UzDxDfJdSlBl_@iE|AyE`E|AmD{ADmBvNCxE|BhK`Pt[zKnb@ePpJkLzsAcPz}@uRlw@iIzSbC|IsIrMoAzBrJbYhd@xHiAtDnDdk@jsAhKpQfGfXrOh[jf@bTfAdViMpy@s@nT`FnTbErC^zPzErOL|FqF~KlGx@tA~FpN|OJrKrQpK`CdL_@dExDvEgBvGpCj@bOtStESdCfDbE}C|RlC`D_DpKyAxKhJhOhCrJuFpKOlLjQvJjWf[aC|AxGbJjDlEoLv\\`MvAy@ZaFjBe@hFvR|KbEvIeHxHoNhPgDnCqRzJsRfDmBjP~XpBdJbRk@rSvZbSoi@fPcO|EgHtAgHpGsArAhDxJfAj@vLgD`HjEEpFzHmAzDeFzADrQjKjKm@fJzHlSpGh@b@nIhc@rc@nJdVnc@ra@|MrGfFEhD~FbDx@rH{ClDkGx@oNrAoBnZpPrBmCfSk@pNrCaJwIwJeCsEgGBoErFvHbLGbIfGdTlD|EbF?pIgFhNAdFtSaL|C{EzEkOpk@u@|BcOtB_Cns@uFxKgKhSwGrEuOn]jAl[yDl@wGuAy@pWqQ_@cL~Lkz@g@iC@zCzWjNt_@jEfUf@t`@|J~X{Lho@iMqFqq@dMaDzKwJvKic@oBo_@`jBoWl]mTFcFFpEiKzGbPiFzIxRp@|IjBr@`~@yQrByGzCqBfj@f@rSwChUhClH|FfERrZgIdAlC^gBs@tAbCxLjBWpEbGnEtn@dLn\\|J`IhQ|@hIvDtKhYxP|PpTp^jf@`RjMf@xf@na@vN`B`Y}Ez|@fTd_@tXrNjPbGhBnN_GfM_N|[yk@lE`Fji@mVdS}QfO_]fl@gj@xJqVtSez@xFw@",
       "date": "2026-09-04T22:00:00.000Z",
       "updated": "2026-09-05T17:15:02.214Z"
+    },
+    {
+      "day": 6,
+      "from": "Capodimonte",
+      "to": "Ladispoli",
+      "km": 94,
+      "dislivello": 467,
+      "name": "Capodimonte - Ladispoli",
+      "polyline": "i|ubGgdsgAnBuG|@m@nEgQ`GdDnAwDdGdCxDeQjE^vCqF~CcDrQ{IfCgCfDsI[oMzC}RrA{BlKeJfC}GJoIpGiGdc@|IlDtCxDxGzD|CpGnHjBz@fG|@fAGbFcCdUCdVqElAd@pBzD`At@`Fh@rE_BrJiAjNgFzDGhtEtm@pAr@|@xAf[tbArH`Ov_@hf@pX~SxD`Bha@rIx@zBhBdYzAfDxdA`Uzq@xHdOdP`HlA~FtBzD\\jM`Hp@nBEpJjE~a@hCvMhB~R?jF`@bBf`@zf@zVjUbHrRfKxJzFvGvIlOpI|K`JhFlb@~N|gBxuAdAlAjDxHrBjBdwAne@zD`C`D|F~Jd_@zHln@lCnJbe@lq@nQnMhKnNvD~ClEtAnDMzBcAhMoJhEq@`IJlGmDxDu@`N`@hOoBnf@c@bPuAne@lDd`@eAnKnC~f@iJjNv@zEzB`KnLlArCjClM|@xApR`GvU~EpDdBvBxCbPv]rR`Ld_@`IdItBnBlA|BpEtEbY|Mt\\tDdMrF|GpKnWvRzRrD{EtCqClCv@LgE`FuE`AcErEeJnAgE|IiGxCaFpBk@h@}AnFoFpB_DnDyJtAy@pJqAl^xJdc@fJfAv@rHo@dGz@tW~I`PxJrMtFtSnR|U~MbUdDp]aF`ET`CrAnBvC~HtUTjB^L`CmBhxDgmBnBqBnZ{e@xCyCbJ{DtCZ`MdLxWfYrJzLfAR`Ag@fBuDd@KBi@j@g@rbCy{AvDyDnEg@~NZ~B`AvFbF|R~EvE]vLiEpKzAvBQx\\m`@xMuGrCeChBwChEeMpImLvCaF`BoE~@cAtAk@|IFrEi@jJsJpJgDXiCjCkHh@yIrC_E`@kCpCeBlDcHX|@[yAzEaQlK{PtJ}HtAk@pRgBtDxAjHsHbLyEfb@aJrW_JlEyBpQqMlNu@zMcI`AGTy@hDmC`IcCdL}LxUmCtO[`KiBlCeCzL_R|FwLzLwCpDgB`HwFtGwMhByBxC_BvH{A|AwAbH}MvDwMlAcK~@e[yEwg@mBsZaCmPwA_WuCmWeBqLoE_NkGuk@y@eOk@iAmFeDo@mBAsD|DeU}DgWDwObBsP~CkJHyHs@{HuEcF_AyCqAuIk@_MpDqa@jCoSfDuHzH}U`CwIrCoP`Vep@zgAgsDrG}WdN{a@z[qgAfNma@r]iiAtDcQbBqVz@gEtIaQnXmq@dxAcyEj@]hAZ|@xAl@C`B~ALcBzA_F`@CI}@nF_QzAi@lAj@hWaKjHlIhFtCrEvDjVrVzb@n\\tA_CtMca@~BfA",
+      "date": "2026-09-05T22:00:00.000Z",
+      "updated": "2026-09-06T14:56:18.490Z"
     }
   ],
   "next_stages": [
