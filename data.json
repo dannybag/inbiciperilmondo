@@ -1,12 +1,18 @@
 {
   "fundraising": {
-    "raised": 3110,
+    "raised": 3115,
     "goal": 3500,
     "donors": [
       {
+        "name": "Anonymous",
+        "amount": 5,
+        "time": "about 3 hours",
+        "message": ""
+      },
+      {
         "name": "Federica G",
         "amount": 25,
-        "time": "about 3 hours",
+        "time": "about 7 hours",
         "message": "More bycicle for a better world !"
       },
       {
@@ -24,7 +30,7 @@
       {
         "name": "Emiliana V",
         "amount": 30,
-        "time": "3 days",
+        "time": "4 days",
         "message": ""
       },
       {
@@ -42,13 +48,13 @@
       {
         "name": "Anonymous",
         "amount": 147,
-        "time": "4 days",
+        "time": "5 days",
         "message": "Proud to participate to this enabling project!"
       },
       {
         "name": "franco v",
         "amount": 25,
-        "time": "4 days",
+        "time": "5 days",
         "message": ""
       },
       {
@@ -66,7 +72,7 @@
       {
         "name": "Mariagrazia L",
         "amount": 25,
-        "time": "5 days",
+        "time": "6 days",
         "message": "Ottima idea!"
       },
       {
@@ -162,13 +168,13 @@
       {
         "name": "Gomarasca B",
         "amount": 150,
-        "time": "10 days",
+        "time": "11 days",
         "message": ""
       },
       {
         "name": "Romina M",
         "amount": 25,
-        "time": "10 days",
+        "time": "11 days",
         "message": "Complimenti! Siamo con te"
       },
       {
@@ -180,7 +186,7 @@
       {
         "name": "Tiziano B",
         "amount": 50,
-        "time": "13 days",
+        "time": "14 days",
         "message": ""
       },
       {
@@ -198,7 +204,7 @@
       {
         "name": "Giorgia G",
         "amount": 147,
-        "time": "16 days",
+        "time": "17 days",
         "message": "Bravo Daniele!"
       },
       {
@@ -222,7 +228,7 @@
       {
         "name": "Anonymous",
         "amount": 25,
-        "time": "19 days",
+        "time": "20 days",
         "message": ""
       },
       {
@@ -252,7 +258,7 @@
       {
         "name": "Alberto C",
         "amount": 10,
-        "time": "21 days",
+        "time": "22 days",
         "message": "Grande Dany, ottima iniziativa... buona pedalata!!!"
       },
       {
