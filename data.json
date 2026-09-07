@@ -1,8 +1,14 @@
 {
   "fundraising": {
-    "raised": 3085,
+    "raised": 3110,
     "goal": 3500,
     "donors": [
+      {
+        "name": "Federica G",
+        "amount": 25,
+        "time": "about 2 hours",
+        "message": "More bycicle for a better world !"
+      },
       {
         "name": "Patrizia D",
         "amount": 25,
