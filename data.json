@@ -330,18 +330,18 @@
     ]
   },
   "tappa": {
-    "day": 6,
-    "from": "Capodimonte",
-    "to": "Ladispoli",
-    "km": 94,
-    "dislivello": 467,
-    "name": "Capodimonte - Ladispoli",
-    "polyline": "i|ubGgdsgAnBuG|@m@nEgQ`GdDnAwDdGdCxDeQjE^vCqF~CcDrQ{IfCgCfDsI[oMzC}RrA{BlKeJfC}GJoIpGiGdc@|IlDtCxDxGzD|CpGnHjBz@fG|@fAGbFcCdUCdVqElAd@pBzD`At@`Fh@rE_BrJiAjNgFzDGhtEtm@pAr@|@xAf[tbArH`Ov_@hf@pX~SxD`Bha@rIx@zBhBdYzAfDxdA`Uzq@xHdOdP`HlA~FtBzD\\jM`Hp@nBEpJjE~a@hCvMhB~R?jF`@bBf`@zf@zVjUbHrRfKxJzFvGvIlOpI|K`JhFlb@~N|gBxuAdAlAjDxHrBjBdwAne@zD`C`D|F~Jd_@zHln@lCnJbe@lq@nQnMhKnNvD~ClEtAnDMzBcAhMoJhEq@`IJlGmDxDu@`N`@hOoBnf@c@bPuAne@lDd`@eAnKnC~f@iJjNv@zEzB`KnLlArCjClM|@xApR`GvU~EpDdBvBxCbPv]rR`Ld_@`IdItBnBlA|BpEtEbY|Mt\\tDdMrF|GpKnWvRzRrD{EtCqClCv@LgE`FuE`AcErEeJnAgE|IiGxCaFpBk@h@}AnFoFpB_DnDyJtAy@pJqAl^xJdc@fJfAv@rHo@dGz@tW~I`PxJrMtFtSnR|U~MbUdDp]aF`ET`CrAnBvC~HtUTjB^L`CmBhxDgmBnBqBnZ{e@xCyCbJ{DtCZ`MdLxWfYrJzLfAR`Ag@fBuDd@KBi@j@g@rbCy{AvDyDnEg@~NZ~B`AvFbF|R~EvE]vLiEpKzAvBQx\\m`@xMuGrCeChBwChEeMpImLvCaF`BoE~@cAtAk@|IFrEi@jJsJpJgDXiCjCkHh@yIrC_E`@kCpCeBlDcHX|@[yAzEaQlK{PtJ}HtAk@pRgBtDxAjHsHbLyEfb@aJrW_JlEyBpQqMlNu@zMcI`AGTy@hDmC`IcCdL}LxUmCtO[`KiBlCeCzL_R|FwLzLwCpDgB`HwFtGwMhByBxC_BvH{A|AwAbH}MvDwMlAcK~@e[yEwg@mBsZaCmPwA_WuCmWeBqLoE_NkGuk@y@eOk@iAmFeDo@mBAsD|DeU}DgWDwObBsP~CkJHyHs@{HuEcF_AyCqAuIk@_MpDqa@jCoSfDuHzH}U`CwIrCoP`Vep@zgAgsDrG}WdN{a@z[qgAfNma@r]iiAtDcQbBqVz@gEtIaQnXmq@dxAcyEj@]hAZ|@xAl@C`B~ALcBzA_F`@CI}@nF_QzAi@lAj@hWaKjHlIhFtCrEvDjVrVzb@n\\tA_CtMca@~BfA",
-    "date": "2026-09-05T22:00:00.000Z",
-    "updated": "2026-09-06T14:56:21.620Z",
-    "totKm": 671,
-    "totDis": 5072,
-    "tappe": 6
+    "day": 7,
+    "from": "Ladispoli",
+    "to": "Latina",
+    "km": 122,
+    "dislivello": 681,
+    "name": "Ladispoli - Latina",
+    "polyline": "q~a_G_sqhAhSkn@n[u~@pAqBb[}fAlD{W`Asg@lBsMdDqGxJiCnCuD|Tgq@pLso@NeFeGsfAIsL`@y[pByb@`Hgd@sIqh@Q}FrNcaAdLio@|AkFlQcWjN}_@tS}f@vX{e@vCfClAO|FkLfOcU~Zq_@j|De|DnE_EFdL^RzEiQxS}SxIiNzH{IfQgQvSeMbDmJfg@eg@~DiCzWkYhMkJf_@cc@xK}JdEsH|\\k^`DkGbTyW~CcFlCeLz@uLMqIoDm_@SoO^wIdFad@a@ys@~@wKpEeNhKqRtYal@hSgYnNeLaDiJwHwb@sIaSHuKhAuLnGqRdDiFReBuAwMoGaTkDmRuJma@mCyVoAwXmAcHKwXnBeQ[cJvFqPdAiQo@mHu_@q{A_HyNkL}QeHeCg@oFmIwMsD_QSgIl@mc@{AwJBeDdE_AfBkWIiTbBkE@sAmFwMeT}PiHgMgQaKrB_HaGsFkE{JL{Br@CfS~RhG}NyA{@`QbPbBiD{@}BbAbBrB_CzE~D|T`I~JlLlBPzBeAhw@_s@l@kB?sBwJel@m@ap@cAaB~AqIfEqB|B}CjKgIrLwD`I{FtDe@hCZpH`FxZtIfGzE|@AvBsNrHoXhBqu@_E{U_LiKh@_Q`By@z_@~NnL~@|DmDdTmZ`GcYh|@qnBjQiV|AkP_CcYtHuWlSac@zHiYlCqG~P}BzMoCpFgDbFu@hD}GzRlDtM{A~VNpaAqJ`TRp]aGhV}OpTeTdNeJbYcWxCs@lIh@tKpArBjAE_Br@_AlAKp@dAWDt@cB`_@uP|SiU`WuUzGwBzCeCzBeE~CiMrGaCvMmJ|Rm^dEoQxDwDGaKzEcGB_HdAaJlFeOnK{O|HeZ`EqDjK}WlBwIrG}KhCwAr@qE~K}VtKsISiCb@yAzFeEhIeLtDmP|CoK`FwOp@{O]_Cl@kDbBqCxM_Lf@qBnIuDbPuB|QiAjLPzLiDfJmItEy@xHeJdYyb@vTqErA}AdCyHjOcCvSiRrq@w^pSyEbx@bCvg@}Npw@al@lGyMrP}f@vE_J`FeGfGeN_@Gq@tCpAgC|x@ogCbRmRlqAw|AbKauAAkPkGgx@aGq\\oDyd@pBQnVfFd\\vc@fDgErBeA`bAwT`aDsr@xAeMdLnIdh@kzAbx@ysB`A\\\\tEr@b@r}Ebn@|AtAoBih@mAmM`}@cvCzLk]rO{uApz@kzCOq@aGiBk]wPaAq@@k@sEuBUgAfSa}@hTe{@`_AktFjBeDN{BbBmEfx@_zAdADnXfc@",
+    "date": "2026-09-06T22:00:00.000Z",
+    "updated": "2026-09-07T16:06:38.525Z",
+    "totKm": 793,
+    "totDis": 5753,
+    "tappe": 7
   },
   "tappe": [
     {
@@ -409,6 +409,17 @@
       "polyline": "i|ubGgdsgAnBuG|@m@nEgQ`GdDnAwDdGdCxDeQjE^vCqF~CcDrQ{IfCgCfDsI[oMzC}RrA{BlKeJfC}GJoIpGiGdc@|IlDtCxDxGzD|CpGnHjBz@fG|@fAGbFcCdUCdVqElAd@pBzD`At@`Fh@rE_BrJiAjNgFzDGhtEtm@pAr@|@xAf[tbArH`Ov_@hf@pX~SxD`Bha@rIx@zBhBdYzAfDxdA`Uzq@xHdOdP`HlA~FtBzD\\jM`Hp@nBEpJjE~a@hCvMhB~R?jF`@bBf`@zf@zVjUbHrRfKxJzFvGvIlOpI|K`JhFlb@~N|gBxuAdAlAjDxHrBjBdwAne@zD`C`D|F~Jd_@zHln@lCnJbe@lq@nQnMhKnNvD~ClEtAnDMzBcAhMoJhEq@`IJlGmDxDu@`N`@hOoBnf@c@bPuAne@lDd`@eAnKnC~f@iJjNv@zEzB`KnLlArCjClM|@xApR`GvU~EpDdBvBxCbPv]rR`Ld_@`IdItBnBlA|BpEtEbY|Mt\\tDdMrF|GpKnWvRzRrD{EtCqClCv@LgE`FuE`AcErEeJnAgE|IiGxCaFpBk@h@}AnFoFpB_DnDyJtAy@pJqAl^xJdc@fJfAv@rHo@dGz@tW~I`PxJrMtFtSnR|U~MbUdDp]aF`ET`CrAnBvC~HtUTjB^L`CmBhxDgmBnBqBnZ{e@xCyCbJ{DtCZ`MdLxWfYrJzLfAR`Ag@fBuDd@KBi@j@g@rbCy{AvDyDnEg@~NZ~B`AvFbF|R~EvE]vLiEpKzAvBQx\\m`@xMuGrCeChBwChEeMpImLvCaF`BoE~@cAtAk@|IFrEi@jJsJpJgDXiCjCkHh@yIrC_E`@kCpCeBlDcHX|@[yAzEaQlK{PtJ}HtAk@pRgBtDxAjHsHbLyEfb@aJrW_JlEyBpQqMlNu@zMcI`AGTy@hDmC`IcCdL}LxUmCtO[`KiBlCeCzL_R|FwLzLwCpDgB`HwFtGwMhByBxC_BvH{A|AwAbH}MvDwMlAcK~@e[yEwg@mBsZaCmPwA_WuCmWeBqLoE_NkGuk@y@eOk@iAmFeDo@mBAsD|DeU}DgWDwObBsP~CkJHyHs@{HuEcF_AyCqAuIk@_MpDqa@jCoSfDuHzH}U`CwIrCoP`Vep@zgAgsDrG}WdN{a@z[qgAfNma@r]iiAtDcQbBqVz@gEtIaQnXmq@dxAcyEj@]hAZ|@xAl@C`B~ALcBzA_F`@CI}@nF_QzAi@lAj@hWaKjHlIhFtCrEvDjVrVzb@n\\tA_CtMca@~BfA",
       "date": "2026-09-05T22:00:00.000Z",
       "updated": "2026-09-06T14:56:21.620Z"
+    },
+    {
+      "day": 7,
+      "from": "Ladispoli",
+      "to": "Latina",
+      "km": 122,
+      "dislivello": 681,
+      "name": "Ladispoli - Latina",
+      "polyline": "q~a_G_sqhAhSkn@n[u~@pAqBb[}fAlD{W`Asg@lBsMdDqGxJiCnCuD|Tgq@pLso@NeFeGsfAIsL`@y[pByb@`Hgd@sIqh@Q}FrNcaAdLio@|AkFlQcWjN}_@tS}f@vX{e@vCfClAO|FkLfOcU~Zq_@j|De|DnE_EFdL^RzEiQxS}SxIiNzH{IfQgQvSeMbDmJfg@eg@~DiCzWkYhMkJf_@cc@xK}JdEsH|\\k^`DkGbTyW~CcFlCeLz@uLMqIoDm_@SoO^wIdFad@a@ys@~@wKpEeNhKqRtYal@hSgYnNeLaDiJwHwb@sIaSHuKhAuLnGqRdDiFReBuAwMoGaTkDmRuJma@mCyVoAwXmAcHKwXnBeQ[cJvFqPdAiQo@mHu_@q{A_HyNkL}QeHeCg@oFmIwMsD_QSgIl@mc@{AwJBeDdE_AfBkWIiTbBkE@sAmFwMeT}PiHgMgQaKrB_HaGsFkE{JL{Br@CfS~RhG}NyA{@`QbPbBiD{@}BbAbBrB_CzE~D|T`I~JlLlBPzBeAhw@_s@l@kB?sBwJel@m@ap@cAaB~AqIfEqB|B}CjKgIrLwD`I{FtDe@hCZpH`FxZtIfGzE|@AvBsNrHoXhBqu@_E{U_LiKh@_Q`By@z_@~NnL~@|DmDdTmZ`GcYh|@qnBjQiV|AkP_CcYtHuWlSac@zHiYlCqG~P}BzMoCpFgDbFu@hD}GzRlDtM{A~VNpaAqJ`TRp]aGhV}OpTeTdNeJbYcWxCs@lIh@tKpArBjAE_Br@_AlAKp@dAWDt@cB`_@uP|SiU`WuUzGwBzCeCzBeE~CiMrGaCvMmJ|Rm^dEoQxDwDGaKzEcGB_HdAaJlFeOnK{O|HeZ`EqDjK}WlBwIrG}KhCwAr@qE~K}VtKsISiCb@yAzFeEhIeLtDmP|CoK`FwOp@{O]_Cl@kDbBqCxM_Lf@qBnIuDbPuB|QiAjLPzLiDfJmItEy@xHeJdYyb@vTqErA}AdCyHjOcCvSiRrq@w^pSyEbx@bCvg@}Npw@al@lGyMrP}f@vE_J`FeGfGeN_@Gq@tCpAgC|x@ogCbRmRlqAw|AbKauAAkPkGgx@aGq\\oDyd@pBQnVfFd\\vc@fDgErBeA`bAwT`aDsr@xAeMdLnIdh@kzAbx@ysB`A\\\\tEr@b@r}Ebn@|AtAoBih@mAmM`}@cvCzLk]rO{uApz@kzCOq@aGiBk]wPaAq@@k@sEuBUgAfSa}@hTe{@`_AktFjBeDN{BbBmEfx@_zAdADnXfc@",
+      "date": "2026-09-06T22:00:00.000Z",
+      "updated": "2026-09-07T16:06:38.525Z"
     }
   ],
   "next_stages": [
