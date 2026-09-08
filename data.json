@@ -1,18 +1,24 @@
 {
   "fundraising": {
-    "raised": 3115,
+    "raised": 3125,
     "goal": 3500,
     "donors": [
       {
+        "name": "Laura F",
+        "amount": 10,
+        "time": "about 1 hour",
+        "message": ""
+      },
+      {
         "name": "Anonymous",
         "amount": 5,
-        "time": "about 9 hours",
+        "time": "about 14 hours",
         "message": ""
       },
       {
         "name": "Federica G",
         "amount": 25,
-        "time": "about 13 hours",
+        "time": "about 18 hours",
         "message": "More bycicle for a better world !"
       },
       {
@@ -66,7 +72,7 @@
       {
         "name": "Laura B",
         "amount": 1,
-        "time": "5 days",
+        "time": "6 days",
         "message": "Un 1€ per volta!"
       },
       {
@@ -108,7 +114,7 @@
       {
         "name": "Antonio C",
         "amount": 25,
-        "time": "7 days",
+        "time": "8 days",
         "message": ""
       },
       {
@@ -126,13 +132,13 @@
       {
         "name": "Alessandro T",
         "amount": 25,
-        "time": "10 days",
+        "time": "11 days",
         "message": "Go Dannybag, go! :-)"
       },
       {
         "name": "Anonymous",
         "amount": 15,
-        "time": "10 days",
+        "time": "11 days",
         "message": ""
       },
       {
@@ -210,7 +216,7 @@
       {
         "name": "Raian E",
         "amount": 10,
-        "time": "17 days",
+        "time": "18 days",
         "message": "🍀🍀🫡"
       },
       {
@@ -246,13 +252,13 @@
       {
         "name": "Giorgio F",
         "amount": 50,
-        "time": "21 days",
+        "time": "22 days",
         "message": "Ottima iniziativa"
       },
       {
         "name": "Anonymous",
         "amount": 50,
-        "time": "21 days",
+        "time": "22 days",
         "message": ""
       },
       {
@@ -264,13 +270,13 @@
       {
         "name": "Umberto C",
         "amount": 147,
-        "time": "23 days",
+        "time": "24 days",
         "message": "Bravo Daniele pedalo con te. E spero che saranno tanti i ragazzi che potranno farlo grazie a te"
       },
       {
         "name": "Anonymous",
         "amount": 9,
-        "time": "26 days",
+        "time": "27 days",
         "message": ""
       },
       {
