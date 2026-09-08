@@ -49,7 +49,7 @@
         "name": "Chiara B",
         "amount": 147,
         "time": "5 days",
-        "message": "Dai, dai, dai! Ce l’hai quasi fatta 🍀"
+        "message": "Dai, dai, dai! Ce lâhai quasi fatta ð"
       },
       {
         "name": "Silvia e Marco G",
@@ -73,13 +73,13 @@
         "name": "Laura B",
         "amount": 1,
         "time": "6 days",
-        "message": "Prove tecniche di spiegazione! 🤣"
+        "message": "Prove tecniche di spiegazione! ð¤£"
       },
       {
         "name": "Laura B",
         "amount": 1,
         "time": "6 days",
-        "message": "Un 1€ per volta!"
+        "message": "Un 1â¬ per volta!"
       },
       {
         "name": "Mariagrazia L",
@@ -154,10 +154,10 @@
         "message": ""
       },
       {
-        "name": "Nicolò Z",
+        "name": "NicolÃ² Z",
         "amount": 25,
         "time": "11 days",
-        "message": "Alé alè!"
+        "message": "AlÃ© alÃ¨!"
       },
       {
         "name": "Anonymous",
@@ -223,7 +223,7 @@
         "name": "Raian E",
         "amount": 10,
         "time": "18 days",
-        "message": "🍀🍀🫡"
+        "message": "ððð«¡"
       },
       {
         "name": "Alessandro N",
@@ -337,7 +337,7 @@
         "name": "Patrizia F",
         "amount": 147,
         "time": "about 1 month",
-        "message": "Grazie a Daniele … la fatica fisica sarà tutta sua 👍🍀👍"
+        "message": "Grazie a Daniele â¦ la fatica fisica sarÃ  tutta sua ððð"
       },
       {
         "name": "Anonymous",
@@ -457,5 +457,6 @@
       "updated": "2026-09-08T15:46:05.471Z"
     }
   ],
-  "next_stages": []
+  "next_stages": [],
+  "featured_video": ""
 }
