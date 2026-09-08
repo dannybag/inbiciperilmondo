@@ -1,12 +1,18 @@
 {
   "fundraising": {
-    "raised": 3125,
+    "raised": 3272,
     "goal": 3500,
     "donors": [
       {
+        "name": "Anonymous",
+        "amount": 147,
+        "time": "31 minutes",
+        "message": ""
+      },
+      {
         "name": "Laura F",
         "amount": 10,
-        "time": "about 13 hours",
+        "time": "about 14 hours",
         "message": ""
       },
       {
@@ -192,7 +198,7 @@
       {
         "name": "Tiziano B",
         "amount": 50,
-        "time": "14 days",
+        "time": "15 days",
         "message": ""
       },
       {
@@ -210,7 +216,7 @@
       {
         "name": "Giorgia G",
         "amount": 147,
-        "time": "17 days",
+        "time": "18 days",
         "message": "Bravo Daniele!"
       },
       {
