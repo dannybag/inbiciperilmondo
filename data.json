@@ -360,18 +360,18 @@
     ]
   },
   "tappa": {
-    "day": 8,
-    "from": "Latina",
-    "to": "Mondragone",
-    "km": 118,
-    "dislivello": 523,
-    "name": "Latina - Mondragone",
-    "polyline": "szw{Fy_bnAtCtErNja@zn@qb@rS_Xz{@lsAnKkUp_@q`@je@mo@~l@t{@{AwBdg@vq@vx@clA|e@sm@x^ca@ztB_qBn|@cp@{ADsLac@j@idAhM{@tl@c[vEsEN{@aEmHdBuGL{KdChAxA~CnJP[rDgClEIlBl@j@jMoBnJoL~AbBgAuB`@}@{@^gDkGbIsLv@cHdFmaBf@oU]{Ap@_CpGizBwFqfC}Iax@~@_B`_@}RbLcKnGoKdWqq@nCgMrAgOs@ez@nBkXjb@ayBhPaO{Nkb@}ReqAW{VcBuQ~Ao]f@hAu@Q|A{ZtCeS_OiV_FbA}CqCyEgq@FyAtGaC?iUfJI}Ag~@Kkv@t@shA~Beq@_HkFoDy@pAwAp@_KkI}IwGw^oHmIkY{EoGaHoGoT}Bi^{GyP}@sHzEo_A|CeqAzIsdA~Awi@~D}b@KmJgE_XYwI`@{N~H}aA`s@iyF~Nu`AnBwe@lEaTZ^JoBxD_JzTa]bk@cc@pWic@fb@uLjCyDjL{ZmC}A}EDqHcDfIVzC}Fz@n@PvBNmBmHcHaAoCvD_HxAoSlVyYpWk]fByEpHgKzDmOtB_EvNuMnNa@jEqHd@yOcAuJF}u@tBt@l@cAr@}HlIoSFuW|ByOpCkHfW_^~`@ay@mIg`@iKuVkLwe@r@_R~F}Z~AiPnF{NXoM{CyR}HsLRcXaBmR_M_OcHuP[kEdF{IxIc@hG{BDsBoDuFm@iPvH{P|KeMiB^NkIqGmCmQeDsMsHkHgJ{I_GiGgOyDsCoNyQgTwRmCaJ{BkSkIw]iAw^sEuNcGk`@_CoIgHuPkG_JeGgUmJwV^sC_CiH}Bkn@o@{nByNyhErIsPfz@uzFv@Mm@QrA{J|r@uyEnEy\\pCcl@k@]nFmIz@[bArFnB`Al_@jC|o@l[lAYnQmAzEiLnBgS|LoThy@ymAjK_OlQkMxUgf@th@up@bCn@hAgAtBkGlMaP~@SrC`C~DmGjFcDfBmG`JsJpF{MvR}XjAqF~ImLvJmFvBgFhFaF|LiA~AqCvBeKrRuQpNuB\\wCtJgBG_BzCGtLoKiAsEnJoIlAqIaF}IhAsI|@_AUyBhC{RiA}Av@eGdCAjX`Mn[fCh|@uWbuBebB`KwMjJgB`G}Ip@j@rAgBjKiPfAmEfDnA|TmIx@~D]sAtl@uj@xEwJA|@cL|Ny^`^u^jWc[v[iEjDyCkGqAl@}IvJuuAhiAG|@",
-    "date": "2026-09-07T22:00:00.000Z",
-    "updated": "2026-09-08T15:46:05.471Z",
-    "totKm": 911,
-    "totDis": 6276,
-    "tappe": 8
+    "day": 9,
+    "from": "Mondragone",
+    "to": "Salerno",
+    "km": 112,
+    "dislivello": 612,
+    "name": "Mondragone - Salerno",
+    "polyline": "kiazFe{qsAtwAijAbh@{x@vUc[jeAgrAgCwBsHkNyC}l@_SaxCac@oeAgK}Wd@eAtR_J?oj@lBsEfJoItAiCnPcbA}FaO}Jap@xbBmSdSsPnb@eq@rpAo{@nGyDbDir@}a@aaAJaGqCeDaD{LLwCfBiEj`KavGvQeOmAPGw~@_A{YvYcaEf@eY?}Pf_@ebB|AeF`w@qlD~@oDfAGpAiNb^s~A|YglAPgBwB}VRgJvBeChYkFX}Ox\\kH`FiOhDsTnk@qfChCcPk@zG|HKn\\aPm@mBpE_ARoIqAiHx@oBHmDxEiK`CeLzLyWuAuKxDoBa@sDrByDx^iThAqD|OkK`a@gSyAqGf@eEjr@wtA`\\caAJ{Ir@o@a@mMfD_C\\p@Ih@u@}BHh@yE{VhEgMBoO`GmFzM[Q{H|@gEc@gCRbCx@YvC}GiDjHgAe@lANm@U`CuCeBhExAaBrHqPB{FdESvHmLrQyS|C_H~B{M~FiQhDeDjEiNk@aKsGmJuHqYqJeUVyL|@cG_DU_CqB~A_YvAo@\\qDWcC_AgAhMyjB`AFnCeStCaGhCaVjBkFzLyMjByIfEuHtEkSfHgCi@_HcBAQfEd@tBvBc@GeFmCaDYaHlBc[MyHzOkP|^wf@xS}TnMoKbCqErTcZjEcC|@qGvYsFdJsEbGsGlG_Cz@aBbCx@jJki@hFcOpFoV~MawAvGkXnE{JrKaL~GsC~PaM|JIfOaDq@Zx@`BQ~Bt@lDlDnFbAq@wDoK|C_NLsFzIiWtCaD~PwJxMmRjK}Kn[}VpJ}DdK_NrKiTlFgGnHaFV}GjTkLdIkVlLeQjJyVfWad@xBuKxCgPM~BlX`HjBoE`DrAnIsVgAkAlHcOnGiWFkElGwSvTfFtEmP}CyCj@JzFmRzEnBrN}e@fEbCbJwYdaAgbBdPcC~IqIn@_EQs|@lOe@oAuM`FsAEyBbDwBVkB}D{ABeAjFyFrKcUrKiv@|DsH~H_FhE_G~G{V`AwLnDqBhDoLfJgMjC_H`DmCdHwAdFuIzJ_HbDcEdES|B`CjG`@pAKdAcBnB_b@rEk@f@ih@n@gB~FX{Dc@bFk`@_A_JhBgE~LkJnHJxBy}Ar@aW`BiN|Wow@jIy[|xA_sAz]c[hMqKzv@sRtVcJ|PmJ~A\\vA~BfNoCj@yABsHxFaJbEiObEcGjH{DhD}GpJwC|LrB|QwDzQ{AdRqT`FqK~HgDnCyK{@kMoG{GyHeGaHiCeEeI{AyHuBmCm@qDh@yBz@z@vJjYjIhFbD~DnCUq@sB}OoI{JwXeCgO[}WzAo\\oAaAw@ySbD{P",
+    "date": "2026-09-08T22:00:00.000Z",
+    "updated": "2026-09-09T17:17:38.677Z",
+    "totKm": 1023,
+    "totDis": 6888,
+    "tappe": 9
   },
   "tappe": [
     {
@@ -461,6 +461,17 @@
       "polyline": "szw{Fy_bnAtCtErNja@zn@qb@rS_Xz{@lsAnKkUp_@q`@je@mo@~l@t{@{AwBdg@vq@vx@clA|e@sm@x^ca@ztB_qBn|@cp@{ADsLac@j@idAhM{@tl@c[vEsEN{@aEmHdBuGL{KdChAxA~CnJP[rDgClEIlBl@j@jMoBnJoL~AbBgAuB`@}@{@^gDkGbIsLv@cHdFmaBf@oU]{Ap@_CpGizBwFqfC}Iax@~@_B`_@}RbLcKnGoKdWqq@nCgMrAgOs@ez@nBkXjb@ayBhPaO{Nkb@}ReqAW{VcBuQ~Ao]f@hAu@Q|A{ZtCeS_OiV_FbA}CqCyEgq@FyAtGaC?iUfJI}Ag~@Kkv@t@shA~Beq@_HkFoDy@pAwAp@_KkI}IwGw^oHmIkY{EoGaHoGoT}Bi^{GyP}@sHzEo_A|CeqAzIsdA~Awi@~D}b@KmJgE_XYwI`@{N~H}aA`s@iyF~Nu`AnBwe@lEaTZ^JoBxD_JzTa]bk@cc@pWic@fb@uLjCyDjL{ZmC}A}EDqHcDfIVzC}Fz@n@PvBNmBmHcHaAoCvD_HxAoSlVyYpWk]fByEpHgKzDmOtB_EvNuMnNa@jEqHd@yOcAuJF}u@tBt@l@cAr@}HlIoSFuW|ByOpCkHfW_^~`@ay@mIg`@iKuVkLwe@r@_R~F}Z~AiPnF{NXoM{CyR}HsLRcXaBmR_M_OcHuP[kEdF{IxIc@hG{BDsBoDuFm@iPvH{P|KeMiB^NkIqGmCmQeDsMsHkHgJ{I_GiGgOyDsCoNyQgTwRmCaJ{BkSkIw]iAw^sEuNcGk`@_CoIgHuPkG_JeGgUmJwV^sC_CiH}Bkn@o@{nByNyhErIsPfz@uzFv@Mm@QrA{J|r@uyEnEy\\pCcl@k@]nFmIz@[bArFnB`Al_@jC|o@l[lAYnQmAzEiLnBgS|LoThy@ymAjK_OlQkMxUgf@th@up@bCn@hAgAtBkGlMaP~@SrC`C~DmGjFcDfBmG`JsJpF{MvR}XjAqF~ImLvJmFvBgFhFaF|LiA~AqCvBeKrRuQpNuB\\wCtJgBG_BzCGtLoKiAsEnJoIlAqIaF}IhAsI|@_AUyBhC{RiA}Av@eGdCAjX`Mn[fCh|@uWbuBebB`KwMjJgB`G}Ip@j@rAgBjKiPfAmEfDnA|TmIx@~D]sAtl@uj@xEwJA|@cL|Ny^`^u^jWc[v[iEjDyCkGqAl@}IvJuuAhiAG|@",
       "date": "2026-09-07T22:00:00.000Z",
       "updated": "2026-09-08T15:46:05.471Z"
+    },
+    {
+      "day": 9,
+      "from": "Mondragone",
+      "to": "Salerno",
+      "km": 112,
+      "dislivello": 612,
+      "name": "Mondragone - Salerno",
+      "polyline": "kiazFe{qsAtwAijAbh@{x@vUc[jeAgrAgCwBsHkNyC}l@_SaxCac@oeAgK}Wd@eAtR_J?oj@lBsEfJoItAiCnPcbA}FaO}Jap@xbBmSdSsPnb@eq@rpAo{@nGyDbDir@}a@aaAJaGqCeDaD{LLwCfBiEj`KavGvQeOmAPGw~@_A{YvYcaEf@eY?}Pf_@ebB|AeF`w@qlD~@oDfAGpAiNb^s~A|YglAPgBwB}VRgJvBeChYkFX}Ox\\kH`FiOhDsTnk@qfChCcPk@zG|HKn\\aPm@mBpE_ARoIqAiHx@oBHmDxEiK`CeLzLyWuAuKxDoBa@sDrByDx^iThAqD|OkK`a@gSyAqGf@eEjr@wtA`\\caAJ{Ir@o@a@mMfD_C\\p@Ih@u@}BHh@yE{VhEgMBoO`GmFzM[Q{H|@gEc@gCRbCx@YvC}GiDjHgAe@lANm@U`CuCeBhExAaBrHqPB{FdESvHmLrQyS|C_H~B{M~FiQhDeDjEiNk@aKsGmJuHqYqJeUVyL|@cG_DU_CqB~A_YvAo@\\qDWcC_AgAhMyjB`AFnCeStCaGhCaVjBkFzLyMjByIfEuHtEkSfHgCi@_HcBAQfEd@tBvBc@GeFmCaDYaHlBc[MyHzOkP|^wf@xS}TnMoKbCqErTcZjEcC|@qGvYsFdJsEbGsGlG_Cz@aBbCx@jJki@hFcOpFoV~MawAvGkXnE{JrKaL~GsC~PaM|JIfOaDq@Zx@`BQ~Bt@lDlDnFbAq@wDoK|C_NLsFzIiWtCaD~PwJxMmRjK}Kn[}VpJ}DdK_NrKiTlFgGnHaFV}GjTkLdIkVlLeQjJyVfWad@xBuKxCgPM~BlX`HjBoE`DrAnIsVgAkAlHcOnGiWFkElGwSvTfFtEmP}CyCj@JzFmRzEnBrN}e@fEbCbJwYdaAgbBdPcC~IqIn@_EQs|@lOe@oAuM`FsAEyBbDwBVkB}D{ABeAjFyFrKcUrKiv@|DsH~H_FhE_G~G{V`AwLnDqBhDoLfJgMjC_H`DmCdHwAdFuIzJ_HbDcEdES|B`CjG`@pAKdAcBnB_b@rEk@f@ih@n@gB~FX{Dc@bFk`@_A_JhBgE~LkJnHJxBy}Ar@aW`BiN|Wow@jIy[|xA_sAz]c[hMqKzv@sRtVcJ|PmJ~A\\vA~BfNoCj@yABsHxFaJbEiObEcGjH{DhD}GpJwC|LrB|QwDzQ{AdRqT`FqK~HgDnCyK{@kMoG{GyHeGaHiCeEeI{AyHuBmCm@qDh@yBz@z@vJjYjIhFbD~DnCUq@sB}OoI{JwXeCgO[}WzAo\\oAaAw@ySbD{P",
+      "date": "2026-09-08T22:00:00.000Z",
+      "updated": "2026-09-09T17:17:38.677Z"
     }
   ],
   "next_stages": [],
