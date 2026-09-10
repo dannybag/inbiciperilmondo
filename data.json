@@ -378,18 +378,18 @@
     ]
   },
   "tappa": {
-    "day": 9,
-    "from": "Mondragone",
-    "to": "Salerno",
-    "km": 112,
-    "dislivello": 612,
-    "name": "Mondragone - Salerno",
-    "polyline": "kiazFe{qsAtwAijAbh@{x@vUc[jeAgrAgCwBsHkNyC}l@_SaxCac@oeAgK}Wd@eAtR_J?oj@lBsEfJoItAiCnPcbA}FaO}Jap@xbBmSdSsPnb@eq@rpAo{@nGyDbDir@}a@aaAJaGqCeDaD{LLwCfBiEj`KavGvQeOmAPGw~@_A{YvYcaEf@eY?}Pf_@ebB|AeF`w@qlD~@oDfAGpAiNb^s~A|YglAPgBwB}VRgJvBeChYkFX}Ox\\kH`FiOhDsTnk@qfChCcPk@zG|HKn\\aPm@mBpE_ARoIqAiHx@oBHmDxEiK`CeLzLyWuAuKxDoBa@sDrByDx^iThAqD|OkK`a@gSyAqGf@eEjr@wtA`\\caAJ{Ir@o@a@mMfD_C\\p@Ih@u@}BHh@yE{VhEgMBoO`GmFzM[Q{H|@gEc@gCRbCx@YvC}GiDjHgAe@lANm@U`CuCeBhExAaBrHqPB{FdESvHmLrQyS|C_H~B{M~FiQhDeDjEiNk@aKsGmJuHqYqJeUVyL|@cG_DU_CqB~A_YvAo@\\qDWcC_AgAhMyjB`AFnCeStCaGhCaVjBkFzLyMjByIfEuHtEkSfHgCi@_HcBAQfEd@tBvBc@GeFmCaDYaHlBc[MyHzOkP|^wf@xS}TnMoKbCqErTcZjEcC|@qGvYsFdJsEbGsGlG_Cz@aBbCx@jJki@hFcOpFoV~MawAvGkXnE{JrKaL~GsC~PaM|JIfOaDq@Zx@`BQ~Bt@lDlDnFbAq@wDoK|C_NLsFzIiWtCaD~PwJxMmRjK}Kn[}VpJ}DdK_NrKiTlFgGnHaFV}GjTkLdIkVlLeQjJyVfWad@xBuKxCgPM~BlX`HjBoE`DrAnIsVgAkAlHcOnGiWFkElGwSvTfFtEmP}CyCj@JzFmRzEnBrN}e@fEbCbJwYdaAgbBdPcC~IqIn@_EQs|@lOe@oAuM`FsAEyBbDwBVkB}D{ABeAjFyFrKcUrKiv@|DsH~H_FhE_G~G{V`AwLnDqBhDoLfJgMjC_H`DmCdHwAdFuIzJ_HbDcEdES|B`CjG`@pAKdAcBnB_b@rEk@f@ih@n@gB~FX{Dc@bFk`@_A_JhBgE~LkJnHJxBy}Ar@aW`BiN|Wow@jIy[|xA_sAz]c[hMqKzv@sRtVcJ|PmJ~A\\vA~BfNoCj@yABsHxFaJbEiObEcGjH{DhD}GpJwC|LrB|QwDzQ{AdRqT`FqK~HgDnCyK{@kMoG{GyHeGaHiCeEeI{AyHuBmCm@qDh@yBz@z@vJjYjIhFbD~DnCUq@sB}OoI{JwXeCgO[}WzAo\\oAaAw@ySbD{P",
-    "date": "2026-09-08T22:00:00.000Z",
-    "updated": "2026-09-09T17:17:38.677Z",
-    "totKm": 1023,
-    "totDis": 6888,
-    "tappe": 9
+    "day": 10,
+    "from": "Salerno",
+    "to": "Palinuro",
+    "km": 121,
+    "dislivello": 998,
+    "name": "Salerno - Palinuro",
+    "polyline": "adhwF}e`yAtES@ud@xj@iaCzh@snAl`A__BxK_XbP}N|l@q|@~\\}X~Zm^|MwRJgIxC`CpBaAfGaHhDaOfOwDxzAuaBtyC_vCnE_UzEmCpIlEhEi@jwFa~DxnIcvDfPyT|\\cBlIaDn`Cw`BfDwFbBlDgA_D|DiC`w@oe@hlA}n@pA~@OgBvr@_c@pOeDff@{XdGq@hR{LtBaDhWiFbD_O`EzA`JmH}Af@kAwFcF}BmNNqm@{LyOd@gDiP{E[hD]gf@fDjf@yChEvRlPw@tl@tLzNM`a@~LfBpFnkA}Zj`@aFdj@`Stv@eAhx@pUh]hDg@vTfEnL`I_ErCpBzo@ci@`IyTbLiCbNgKhMcW~LcIpCgHvUiB|C}DdClDpIl@fEiB~CxPzS`Q]nR~ArI`LiLbFYnPrFzR|P_BjS~HvKy@rRtOxGTrIxJhWtMnQxG`MkAhTsEzK`ErKaFdHtAnEaDbG|Sx_@wGzEu@zDhTt^~^vIp^`VhGpJ~TlKhYz@bJ|G~P~CnQaAxDuEM{BuA~Gtb@kE|^_\\pNwEjRoQvVyLjq@ws@lFtBrGkFtDdJdMgIn@fBqDnJzDxHzJg@nSwMvUo[|LqInHuWTsIqDFfGmDgFQcL|JiIyAfF}i@{AyD{IoAmE_E`@_L~Rq@rD`BnFcB|FzAjQgr@gCyZxHoIlInFpFoGfScIzE_HvKc]`RwLjDaHdC?tI_Vg@qEnAiBbDbArUiKn[}TdLu@jiAsm@p^yg@pLaa@_AuIxGuHaJmd@\\wX`E{NtFsGsGqJYsHxGoFBiGlHr@tDmHuJ}Jv@{HsByEdCsGkG_[kHaMm@uFuDUyAzB_EyCqEfIeHkAmBkIvLyKjEJhC_DaFcV?uSMiIbDmPx@aYgQuh@|AkPiIuKsCeNhA_TqBoLpA{CkDuLnDoEhTiy@bOu{@tpAk}@hAaOrMq`@hNaS~PmLtPsBfHyFxQu@`McQeBnAwAqJhEwCk@kMjDoH_CLhAmCoFyEwEY|E}LA}FtOwAzG}KVgF`MgGh@qFtUdE|GgMoHcIhRb@~EcByU_MoIkNiMi@rEyJcA}DvLgJ}@dLbQvCpDjHlJj@^q`A`Moh@jDz@fRq[lWmYxEEzK}VvKnAGcIxPwLiNwUpL}Cs@uGzFkNjX|FjLqI|BqNrAhHxDZhOcMfQ}SlAoGfEeCdAkMxIqUnBoWpRiHbG_a@zSu_@tMwBxGmEKgFfVgGrDwFhJMxBcI`I_@bx@ca@|{@uQpf@iUvN}K`b@dG",
+    "date": "2026-09-09T22:00:00.000Z",
+    "updated": "2026-09-10T18:34:19.281Z",
+    "totKm": 1144,
+    "totDis": 7886,
+    "tappe": 10
   },
   "tappe": [
     {
@@ -490,6 +490,17 @@
       "polyline": "kiazFe{qsAtwAijAbh@{x@vUc[jeAgrAgCwBsHkNyC}l@_SaxCac@oeAgK}Wd@eAtR_J?oj@lBsEfJoItAiCnPcbA}FaO}Jap@xbBmSdSsPnb@eq@rpAo{@nGyDbDir@}a@aaAJaGqCeDaD{LLwCfBiEj`KavGvQeOmAPGw~@_A{YvYcaEf@eY?}Pf_@ebB|AeF`w@qlD~@oDfAGpAiNb^s~A|YglAPgBwB}VRgJvBeChYkFX}Ox\\kH`FiOhDsTnk@qfChCcPk@zG|HKn\\aPm@mBpE_ARoIqAiHx@oBHmDxEiK`CeLzLyWuAuKxDoBa@sDrByDx^iThAqD|OkK`a@gSyAqGf@eEjr@wtA`\\caAJ{Ir@o@a@mMfD_C\\p@Ih@u@}BHh@yE{VhEgMBoO`GmFzM[Q{H|@gEc@gCRbCx@YvC}GiDjHgAe@lANm@U`CuCeBhExAaBrHqPB{FdESvHmLrQyS|C_H~B{M~FiQhDeDjEiNk@aKsGmJuHqYqJeUVyL|@cG_DU_CqB~A_YvAo@\\qDWcC_AgAhMyjB`AFnCeStCaGhCaVjBkFzLyMjByIfEuHtEkSfHgCi@_HcBAQfEd@tBvBc@GeFmCaDYaHlBc[MyHzOkP|^wf@xS}TnMoKbCqErTcZjEcC|@qGvYsFdJsEbGsGlG_Cz@aBbCx@jJki@hFcOpFoV~MawAvGkXnE{JrKaL~GsC~PaM|JIfOaDq@Zx@`BQ~Bt@lDlDnFbAq@wDoK|C_NLsFzIiWtCaD~PwJxMmRjK}Kn[}VpJ}DdK_NrKiTlFgGnHaFV}GjTkLdIkVlLeQjJyVfWad@xBuKxCgPM~BlX`HjBoE`DrAnIsVgAkAlHcOnGiWFkElGwSvTfFtEmP}CyCj@JzFmRzEnBrN}e@fEbCbJwYdaAgbBdPcC~IqIn@_EQs|@lOe@oAuM`FsAEyBbDwBVkB}D{ABeAjFyFrKcUrKiv@|DsH~H_FhE_G~G{V`AwLnDqBhDoLfJgMjC_H`DmCdHwAdFuIzJ_HbDcEdES|B`CjG`@pAKdAcBnB_b@rEk@f@ih@n@gB~FX{Dc@bFk`@_A_JhBgE~LkJnHJxBy}Ar@aW`BiN|Wow@jIy[|xA_sAz]c[hMqKzv@sRtVcJ|PmJ~A\\vA~BfNoCj@yABsHxFaJbEiObEcGjH{DhD}GpJwC|LrB|QwDzQ{AdRqT`FqK~HgDnCyK{@kMoG{GyHeGaHiCeEeI{AyHuBmCm@qDh@yBz@z@vJjYjIhFbD~DnCUq@sB}OoI{JwXeCgO[}WzAo\\oAaAw@ySbD{P",
       "date": "2026-09-08T22:00:00.000Z",
       "updated": "2026-09-09T17:17:38.677Z"
+    },
+    {
+      "day": 10,
+      "from": "Salerno",
+      "to": "Palinuro",
+      "km": 121,
+      "dislivello": 998,
+      "name": "Salerno - Palinuro",
+      "polyline": "adhwF}e`yAtES@ud@xj@iaCzh@snAl`A__BxK_XbP}N|l@q|@~\\}X~Zm^|MwRJgIxC`CpBaAfGaHhDaOfOwDxzAuaBtyC_vCnE_UzEmCpIlEhEi@jwFa~DxnIcvDfPyT|\\cBlIaDn`Cw`BfDwFbBlDgA_D|DiC`w@oe@hlA}n@pA~@OgBvr@_c@pOeDff@{XdGq@hR{LtBaDhWiFbD_O`EzA`JmH}Af@kAwFcF}BmNNqm@{LyOd@gDiP{E[hD]gf@fDjf@yChEvRlPw@tl@tLzNM`a@~LfBpFnkA}Zj`@aFdj@`Stv@eAhx@pUh]hDg@vTfEnL`I_ErCpBzo@ci@`IyTbLiCbNgKhMcW~LcIpCgHvUiB|C}DdClDpIl@fEiB~CxPzS`Q]nR~ArI`LiLbFYnPrFzR|P_BjS~HvKy@rRtOxGTrIxJhWtMnQxG`MkAhTsEzK`ErKaFdHtAnEaDbG|Sx_@wGzEu@zDhTt^~^vIp^`VhGpJ~TlKhYz@bJ|G~P~CnQaAxDuEM{BuA~Gtb@kE|^_\\pNwEjRoQvVyLjq@ws@lFtBrGkFtDdJdMgIn@fBqDnJzDxHzJg@nSwMvUo[|LqInHuWTsIqDFfGmDgFQcL|JiIyAfF}i@{AyD{IoAmE_E`@_L~Rq@rD`BnFcB|FzAjQgr@gCyZxHoIlInFpFoGfScIzE_HvKc]`RwLjDaHdC?tI_Vg@qEnAiBbDbArUiKn[}TdLu@jiAsm@p^yg@pLaa@_AuIxGuHaJmd@\\wX`E{NtFsGsGqJYsHxGoFBiGlHr@tDmHuJ}Jv@{HsByEdCsGkG_[kHaMm@uFuDUyAzB_EyCqEfIeHkAmBkIvLyKjEJhC_DaFcV?uSMiIbDmPx@aYgQuh@|AkPiIuKsCeNhA_TqBoLpA{CkDuLnDoEhTiy@bOu{@tpAk}@hAaOrMq`@hNaS~PmLtPsBfHyFxQu@`McQeBnAwAqJhEwCk@kMjDoH_CLhAmCoFyEwEY|E}LA}FtOwAzG}KVgF`MgGh@qFtUdE|GgMoHcIhRb@~EcByU_MoIkNiMi@rEyJcA}DvLgJ}@dLbQvCpDjHlJj@^q`A`Moh@jDz@fRq[lWmYxEEzK}VvKnAGcIxPwLiNwUpL}Cs@uGzFkNjX|FjLqI|BqNrAhHxDZhOcMfQ}SlAoGfEeCdAkMxIqUnBoWpRiHbG_a@zSu_@tMwBxGmEKgFfVgGrDwFhJMxBcI`I_@bx@ca@|{@uQpf@iUvN}K`b@dG",
+      "date": "2026-09-09T22:00:00.000Z",
+      "updated": "2026-09-10T18:34:19.281Z"
     }
   ],
   "next_stages": [],
