@@ -1,8 +1,26 @@
 {
   "fundraising": {
-    "raised": 3398,
+    "raised": 3458,
     "goal": 3500,
     "donors": [
+      {
+        "name": "Luigi M",
+        "amount": 20,
+        "time": "4 minutes",
+        "message": ""
+      },
+      {
+        "name": "Laura B",
+        "amount": 10,
+        "time": "8 minutes",
+        "message": ""
+      },
+      {
+        "name": "Annalisa G",
+        "amount": 30,
+        "time": "about 1 hour",
+        "message": "Complimenti per la bella iniziativa!!!!"
+      },
       {
         "name": "Roberto t",
         "amount": 25,
