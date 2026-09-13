@@ -1,30 +1,36 @@
 {
   "fundraising": {
-    "raised": 3558,
+    "raised": 3658,
     "goal": 4000,
     "donors": [
       {
+        "name": "Andrea C",
+        "amount": 100,
+        "time": "15 minutes",
+        "message": "Un gesto che ispira una sfida che ammiriamo ! (A&V)"
+      },
+      {
         "name": "Massimo T",
         "amount": 100,
-        "time": "about 5 hours",
+        "time": "about 8 hours",
         "message": ""
       },
       {
         "name": "Luigi M",
         "amount": 20,
-        "time": "about 22 hours",
+        "time": "1 day",
         "message": ""
       },
       {
         "name": "Laura B",
         "amount": 10,
-        "time": "about 22 hours",
+        "time": "1 day",
         "message": ""
       },
       {
         "name": "Annalisa G",
         "amount": 30,
-        "time": "about 23 hours",
+        "time": "1 day",
         "message": "Complimenti per la bella iniziativa!!!!"
       },
       {
@@ -306,7 +312,7 @@
       {
         "name": "Roberta G",
         "amount": 25,
-        "time": "26 days",
+        "time": "27 days",
         "message": ""
       },
       {
@@ -396,7 +402,7 @@
       {
         "name": "Patrizia F",
         "amount": 147,
-        "time": "about 1 month",
+        "time": "about 2 months",
         "message": "Grazie a Daniele … la fatica fisica sarà tutta sua 👍🍀👍"
       },
       {
