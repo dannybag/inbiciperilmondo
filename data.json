@@ -1,18 +1,24 @@
 {
   "fundraising": {
-    "raised": 3714,
+    "raised": 3814,
     "goal": 4000,
     "donors": [
       {
+        "name": "Elisabetta C",
+        "amount": 100,
+        "time": "about 3 hours",
+        "message": "Bravo Daniele!!"
+      },
+      {
         "name": "Anonymous",
         "amount": 30,
-        "time": "about 3 hours",
+        "time": "about 6 hours",
         "message": "Gambe in spalla e pedalare !!!! Grande Danny Bag !"
       },
       {
         "name": "Fabrizio G",
         "amount": 26,
-        "time": "1 day",
+        "time": "2 days",
         "message": ""
       },
       {
@@ -324,7 +330,7 @@
       {
         "name": "Roberta G",
         "amount": 25,
-        "time": "29 days",
+        "time": "30 days",
         "message": ""
       },
       {
