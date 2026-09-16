@@ -432,18 +432,18 @@
     ]
   },
   "tappa": {
-    "day": 13,
-    "from": "Paola",
-    "to": "Parghelia",
-    "km": 114,
-    "dislivello": 669,
-    "name": "Paola - Parghelia",
-    "polyline": "_bfoF}k{`B|@dAlJ_BmI|CeKvHnFbJtBrI|UyJfDsH`_AkSlqCq^buA_P`N_NnYkL|IgAMqEuFiNhGaCd[mDvReF``@bA~ArMfmAoMfbAqAt@yA~FLRx@Qy@{FKM_M`Au@nB~Dps@_Al@bHdj@S\\qAzCH|@yElGs@TrCzAt@JzG~@hA~H{ExIyArh@yA`@qAvq@eA~BiBb]iHtj@_AtVxBrV?|\\yEdoA_Ipy@kC`_@|Cvk@}AxT`AxoA_Fbw@_RdDaCoBy@Ro@bAtBs@qAg@j@vC\\tNaInW|AnFe@re@eMv}@u\\f_@}E}Mz@u@{Ap@{D`Dv@t@pI`B|Abl@{KxVuB`HsGKbA`BIrDqMlE}BdlAqSrq@aVf`@_E|L~GzDV~tE{jAbJmFfs@on@^cCnZuXpADzFaFhoAgoA|z@ye@p]{LdTkLxh@mN|E{DtH{Lnt@_^fcAoRbSqPrEeHvCoP_B_wAzBo\\zOs]tOmUhH}Q`G}b@rPst@fg@gm@dLiQdAoA`BsDT}EbAk@j@mNlCeA`BuJpBWbMnHjBUzDrFdAhGdX_E\\hGuBk]`XqFp@wCzFbTjWrArv@Ji@[i@uRrJKTwIhIL|KgCjNfCoDwnCVu@~^Y~zCf\\xKbDxq@vE|^`EndCd~Ajj@|J`~@nNn_Bpc@|F}Uvy@nd@jTfChCiFhG|BvB_I|R|GjNuAxQvG|DhHgGxGo@rNgG~Lt@nGxRhMhPjPnt@f`AnMzItV~UlEDdCnAx@bCzGzClF`VvKnJ~KlSd@`JtF|Ia@nBbApFjDjC@rGfCdBk@jD`KbNIxFtDjIiAkAaAmEpCnEqC{Bk@`@pApEv@uAdBB~HlFjEnMvJdM|PfJxGfGhT`[`FrJ|Ht_@lD~An@fD~A`@DjC~Lfa@nBrBrEjOjA~LxSzf@`@|F{@hZhBpr@zIvUmBzAtCjb@gDzKkJ|w@}Gpq@gB~]`V~LPnNwB|Ega@rc@_BdUgMbcAgSv[gCbLC~JoGdSq@fs@v@~EnGfNdBn_@{CzSvErStDx_@_CtX}G`_@j@nr@lDjOlM`PxCfKrJrQxD~BxYbG|AjB`H^@mBu@ThO`ClD`KpLtI~]zh@jIdYrf@tf@vE~PvA|PwAdPfGdf@nFlR_@rAxAp@fM|^pMd~@rC|F~KrLG~B_AqB",
-    "date": "2026-09-14T22:00:00.000Z",
-    "updated": "2026-09-15T15:22:54.425Z",
-    "totKm": 1414,
-    "totDis": 10553,
-    "tappe": 13
+    "day": 14,
+    "from": "Parghelia",
+    "to": "Villa San Giovanni",
+    "km": 89,
+    "dislivello": 1445,
+    "name": "Parghelia - Villa San Giovanni",
+    "polyline": "cxakFu|c`BUwDsFuVtAi@k@qGvEmA}B{LdBcB}@wEbDpE~@GsC}FbBvDnCw@sBIU{DfAoBaCmCtCp@tWaNhFhPoE|VfFgK{AdGf@bBlBqJnNmP|DmK|NRzGeDpEqItCgTlCcG`DzGjEfCj@lDv@qA^zDxMqDt@kLwAeIXyOdTuRrN}VjWsWnn@gTlFkIzSiO`MyArZfD~IfMvExPfPjQzI|CfHrHfOmBfNfEfEzFnByEpRgFhDXfHyEfK}RbB_@bHtF~@nH_DfUxYtJ~F@lP{FfFaUjLiJdAvGFb`@hB|KvSnFdHpNpIg@hCdJtD{C~AoNnBcBrEcUjEiH~BtUdAsLf\\{YxKoC~IcTpH|@jIaEnCuGzA`C]aFbG_EpAnAjLsE`H^zDoFnPkFpO{XBoRxM}SnWiI`a@{ZbKn@hLgDhLeL~Lw@~A|@JzC|BgHUvLrD}QfAbCWl[l[oTxARjHtNlPzN|Uv_@xTxBtP_DbE`IzGfArO_EzU\\hS|CpQtGfMgGvQfAdHmSzHoCtDpJjLlA|WwJzVdOlFbEx@dL|IvXlHjc@zJtT~DqDnN`Q~eA|sA}BxIl@dAxjArtAvJnJrnAzm@`DdQjF|JpRxQnGA|K~DdByB`EfGzToAbGhFfCsAfPg]|IiEtf@qF~Mp@hU_E`Q_Kd[gDzHd@rv@mJfBz@hD|LpJbAdE|PzCW`GhFdMpChX{AlZbN`PbR|DzKxUv]pT~HlD`JxO`HvJdPrMtK|RrM`NzDxJxXsLbEOjB~L|HpLn@xIlD[rCzAvC}A|CdAvHnE]vEzLcFhF~CwA~C`ApHnEzC`GHdGpBdD_AfXzIzPsCB~GtEhQEpHnEnCjJ?pWfDlIpKrDrNkBlKuEpUp@|BpBJ|D|HvBjApHyEp}@xLxOnC`NdKaD~_@c_@nBlJxC~Bf@rGxIeFyA|LgHjJ|AdKvKvJvErOvM|SfNtGfEo@fDcIjCbC~EsB_@hLrBbEo@pKlF`MtCJ_D`AqJaJvHxTkK_KpBfNyAeAuHdGlBOLoC`OjDhDzGJ|FnIpAdM|MnKn_@rD|a@pQdYlYl^hLb[bGzIp@zJdGtLjEtQ|^jk@lUxt@f@rZ|G|TxDx[fI`U~Ata@KpMqFje@_@v\\sJ|PzEaAfFjCzOna@wBvYiHpNvH`OlBbObAhT}@pCzAxJdJ`K~DvK`@hEwBpKfD`ZrL`I`AvHvCdDhJXvPbPxMrs@dIrGjG~M|DdRT~RuBnUvBvJAzQzEjN~MpIrVfTxZh@\\|Z|Sg@DyEhCAAeH",
+    "date": "2026-09-15T22:00:00.000Z",
+    "updated": "2026-09-16T14:25:36.321Z",
+    "totKm": 1503,
+    "totDis": 11998,
+    "tappe": 14
   },
   "tappe": [
     {
@@ -588,6 +588,17 @@
       "polyline": "_bfoF}k{`B|@dAlJ_BmI|CeKvHnFbJtBrI|UyJfDsH`_AkSlqCq^buA_P`N_NnYkL|IgAMqEuFiNhGaCd[mDvReF``@bA~ArMfmAoMfbAqAt@yA~FLRx@Qy@{FKM_M`Au@nB~Dps@_Al@bHdj@S\\qAzCH|@yElGs@TrCzAt@JzG~@hA~H{ExIyArh@yA`@qAvq@eA~BiBb]iHtj@_AtVxBrV?|\\yEdoA_Ipy@kC`_@|Cvk@}AxT`AxoA_Fbw@_RdDaCoBy@Ro@bAtBs@qAg@j@vC\\tNaInW|AnFe@re@eMv}@u\\f_@}E}Mz@u@{Ap@{D`Dv@t@pI`B|Abl@{KxVuB`HsGKbA`BIrDqMlE}BdlAqSrq@aVf`@_E|L~GzDV~tE{jAbJmFfs@on@^cCnZuXpADzFaFhoAgoA|z@ye@p]{LdTkLxh@mN|E{DtH{Lnt@_^fcAoRbSqPrEeHvCoP_B_wAzBo\\zOs]tOmUhH}Q`G}b@rPst@fg@gm@dLiQdAoA`BsDT}EbAk@j@mNlCeA`BuJpBWbMnHjBUzDrFdAhGdX_E\\hGuBk]`XqFp@wCzFbTjWrArv@Ji@[i@uRrJKTwIhIL|KgCjNfCoDwnCVu@~^Y~zCf\\xKbDxq@vE|^`EndCd~Ajj@|J`~@nNn_Bpc@|F}Uvy@nd@jTfChCiFhG|BvB_I|R|GjNuAxQvG|DhHgGxGo@rNgG~Lt@nGxRhMhPjPnt@f`AnMzItV~UlEDdCnAx@bCzGzClF`VvKnJ~KlSd@`JtF|Ia@nBbApFjDjC@rGfCdBk@jD`KbNIxFtDjIiAkAaAmEpCnEqC{Bk@`@pApEv@uAdBB~HlFjEnMvJdM|PfJxGfGhT`[`FrJ|Ht_@lD~An@fD~A`@DjC~Lfa@nBrBrEjOjA~LxSzf@`@|F{@hZhBpr@zIvUmBzAtCjb@gDzKkJ|w@}Gpq@gB~]`V~LPnNwB|Ega@rc@_BdUgMbcAgSv[gCbLC~JoGdSq@fs@v@~EnGfNdBn_@{CzSvErStDx_@_CtX}G`_@j@nr@lDjOlM`PxCfKrJrQxD~BxYbG|AjB`H^@mBu@ThO`ClD`KpLtI~]zh@jIdYrf@tf@vE~PvA|PwAdPfGdf@nFlR_@rAxAp@fM|^pMd~@rC|F~KrLG~B_AqB",
       "date": "2026-09-14T22:00:00.000Z",
       "updated": "2026-09-15T15:22:54.425Z"
+    },
+    {
+      "day": 14,
+      "from": "Parghelia",
+      "to": "Villa San Giovanni",
+      "km": 89,
+      "dislivello": 1445,
+      "name": "Parghelia - Villa San Giovanni",
+      "polyline": "cxakFu|c`BUwDsFuVtAi@k@qGvEmA}B{LdBcB}@wEbDpE~@GsC}FbBvDnCw@sBIU{DfAoBaCmCtCp@tWaNhFhPoE|VfFgK{AdGf@bBlBqJnNmP|DmK|NRzGeDpEqItCgTlCcG`DzGjEfCj@lDv@qA^zDxMqDt@kLwAeIXyOdTuRrN}VjWsWnn@gTlFkIzSiO`MyArZfD~IfMvExPfPjQzI|CfHrHfOmBfNfEfEzFnByEpRgFhDXfHyEfK}RbB_@bHtF~@nH_DfUxYtJ~F@lP{FfFaUjLiJdAvGFb`@hB|KvSnFdHpNpIg@hCdJtD{C~AoNnBcBrEcUjEiH~BtUdAsLf\\{YxKoC~IcTpH|@jIaEnCuGzA`C]aFbG_EpAnAjLsE`H^zDoFnPkFpO{XBoRxM}SnWiI`a@{ZbKn@hLgDhLeL~Lw@~A|@JzC|BgHUvLrD}QfAbCWl[l[oTxARjHtNlPzN|Uv_@xTxBtP_DbE`IzGfArO_EzU\\hS|CpQtGfMgGvQfAdHmSzHoCtDpJjLlA|WwJzVdOlFbEx@dL|IvXlHjc@zJtT~DqDnN`Q~eA|sA}BxIl@dAxjArtAvJnJrnAzm@`DdQjF|JpRxQnGA|K~DdByB`EfGzToAbGhFfCsAfPg]|IiEtf@qF~Mp@hU_E`Q_Kd[gDzHd@rv@mJfBz@hD|LpJbAdE|PzCW`GhFdMpChX{AlZbN`PbR|DzKxUv]pT~HlD`JxO`HvJdPrMtK|RrM`NzDxJxXsLbEOjB~L|HpLn@xIlD[rCzAvC}A|CdAvHnE]vEzLcFhF~CwA~C`ApHnEzC`GHdGpBdD_AfXzIzPsCB~GtEhQEpHnEnCjJ?pWfDlIpKrDrNkBlKuEpUp@|BpBJ|D|HvBjApHyEp}@xLxOnC`NdKaD~_@c_@nBlJxC~Bf@rGxIeFyA|LgHjJ|AdKvKvJvErOvM|SfNtGfEo@fDcIjCbC~EsB_@hLrBbEo@pKlF`MtCJ_D`AqJaJvHxTkK_KpBfNyAeAuHdGlBOLoC`OjDhDzGJ|FnIpAdM|MnKn_@rD|a@pQdYlYl^hLb[bGzIp@zJdGtLjEtQ|^jk@lUxt@f@rZ|G|TxDx[fI`U~Ata@KpMqFje@_@v\\sJ|PzEaAfFjCzOna@wBvYiHpNvH`OlBbObAhT}@pCzAxJdJ`K~DvK`@hEwBpKfD`ZrL`I`AvHvCdDhJXvPbPxMrs@dIrGjG~M|DdRT~RuBnUvBvJAzQzEjN~MpIrVfTxZh@\\|Z|Sg@DyEhCAAeH",
+      "date": "2026-09-15T22:00:00.000Z",
+      "updated": "2026-09-16T14:25:36.321Z"
     }
   ],
   "next_stages": [
