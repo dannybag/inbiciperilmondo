@@ -1,18 +1,24 @@
 {
   "fundraising": {
-    "raised": 3969,
+    "raised": 4116,
     "goal": 4000,
     "donors": [
       {
+        "name": "Mariolina&Lorenzo S",
+        "amount": 147,
+        "time": "17 minutes",
+        "message": "bravo Daniele bellissima iniziativa Mariolina e Lorenzo."
+      },
+      {
         "name": "Mago M",
         "amount": 50,
-        "time": "about 1 hour",
+        "time": "about 2 hours",
         "message": ""
       },
       {
         "name": "Mario C",
         "amount": 100,
-        "time": "about 11 hours",
+        "time": "about 12 hours",
         "message": "Sì va bene, ma lo stretto in traghetto non vale! :-)"
       },
       {
@@ -228,13 +234,13 @@
       {
         "name": "Antonio T",
         "amount": 50,
-        "time": "17 days",
+        "time": "18 days",
         "message": "Bellissima iniziativa, buona strada Daniele!"
       },
       {
         "name": "Elena G",
         "amount": 25,
-        "time": "17 days",
+        "time": "18 days",
         "message": ""
       },
       {
@@ -276,7 +282,7 @@
       {
         "name": "Monica P",
         "amount": 50,
-        "time": "20 days",
+        "time": "21 days",
         "message": "Buona avventura Daniele, tienici aggiornati!"
       },
       {
