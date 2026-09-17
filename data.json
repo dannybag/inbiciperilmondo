@@ -6,13 +6,13 @@
       {
         "name": "Mario C",
         "amount": 100,
-        "time": "about 4 hours",
+        "time": "about 7 hours",
         "message": "Sì va bene, ma lo stretto in traghetto non vale! :-)"
       },
       {
         "name": "Anonymous",
         "amount": 5,
-        "time": "about 16 hours",
+        "time": "about 19 hours",
         "message": ""
       },
       {
@@ -416,6 +416,12 @@
         "amount": 25,
         "time": "about 1 month",
         "message": "Adesso devi partire!"
+      },
+      {
+        "name": "Anonymous",
+        "amount": 10,
+        "time": "about 2 months",
+        "message": ""
       },
       {
         "name": "Lorenzo V",
