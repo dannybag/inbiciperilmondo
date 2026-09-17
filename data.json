@@ -1,18 +1,24 @@
 {
   "fundraising": {
-    "raised": 3919,
+    "raised": 3969,
     "goal": 4000,
     "donors": [
       {
+        "name": "Mago M",
+        "amount": 50,
+        "time": "18 minutes",
+        "message": ""
+      },
+      {
         "name": "Mario C",
         "amount": 100,
-        "time": "about 8 hours",
+        "time": "about 10 hours",
         "message": "Sì va bene, ma lo stretto in traghetto non vale! :-)"
       },
       {
         "name": "Anonymous",
         "amount": 5,
-        "time": "about 21 hours",
+        "time": "about 23 hours",
         "message": ""
       },
       {
@@ -42,7 +48,7 @@
       {
         "name": "Massimo T",
         "amount": 100,
-        "time": "4 days",
+        "time": "5 days",
         "message": ""
       },
       {
@@ -72,7 +78,7 @@
       {
         "name": "Veronica P",
         "amount": 10,
-        "time": "7 days",
+        "time": "8 days",
         "message": "Forza!!!"
       },
       {
@@ -102,7 +108,7 @@
       {
         "name": "Laura F",
         "amount": 10,
-        "time": "9 days",
+        "time": "10 days",
         "message": ""
       },
       {
@@ -150,13 +156,13 @@
       {
         "name": "Anonymous",
         "amount": 147,
-        "time": "14 days",
+        "time": "15 days",
         "message": "Proud to participate to this enabling project!"
       },
       {
         "name": "franco v",
         "amount": 25,
-        "time": "14 days",
+        "time": "15 days",
         "message": ""
       },
       {
@@ -180,7 +186,7 @@
       {
         "name": "Mariagrazia L",
         "amount": 25,
-        "time": "15 days",
+        "time": "16 days",
         "message": "Ottima idea!"
       },
       {
@@ -276,13 +282,13 @@
       {
         "name": "Gomarasca B",
         "amount": 150,
-        "time": "20 days",
+        "time": "21 days",
         "message": ""
       },
       {
         "name": "Romina M",
         "amount": 25,
-        "time": "20 days",
+        "time": "21 days",
         "message": "Complimenti! Siamo con te"
       },
       {
@@ -336,7 +342,7 @@
       {
         "name": "Anonymous",
         "amount": 25,
-        "time": "29 days",
+        "time": "30 days",
         "message": ""
       },
       {
