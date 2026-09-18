@@ -1,36 +1,42 @@
 {
   "fundraising": {
-    "raised": 4206,
+    "raised": 4256,
     "goal": 4410,
     "donors": [
       {
+        "name": "Ale Z",
+        "amount": 50,
+        "time": "25 minutes",
+        "message": "Bravo Dani, ben arrivatoooo!!"
+      },
+      {
         "name": "Enrico M",
         "amount": 5,
-        "time": "about 1 hour",
+        "time": "about 2 hours",
         "message": ""
       },
       {
         "name": "RENATO P",
         "amount": 30,
-        "time": "about 10 hours",
+        "time": "about 11 hours",
         "message": "Complimenti Daniele!!! Nr. ONE"
       },
       {
         "name": "Anonymous",
         "amount": 50,
-        "time": "about 11 hours",
+        "time": "about 12 hours",
         "message": ""
       },
       {
         "name": "Mariolina&Lorenzo S",
         "amount": 147,
-        "time": "about 19 hours",
+        "time": "about 20 hours",
         "message": "bravo Daniele bellissima iniziativa Mariolina e Lorenzo."
       },
       {
         "name": "Mago M",
         "amount": 50,
-        "time": "about 21 hours",
+        "time": "about 22 hours",
         "message": ""
       },
       {
