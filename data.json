@@ -1,36 +1,42 @@
 {
   "fundraising": {
-    "raised": 4302,
+    "raised": 4310,
     "goal": 4410,
     "donors": [
       {
+        "name": "Laura B",
+        "amount": 8,
+        "time": "about 1 hour",
+        "message": "E adesso sei a -100€!!!! Forza!! Grandissimo!!!"
+      },
+      {
         "name": "Roberta G",
         "amount": 10,
-        "time": "about 1 hour",
+        "time": "about 5 hours",
         "message": ""
       },
       {
         "name": "Anonymous",
         "amount": 10,
-        "time": "about 3 hours",
+        "time": "about 7 hours",
         "message": ""
       },
       {
         "name": "Alberto F",
         "amount": 26,
-        "time": "about 4 hours",
+        "time": "about 8 hours",
         "message": "Grande Danny"
       },
       {
         "name": "Ale Z",
         "amount": 50,
-        "time": "about 17 hours",
+        "time": "about 21 hours",
         "message": "Bravo Dani, ben arrivatoooo!!"
       },
       {
         "name": "Enrico M",
         "amount": 5,
-        "time": "about 18 hours",
+        "time": "about 22 hours",
         "message": ""
       },
       {
@@ -54,7 +60,7 @@
       {
         "name": "Mago M",
         "amount": 50,
-        "time": "1 day",
+        "time": "2 days",
         "message": ""
       },
       {
@@ -192,7 +198,7 @@
       {
         "name": "Chiara B",
         "amount": 147,
-        "time": "15 days",
+        "time": "16 days",
         "message": "Dai, dai, dai! Ce l’hai quasi fatta 🍀"
       },
       {
@@ -462,7 +468,7 @@
       {
         "name": "Anonymous",
         "amount": 10,
-        "time": "about 1 month",
+        "time": "about 2 months",
         "message": ""
       },
       {
@@ -470,12 +476,6 @@
         "amount": 25,
         "time": "about 2 months",
         "message": "Adesso devi partire!"
-      },
-      {
-        "name": "Anonymous",
-        "amount": 10,
-        "time": "about 2 months",
-        "message": ""
       },
       {
         "name": "Lorenzo V",
