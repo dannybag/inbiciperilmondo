@@ -1,8 +1,14 @@
 {
   "fundraising": {
-    "raised": 4360,
+    "raised": 4410,
     "goal": 4410,
     "donors": [
+      {
+        "name": "Anonymous",
+        "amount": 50,
+        "time": "11 minutes",
+        "message": ""
+      },
       {
         "name": "Francesco M",
         "amount": 50,
@@ -24,7 +30,7 @@
       {
         "name": "Anonymous",
         "amount": 10,
-        "time": "about 12 hours",
+        "time": "about 13 hours",
         "message": ""
       },
       {
@@ -90,7 +96,7 @@
       {
         "name": "Anonymous",
         "amount": 30,
-        "time": "3 days",
+        "time": "4 days",
         "message": "Gambe in spalla e pedalare !!!! Grande Danny Bag !"
       },
       {
@@ -132,7 +138,7 @@
       {
         "name": "Roberto t",
         "amount": 25,
-        "time": "8 days",
+        "time": "9 days",
         "message": ""
       },
       {
