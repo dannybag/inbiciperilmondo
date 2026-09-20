@@ -511,10 +511,10 @@
     border-radius: 6px;
     overflow: visible;
     position: relative;
-    margin-right: 3.5rem;
+    margin-right: 2.8rem;
   }
   @media (max-width: 600px) {
-    .progress-track { margin-right: 2rem; }
+    .progress-track { margin-right: 1rem; }
   }
   .progress-fill {
     background: var(--orange);
@@ -2339,16 +2339,7 @@
     window._lastRaised = raised;
     window._lastGoal = goal;
     const lang = localStorage.getItem('site-lang') || 'it';
-    // Le medaglie occupano al massimo il 65% della barra, più spaziate
-    const MILESTONES_SCALE = [1700, 2500, 3000, 3500, 4000, 4410];
-    const lastMilestone = MILESTONES_SCALE[MILESTONES_SCALE.length - 1];
-    const displayGoal = lastMilestone / 0.65; // ultima medaglia al 65%, più spazio tra le medaglie
-    // Il cursore bici è sempre almeno 5% avanti all'ultima medaglia se l'abbiamo superata
-    const rawPct = Math.round(raised / displayGoal * 100);
-    const lastMilestonePct = Math.round(lastMilestone / displayGoal * 100);
-    const pct = raised >= lastMilestone
-      ? Math.max(lastMilestonePct + 5, rawPct)
-      : rawPct;
+    const pct = Math.min(100, Math.round(raised / goal * 100));
     const bikes = Math.floor(raised / 147);
     const fill = document.querySelector('.progress-fill');
     const bike = document.querySelector('.progress-bike');
@@ -2372,7 +2363,7 @@
       container.innerHTML = '';
       MILESTONES.forEach(m => {
         if (m > goal) return; // non mostrare se oltre il goal attuale
-        const mPct = Math.round(m / displayGoal * 100);
+        const mPct = Math.min(100, Math.round(m / goal * 100));
         const reached = raised >= m;
         const el = document.createElement('div');
         el.className = 'milestone' + (reached ? ' reached' : '');
