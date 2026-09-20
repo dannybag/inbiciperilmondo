@@ -511,10 +511,10 @@
     border-radius: 6px;
     overflow: visible;
     position: relative;
-    margin-right: 2.8rem;
+    margin-right: 4rem;
   }
   @media (max-width: 600px) {
-    .progress-track { margin-right: 1rem; }
+    .progress-track { margin-right: 2rem; }
   }
   .progress-fill {
     background: var(--orange);
@@ -2339,7 +2339,6 @@
     window._lastRaised = raised;
     window._lastGoal = goal;
     const lang = localStorage.getItem('site-lang') || 'it';
-    const pct = Math.min(100, Math.round(raised / goal * 100));
     const bikes = Math.floor(raised / 147);
     const fill = document.querySelector('.progress-fill');
     const bike = document.querySelector('.progress-bike');
@@ -2347,23 +2346,41 @@
     const goalEl   = document.querySelector('.progress-goal');
     const pctEl    = document.querySelector('.progress-pct');
     const bikesEl  = document.querySelector('.progress-bikes');
-    if (fill)    fill.style.width = pct + '%';
-    if (bike)    bike.style.left  = pct + '%';
+
+    // ── SCALA VISIVA ──
+    // I milestone (0 → goal) occupano MILESTONE_ZONE% della barra.
+    // Il restante (1 - MILESTONE_ZONE)% è spazio libero per donazioni oltre il goal.
+    // Fill e bici usano la stessa scala: goal corrisponde a MILESTONE_ZONE%.
+    const MILESTONE_ZONE = 85; // % di barra per il range 0→goal
+    const rawVisualPct = (raised / goal) * MILESTONE_ZONE;
+    const fillPct = Math.min(100, rawVisualPct); // fill non esce dalla barra
+    // Se raised >= goal la bici si posiziona 8 punti oltre l'ultima medaglia,
+    // altrimenti segue la progressione normale (max MILESTONE_ZONE)
+    const bikePct = raised >= goal
+      ? MILESTONE_ZONE + 8
+      : Math.min(MILESTONE_ZONE, rawVisualPct);
+
+    if (fill)    fill.style.width = fillPct + '%';
+    if (bike)    bike.style.left  = bikePct + '%';
+
+    const displayPct = Math.round(raised / goal * 100);
     if (raisedEl) raisedEl.textContent = '€' + raised;
     if (goalEl)   goalEl.textContent   = '€' + goal;
-    if (pctEl)    pctEl.textContent    = lang === 'en' ? pct + '% reached' : pct + '% raggiunto';
+    if (pctEl)    pctEl.textContent    = lang === 'en' ? displayPct + '% reached' : displayPct + '% raggiunto';
     if (bikesEl)  bikesEl.innerHTML    = lang === 'en' ? '= ' + bikes + ' <strong>Buffalo</strong> bikes donated' : '= ' + bikes + ' bici <strong>Buffalo</strong> donate';
     const bikesNum = document.getElementById('bikes-count-num');
     if (bikesNum) bikesNum.textContent = bikes;
 
     // ── MILESTONE MARKERS ──
+    // Posizionati proporzionalmente in MILESTONE_ZONE% della barra (stessa scala di fill/bici).
     const MILESTONES = [1700, 2500, 3000, 3500, 4000, 4410]; // aggiungi qui i target futuri
     const container = document.getElementById('progress-milestones');
     if (container) {
       container.innerHTML = '';
       MILESTONES.forEach(m => {
-        if (m > goal) return; // non mostrare se oltre il goal attuale
-        const mPct = Math.min(100, Math.round(m / goal * 100));
+        if (m > goal) return; // non mostrare milestone oltre il goal attuale
+        // Stessa scala: m/goal * MILESTONE_ZONE
+        const mPct = Math.round((m / goal) * MILESTONE_ZONE);
         const reached = raised >= m;
         const el = document.createElement('div');
         el.className = 'milestone' + (reached ? ' reached' : '');
