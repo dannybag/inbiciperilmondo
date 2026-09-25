@@ -1,8 +1,14 @@
 {
   "fundraising": {
-    "raised": 4667,
+    "raised": 4693,
     "goal": 4410,
     "donors": [
+      {
+        "name": "barbara c",
+        "amount": 26,
+        "time": "41 minutes",
+        "message": "One step at a time, joining forces."
+      },
       {
         "name": "Lucia G",
         "amount": 100,
@@ -90,7 +96,7 @@
       {
         "name": "Mago M",
         "amount": 50,
-        "time": "7 days",
+        "time": "8 days",
         "message": ""
       },
       {
@@ -186,7 +192,7 @@
       {
         "name": "Anonymous",
         "amount": 147,
-        "time": "16 days",
+        "time": "17 days",
         "message": ""
       },
       {
@@ -234,7 +240,7 @@
       {
         "name": "Silvia e Marco G",
         "amount": 50,
-        "time": "21 days",
+        "time": "22 days",
         "message": ""
       },
       {
@@ -252,19 +258,19 @@
       {
         "name": "Patrizia S",
         "amount": 50,
-        "time": "22 days",
+        "time": "23 days",
         "message": ""
       },
       {
         "name": "Laura B",
         "amount": 12,
-        "time": "2 days",
+        "time": "3 days",
         "message": "Prove tecniche di spiegazione! 🤣"
       },
       {
         "name": "Laura B",
         "amount": 12,
-        "time": "2 days",
+        "time": "3 days",
         "message": "Un 1€ per volta!"
       },
       {
