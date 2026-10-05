@@ -69,7 +69,9 @@
       "title": "Finalmente ho deciso luogo di partenza!",
       "text": "Guardate il video e lo scoprirete!",
       "photos": [],
-      "videos": [],
+      "videos": [
+        "https://youtube.com/shorts/_SYevM0o7nw?feature=share"
+      ],
       "published": true,
       "title_en": "The starting point has been decided!",
       "text_en": "Watch the video and you’ll find out!"
