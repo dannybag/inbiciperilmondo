@@ -955,11 +955,13 @@
   <!-- Griglia realtà -->
   <div id="cr" class="cs">
     <div class="cin-label" id="cil" style="opacity:0">Com'è andata</div>
-    <div class="cin-grid">
+    <div class="cin-grid" style="grid-template-columns:repeat(3,1fr);">
       <div class="cin-item" id="ci0" style="opacity:0"><div class="cin-num">1.766</div><div class="cin-lbl">km pedalati</div></div>
-      <div class="cin-item" id="ci1" style="opacity:0"><div class="cin-num">16</div><div class="cin-lbl">tappe fatte</div></div>
-      <div class="cin-item" id="ci2" style="opacity:0"><div class="cin-num">2,6€<span style="font-size:.5em;vertical-align:middle">×</span>km</div><div class="cin-lbl">obiettivo raggiunto</div></div>
-      <div class="cin-item" id="ci3" style="opacity:0"><div class="cin-num">100%</div><div class="cin-lbl">fondi devoluti</div></div>
+      <div class="cin-item" id="ci1" style="opacity:0"><div class="cin-num">14.343 m</div><div class="cin-lbl">di dislivello</div></div>
+      <div class="cin-item" id="ci2" style="opacity:0"><div class="cin-num">16</div><div class="cin-lbl">tappe fatte</div></div>
+      <div class="cin-item" id="ci3" style="opacity:0"><div class="cin-num">2,6 €<span style="font-size:.5em;vertical-align:middle">×</span>km</div><div class="cin-lbl">obiettivo raggiunto</div></div>
+      <div class="cin-item" id="ci4" style="opacity:0"><div class="cin-num">4.704 €</div><div class="cin-lbl">cifra raggiunta</div></div>
+      <div class="cin-item" id="ci5" style="opacity:0"><div class="cin-num">100%</div><div class="cin-lbl">fondi devoluti</div></div>
     </div>
   </div>
 
@@ -983,14 +985,18 @@
 (function(){
   const W = ms => new Promise(r => setTimeout(r, ms));
   const SPOTS = [
-    {n:'1.766',l:'km pedalati'},{n:'16',l:'tappe fatte'},
-    {n:'2,6€×km',l:'obiettivo raggiunto'},{n:'100%',l:'fondi devoluti'}
+    {n:'16',l:'tappe fatte'},
+    {n:'1.766',l:'km pedalati'},
+    {n:'14.343 m',l:'di dislivello'},
+    {n:'2,6 €×km',l:'obiettivo raggiunto'},
+    {n:'100%',l:'fondi devoluti'}
   ];
 
   async function showSeq(prefix, containerId){
     const container = document.getElementById(containerId);
     const lbl = document.getElementById(prefix+'l');
-    const items = [0,1,2,3].map(i => document.getElementById(prefix+i));
+    const count = containerId==='cr' ? 6 : 4;
+    const items = Array.from({length:count},(_,i)=>document.getElementById(prefix+i));
     items.forEach(el => { el.style.opacity='0'; el.className='cin-item'; });
     lbl.style.opacity='0'; lbl.className='cin-label';
     container.className = containerId==='cp' ? '' : 'cs';
@@ -1049,6 +1055,9 @@
 
     // 4 — Com'è andata sequenza sinistra→destra
     await showSeq('ci', 'cr');
+
+    // pausa sulla griglia finale
+    await W(1800);
 
     // 5 — rimpicciolisce
     cr.classList.add('cin-anim-zo');
