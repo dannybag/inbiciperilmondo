@@ -1151,6 +1151,7 @@
 <!-- IL DIARIO - sezione espandibile, esperienza completa come per Il Viaggio -->
 <div id="diario-section" style="display:none; overflow:hidden;">
   <style>
+    #viaggio-btn.is-open, #diario-btn.is-open, #donors-btn.is-open { outline:2px solid var(--orange); outline-offset:2px; }
     .dia-tabs { display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap; max-width:680px; margin:0 auto 0.8rem; }
     .dia-tab { display:inline-flex; align-items:center; gap:0.4rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:transparent; border:2px solid var(--orange); padding:0.4rem 0.8rem; border-radius:3px; cursor:pointer; white-space:nowrap; transition:background .2s, color .2s; }
     .dia-tab { color:var(--orange); border-color:var(--orange); transition:box-shadow .2s, filter .2s; }
@@ -2111,22 +2112,37 @@
       document.getElementById('diario-section').style.display = 'none';
       document.getElementById('diario-arrow').textContent = '↓';
     }
+    syncTopBtns();
   }
 
   let _diarioOpen = false;
   let _diarioLoaded = false;
+  function syncTopBtns() {
+    [['viaggio-btn', typeof _viaggioOpen !== 'undefined' && _viaggioOpen],
+     ['diario-btn',  typeof _diarioOpen  !== 'undefined' && _diarioOpen],
+     ['donors-btn',  typeof _donorsOpen  !== 'undefined' && _donorsOpen]].forEach(([id, on]) => {
+      const b = document.getElementById(id);
+      if (b) b.classList.toggle('is-open', !!on);
+    });
+  }
   function toggleDiario() {
     const sec = document.getElementById('diario-section');
     const arrow = document.getElementById('diario-arrow');
     _diarioOpen = !_diarioOpen;
     sec.style.display = _diarioOpen ? 'block' : 'none';
     arrow.textContent = _diarioOpen ? '↑' : '↓';
+    if (_diarioOpen) {
+      // Ogni volta che si apre Storie in Sella parte da Quante Storie
+      window._diaTab = 'viaggio';
+      if (window._diaGroups) setDiaTab('viaggio');
+    }
     if (_diarioOpen && !_diarioLoaded) { _diarioLoaded = true; loadDiarioPreview(); }
     if (_diarioOpen && _viaggioOpen) {
       _viaggioOpen = false;
       document.getElementById('viaggio-section').style.display = 'none';
       document.getElementById('viaggio-arrow').textContent = '↓';
     }
+    syncTopBtns();
   }
 
   function _diarioYtId(url) {
@@ -3282,6 +3298,7 @@
       renderDonors();
       setTimeout(() => document.getElementById('donors-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
     }
+    syncTopBtns();
   }
 
   function renderDonors() {
