@@ -1153,10 +1153,13 @@
   <style>
     .dia-tabs { display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap; max-width:680px; margin:0 auto 0.8rem; }
     .dia-tab { display:inline-flex; align-items:center; gap:0.4rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:transparent; border:2px solid var(--orange); padding:0.4rem 0.8rem; border-radius:3px; cursor:pointer; white-space:nowrap; transition:background .2s, color .2s; }
-    .dia-tab:hover { background:rgba(240,90,40,0.12); }
-    .dia-tab.active { color:#FFF8F4; background:var(--orange); }
-    .dia-tab-n { font-family:'IBM Plex Mono',monospace; font-weight:400; font-size:0.6rem; letter-spacing:0; opacity:0.75; }
-    .dia-caption { text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.35); margin-bottom:1.3rem; min-height:0.9rem; }
+    .dia-tab { --c:var(--orange); --on:#FFF8F4; color:var(--c); border-color:var(--c); }
+    .dia-tab[data-tab="ant"]     { --c:#4FC3F7; --on:#0A0A0A; border-radius:999px; padding-left:1rem; padding-right:1rem; }
+    .dia-tab[data-tab="viaggio"] { --c:var(--orange); --on:#FFF8F4; border-radius:3px; }
+    .dia-tab[data-tab="agg"]     { --c:#F5C542; --on:#0A0A0A; border-radius:0; border-style:dashed; }
+    .dia-tab:hover { background:color-mix(in srgb, var(--c) 15%, transparent); }
+    .dia-tab.active { color:var(--on); background:var(--c); border-style:solid; }
+    .dia-caption { text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:#FFFFFF; margin-bottom:1.3rem; min-height:0.9rem; }
     @media(max-width:480px) { .dia-tab { font-size:0.78rem; padding:0.4rem 0.6rem; letter-spacing:0.06em; } }
     .dia-photos { display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; }
     .dia-photo { width:88px; height:88px; border-radius:3px; overflow:hidden; cursor:pointer; border:1px solid rgba(255,248,244,0.08); flex-shrink:0; position:relative; background:#0A0A0A; }
@@ -1182,9 +1185,9 @@
   <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 2.2rem;">
     <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:1.2rem; text-align:center;" data-i18n="diario_sub">Ricordi, incontri e imprevisti, giorno per giorno</div>
     <div class="dia-tabs" id="dia-tabs" role="tablist">
-      <button class="dia-tab" data-tab="ant" role="tab" onclick="setDiaTab('ant')"><span data-i18n="dia_tab_ant">Anticipazioni</span> <span class="dia-tab-n" id="dia-n-ant"></span></button>
-      <button class="dia-tab" data-tab="viaggio" role="tab" onclick="setDiaTab('viaggio')"><span data-i18n="dia_tab_viaggio">Storie di viaggio</span> <span class="dia-tab-n" id="dia-n-viaggio"></span></button>
-      <button class="dia-tab" data-tab="agg" role="tab" onclick="setDiaTab('agg')"><span data-i18n="dia_tab_agg">Aggiornamenti</span> <span class="dia-tab-n" id="dia-n-agg"></span></button>
+      <button class="dia-tab" data-tab="ant" role="tab" onclick="setDiaTab('ant')"><span data-i18n="dia_tab_ant">Anticipazioni</span></button>
+      <button class="dia-tab" data-tab="viaggio" role="tab" onclick="setDiaTab('viaggio')"><span data-i18n="dia_tab_viaggio">Storie di viaggio</span></button>
+      <button class="dia-tab" data-tab="agg" role="tab" onclick="setDiaTab('agg')"><span data-i18n="dia_tab_agg">Aggiornamenti</span></button>
     </div>
     <div class="dia-caption" id="dia-caption"></div>
     <div id="diario-full" style="max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:1.4rem;">
@@ -2272,10 +2275,6 @@
 
   function renderDiarioEntries(entries) {
     window._diaGroups = _diaGroups([..._AGGIORNAMENTI, ...entries]);
-    _DIA_TABS.forEach(k => {
-      const n = document.getElementById('dia-n-' + k);
-      if (n) n.textContent = window._diaGroups[k].length;
-    });
     setDiaTab(window._diaTab || 'viaggio');
   }
 
