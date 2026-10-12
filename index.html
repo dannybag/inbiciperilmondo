@@ -1180,6 +1180,11 @@
     .dia-yt .play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:2.4rem; height:2.4rem; border-radius:50%; background:rgba(240,90,40,0.9); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 6px rgba(0,0,0,0.25); }
     .dia-yt .play::before { content:''; border-style:solid; border-width:6px 0 6px 11px; border-color:transparent transparent transparent #fff; margin-left:3px; }
     .dia-yt iframe { width:100%; aspect-ratio:16/9; border:0; display:block; }
+    /* il player sostituisce l'anteprima come figlio diretto di .dia-video: serve una misura (non per Instagram, che si regola da solo) */
+    .dia-video:not(.dia-ig) > iframe { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
+    /* YouTube Shorts: verticali 9:16, più stretti */
+    .dia-video.short { max-width:320px; }
+    .dia-video.short .dia-yt, .dia-video.short > iframe { aspect-ratio:9/16; }
     .dia-ig { max-width:540px; border:0; background:transparent; }
     .dia-ig .instagram-media { margin:0 auto !important; }
     .dia-lightbox { display:none; position:fixed; inset:0; background:rgba(10,10,10,0.92); z-index:9500; align-items:center; justify-content:center; padding:4vw; }
@@ -2262,7 +2267,8 @@
     }
     const ytId = _diarioYtId(url);
     if (ytId) {
-      return `<div class="dia-video">
+      const isShort = /youtube\.com\/shorts\//.test(url);
+      return `<div class="dia-video${isShort ? ' short' : ''}">
         <div class="dia-yt" style="background-image:url('https://img.youtube.com/vi/${ytId}/hqdefault.jpg')" onclick="_diaPlayYt(this, '${ytId}')">
           <div class="play"></div>
         </div>
@@ -2283,7 +2289,7 @@
   }
 
   function _diaPlayYt(el, id) {
-    el.outerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+    el.outerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
   }
 
   let diaLightboxPhotos = [];
