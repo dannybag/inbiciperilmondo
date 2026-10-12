@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una Bici per il Mondo — Stats</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Barlow+Condensed:wght@700;900&family=IBM+Plex+Mono:wght@400;500&display=swap');
+  :root { --orange:#F05A28; --offwhite:#FFF8F4; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html, body { width:100%; height:100%; background:#111; display:flex; align-items:center; justify-content:center; }
+</style>
+</head>
+<body>
+<!-- STATS CINEMATICHE -->
+<div id="stats-stage" style="background:#111; display:block; height:340px; position:relative; overflow:hidden;">
+  <!-- glow di sfondo -->
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 65% at 50% 50%, rgba(240,90,40,0.16) 0%, transparent 70%);pointer-events:none;"></div>
+
+  <style>
+    /* tutti gli screen: sovrapposti, centrati, stessa area */
+    .cs { position:absolute; inset:0; display:none; flex-direction:column; align-items:center; justify-content:center; }
+    /* piano — visibile all'inizio */
+    #cp { position:absolute; inset:0; display:none; flex-direction:column; align-items:center; justify-content:center; }
+    /* label */
+    .cin-label { font-family:'IBM Plex Mono',monospace; font-size:0.78rem; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; text-align:center; margin-bottom:1.4rem; color:#FFF; }
+    /* griglia 4 colonne */
+    .cin-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; width:90%; }
+    .cin-item { text-align:center; padding:0.9rem 0.5rem; border-right:1px solid rgba(240,90,40,0.15); }
+    .cin-item:last-child { border-right:none; }
+    .cin-num { font-family:'Barlow Condensed',sans-serif; font-size:clamp(1.1rem,3.8vw,2rem); font-weight:900; line-height:1; color:var(--orange); }
+    .cin-lbl { font-family:'IBM Plex Mono',monospace; font-size:0.48rem; letter-spacing:0.15em; text-transform:uppercase; margin-top:0.4rem; color:rgba(255,255,255,0.4); }
+    /* titolo */
+    .cin-title-text { font-family:'Barlow Condensed',sans-serif; font-weight:900; color:#FFF; line-height:1; font-size:clamp(2.5rem,10vw,5rem); letter-spacing:0.05em; text-transform:uppercase; }
+    /* spotlight */
+    .cin-spot-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; color:var(--orange); line-height:1; font-size:clamp(3.5rem,14vw,7rem); }
+    .cin-spot-lbl { font-family:'IBM Plex Mono',monospace; font-size:clamp(0.65rem,1.8vw,0.85rem); font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:#FFF; margin-top:0.6rem; }
+    /* bici */
+    .cin-bici-num { font-family:'Barlow Condensed',sans-serif; font-weight:900; color:var(--orange); line-height:1; font-size:clamp(5rem,18vw,9rem); }
+    .cin-bici-sub { font-family:'IBM Plex Mono',monospace; font-size:clamp(0.65rem,2vw,0.85rem); font-weight:700; letter-spacing:0.3em; text-transform:uppercase; color:#FFF; margin-top:0.6rem; opacity:0; }
+    #cin-grazie   { font-family:'Barlow Condensed',sans-serif; font-weight:900; color:#FFF; font-size:clamp(2.5rem,10vw,5rem); letter-spacing:0.08em; text-transform:uppercase; margin-top:0.6rem; opacity:0; }
+    /* replay */
+    #cin-replay { display:none !important; }
+    /* animazioni */
+    @keyframes cinZO  { 0%{opacity:1;transform:scale(1)} 100%{opacity:0;transform:scale(0.05)} }
+    @keyframes cinZI  { 0%{opacity:0;transform:scale(0.2)} 100%{opacity:1;transform:scale(1)} }
+    @keyframes cinZB  { 0%{opacity:0;transform:scale(0.1)} 70%{transform:scale(1.08)} 100%{opacity:1;transform:scale(1)} }
+    @keyframes cinSI  { 0%{opacity:0;transform:scale(0.3)} 100%{opacity:1;transform:scale(1)} }
+    @keyframes cinSO  { 0%{opacity:1;transform:scale(1)} 100%{opacity:0;transform:scale(0.05)} }
+    @keyframes cinFU  { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes cinFI  { from{opacity:0} to{opacity:1} }
+    @keyframes cinSLI { from{opacity:0;transform:translateX(-16px)} to{opacity:1;transform:translateX(0)} }
+    .cin-anim-zo  { animation:cinZO  1.2s cubic-bezier(.4,0,1,1) forwards }
+    .cin-anim-zi  { animation:cinZI  1.4s cubic-bezier(.22,1,.36,1) forwards }
+    .cin-anim-zb  { animation:cinZB  2.6s cubic-bezier(.22,1,.36,1) forwards }
+    .cin-anim-si  { animation:cinSI  1.1s cubic-bezier(.22,1,.36,1) forwards }
+    .cin-anim-so  { animation:cinSO  0.9s cubic-bezier(.4,0,1,1) forwards }
+    .cin-anim-fu  { animation:cinFU  1s ease forwards }
+    .cin-anim-fi  { animation:cinFI  .8s ease forwards }
+    .cin-anim-sli { animation:cinSLI .6s cubic-bezier(.22,1,.36,1) forwards }
+    @media(max-width:600px){
+      .cin-grid { grid-template-columns:repeat(2,1fr); width:100%; }
+      .cin-item { border-right:none; border-bottom:1px solid rgba(240,90,40,0.1); }
+      .cin-item:nth-child(odd){ border-right:1px solid rgba(240,90,40,0.1); }
+      .cin-item:nth-last-child(-n+2){ border-bottom:none; }
+      #stats-stage { height:300px; }
+    }
+  </style>
+
+  <!-- Piano originale -->
+  <div id="cp">
+    <div class="cin-label" id="pil" style="opacity:0">Il piano originale</div>
+    <div class="cin-grid">
+      <div class="cin-item" id="pi0" style="opacity:0"><div class="cin-num">~1.700</div><div class="cin-lbl">km in sella</div></div>
+      <div class="cin-item" id="pi1" style="opacity:0"><div class="cin-num">~20</div><div class="cin-lbl">tappe previste</div></div>
+      <div class="cin-item" id="pi2" style="opacity:0"><div class="cin-num">1€<span style="font-size:.5em;vertical-align:middle">×</span>km</div><div class="cin-lbl">obiettivo raccolta</div></div>
+      <div class="cin-item" id="pi3" style="opacity:0"><div class="cin-num">100%</div><div class="cin-lbl">fondi devoluti</div></div>
+    </div>
+  </div>
+
+  <!-- Titolo Com'è andata -->
+  <div id="ct" class="cs"><div class="cin-title-text">Com'è andata</div></div>
+
+  <!-- Griglia realtà -->
+  <div id="cr" class="cs">
+    <div class="cin-label" id="cil" style="opacity:0">Com'è andata</div>
+    <div class="cin-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="cin-item" id="ci0" style="opacity:0"><div class="cin-num">1.766</div><div class="cin-lbl">km pedalati</div></div>
+      <div class="cin-item" id="ci1" style="opacity:0"><div class="cin-num">14.343 m</div><div class="cin-lbl">di dislivello</div></div>
+      <div class="cin-item" id="ci2" style="opacity:0"><div class="cin-num">16</div><div class="cin-lbl">tappe fatte</div></div>
+      <div class="cin-item" id="ci3" style="opacity:0"><div class="cin-num">2,6 €<span style="font-size:.5em;vertical-align:middle">×</span>km</div><div class="cin-lbl">obiettivo raggiunto</div></div>
+      <div class="cin-item" id="ci4" style="opacity:0"><div class="cin-num">4.704 €</div><div class="cin-lbl">cifra raggiunta</div></div>
+      <div class="cin-item" id="ci5" style="opacity:0"><div class="cin-num">100%</div><div class="cin-lbl">fondi devoluti</div></div>
+    </div>
+  </div>
+
+  <!-- Spotlight -->
+  <div id="cs" class="cs" style="text-align:center">
+    <div class="cin-spot-num" id="csn"></div>
+    <div class="cin-spot-lbl" id="csl"></div>
+  </div>
+
+  <!-- Bici + Grazie -->
+  <div id="cb" class="cs" style="text-align:center">
+    <div class="cin-bici-num" id="cbn">32</div>
+    <div class="cin-bici-sub" id="cbs">bici Buffalo donate</div>
+    <div id="cin-grazie">GRAZIE!</div>
+  </div>
+
+  <button id="cin-replay" onclick="cinStartAnim()">↺ rivedi</button>
+</div>
+
+<script>
+(function(){
+  const W = ms => new Promise(r => setTimeout(r, ms));
+  const SPOTS = [
+    {n:'16',l:'tappe fatte'},
+    {n:'1.766',l:'km pedalati'},
+    {n:'14.343 m',l:'di dislivello'},
+    {n:'2,6 €×km',l:'obiettivo raggiunto'},
+    {n:'100%',l:'fondi devoluti'}
+  ];
+
+  async function showSeq(prefix, containerId){
+    const container = document.getElementById(containerId);
+    const lbl = document.getElementById(prefix+'l');
+    const count = containerId==='cr' ? 6 : 4;
+    const items = Array.from({length:count},(_,i)=>document.getElementById(prefix+i));
+    items.forEach(el => { el.style.opacity='0'; el.className='cin-item'; });
+    lbl.style.opacity='0'; lbl.className='cin-label';
+    container.className = containerId==='cp' ? '' : 'cs';
+    container.style.display='flex';
+    await W(50);
+    lbl.classList.add('cin-anim-sli');
+    await W(600);
+    for(const el of items){ el.classList.add('cin-anim-sli'); await W(450); }
+    await W(600);
+  }
+
+  async function cinStartAnim(){
+    const cp=document.getElementById('cp'), cr=document.getElementById('cr'),
+          ct=document.getElementById('ct'), cs=document.getElementById('cs'),
+          cb=document.getElementById('cb'), btn=document.getElementById('cin-replay'),
+          cbn=document.getElementById('cbn'), cbs=document.getElementById('cbs'),
+          csn=document.getElementById('csn'), csl=document.getElementById('csl'),
+          cg=document.getElementById('cin-grazie');
+
+    // reset tutto
+    btn.style.display='none';
+    [cr,ct,cs,cb].forEach(el=>{ el.style.display='none'; el.className='cs'; });
+    cp.style.display='none'; cp.style.opacity='1'; cp.style.transform='scale(1)'; cp.className='';
+    document.getElementById('pil').style.opacity='0'; document.getElementById('pil').className='cin-label';
+    [0,1,2,3].forEach(i=>{ const el=document.getElementById('pi'+i); el.style.opacity='0'; el.className='cin-item'; });
+    cbn.style.opacity='0'; cbn.className='cin-bici-num';
+    cbs.style.opacity='0'; cbs.className='cin-bici-sub';
+    cg.style.opacity='0'; cg.className='';
+
+    // 0 — piano appare in sequenza sinistra→destra
+    await showSeq('pi', 'cp');
+    await W(800);
+
+    // 1 — piano rimpicciolisce
+    cp.classList.add('cin-anim-zo');
+    await W(1300); cp.style.display='none'; await W(300);
+
+    // 2 — titolo zoom in poi rimpicciolisce
+    ct.className='cs'; ct.style.display='flex';
+    ct.classList.add('cin-anim-zb');
+    await W(1800);
+    ct.classList.remove('cin-anim-zb'); ct.classList.add('cin-anim-zo');
+    await W(1200); ct.style.display='none'; await W(300);
+
+    // 3 — spotlight voce per voce
+    for(const s of SPOTS){
+      csn.textContent=s.n; csl.textContent=s.l;
+      cs.className='cs'; cs.style.display='flex';
+      cs.classList.add('cin-anim-si');
+      await W(1600);
+      cs.classList.remove('cin-anim-si'); cs.classList.add('cin-anim-so');
+      await W(900); cs.style.display='none'; await W(80);
+    }
+
+    await W(80);
+
+    // 4 — Com'è andata sequenza sinistra→destra
+    await showSeq('ci', 'cr');
+
+    // pausa sulla griglia finale
+    await W(1800);
+
+    // 5 — rimpicciolisce
+    cr.classList.add('cin-anim-zo');
+    await W(1200); cr.style.display='none'; await W(300);
+
+    // 6 — 32 bici + GRAZIE
+    cb.className='cs'; cb.style.display='flex';
+    cbn.classList.add('cin-anim-zb'); cbn.style.opacity='1';
+    await W(800);
+    cbs.classList.add('cin-anim-fu'); cbs.style.opacity='1';
+    await W(2200);
+    cg.classList.add('cin-anim-fu'); cg.style.opacity='1';
+    await W(2000);
+    // pausa prima di ripartire
+    await W(3500);
+    cinStartAnim();
+  }
+
+  window.cinStartAnim = cinStartAnim;
+  cinStartAnim();
+})();
+</script>
+</body>
+</html>
