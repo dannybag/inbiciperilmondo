@@ -1152,7 +1152,10 @@
 <div id="diario-section" style="display:none; overflow:hidden;">
   <style>
     #viaggio-btn.is-open, #diario-btn.is-open, #donors-btn.is-open { outline:2px solid var(--orange); outline-offset:2px; }
-    .v-story-btn { margin-left:auto; flex-shrink:0; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); border-radius:999px; padding:0.2rem 0.7rem; cursor:pointer; white-space:nowrap; transition:filter .2s, background .2s; }
+    .v-story-btn { margin-left:auto; flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; width:2.6rem; height:1.9rem; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); border-radius:999px; padding:0; cursor:pointer; transition:filter .2s, background .2s; }
+    .v-story-btn svg { width:1.15rem; height:1.15rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .v-route-link { color:inherit; text-decoration:none; cursor:pointer; }
+    .v-route-link:hover, .v-route-link:focus-visible { text-decoration:underline; text-underline-offset:3px; }
     .dia-back-btn { display:inline-flex; align-self:flex-start; margin-bottom:0.7rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); border-radius:999px; padding:0.2rem 0.7rem; cursor:pointer; white-space:nowrap; transition:background .2s; }
     .dia-back-btn:hover { background:var(--orange); color:#FFF8F4; }
     .v-story-btn:hover { background:var(--orange); color:#FFF8F4; }
@@ -2022,13 +2025,18 @@
       const route = (t.from&&t.to)?t.from+' → '+t.to:(t.from||'—');
       const color = TAPPE_COLORS[i % TAPPE_COLORS.length];
       const story = _matches[i];
+      const _storyTip = _lang === 'en' ? 'Read the story of this stage' : 'Leggi la storia di questa tappa';
       const storyBtn = story
-        ? `<button class="v-story-btn" onclick="openStoryFromTappa('${_diaStoryId(story)}', ${i})" title="${_lang === 'en' ? 'Read the story of this stage' : 'Leggi la storia di questa tappa'}">${_storyLbl} →</button>`
+        ? `<button class="v-story-btn" onclick="openStoryFromTappa('${_diaStoryId(story)}', ${i})" title="${_storyTip}" aria-label="${_storyTip}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5C4.5 4.4 8 4.4 12 6.6c4-2.2 7.5-2.2 10-1.100V19c-2.500-1.100-6-1.100-10 1.100C8 17.900 4.500 17.900 2 19z"/><path d="M12 6.600V20.100"/></svg></button>`
         : '';
+      // anche il titolo della tappa porta alla storia (link vero: funziona anche con tasto destro / nuova scheda)
+      const routeHtml = story
+        ? `<a class="v-route-link" href="#${_diaStoryId(story)}" onclick="openStoryFromTappa('${_diaStoryId(story)}', ${i}); return false;" title="${_storyTip}">${route}</a>`
+        : route;
       return `<div id="v-row-${i}" style="display:flex; align-items:center; gap:0.8rem; padding:0.8rem 0; border-bottom:1px solid rgba(240,90,40,0.1); flex-wrap:wrap; transition:background .4s;">
         <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:${color}; min-width:1.8rem; flex-shrink:0;">${i+1}</span>
         <span style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#FFF8F4; min-width:4rem; flex-shrink:0;">${dateStr}</span>
-        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:${color};">${route} <span style="font-family:var(--mono);font-size:0.75rem;color:#FFF8F4;margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0}m</span></span>
+        <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:${color};">${routeHtml} <span style="font-family:var(--mono);font-size:0.75rem;color:#FFF8F4;margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0}m</span></span>
         ${storyBtn}
       </div>`;
     }).join('');
