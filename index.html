@@ -1177,7 +1177,8 @@
     .dia-yt .play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:2.4rem; height:2.4rem; border-radius:50%; background:rgba(240,90,40,0.9); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 6px rgba(0,0,0,0.25); }
     .dia-yt .play::before { content:''; border-style:solid; border-width:6px 0 6px 11px; border-color:transparent transparent transparent #fff; margin-left:3px; }
     .dia-yt iframe { width:100%; aspect-ratio:16/9; border:0; display:block; }
-    .dia-ig iframe { width:100%; min-height:480px; border:0; display:block; background:#000; }
+    .dia-ig { max-width:540px; border:0; background:transparent; }
+    .dia-ig .instagram-media { margin:0 auto !important; }
     .dia-lightbox { display:none; position:fixed; inset:0; background:rgba(10,10,10,0.92); z-index:9500; align-items:center; justify-content:center; padding:4vw; }
     .dia-lightbox.open { display:flex; }
     .dia-lightbox img { max-width:100%; max-height:90vh; border-radius:4px; user-select:none; -webkit-user-select:none; }
@@ -2242,8 +2243,12 @@
   function _diaRenderVideo(url) {
     const igEmbed = _diarioIgEmbed(url);
     if (igEmbed) {
+      // Embed ufficiale Instagram (blockquote + embed.js): lo script lo trasforma nel riquadro con il suo player
+      const permalink = igEmbed.replace(/embed$/, '') + '?utm_source=ig_embed&utm_campaign=loading';
       return `<div class="dia-video dia-ig">
-        <iframe src="${igEmbed}" allowtransparency="true" allow="autoplay; encrypted-media" frameborder="0" scrolling="no"></iframe>
+        <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="${permalink}" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px auto; max-width:540px; min-width:280px; padding:0; width:calc(100% - 2px);">
+          <a href="${permalink}" target="_blank" rel="noopener" style="display:block; padding:2.2rem 1rem; text-align:center; font-family:Arial,sans-serif; font-size:14px; color:#3897f0; text-decoration:none;">Visualizza questo post su Instagram</a>
+        </blockquote>
       </div>`;
     }
     const ytId = _diarioYtId(url);
@@ -2255,6 +2260,17 @@
       </div>`;
     }
     return `<div class="dia-video"><video controls preload="metadata" src="${url}"></video></div>`;
+  }
+
+  // Dopo ogni rendering delle card: carica embed.js (una sola volta) e fa elaborare i blockquote Instagram nuovi
+  function _diaProcessIg() {
+    if (!document.querySelector('#diario-full .instagram-media')) return;
+    if (window.instgrm && window.instgrm.Embeds) { window.instgrm.Embeds.process(); return; }
+    if (document.getElementById('ig-embed-js')) return;
+    const sc = document.createElement('script');
+    sc.id = 'ig-embed-js'; sc.async = true; sc.src = 'https://www.instagram.com/embed.js';
+    sc.onload = () => { try { window.instgrm && window.instgrm.Embeds.process(); } catch (e) {} };
+    document.body.appendChild(sc);
   }
 
   function _diaPlayYt(el, id) {
@@ -2405,6 +2421,7 @@
       return;
     }
     wrap.innerHTML = list.map(e => _diaCardHtml(e, lang)).join('');
+    _diaProcessIg();
   }
 
   function _diaCardHtml(e, lang) {
