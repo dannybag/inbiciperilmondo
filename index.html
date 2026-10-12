@@ -1973,8 +1973,7 @@
     window._pendingStoryHash = storyId;
     window._backStoryId = storyId;      // da qui il bottone "← Il Viaggio" sulla storia
     window._backTappaIdx = idx;
-    // una voce di cronologia: il tasto Indietro del telefono/browser riporta a Il Viaggio
-    try { history.pushState({ fromViaggio: true }, '', '#' + storyId); } catch (e) {}
+    window._navHash = storyId;          // l'indirizzo diventa #storia-N (condivisibile); Indietro riporta a Il Viaggio
     if (!_diarioOpen) toggleDiario(true);      // chiude Il Viaggio e apre Storie in Sella
     else {
       if (_viaggioOpen) toggleViaggio();
@@ -1983,28 +1982,29 @@
     setTimeout(scrollToPendingStory, 120);     // se il diario non è ancora caricato ci pensa loadDiarioPreview
   }
 
-  function returnToViaggio() {
+  function scrollBackToTappa() {
     const idx = window._backTappaIdx;
     window._backStoryId = null;
-    if (_diarioOpen) toggleDiario();
-    if (!_viaggioOpen) toggleViaggio();
     setTimeout(() => {
       const row = document.getElementById('v-row-' + idx);
       const target = row || document.getElementById('viaggio-section');
+      if (!target) return;
       target.scrollIntoView({ behavior: 'smooth', block: row ? 'center' : 'start' });
       if (row) { row.style.background = 'rgba(240,90,40,0.15)'; setTimeout(() => { row.style.background = ''; }, 2200); }
     }, 250);
   }
 
-  function backToViaggioClick() {
-    // se sono arrivato da una tappa, "Indietro" del browser e il bottone fanno la stessa cosa
-    if (history.state && history.state.fromViaggio) history.back();
-    else returnToViaggio();
+  function returnToViaggio() {        // solo se non c'è una voce di cronologia a cui tornare
+    if (_diarioOpen) toggleDiario();
+    if (!_viaggioOpen) toggleViaggio();
+    scrollBackToTappa();
   }
 
-  window.addEventListener('popstate', () => {
-    if (window._backStoryId && _diarioOpen) returnToViaggio();
-  });
+  function backToViaggioClick() {
+    const st = history.state;
+    if (window._backStoryId && st && st.nav && st.d && !st.ov && st.prev && st.prev.v) history.back();
+    else returnToViaggio();
+  }
 
   function renderViaggioList(tappe) {
     const list = document.getElementById('v-list');
@@ -2205,6 +2205,7 @@
       const b = document.getElementById(id);
       if (b) b.classList.toggle('is-open', !!on);
     });
+    if (typeof navSync === 'function') navSync();   // cronologia: il tasto Indietro segue le sezioni
   }
   function toggleDiario(keepBack) {
     const sec = document.getElementById('diario-section');
@@ -2229,7 +2230,7 @@
 
   function _diarioYtId(url) {
     if (!url) return null;
-    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([a-zA-Z0-9_-]{11})/);
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:shorts\/|embed\/|live\/)|youtube\.com\/watch\?(?:[^#\s]*&)?v=)([a-zA-Z0-9_-]{11})/);
     return m ? m[1] : null;
   }
 
@@ -2490,7 +2491,7 @@
       }
       // Video in evidenza
       if (data.featured_video) {
-        const ytId = data.featured_video.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([a-zA-Z0-9_-]{11})/);
+        const ytId = data.featured_video.match(/(?:youtu\.be\/|youtube\.com\/(?:shorts\/|embed\/|live\/)|youtube\.com\/watch\?(?:[^#\s]*&)?v=)([a-zA-Z0-9_-]{11})/);
         if (ytId) {
           const box = document.getElementById('featured-video-box');
           const iframe = document.getElementById('featured-video-iframe');
@@ -3498,6 +3499,7 @@
     const hash = window.location.hash;
     if (!hash.startsWith('#storia-')) return;
     window._pendingStoryHash = hash.slice(1);
+    window._navHash = hash.slice(1);
     if (!_diarioOpen) toggleDiario(); // loadDiarioPreview girerà normalmente
   }
 
@@ -3747,6 +3749,80 @@
   document.getElementById('pwd-overlay').addEventListener('click', (e) => {
     if (e.target === document.getElementById('pwd-overlay')) closePwd();
   });
+</script>
+
+<script>
+/* ===== CRONOLOGIA: il tasto Indietro (telefono/browser) torna alla vista precedente invece di uscire dal sito =====
+   Stato di vista = quali sezioni sono aperte (Il Viaggio, Storie in Sella, Sostenitori) + eventuale finestra sopra
+   (galleria foto, report, pannelli). Ogni cambio di vista aggiunge UNA voce di cronologia; Indietro ripristina la precedente.
+   Guarda lo stato reale della pagina, quindi vale per qualunque modo in cui si apra o chiuda una vista. */
+(function () {
+  const disp = e => !!e.style.display && e.style.display !== 'none';
+  const OVERLAYS = [
+    { name: 'lightbox', el: 'dia-lightbox',  vis: e => e.classList.contains('open'), close: () => closeDiaLightbox() },
+    { name: 'frame',    el: 'frame-overlay', vis: disp, close: () => closeFrame() },
+    { name: 'pwd',      el: 'pwd-overlay',   vis: disp, close: () => closePwd() },
+    { name: 'fndin',    el: 'fndin-overlay', vis: disp, close: () => closeAdmin() },
+    { name: 'tap',      el: 'tap-overlay',   vis: disp, close: () => tapClose() }
+  ];
+  const BASE = { v: false, d: false, s: false, ov: null };
+  let applying = false, queued = false, inited = false;
+
+  function norm(x) { x = x || {}; return { v: !!x.v, d: !!x.d, s: !!x.s, ov: x.ov || null }; }
+  function same(a, b) { a = norm(a); b = norm(b); return a.v === b.v && a.d === b.d && a.s === b.s && a.ov === b.ov; }
+  function current() {
+    let ov = null;
+    for (const o of OVERLAYS) { const e = document.getElementById(o.el); if (e && o.vis(e)) { ov = o.name; break; } }
+    return { v: !!_viaggioOpen, d: !!_diarioOpen, s: !!_donorsOpen, ov };
+  }
+
+  function commit() {
+    queued = false;
+    if (applying) return;
+    try {
+      if (!inited) { history.replaceState(Object.assign({ nav: 1 }, BASE), ''); inited = true; }  // la pagina nasce con tutto chiuso
+      const st = current();
+      const cur = history.state && history.state.nav ? history.state : BASE;
+      if (same(cur, st)) return;
+      // chiudo ciò che avevo appena aperto -> torno alla voce precedente invece di accumulare voci
+      if (cur.prev && same(cur.prev, st)) { history.back(); return; }
+      const hash = window._navHash; window._navHash = null;
+      history.pushState(Object.assign({ nav: 1, prev: norm(cur) }, st), '',
+        location.pathname + location.search + (hash ? '#' + hash : ''));
+    } catch (e) { /* cronologia non disponibile: la pagina funziona come prima */ }
+  }
+
+  window.navSync = function () {
+    if (applying || queued) return;
+    queued = true;
+    Promise.resolve().then(commit);   // più modifiche nello stesso gesto = una sola voce
+  };
+
+  function apply(st) {
+    st = norm(st);
+    OVERLAYS.forEach(o => { const e = document.getElementById(o.el); if (e && o.vis(e) && o.name !== st.ov) { try { o.close(); } catch (er) {} } });
+    if (_viaggioOpen && !st.v) toggleViaggio();
+    if (_diarioOpen && !st.d) toggleDiario();
+    if (_donorsOpen && !st.s) toggleDonors();
+    if (!_donorsOpen && st.s) toggleDonors();
+    if (!_viaggioOpen && st.v) toggleViaggio();
+    if (!_diarioOpen && st.d) toggleDiario();
+  }
+
+  window.addEventListener('popstate', e => {
+    const st = e.state && e.state.nav ? e.state : BASE;
+    const cameFromStory = !!window._backStoryId;
+    applying = true;
+    try { apply(st); } finally { setTimeout(() => { applying = false; }, 0); }
+    if (cameFromStory && st.v && !st.d) scrollBackToTappa();   // da storia a Il Viaggio: torno alla tappa
+  });
+
+  OVERLAYS.forEach(o => {
+    const e = document.getElementById(o.el);
+    if (e) new MutationObserver(() => navSync()).observe(e, { attributes: true, attributeFilter: ['style', 'class'] });
+  });
+  navSync();   // una vista già aperta al caricamento (link diretto #storia-N) entra in cronologia sopra la pagina vuota
+})();
 </script>
 </body>
 </html>
