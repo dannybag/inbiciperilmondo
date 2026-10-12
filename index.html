@@ -1151,6 +1151,13 @@
 <!-- IL DIARIO - sezione espandibile, esperienza completa come per Il Viaggio -->
 <div id="diario-section" style="display:none; overflow:hidden;">
   <style>
+    .dia-tabs { display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap; max-width:680px; margin:0 auto 0.8rem; }
+    .dia-tab { display:inline-flex; align-items:center; gap:0.4rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:transparent; border:2px solid var(--orange); padding:0.4rem 0.8rem; border-radius:3px; cursor:pointer; white-space:nowrap; transition:background .2s, color .2s; }
+    .dia-tab:hover { background:rgba(240,90,40,0.12); }
+    .dia-tab.active { color:#FFF8F4; background:var(--orange); }
+    .dia-tab-n { font-family:'IBM Plex Mono',monospace; font-weight:400; font-size:0.6rem; letter-spacing:0; opacity:0.75; }
+    .dia-caption { text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,248,244,0.35); margin-bottom:1.3rem; min-height:0.9rem; }
+    @media(max-width:480px) { .dia-tab { font-size:0.78rem; padding:0.4rem 0.6rem; letter-spacing:0.06em; } }
     .dia-photos { display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; }
     .dia-photo { width:88px; height:88px; border-radius:3px; overflow:hidden; cursor:pointer; border:1px solid rgba(255,248,244,0.08); flex-shrink:0; position:relative; background:#0A0A0A; }
     .dia-photo img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s; }
@@ -1174,6 +1181,12 @@
   </style>
   <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 2.2rem;">
     <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:1.2rem; text-align:center;" data-i18n="diario_sub">Ricordi, incontri e imprevisti, giorno per giorno</div>
+    <div class="dia-tabs" id="dia-tabs" role="tablist">
+      <button class="dia-tab" data-tab="ant" role="tab" onclick="setDiaTab('ant')"><span data-i18n="dia_tab_ant">Anticipazioni</span> <span class="dia-tab-n" id="dia-n-ant"></span></button>
+      <button class="dia-tab" data-tab="viaggio" role="tab" onclick="setDiaTab('viaggio')"><span data-i18n="dia_tab_viaggio">Storie di viaggio</span> <span class="dia-tab-n" id="dia-n-viaggio"></span></button>
+      <button class="dia-tab" data-tab="agg" role="tab" onclick="setDiaTab('agg')"><span data-i18n="dia_tab_agg">Aggiornamenti</span> <span class="dia-tab-n" id="dia-n-agg"></span></button>
+    </div>
+    <div class="dia-caption" id="dia-caption"></div>
     <div id="diario-full" style="max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:1.4rem;">
       <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">Caricamento...</div>
     </div>
@@ -2213,32 +2226,103 @@
     }
   }
 
-  const _AGGIORNAMENTI = [{"day": "UPD01", "date": "2026-08-09", "title": "Aggiornamento — pre-partenza", "text": "Avevo stimato male, non le salite, quelle le temo ancora tutte, ma voi. La generosità con cui avete risposto prima ancora della partenza mi ha piacevolmente sorpreso, e devo ammettere, anche un po' commosso. Confesso: lo slogan di 1 euro per km pedalato era perfetto , voi lo avete reso obsoleto prima ancora che partissi, peggio per lo slogan. 😄\nTentiamo un nuovo obiettivo: 2.500 €\nNon perché le mie gambe pedalino più veloce, ma perché con più fondi si comprano più bici: 17 invece di 12, e si sa mai che possiamo arrivare anche a 20 . Più bici vuol dire più gente che arriva a scuola, al lavoro, al mercato con meno difficoltà.\nGrazie di cuore a tutti, anche a chi non può donare, ma aiuta a spargere la voce.", "_aggiornamento": true}, {"day": "UPD02", "date": "2026-08-16", "title": "Aggiornamento — in corsa", "text": "Le decisioni sul target non le prendo più io, le prendete voi. Avevo messo 1.700 euro perché sembrava già un traguardo serio. Li avete superati. Poi avete superato anche 2.500, mentre io ero in sella da qualche parte a contare i km.\nNuovo obiettivo: 3.000 €\nOgni euro in più è una bici in più , e ogni bici in più è qualcuno che arriva a scuola, al lavoro, al mercato. Io pedalo, voi comandate.\nGrazie di cuore a tutti, ancora.", "_aggiornamento": true}, {"day": "UPD03", "date": "2026-08-24", "title": "Aggiornamento — da Firenze", "text": "Morale della giornata: pedalare non serve. Ero fermo a Firenze per un bellissimo incontro con degli amici e voi avete superato i 3.000 euro lo stesso.\nNuovo obiettivo: 3.500 €\nQuasi 24 bici . Se superate anche quello, aspettatevi che mi fermi più spesso.", "_aggiornamento": true}, {"day": "UPD04", "date": "2026-09-01", "title": "Aggiornamento — in corsa", "text": "Ho superato la metà dei km. Non la metà del dislivello, il che è un modo elegante per dire che la parte difficile deve ancora venire. Le salite le stimo sempre male. 😄 Voi invece avete praticamente doppiato le donazioni in cui speravo. Grazie infinite.", "_aggiornamento": true}, {"day": "UPD05", "date": "2026-09-06", "title": "Aggiornamento — in corsa", "text": "Mancano ancora circa 600 km e abbiamo conquistato insieme l'inaspettato ed esaltante traguardo di 23 bici donate .\nNuovo obiettivo: 4.000 €\nSpero di non risultare troppo presuntuoso nello spostare l'obiettivo a 27 Buffalo donate . Ci provo dai!", "_aggiornamento": true}, {"day": "UPD06", "date": "2026-09-11", "title": "Aggiornamento — quasi in fondo", "text": "Mancano pochi chilometri e abbiamo raggiunto insieme un traguardo che non avevo previsto: 27 Buffalo donate .\nNuovo obiettivo: 4.410 €\nOvvero 30 bici . Un numero tondo, bello, e forse anche raggiungibile. Ci provo e se non ce la facciamo sarò felice lo stesso, anzi, lo sono già.\nGrazie di cuore.", "_aggiornamento": true}, {"day": "UPD07", "date": "2026-09-13", "title": "Aggiornamento — ci siamo arrivati", "text": "1.766 km. 14.343 metri di dislivello. Da Milano a Palermo.\nIl progetto è arrivato a Palermo insieme a me. Le vostre donazioni, i messaggi, gli incoraggiamenti sono stati come gel energetici: una piccola dose di energia arrivata ogni volta che serviva.\nGrazie a chi ha donato tanto e a chi ha donato poco, a chi ha scritto, condiviso, seguito il viaggio. Io ho messo le gambe. Voi avete messo l'energia.\nLa raccolta rimane aperta ancora per un po', a prescindere dall'obiettivo stabilito. Ogni euro in più è una bici in più per qualcuno che ne ha bisogno.", "_aggiornamento": true}, {"day": "UPD08", "date": "2026-09-14", "title": "Ultimo aggiornamento", "text": "Ci siamo. Questa avventura è finita, e lo ha fatto in un modo speciale, molto più di quanto avrei mai immaginato. Tenuto conto che io sono un attempato DannyBag qualunque, riuscire a donare l'equivalente di 32 biciclette è per me un risultato straordinario. Questo, naturalmente, è solo merito vostro e ve ne sono grato. A me rimane la soddisfazione di aver realizzato un sogno e di aver dimostrato che i sogni alla fine si avverano quando trovano la volontà di raggiungerli.\nI sogni tra l'altro ci aiutano a guardare oltre l'ostacolo, a dare un senso alla fatica e a scoprire possibilità che prima non riuscivamo nemmeno a immaginare. Ci ricordano che non è mai troppo tardi per ricominciare, per mettersi in gioco o per trasformare un desiderio in qualcosa di concreto. Soprattutto, nel mio caso, mi hanno permesso di condividere il cammino, quando un sogno diventa collettivo, può andare molto più lontano di quanto avremmo mai potuto fare da soli.\nPerciò non esitate a sognare, fatelo a qualunque età. Sognate anche quando la strada sembra lunga, quando il traguardo appare lontano o quando qualcuno vi dice che non è possibile. Perché il risultato, piccolo o grande che sia, nascerà da una vostra idea, da un atto di fiducia e dal coraggio di fare il primo passo. E proprio per questo sarà sempre straordinario.\nGrazie per aver pedalato con me.", "_aggiornamento": true}];
+  // Aggiornamenti: nessuna data, ordinati per obiettivo crescente (target). kind: new = nuovo obiettivo, cur = obiettivo in corso.
+  // L'ultimo aggiornamento ("Il Pippone", diario.json n.14) arriva dal diario e chiude la serie.
+  const _AGGIORNAMENTI = [{"day": "UPD01", "title": "Aggiornamento — pre-partenza", "text": "Avevo stimato male, non le salite, quelle le temo ancora tutte, ma voi. La generosità con cui avete risposto prima ancora della partenza mi ha piacevolmente sorpreso, e devo ammettere, anche un po' commosso. Confesso: lo slogan di 1 euro per km pedalato era perfetto , voi lo avete reso obsoleto prima ancora che partissi, peggio per lo slogan. 😄\nTentiamo un nuovo obiettivo: 2.500 €\nNon perché le mie gambe pedalino più veloce, ma perché con più fondi si comprano più bici: 17 invece di 12, e si sa mai che possiamo arrivare anche a 20 . Più bici vuol dire più gente che arriva a scuola, al lavoro, al mercato con meno difficoltà.\nGrazie di cuore a tutti, anche a chi non può donare, ma aiuta a spargere la voce.", "target": 2500, "kind": "new", "_aggiornamento": true}, {"day": "UPD02", "title": "Aggiornamento — in corsa", "text": "Le decisioni sul target non le prendo più io, le prendete voi. Avevo messo 1.700 euro perché sembrava già un traguardo serio. Li avete superati. Poi avete superato anche 2.500, mentre io ero in sella da qualche parte a contare i km.\nNuovo obiettivo: 3.000 €\nOgni euro in più è una bici in più , e ogni bici in più è qualcuno che arriva a scuola, al lavoro, al mercato. Io pedalo, voi comandate.\nGrazie di cuore a tutti, ancora.", "target": 3000, "kind": "new", "_aggiornamento": true}, {"day": "UPD03", "title": "Aggiornamento — da Firenze", "text": "Morale della giornata: pedalare non serve. Ero fermo a Firenze per un bellissimo incontro con degli amici e voi avete superato i 3.000 euro lo stesso.\nNuovo obiettivo: 3.500 €\nQuasi 24 bici . Se superate anche quello, aspettatevi che mi fermi più spesso.", "target": 3500, "kind": "new", "_aggiornamento": true}, {"day": "UPD04", "title": "Aggiornamento — in corsa", "text": "Ho superato la metà dei km. Non la metà del dislivello, il che è un modo elegante per dire che la parte difficile deve ancora venire. Le salite le stimo sempre male. 😄 Voi invece avete praticamente doppiato le donazioni in cui speravo. Grazie infinite.", "target": 3500, "kind": "cur", "_aggiornamento": true}, {"day": "UPD05", "title": "Aggiornamento — in corsa", "text": "Mancano ancora circa 600 km e abbiamo conquistato insieme l'inaspettato ed esaltante traguardo di 23 bici donate .\nNuovo obiettivo: 4.000 €\nSpero di non risultare troppo presuntuoso nello spostare l'obiettivo a 27 Buffalo donate . Ci provo dai!", "target": 4000, "kind": "new", "_aggiornamento": true}, {"day": "UPD06", "title": "Aggiornamento — quasi in fondo", "text": "Mancano pochi chilometri e abbiamo raggiunto insieme un traguardo che non avevo previsto: 27 Buffalo donate .\nNuovo obiettivo: 4.410 €\nOvvero 30 bici . Un numero tondo, bello, e forse anche raggiungibile. Ci provo e se non ce la facciamo sarò felice lo stesso, anzi, lo sono già.\nGrazie di cuore.", "target": 4410, "kind": "new", "_aggiornamento": true}, {"day": "UPD07", "title": "Aggiornamento — ci siamo arrivati", "text": "1.766 km. 14.343 metri di dislivello. Da Milano a Palermo.\nIl progetto è arrivato a Palermo insieme a me. Le vostre donazioni, i messaggi, gli incoraggiamenti sono stati come gel energetici: una piccola dose di energia arrivata ogni volta che serviva.\nGrazie a chi ha donato tanto e a chi ha donato poco, a chi ha scritto, condiviso, seguito il viaggio. Io ho messo le gambe. Voi avete messo l'energia.\nLa raccolta rimane aperta ancora per un po', a prescindere dall'obiettivo stabilito. Ogni euro in più è una bici in più per qualcuno che ne ha bisogno.", "target": 4410, "kind": "cur", "_aggiornamento": true}];
+
+  const _DIA_START = '2026-08-31';   // dal 31 agosto: Storie di viaggio
+  const _DIA_FINAL_DAY = 14;         // "Il Pippone": ultimo aggiornamento
+  const _DIA_TABS = ['ant', 'viaggio', 'agg'];
+
+  function _diaStoryId(e) {
+    return 'storia-' + (e.day || String(e.date || '').replace(/[^0-9]/g, '-') || 'x');
+  }
+
+  function _diaAggMeta(e) {
+    if (e._aggiornamento) return { target: e.target, kind: e.kind };
+    if (Number(e.day) === _DIA_FINAL_DAY) return { target: Infinity, kind: 'fin' };
+    return null;
+  }
+
+  function _diaAggLabel(m, lang) {
+    const en = lang === 'en';
+    if (m.kind === 'fin') return en ? 'Final result · 32 bikes' : 'Traguardo finale · 32 bici';
+    const n = String(m.target).replace(/\B(?=(\d{3})+(?!\d))/g, en ? ',' : '.');
+    const amount = en ? '€' + n : n + ' €';
+    const lbl = m.kind === 'new' ? (en ? 'New goal' : 'Nuovo obiettivo') : (en ? 'Goal in progress' : 'Obiettivo in corso');
+    return lbl + ' · ' + amount;
+  }
+
+  function _diaGroups(entries) {
+    const g = { ant: [], viaggio: [], agg: [] };
+    const byDate = (a, b) => new Date(a.date) - new Date(b.date);
+    entries.forEach(e => {
+      if (_diaAggMeta(e)) g.agg.push(e);
+      else if (String(e.date || '').slice(0, 10) < _DIA_START) g.ant.push(e);
+      else g.viaggio.push(e);
+    });
+    g.ant.sort(byDate);
+    g.viaggio.sort(byDate);
+    // Aggiornamenti: per obiettivo crescente, a parità di obiettivo resta l'ordine di scrittura
+    g.agg = g.agg.map((e, i) => [e, i])
+      .sort((a, b) => (_diaAggMeta(a[0]).target - _diaAggMeta(b[0]).target) || (a[1] - b[1]))
+      .map(x => x[0]);
+    return g;
+  }
 
   function renderDiarioEntries(entries) {
-    // Unisci aggiornamenti e storie, ordina per data ascendente
-    const all = [..._AGGIORNAMENTI, ...entries].sort((a,b)=>new Date(a.date)-new Date(b.date));
-    entries = all;
-    const wrap = document.getElementById('diario-full');
+    window._diaGroups = _diaGroups([..._AGGIORNAMENTI, ...entries]);
+    _DIA_TABS.forEach(k => {
+      const n = document.getElementById('dia-n-' + k);
+      if (n) n.textContent = window._diaGroups[k].length;
+    });
+    setDiaTab(window._diaTab || 'viaggio');
+  }
+
+  function setDiaTab(tab) {
+    if (!_DIA_TABS.includes(tab)) tab = 'viaggio';
+    window._diaTab = tab;
     const lang = localStorage.getItem('site-lang') || 'it';
+    document.querySelectorAll('.dia-tab').forEach(b => {
+      const on = b.dataset.tab === tab;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    const cap = document.getElementById('dia-caption');
+    if (cap) cap.textContent = I18N[lang]['dia_cap_' + tab] || '';
+    const wrap = document.getElementById('diario-full');
+    const list = (window._diaGroups || {})[tab] || [];
+    if (!list.length) {
+      wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">' + (I18N[lang].dia_empty || '') + '</div>';
+      return;
+    }
+    wrap.innerHTML = list.map(e => _diaCardHtml(e, lang)).join('');
+  }
+
+  function _diaCardHtml(e, lang) {
     const MESI_IT=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
     const MESI_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
     const MESI = lang === 'en' ? MESI_EN : MESI_IT;
-    wrap.innerHTML = entries.map(e => {
+    const aggMeta = _diaAggMeta(e);
+    let head;
+    if (aggMeta) {
+      head = _diaAggLabel(aggMeta, lang);   // gli aggiornamenti non mostrano la data
+    } else {
       const d = new Date(e.date);
-      const dateStr = lang === 'en' ? (MESI[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear()) : (d.getDate() + ' ' + MESI[d.getMonth()] + ' ' + d.getFullYear());
-      const photos = e.photos || [];
-      const videos = e.videos || (e.video ? [e.video] : []);
-      const title = (lang === 'en' && e.title_en) ? e.title_en : e.title;
-      const rawText = (lang === 'en' && e.text_en) ? e.text_en : e.text;
-      const text = (rawText || '')
-        .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--orange); text-decoration:underline;">$1</a>')
-        .replace(/\n/g, '<br>');
-      const storyId = `storia-${e.day || (e.date||'').replace(/[^0-9]/g,'-') || i}`;
-      return `
+      head = lang === 'en' ? (MESI[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear()) : (d.getDate() + ' ' + MESI[d.getMonth()] + ' ' + d.getFullYear());
+    }
+    const photos = e.photos || [];
+    const videos = e.videos || (e.video ? [e.video] : []);
+    const title = (lang === 'en' && e.title_en) ? e.title_en : e.title;
+    const rawText = (lang === 'en' && e.text_en) ? e.text_en : e.text;
+    const text = (rawText || '')
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--orange); text-decoration:underline;">$1</a>')
+      .replace(/\n/g, '<br>');
+    const storyId = _diaStoryId(e);
+    return `
         <div id="${storyId}" style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:4px; padding:1.2rem 1.3rem; scroll-margin-top:5rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
-            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.08em; color:var(--orange); text-transform:uppercase;">${dateStr}</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.08em; color:var(--orange); text-transform:uppercase;">${head}</div>
             <button onclick="copyStoryLink('${storyId}', this)" title="Copia link a questa storia" style="background:none; border:none; color:rgba(255,248,244,0.25); font-size:0.8rem; cursor:pointer; padding:0.2rem; line-height:1; transition:color 0.2s;">🔗</button>
           </div>
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:400; color:#FFF8F4; margin-bottom:0.5rem;">${title}</div>
@@ -2255,7 +2339,6 @@
           ${e.audio ? `<div style="margin-top:0.6rem;"><audio controls src="https://raw.githubusercontent.com/dannybag/inbiciperilmondo/main/${e.audio}" style="width:100%; height:36px; border-radius:4px;"></audio></div>` : ''}
         </div>
       `;
-    }).join('');
   }
 
   handleStravaCallback();
@@ -2914,6 +2997,13 @@
       del_percorso: 'Del percorso',
       prossime_tappe: '→ Prossime tappe',
       diario_sub: 'Ricordi, incontri e imprevisti, giorno per giorno',
+      dia_tab_ant: 'Anticipazioni',
+      dia_tab_viaggio: 'Storie di viaggio',
+      dia_tab_agg: 'Aggiornamenti',
+      dia_cap_ant: 'Prima della partenza',
+      dia_cap_viaggio: 'Tappa dopo tappa, da Milano a Palermo',
+      dia_cap_agg: 'Dal primo obiettivo al traguardo',
+      dia_empty: 'Ancora nessuna nota',
       footer_logo: 'Una Bici per il <span>Mondo</span>',
       raccolta_corso: 'Raccolta fondi',
       di_word: 'di',
@@ -3012,6 +3102,13 @@
       del_percorso: 'Of the route',
       prossime_tappe: '→ Upcoming stages',
       diario_sub: 'Memories, encounters and surprises, day by day',
+      dia_tab_ant: 'Previews',
+      dia_tab_viaggio: 'Journey stories',
+      dia_tab_agg: 'Updates',
+      dia_cap_ant: 'Before the start',
+      dia_cap_viaggio: 'Stage by stage, from Milan to Palermo',
+      dia_cap_agg: 'From the first goal to the finish line',
+      dia_empty: 'No notes yet',
       footer_logo: 'One Bike for the <span>World</span>',
       raccolta_corso: 'Fundraising in progress',
       di_word: 'of',
@@ -3272,6 +3369,9 @@
   function scrollToPendingStory() {
     const id = window._pendingStoryHash;
     if (!id) return;
+    const g = window._diaGroups || {};
+    const tab = _DIA_TABS.find(k => (g[k] || []).some(e => _diaStoryId(e) === id));
+    if (tab && tab !== window._diaTab) setDiaTab(tab);
     const el = document.getElementById(id);
     if (!el) return;
     window._pendingStoryHash = null;
