@@ -1152,6 +1152,8 @@
 <div id="diario-section" style="display:none; overflow:hidden;">
   <style>
     #viaggio-btn.is-open, #diario-btn.is-open, #donors-btn.is-open { outline:2px solid var(--orange); outline-offset:2px; }
+    .v-story-btn { margin-left:auto; flex-shrink:0; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); border-radius:999px; padding:0.2rem 0.7rem; cursor:pointer; white-space:nowrap; transition:filter .2s, background .2s; }
+    .v-story-btn:hover { background:var(--orange); color:#FFF8F4; }
     .dia-tabs { display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap; max-width:680px; margin:0 auto 0.8rem; }
     .dia-tab { display:inline-flex; align-items:center; gap:0.4rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:transparent; border:2px solid var(--orange); padding:0.4rem 0.8rem; border-radius:3px; cursor:pointer; white-space:nowrap; transition:background .2s, color .2s; }
     .dia-tab { color:var(--orange); border-color:var(--orange); transition:box-shadow .2s, filter .2s; }
@@ -1935,10 +1937,49 @@
     if(all.length) _viaggioMap.fitBounds(L.latLngBounds(all),{padding:[30,30]});
   }
 
+  // ---- COLLEGAMENTO TAPPE <-> STORIE ----
+  // 1) stesso nome tappa/titolo ("Milano - Parma"), ignorando maiuscole, spazi e tipo di trattino
+  // 2) in mancanza, stessa data (giorno italiano) se quel giorno c'è una sola storia non ancora abbinata
+  // Una storia nuova col titolo "Partenza - Arrivo" si collega da sola alla tappa, senza altre modifiche.
+  function _normStage(x) {
+    return String(x || '').toLowerCase().replace(/[–—−]/g, '-').replace(/\s*-\s*/g, '-').replace(/\s+/g, ' ').trim();
+  }
+  function _romeDay(d) {
+    try { return new Date(d).toLocaleDateString('sv-SE', { timeZone: 'Europe/Rome' }); } catch (e) { return ''; }
+  }
+  function _matchStories(tappe) {
+    const stories = (window._diarioEntries || []).filter(e =>
+      !e._aggiornamento && Number(e.day) !== _DIA_FINAL_DAY && String(e.date || '').slice(0, 10) >= _DIA_START);
+    const used = new Set();
+    const out = tappe.map(() => null);
+    tappe.forEach((t, i) => {
+      const key = _normStage(t.name || ((t.from && t.to) ? t.from + ' - ' + t.to : ''));
+      if (!key) return;
+      const hit = stories.find(e => !used.has(e) && _normStage(e.title) === key);
+      if (hit) { used.add(hit); out[i] = hit; }
+    });
+    tappe.forEach((t, i) => {
+      if (out[i] || !t.date) return;
+      const day = _romeDay(t.date);
+      const same = stories.filter(e => !used.has(e) && String(e.date || '').slice(0, 10) === day);
+      if (same.length === 1) { used.add(same[0]); out[i] = same[0]; }
+    });
+    return out;
+  }
+  function openStoryFromTappa(storyId) {
+    window._pendingStoryHash = storyId;
+    if (!_diarioOpen) toggleDiario();          // chiude Il Viaggio e apre Storie in Sella
+    else if (_viaggioOpen) toggleViaggio();
+    setTimeout(scrollToPendingStory, 120);     // se il diario non è ancora caricato ci pensa loadDiarioPreview
+  }
+
   function renderViaggioList(tappe) {
     const list = document.getElementById('v-list');
     const MESI=['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
     if(!tappe.length){ list.innerHTML='<div style="font-family:var(--mono);font-size:0.6rem;color:rgba(255,255,255,0.2);text-transform:uppercase;letter-spacing:0.1em;">Nessuna tappa ancora</div>'; return; }
+    const _lang = localStorage.getItem('site-lang') || 'it';
+    const _storyLbl = _lang === 'en' ? 'Story' : 'Storia';
+    const _matches = _matchStories(tappe);
     list.innerHTML = tappe.map((t,i)=>{
       let dateStr = '—';
       if (t.date) {
@@ -1947,10 +1988,15 @@
       }
       const route = (t.from&&t.to)?t.from+' → '+t.to:(t.from||'—');
       const color = TAPPE_COLORS[i % TAPPE_COLORS.length];
+      const story = _matches[i];
+      const storyBtn = story
+        ? `<button class="v-story-btn" onclick="openStoryFromTappa('${_diaStoryId(story)}')" title="${_lang === 'en' ? 'Read the story of this stage' : 'Leggi la storia di questa tappa'}">${_storyLbl} →</button>`
+        : '';
       return `<div style="display:flex; align-items:center; gap:0.8rem; padding:0.8rem 0; border-bottom:1px solid rgba(240,90,40,0.1); flex-wrap:wrap;">
         <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:${color}; min-width:1.8rem; flex-shrink:0;">${i+1}</span>
         <span style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#FFF8F4; min-width:4rem; flex-shrink:0;">${dateStr}</span>
         <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:${color};">${route} <span style="font-family:var(--mono);font-size:0.75rem;color:#FFF8F4;margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0}m</span></span>
+        ${storyBtn}
       </div>`;
     }).join('');
   }
@@ -1968,6 +2014,8 @@
     const tappe = (_tappeList||[]).filter(t=>t.km>0);
     renderViaggioStats(tappe);
     renderViaggioList(tappe);
+    // Le storie servono per i bottoni "Storia": appena arrivano ridisegno la lista
+    _loadDiarioEntries().then(() => { if (_viaggioOpen) renderViaggioList((_tappeList||[]).filter(t=>t.km>0)); }).catch(()=>{});
     // Load Leaflet if not yet loaded
     if(!window.L) {
       await new Promise(res=>{
@@ -2225,19 +2273,31 @@
     });
   })();
 
-  async function loadDiarioPreview() {
-    const wrap = document.getElementById('diario-full');
-    try {
+  // Carica diario.json una volta sola (serve sia a Storie in Sella sia ai bottoni "Storia" di Il Viaggio)
+  let _diarioPromise = null;
+  function _loadDiarioEntries() {
+    if (window._diarioEntries && window._diarioEntries.length) return Promise.resolve(window._diarioEntries);
+    if (_diarioPromise) return _diarioPromise;
+    _diarioPromise = (async () => {
       const res = await fetch('https://api.github.com/repos/dannybag/inbiciperilmondo/contents/diario.json?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error('diario.json non trovato');
       const meta = await res.json();
       const raw = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g,'')))));
       const entries = (raw.entries || []).filter(e => e.published !== false).slice().sort((a,b) => new Date(a.date) - new Date(b.date));
+      window._diarioEntries = entries;
+      return entries;
+    })().catch(err => { _diarioPromise = null; throw err; });
+    return _diarioPromise;
+  }
+
+  async function loadDiarioPreview() {
+    const wrap = document.getElementById('diario-full');
+    try {
+      const entries = await _loadDiarioEntries();
       if (!entries.length) {
         wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">Ancora nessuna nota</div>';
         return;
       }
-      window._diarioEntries = entries;
       renderDiarioEntries(entries);
       scrollToPendingStory();
     } catch (e) {
