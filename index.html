@@ -1153,12 +1153,12 @@
   <style>
     .dia-tabs { display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap; max-width:680px; margin:0 auto 0.8rem; }
     .dia-tab { display:inline-flex; align-items:center; gap:0.4rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:transparent; border:2px solid var(--orange); padding:0.4rem 0.8rem; border-radius:3px; cursor:pointer; white-space:nowrap; transition:background .2s, color .2s; }
-    .dia-tab { --c:var(--orange); --on:#FFF8F4; color:var(--c); border-color:var(--c); }
-    .dia-tab[data-tab="ant"]     { --c:#4FC3F7; --on:#0A0A0A; border-radius:999px; padding-left:1rem; padding-right:1rem; }
-    .dia-tab[data-tab="viaggio"] { --c:var(--orange); --on:#FFF8F4; border-radius:3px; }
-    .dia-tab[data-tab="agg"]     { --c:#F5C542; --on:#0A0A0A; border-radius:0; border-style:dashed; }
-    .dia-tab:hover { background:color-mix(in srgb, var(--c) 15%, transparent); }
-    .dia-tab.active { color:var(--on); background:var(--c); border-style:solid; }
+    .dia-tab { color:var(--orange); border-color:var(--orange); transition:box-shadow .2s, filter .2s; }
+    .dia-tab:hover { filter:brightness(1.15); }
+    .dia-tab.active { box-shadow:0 0 0 2px #0A0A0A, 0 0 0 4px var(--orange); }
+    .dia-tab[data-tab="ant"]     { color:#FFF8F4; background:var(--orange); border-radius:999px; padding-left:1rem; padding-right:1rem; }
+    .dia-tab[data-tab="viaggio"] { color:var(--orange); background:rgba(255,248,244,0.18); border-radius:999px; padding-left:1rem; padding-right:1rem; }
+    .dia-tab[data-tab="agg"]     { color:var(--orange); background:rgba(255,248,244,0.08); border-radius:999px; padding-left:1rem; padding-right:1rem; }
     .dia-caption { text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:#FFFFFF; margin-bottom:1.3rem; min-height:0.9rem; }
     @media(max-width:480px) { .dia-tab { font-size:0.78rem; padding:0.4rem 0.6rem; letter-spacing:0.06em; } }
     .dia-photos { display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; }
@@ -1186,7 +1186,7 @@
     <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:1.2rem; text-align:center;" data-i18n="diario_sub">Ricordi, incontri e imprevisti, giorno per giorno</div>
     <div class="dia-tabs" id="dia-tabs" role="tablist">
       <button class="dia-tab" data-tab="ant" role="tab" onclick="setDiaTab('ant')"><span data-i18n="dia_tab_ant">Anticipazioni</span></button>
-      <button class="dia-tab" data-tab="viaggio" role="tab" onclick="setDiaTab('viaggio')"><span data-i18n="dia_tab_viaggio">Storie di viaggio</span></button>
+      <button class="dia-tab" data-tab="viaggio" role="tab" onclick="setDiaTab('viaggio')"><span data-i18n="dia_tab_viaggio">Quante Storie</span></button>
       <button class="dia-tab" data-tab="agg" role="tab" onclick="setDiaTab('agg')"><span data-i18n="dia_tab_agg">Aggiornamenti</span></button>
     </div>
     <div class="dia-caption" id="dia-caption"></div>
@@ -2997,7 +2997,7 @@
       prossime_tappe: '→ Prossime tappe',
       diario_sub: 'Ricordi, incontri e imprevisti, giorno per giorno',
       dia_tab_ant: 'Anticipazioni',
-      dia_tab_viaggio: 'Storie di viaggio',
+      dia_tab_viaggio: 'Quante Storie',
       dia_tab_agg: 'Aggiornamenti',
       dia_cap_ant: 'Prima della partenza',
       dia_cap_viaggio: 'Tappa dopo tappa, da Milano a Palermo',
@@ -3102,7 +3102,7 @@
       prossime_tappe: '→ Upcoming stages',
       diario_sub: 'Memories, encounters and surprises, day by day',
       dia_tab_ant: 'Previews',
-      dia_tab_viaggio: 'Journey stories',
+      dia_tab_viaggio: 'So Many Stories',
       dia_tab_agg: 'Updates',
       dia_cap_ant: 'Before the start',
       dia_cap_viaggio: 'Stage by stage, from Milan to Palermo',
