@@ -3272,9 +3272,17 @@
   }
   function toggleDonors() {
     _donorsOpen = !_donorsOpen;
+    if (_donorsOpen) {
+      // La lista sta più in basso: con Storie in Sella o Il Viaggio aperti finiva fuori vista. Li chiudo.
+      if (_diarioOpen) toggleDiario();
+      if (_viaggioOpen) toggleViaggio();
+    }
     document.getElementById('donors-section').style.display = _donorsOpen ? 'block' : 'none';
     document.getElementById('donors-arrow').textContent = _donorsOpen ? '↑' : '↓';
-    if (_donorsOpen) renderDonors();
+    if (_donorsOpen) {
+      renderDonors();
+      setTimeout(() => document.getElementById('donors-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+    }
   }
 
   function renderDonors() {
