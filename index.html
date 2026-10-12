@@ -1153,6 +1153,8 @@
   <style>
     #viaggio-btn.is-open, #diario-btn.is-open, #donors-btn.is-open { outline:2px solid var(--orange); outline-offset:2px; }
     .v-story-btn { margin-left:auto; flex-shrink:0; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); border-radius:999px; padding:0.2rem 0.7rem; cursor:pointer; white-space:nowrap; transition:filter .2s, background .2s; }
+    .dia-back-btn { display:inline-flex; align-self:flex-start; margin-bottom:0.7rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); border-radius:999px; padding:0.2rem 0.7rem; cursor:pointer; white-space:nowrap; transition:background .2s; }
+    .dia-back-btn:hover { background:var(--orange); color:#FFF8F4; }
     .v-story-btn:hover { background:var(--orange); color:#FFF8F4; }
     .dia-tabs { display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap; max-width:680px; margin:0 auto 0.8rem; }
     .dia-tab { display:inline-flex; align-items:center; gap:0.4rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:transparent; border:2px solid var(--orange); padding:0.4rem 0.8rem; border-radius:3px; cursor:pointer; white-space:nowrap; transition:background .2s, color .2s; }
@@ -1966,12 +1968,42 @@
     });
     return out;
   }
-  function openStoryFromTappa(storyId) {
+  function openStoryFromTappa(storyId, idx) {
     window._pendingStoryHash = storyId;
-    if (!_diarioOpen) toggleDiario();          // chiude Il Viaggio e apre Storie in Sella
-    else if (_viaggioOpen) toggleViaggio();
+    window._backStoryId = storyId;      // da qui il bottone "← Il Viaggio" sulla storia
+    window._backTappaIdx = idx;
+    // una voce di cronologia: il tasto Indietro del telefono/browser riporta a Il Viaggio
+    try { history.pushState({ fromViaggio: true }, '', '#' + storyId); } catch (e) {}
+    if (!_diarioOpen) toggleDiario(true);      // chiude Il Viaggio e apre Storie in Sella
+    else {
+      if (_viaggioOpen) toggleViaggio();
+      if (window._diaGroups) setDiaTab(window._diaTab || 'viaggio');
+    }
     setTimeout(scrollToPendingStory, 120);     // se il diario non è ancora caricato ci pensa loadDiarioPreview
   }
+
+  function returnToViaggio() {
+    const idx = window._backTappaIdx;
+    window._backStoryId = null;
+    if (_diarioOpen) toggleDiario();
+    if (!_viaggioOpen) toggleViaggio();
+    setTimeout(() => {
+      const row = document.getElementById('v-row-' + idx);
+      const target = row || document.getElementById('viaggio-section');
+      target.scrollIntoView({ behavior: 'smooth', block: row ? 'center' : 'start' });
+      if (row) { row.style.background = 'rgba(240,90,40,0.15)'; setTimeout(() => { row.style.background = ''; }, 2200); }
+    }, 250);
+  }
+
+  function backToViaggioClick() {
+    // se sono arrivato da una tappa, "Indietro" del browser e il bottone fanno la stessa cosa
+    if (history.state && history.state.fromViaggio) history.back();
+    else returnToViaggio();
+  }
+
+  window.addEventListener('popstate', () => {
+    if (window._backStoryId && _diarioOpen) returnToViaggio();
+  });
 
   function renderViaggioList(tappe) {
     const list = document.getElementById('v-list');
@@ -1990,9 +2022,9 @@
       const color = TAPPE_COLORS[i % TAPPE_COLORS.length];
       const story = _matches[i];
       const storyBtn = story
-        ? `<button class="v-story-btn" onclick="openStoryFromTappa('${_diaStoryId(story)}')" title="${_lang === 'en' ? 'Read the story of this stage' : 'Leggi la storia di questa tappa'}">${_storyLbl} →</button>`
+        ? `<button class="v-story-btn" onclick="openStoryFromTappa('${_diaStoryId(story)}', ${i})" title="${_lang === 'en' ? 'Read the story of this stage' : 'Leggi la storia di questa tappa'}">${_storyLbl} →</button>`
         : '';
-      return `<div style="display:flex; align-items:center; gap:0.8rem; padding:0.8rem 0; border-bottom:1px solid rgba(240,90,40,0.1); flex-wrap:wrap;">
+      return `<div id="v-row-${i}" style="display:flex; align-items:center; gap:0.8rem; padding:0.8rem 0; border-bottom:1px solid rgba(240,90,40,0.1); flex-wrap:wrap; transition:background .4s;">
         <span style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; color:${color}; min-width:1.8rem; flex-shrink:0;">${i+1}</span>
         <span style="font-family:var(--mono); font-size:0.75rem; font-weight:700; color:#FFF8F4; min-width:4rem; flex-shrink:0;">${dateStr}</span>
         <span style="flex:1; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:600; color:${color};">${route} <span style="font-family:var(--mono);font-size:0.75rem;color:#FFF8F4;margin-left:0.3rem;">${t.km||0} km · ↑${t.dislivello||0}m</span></span>
@@ -2173,7 +2205,7 @@
       if (b) b.classList.toggle('is-open', !!on);
     });
   }
-  function toggleDiario() {
+  function toggleDiario(keepBack) {
     const sec = document.getElementById('diario-section');
     const arrow = document.getElementById('diario-arrow');
     _diarioOpen = !_diarioOpen;
@@ -2182,6 +2214,7 @@
     if (_diarioOpen) {
       // Ogni volta che si apre Storie in Sella parte da Quante Storie
       window._diaTab = 'viaggio';
+      if (keepBack !== true) window._backStoryId = null;   // il tasto "torna a Il Viaggio" c'è solo se arrivo da una tappa
       if (window._diaGroups) setDiaTab('viaggio');
     }
     if (_diarioOpen && !_diarioLoaded) { _diarioLoaded = true; loadDiarioPreview(); }
@@ -2396,6 +2429,7 @@
     const storyId = _diaStoryId(e);
     return `
         <div id="${storyId}" style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:4px; padding:1.2rem 1.3rem; scroll-margin-top:5rem;">
+          ${window._backStoryId === storyId ? `<button class="dia-back-btn" onclick="backToViaggioClick()">← ${I18N[lang].guarda_viaggio}</button>` : ''}
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
             <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.08em; color:var(--orange); text-transform:uppercase;">${head}</div>
             <button onclick="copyStoryLink('${storyId}', this)" title="Copia link a questa storia" style="background:none; border:none; color:rgba(255,248,244,0.25); font-size:0.8rem; cursor:pointer; padding:0.2rem; line-height:1; transition:color 0.2s;">🔗</button>
