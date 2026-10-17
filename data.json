@@ -502,6 +502,12 @@
         "message": "Adesso devi partire!"
       },
       {
+        "name": "Anonymous",
+        "amount": 10,
+        "time": "3 months",
+        "message": ""
+      },
+      {
         "name": "Lorenzo V",
         "amount": 30,
         "time": "3 months",
