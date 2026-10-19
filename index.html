@@ -1200,10 +1200,7 @@
     .dia-ig.loaded .dia-ig-open { margin-top:0.6rem; }
     /* indice delle storie */
     .dia-index { max-width:680px; margin:0 auto 1.3rem; text-align:center; }
-    .dia-idx-toggle { display:inline-flex; align-items:center; gap:0.4rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); border-radius:999px; padding:0.35rem 1rem; cursor:pointer; transition:filter .2s, box-shadow .2s; }
-    .dia-idx-toggle:hover { filter:brightness(1.15); }
-    .dia-idx-toggle[aria-expanded="true"] { box-shadow:0 0 0 2px #0A0A0A, 0 0 0 4px var(--orange); }
-    .dia-idx-panel { display:none; margin-top:0.8rem; text-align:left; background:#111; border:1px solid rgba(240,90,40,0.2); border-radius:4px; padding:0.2rem 1rem 0.9rem; max-height:55vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+    .dia-idx-panel { text-align:left; background:#111; border:1px solid rgba(240,90,40,0.2); border-radius:4px; padding:0.2rem 1rem 0.9rem; max-height:55vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
     .dia-idx-item { display:flex; gap:0.8rem; align-items:baseline; padding:0.42rem 0; text-decoration:none; color:#FFF8F4; border-bottom:1px solid rgba(255,248,244,0.05); }
     .dia-idx-meta { flex:0 0 5.4rem; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--orange); }
     .dia-idx-title { font-family:'Barlow Condensed',sans-serif; font-size:1.05rem; line-height:1.2; }
@@ -1226,8 +1223,7 @@
     </div>
     <div class="dia-caption" id="dia-caption"></div>
     <div class="dia-index" id="dia-index">
-      <button class="dia-idx-toggle" id="dia-idx-toggle" aria-expanded="true" aria-controls="dia-idx-panel" onclick="toggleDiaIndex()"><span data-i18n="dia_index">Indice</span> <span id="dia-idx-arrow">↑</span></button>
-      <div class="dia-idx-panel" id="dia-idx-panel" style="display:block;"></div>
+      <div class="dia-idx-panel" id="dia-idx-panel"></div>
     </div>
     <div id="diario-full" style="max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:1.4rem;">
       <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">Caricamento...</div>
@@ -2254,7 +2250,6 @@
     if (_diarioOpen) {
       // Ogni volta che si apre Storie in Sella parte da Quante Storie
       window._diaTab = 'viaggio';
-      if (typeof toggleDiaIndex === 'function') toggleDiaIndex(true);   // l'indice parte sempre aperto
       if (keepBack !== true) window._backStoryId = null;   // il tasto "torna a Il Viaggio" c'è solo se arrivo da una tappa
       if (window._diaGroups) setDiaTab('viaggio');
     }
@@ -2496,18 +2491,7 @@
     box.style.display = (window._diaTab === 'viaggio' && has) ? '' : 'none';
   }
 
-  function toggleDiaIndex(force) {
-    const panel = document.getElementById('dia-idx-panel');
-    const btn = document.getElementById('dia-idx-toggle');
-    if (!panel || !btn) return;
-    const open = typeof force === 'boolean' ? force : panel.style.display !== 'block';
-    panel.style.display = open ? 'block' : 'none';
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    const ar = document.getElementById('dia-idx-arrow'); if (ar) ar.textContent = open ? '↑' : '↓';
-  }
-
   function openDiaIndexItem(id) {
-    toggleDiaIndex(false);              // chiudo l'indice: la storia resta in vista
     window._pendingStoryHash = id;      // scrollToPendingStory cambia scheda da sola se serve
     scrollToPendingStory();
     return false;
@@ -3242,7 +3226,6 @@
       dia_cap_viaggio: 'Tappa dopo tappa, da Milano a Palermo',
       dia_cap_agg: 'Dal primo obiettivo al traguardo',
       dia_empty: 'Ancora nessuna nota',
-      dia_index: 'Indice',
       ig_watch: 'Guarda su Instagram',
       ig_open: 'Apri su Instagram',
       footer_logo: 'Una Bici per il <span>Mondo</span>',
@@ -3350,7 +3333,6 @@
       dia_cap_viaggio: 'Stage by stage, from Milan to Palermo',
       dia_cap_agg: 'From the first goal to the finish line',
       dia_empty: 'No notes yet',
-      dia_index: 'Index',
       ig_watch: 'Watch on Instagram',
       ig_open: 'Open on Instagram',
       footer_logo: 'One Bike for the <span>World</span>',
