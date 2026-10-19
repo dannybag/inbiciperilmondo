@@ -2528,9 +2528,11 @@
     }
     let photos = e.photos || [];
     let photoLinks = e.photoLinks;
-    // ig_cover: la prima foto fa da copertina al reel Instagram e non compare tra le foto
-    const igCover = (e.ig_cover && photos.length) ? photos[0] : '';
-    if (igCover) { photos = photos.slice(1); if (photoLinks) photoLinks = photoLinks.slice(1); }
+    // ig_cover: percorso della foto scelta come copertina del reel (true = la prima); non compare tra le foto
+    let igCover = e.ig_cover === true ? photos[0] : (e.ig_cover || '');
+    const ci = photos.indexOf(igCover);
+    if (ci < 0) igCover = '';
+    else { photos = photos.filter((_, i) => i !== ci); if (photoLinks) photoLinks = photoLinks.filter((_, i) => i !== ci); }
     const videos = e.videos || (e.video ? [e.video] : []);
     const title = (lang === 'en' && e.title_en) ? e.title_en : e.title;
     const rawText = (lang === 'en' && e.text_en) ? e.text_en : e.text;
