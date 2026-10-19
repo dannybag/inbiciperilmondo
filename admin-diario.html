@@ -162,6 +162,11 @@
   <div class="photo-preview" id="photo-preview"></div>
   <div id="photo-count" style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); margin-top:0.3rem;"></div>
 
+  <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer; text-transform:none; letter-spacing:0.02em; font-size:0.8rem; margin-top:0.9rem;">
+    <input type="checkbox" id="f-igcover" style="width:1.1rem; height:1.1rem; accent-color:#F05A28;">
+    <span>Usa la <b>prima foto</b> come copertina del reel Instagram (poi non compare tra le foto della storia)</span>
+  </label>
+
   <label>Video (link YouTube o Instagram, uno per riga — lascia vuoto se nessuno)</label>
   <textarea id="f-video" style="min-height:70px;" placeholder="https://youtube.com/watch?v=...
 https://www.instagram.com/reel/..."></textarea>
@@ -535,6 +540,7 @@ function editEntry(idx) {
   document.getElementById('f-title').value = e.title;
   document.getElementById('f-text').value = e.text;
   document.getElementById('f-video').value = (e.videos || (e.video ? [e.video] : [])).join('\n');
+  document.getElementById('f-igcover').checked = !!e.ig_cover;
   document.getElementById('f-photos').value = '';
   selectedPhotoFiles = [];
   document.getElementById('photo-preview').innerHTML = '';
@@ -553,6 +559,7 @@ function cancelEdit() {
   document.getElementById('f-title').value = '';
   document.getElementById('f-text').value = '';
   document.getElementById('f-video').value = '';
+  document.getElementById('f-igcover').checked = false;
   document.getElementById('f-photos').value = '';
   selectedPhotoFiles = [];
   document.getElementById('photo-preview').innerHTML = '';
@@ -575,8 +582,10 @@ async function saveEntry() {
   const videos = document.getElementById('f-video').value
     .split('\n').map(v => v.trim()).filter(Boolean);
   const files = selectedPhotoFiles;
+  const igCover = document.getElementById('f-igcover').checked;
 
   if (!date || !title || !text) { setStatus('Data, titolo e testo sono obbligatori.', 'err'); return; }
+  if (igCover && keptPhotos.length + files.length === 0) { setStatus('Hai spuntato la copertina del reel ma non c\'è nessuna foto.', 'err'); return; }
 
   btn.disabled = true;
 
@@ -597,13 +606,14 @@ async function saveEntry() {
     let message;
     let removedPhotos = [];
     if (editingIndex !== null && entries[editingIndex]) {
-      const { video: _old, ...rest } = entries[editingIndex];
+      const { video: _old, ig_cover: _oldCover, ...rest } = entries[editingIndex];
       removedPhotos = (rest.photos || []).filter(p => !keptPhotos.includes(p));
       entries[editingIndex] = {
         ...rest,
         date, title, text,
         photos: photoPaths,
         videos,
+        ...(igCover ? { ig_cover: true } : {}),
         ...(audioPath ? { audio: audioPath } : {})
       };
       message = `Diario: modifico nota "${title}"`;
@@ -613,6 +623,7 @@ async function saveEntry() {
         date, title, text,
         photos: photoPaths,
         videos,
+        ...(igCover ? { ig_cover: true } : {}),
         ...(audioPath ? { audio: audioPath } : {}),
         published: true
       });

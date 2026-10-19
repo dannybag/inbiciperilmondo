@@ -1187,6 +1187,14 @@
     .dia-video.short .dia-yt, .dia-video.short > iframe { aspect-ratio:9/16; }
     /* Instagram: non si può incorporare un reel in modo affidabile (al tocco rimanda comunque all'app), quindi è una scheda-link compatta che lo dice chiaramente */
     .dia-ig-link { display:flex; align-items:center; gap:0.8rem; width:100%; max-width:420px; padding:0.7rem 0.9rem; text-decoration:none; color:#FFF8F4; background:linear-gradient(135deg, rgba(240,90,40,0.14) 0%, rgba(255,248,244,0.04) 60%), #111; border:1px solid rgba(240,90,40,0.35); border-radius:4px; transition:border-color .2s, background .2s; }
+    .dia-ig-link.has-cover { flex-wrap:wrap; max-width:320px; padding:0; gap:0; overflow:hidden; }
+    .dia-ig-link .ig-cover { position:relative; display:block; width:100%; aspect-ratio:4/5; background-size:cover; background-position:center; background-color:#000; }
+    .dia-ig-link .ig-cover::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0.22); }
+    .dia-ig-link .ig-play { position:absolute; z-index:1; top:50%; left:50%; width:3.4rem; height:3.4rem; margin:-1.7rem 0 0 -1.7rem; border-radius:50%; background:var(--orange); }
+    .dia-ig-link .ig-play::before { content:''; position:absolute; top:50%; left:50%; margin:-0.55rem 0 0 -0.3rem; border-style:solid; border-width:0.55rem 0 0.55rem 0.95rem; border-color:transparent transparent transparent #fff; }
+    .dia-ig-link.has-cover .ig-badge, .dia-ig-link.has-cover .ig-txt, .dia-ig-link.has-cover .ig-go { margin:0.7rem 0; }
+    .dia-ig-link.has-cover .ig-badge { margin-left:0.9rem; margin-right:0.8rem; }
+    .dia-ig-link.has-cover .ig-go { margin-right:0.9rem; }
     .dia-ig-link:hover, .dia-ig-link:focus-visible { border-color:var(--orange); }
     .dia-ig-link .ig-badge { flex:0 0 auto; display:flex; align-items:center; justify-content:center; width:2.6rem; height:2.6rem; border:2px solid var(--orange); border-radius:50%; color:var(--orange); }
     .dia-ig-link .ig-badge svg { width:1.3rem; height:1.3rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
@@ -2275,15 +2283,16 @@
     return `https://www.instagram.com/${m[1]}/${m[2]}/embed`;
   }
 
-  function _diaRenderVideo(url) {
+  function _diaRenderVideo(url, cover) {
     const igEmbed = _diarioIgEmbed(url);
     if (igEmbed) {
       const lang = localStorage.getItem('site-lang') || 'it';
       const kind = (url.match(/instagram\.com\/(p|reel|tv)\//) || [])[1];
-      const label = kind === 'reel' ? I18N[lang].ig_watch_reel : I18N[lang].ig_watch_post;
+      const label = I18N[lang].ig_watch_reel;
       const href = igEmbed.replace(/embed$/, '');
-      return `<a class="dia-ig-link" href="${href}" target="_blank" rel="noopener">
-        <span class="ig-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9"/></svg></span>
+      const coverHtml = cover ? `<span class="ig-cover" style="background-image:url('${String(cover).replace(/'/g, '%27')}')"><span class="ig-play"></span></span>` : '';
+      return `<a class="dia-ig-link${cover ? ' has-cover' : ''}" href="${href}" target="_blank" rel="noopener">
+        ${coverHtml}<span class="ig-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9"/></svg></span>
         <span class="ig-txt"><span class="ig-main">${label}</span><span class="ig-sub">${I18N[lang].ig_sub}</span></span>
         <span class="ig-go" aria-hidden="true">↗</span>
       </a>`;
@@ -2517,7 +2526,11 @@
       const d = new Date(e.date);
       head = lang === 'en' ? (MESI[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear()) : (d.getDate() + ' ' + MESI[d.getMonth()] + ' ' + d.getFullYear());
     }
-    const photos = e.photos || [];
+    let photos = e.photos || [];
+    let photoLinks = e.photoLinks;
+    // ig_cover: la prima foto fa da copertina al reel Instagram e non compare tra le foto
+    const igCover = (e.ig_cover && photos.length) ? photos[0] : '';
+    if (igCover) { photos = photos.slice(1); if (photoLinks) photoLinks = photoLinks.slice(1); }
     const videos = e.videos || (e.video ? [e.video] : []);
     const title = (lang === 'en' && e.title_en) ? e.title_en : e.title;
     const rawText = (lang === 'en' && e.text_en) ? e.text_en : e.text;
@@ -2535,14 +2548,14 @@
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:400; color:#FFF8F4; margin-bottom:0.5rem;">${title}</div>
           <div style="font-family:'Barlow',sans-serif; font-size:0.92rem; line-height:1.55; color:rgba(255,248,244,0.8); margin-bottom:${(photos.length||videos.length)?'0.8rem':'0'};">${text}</div>
           ${photos.length ? `<div class="dia-photos">${photos.map((p, i) => {
-            const link = (e.photoLinks && e.photoLinks[i]) ? e.photoLinks[i] : '';
+            const link = (photoLinks && photoLinks[i]) ? photoLinks[i] : '';
             const click = link
               ? `onclick="window.open('${link}','_blank')"`
               : `onclick='openDiaLightbox(${JSON.stringify(photos)}, ${i})'`;
             const cursor = link ? 'cursor:pointer; outline:2px solid var(--orange);' : '';
             return `<div class="dia-photo" ${click} style="${cursor}" title="${link ? 'Apri link' : 'Ingrandisci'}"><img src="${p}" loading="lazy"></div>`;
           }).join('')}</div>` : ''}
-          ${videos.length ? `<div class="dia-videos">${videos.map(v => _diaRenderVideo(v)).join('')}</div>` : ''}
+          ${videos.length ? `<div class="dia-videos">${videos.map(v => _diaRenderVideo(v, igCover)).join('')}</div>` : ''}
           ${(!aggMeta && String(e.date || '').slice(0, 10) >= _DIA_START) ? `<div class="dia-toindex-row"><button class="dia-toindex" type="button" onclick="goToDiaIndex()" title="${I18N[lang].dia_toindex}" aria-label="${I18N[lang].dia_toindex}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 6H21M8.5 12H21M8.5 18H21"/><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01" stroke-width="3"/></svg></button></div>` : ''}
           ${e.audio ? `<div style="margin-top:0.6rem;"><audio controls src="https://raw.githubusercontent.com/dannybag/inbiciperilmondo/main/${e.audio}" style="width:100%; height:36px; border-radius:4px;"></audio></div>` : ''}
         </div>
