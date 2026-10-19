@@ -1188,7 +1188,8 @@
     /* Instagram: non si può incorporare un reel in modo affidabile (al tocco rimanda comunque all'app), quindi è una scheda-link compatta che lo dice chiaramente */
     .dia-ig-link { display:flex; align-items:center; gap:0.8rem; width:100%; max-width:420px; padding:0.7rem 0.9rem; text-decoration:none; color:#FFF8F4; background:linear-gradient(135deg, rgba(240,90,40,0.14) 0%, rgba(255,248,244,0.04) 60%), #111; border:1px solid rgba(240,90,40,0.35); border-radius:4px; transition:border-color .2s, background .2s; }
     .dia-ig-link.has-cover { flex-wrap:wrap; max-width:320px; padding:0; gap:0; overflow:hidden; }
-    .dia-ig-link .ig-cover { position:relative; display:block; width:100%; aspect-ratio:4/5; background-size:cover; background-position:center; background-color:#000; }
+    .dia-ig-link .ig-cover { position:relative; display:block; width:100%; background:#000; line-height:0; }
+    .dia-ig-link .ig-cover img { display:block; width:100%; height:auto; }
     .dia-ig-link .ig-cover::after { content:''; position:absolute; inset:0; background:rgba(0,0,0,0.22); }
     .dia-ig-link .ig-play { position:absolute; z-index:1; top:50%; left:50%; width:3.4rem; height:3.4rem; margin:-1.7rem 0 0 -1.7rem; border-radius:50%; background:var(--orange); }
     .dia-ig-link .ig-play::before { content:''; position:absolute; top:50%; left:50%; margin:-0.55rem 0 0 -0.3rem; border-style:solid; border-width:0.55rem 0 0.55rem 0.95rem; border-color:transparent transparent transparent #fff; }
@@ -2290,7 +2291,7 @@
       const kind = (url.match(/instagram\.com\/(p|reel|tv)\//) || [])[1];
       const label = I18N[lang].ig_watch_reel;
       const href = igEmbed.replace(/embed$/, '');
-      const coverHtml = cover ? `<span class="ig-cover" style="background-image:url('${String(cover).replace(/'/g, '%27')}')"><span class="ig-play"></span></span>` : '';
+      const coverHtml = cover ? `<span class="ig-cover"><img src="${String(cover).replace(/"/g, '%22')}" alt=""><span class="ig-play"></span></span>` : '';
       return `<a class="dia-ig-link${cover ? ' has-cover' : ''}" href="${href}" target="_blank" rel="noopener">
         ${coverHtml}<span class="ig-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9"/></svg></span>
         <span class="ig-txt"><span class="ig-main">${label}</span><span class="ig-sub">${I18N[lang].ig_sub}</span></span>
