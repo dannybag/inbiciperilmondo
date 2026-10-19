@@ -1177,27 +1177,23 @@
     .dia-video { width:100%; max-width:420px; border-radius:3px; overflow:hidden; border:1px solid rgba(255,248,244,0.08); }
     .dia-video video { width:100%; display:block; background:#000; }
     .dia-yt { position:relative; width:100%; aspect-ratio:16/9; background:#000 center/cover no-repeat; cursor:pointer; }
-    .dia-yt .play, .dia-igph .play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:2.4rem; height:2.4rem; border-radius:50%; background:rgba(240,90,40,0.9); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 6px rgba(0,0,0,0.25); }
-    .dia-yt .play::before, .dia-igph .play::before { content:''; border-style:solid; border-width:6px 0 6px 11px; border-color:transparent transparent transparent #fff; margin-left:3px; }
+    .dia-yt .play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:2.4rem; height:2.4rem; border-radius:50%; background:rgba(240,90,40,0.9); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 6px rgba(0,0,0,0.25); }
+    .dia-yt .play::before { content:''; border-style:solid; border-width:6px 0 6px 11px; border-color:transparent transparent transparent #fff; margin-left:3px; }
     .dia-yt iframe { width:100%; aspect-ratio:16/9; border:0; display:block; }
     /* il player sostituisce l'anteprima come figlio diretto di .dia-video: serve una misura (non per Instagram, che si regola da solo) */
     .dia-video:not(.dia-ig) > iframe { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
     /* YouTube Shorts: verticali 9:16, più stretti */
     .dia-video.short { max-width:320px; }
     .dia-video.short .dia-yt, .dia-video.short > iframe { aspect-ratio:9/16; }
-    .dia-ig { border:0; background:transparent; overflow:visible; }
-    .dia-ig.loaded { max-width:540px; }
-    .dia-ig .instagram-media { margin:0 auto !important; }
-    /* scheda Instagram: stessa logica dell'anteprima YouTube. Instagram non fornisce miniature senza accesso, quindi è una scheda nel nostro stile; al tocco carica il player ufficiale */
-    .dia-igph { position:relative; display:block; width:100%; aspect-ratio:4/5; padding:0; border:1px solid rgba(240,90,40,0.25); border-radius:3px; cursor:pointer; color:#FFF8F4; background:radial-gradient(120% 80% at 50% 0%, rgba(240,90,40,0.30) 0%, rgba(240,90,40,0) 60%), linear-gradient(180deg,#1b1b1b 0%,#0d0d0d 100%); overflow:hidden; }
-    .dia-ig.short .dia-igph { aspect-ratio:9/16; }
-    .dia-igph:hover { border-color:var(--orange); }
-    .dia-igph .ig-glyph { position:absolute; top:12%; left:50%; width:3rem; height:3rem; transform:translateX(-50%); fill:none; stroke:rgba(255,248,244,0.35); stroke-width:1.6; }
-    .dia-igph .ig-tag { position:absolute; top:0.7rem; left:0.8rem; font-family:'IBM Plex Mono',monospace; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:#FFFFFF; }
-    .dia-igph .ig-cta { position:absolute; left:0; right:0; bottom:1.1rem; text-align:center; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); }
-    .dia-ig-open { display:block; margin-top:0.45rem; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:#FFFFFF; text-decoration:none; opacity:0.8; }
-    .dia-ig-open:hover { opacity:1; text-decoration:underline; }
-    .dia-ig.loaded .dia-ig-open { margin-top:0.6rem; }
+    /* Instagram: non si può incorporare un reel in modo affidabile (al tocco rimanda comunque all'app), quindi è una scheda-link compatta che lo dice chiaramente */
+    .dia-ig-link { display:flex; align-items:center; gap:0.8rem; width:100%; max-width:420px; padding:0.7rem 0.9rem; text-decoration:none; color:#FFF8F4; background:linear-gradient(135deg, rgba(240,90,40,0.14) 0%, rgba(255,248,244,0.04) 60%), #111; border:1px solid rgba(240,90,40,0.35); border-radius:4px; transition:border-color .2s, background .2s; }
+    .dia-ig-link:hover, .dia-ig-link:focus-visible { border-color:var(--orange); }
+    .dia-ig-link .ig-badge { flex:0 0 auto; display:flex; align-items:center; justify-content:center; width:2.6rem; height:2.6rem; border:2px solid var(--orange); border-radius:50%; color:var(--orange); }
+    .dia-ig-link .ig-badge svg { width:1.3rem; height:1.3rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .dia-ig-link .ig-txt { flex:1; min-width:0; display:flex; flex-direction:column; gap:0.15rem; }
+    .dia-ig-link .ig-main { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1rem; letter-spacing:0.06em; text-transform:uppercase; color:#FFF8F4; }
+    .dia-ig-link .ig-sub { font-family:'IBM Plex Mono',monospace; font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:#FFFFFF; opacity:0.75; }
+    .dia-ig-link .ig-go { flex:0 0 auto; font-size:1.2rem; line-height:1; color:var(--orange); }
     /* indice delle storie */
     .dia-index { max-width:680px; margin:0 auto 1.3rem; text-align:center; scroll-margin-top:5.5rem; }
     .dia-toindex-row { display:flex; justify-content:flex-end; margin-top:0.8rem; }
@@ -2284,19 +2280,13 @@
     if (igEmbed) {
       const lang = localStorage.getItem('site-lang') || 'it';
       const kind = (url.match(/instagram\.com\/(p|reel|tv)\//) || [])[1];
-      const vertical = kind === 'reel' || kind === 'tv';
-      const base = igEmbed.replace(/embed$/, '');
-      const permalink = base + '?utm_source=ig_embed&utm_campaign=loading';
-      const tag = kind === 'reel' ? 'Reel · Instagram' : 'Instagram';
-      return `<div class="dia-video dia-ig${vertical ? ' short' : ''}" data-ig="${permalink}">
-        <button class="dia-igph" type="button" onclick="_diaLoadIg(this)" aria-label="${I18N[lang].ig_watch}">
-          <span class="ig-tag">${tag}</span>
-          <svg class="ig-glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9"/></svg>
-          <span class="play"></span>
-          <span class="ig-cta">${I18N[lang].ig_watch}</span>
-        </button>
-        <a class="dia-ig-open" href="${base}" target="_blank" rel="noopener">${I18N[lang].ig_open} ↗</a>
-      </div>`;
+      const label = kind === 'reel' ? I18N[lang].ig_watch_reel : I18N[lang].ig_watch_post;
+      const href = igEmbed.replace(/embed$/, '');
+      return `<a class="dia-ig-link" href="${href}" target="_blank" rel="noopener">
+        <span class="ig-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9"/></svg></span>
+        <span class="ig-txt"><span class="ig-main">${label}</span><span class="ig-sub">${I18N[lang].ig_sub}</span></span>
+        <span class="ig-go" aria-hidden="true">↗</span>
+      </a>`;
     }
     const ytId = _diarioYtId(url);
     if (ytId) {
@@ -2308,29 +2298,6 @@
       </div>`;
     }
     return `<div class="dia-video"><video controls preload="metadata" src="${url}"></video></div>`;
-  }
-
-  // Dopo ogni rendering delle card: carica embed.js (una sola volta) e fa elaborare i blockquote Instagram nuovi
-  function _diaProcessIg() {
-    if (!document.querySelector('#diario-full .instagram-media')) return;
-    if (window.instgrm && window.instgrm.Embeds) { window.instgrm.Embeds.process(); return; }
-    if (document.getElementById('ig-embed-js')) return;
-    const sc = document.createElement('script');
-    sc.id = 'ig-embed-js'; sc.async = true; sc.src = 'https://www.instagram.com/embed.js';
-    sc.onload = () => { try { window.instgrm && window.instgrm.Embeds.process(); } catch (e) {} };
-    document.body.appendChild(sc);
-  }
-
-  // Tocco sulla scheda Instagram: al suo posto va il player ufficiale (blockquote + embed.js)
-  function _diaLoadIg(btn) {
-    const box = btn.closest('.dia-ig');
-    if (!box) return;
-    const permalink = box.dataset.ig;
-    box.classList.add('loaded');
-    btn.outerHTML = `<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="${permalink}" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px auto; max-width:540px; min-width:280px; padding:0; width:calc(100% - 2px);">
-      <a href="${permalink}" target="_blank" rel="noopener" style="display:block; padding:2.2rem 1rem; text-align:center; font-family:Arial,sans-serif; font-size:14px; color:#3897f0; text-decoration:none;">Instagram…</a>
-    </blockquote>`;
-    _diaProcessIg();
   }
 
   function _diaPlayYt(el, id) {
@@ -2536,7 +2503,6 @@
     }
     wrap.innerHTML = list.map(e => _diaCardHtml(e, lang)).join('');
     updateDiaIndexVisibility();
-    _diaProcessIg();
   }
 
   function _diaCardHtml(e, lang) {
@@ -3246,9 +3212,10 @@
       dia_cap_viaggio: 'Tappa dopo tappa, da Milano a Palermo',
       dia_cap_agg: 'Dal primo obiettivo al traguardo',
       dia_empty: 'Ancora nessuna nota',
-      ig_watch: 'Guarda su Instagram',
+      ig_watch_reel: 'Guarda il reel su Instagram',
+      ig_watch_post: 'Guarda il post su Instagram',
+      ig_sub: 'Si apre su Instagram',
       dia_toindex: "Torna all'indice",
-      ig_open: 'Apri su Instagram',
       footer_logo: 'Una Bici per il <span>Mondo</span>',
       raccolta_corso: 'Raccolta fondi',
       di_word: 'di',
@@ -3354,9 +3321,10 @@
       dia_cap_viaggio: 'Stage by stage, from Milan to Palermo',
       dia_cap_agg: 'From the first goal to the finish line',
       dia_empty: 'No notes yet',
-      ig_watch: 'Watch on Instagram',
+      ig_watch_reel: 'Watch the reel on Instagram',
+      ig_watch_post: 'View the post on Instagram',
+      ig_sub: 'Opens on Instagram',
       dia_toindex: 'Back to the index',
-      ig_open: 'Open on Instagram',
       footer_logo: 'One Bike for the <span>World</span>',
       raccolta_corso: 'Fundraising in progress',
       di_word: 'of',
