@@ -1204,7 +1204,6 @@
     .dia-idx-toggle:hover { filter:brightness(1.15); }
     .dia-idx-toggle[aria-expanded="true"] { box-shadow:0 0 0 2px #0A0A0A, 0 0 0 4px var(--orange); }
     .dia-idx-panel { display:none; margin-top:0.8rem; text-align:left; background:#111; border:1px solid rgba(240,90,40,0.2); border-radius:4px; padding:0.2rem 1rem 0.9rem; max-height:55vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-    .dia-idx-head { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:#FFFFFF; margin:1rem 0 0.3rem; padding-bottom:0.3rem; border-bottom:1px solid rgba(240,90,40,0.3); }
     .dia-idx-item { display:flex; gap:0.8rem; align-items:baseline; padding:0.42rem 0; text-decoration:none; color:#FFF8F4; border-bottom:1px solid rgba(255,248,244,0.05); }
     .dia-idx-meta { flex:0 0 5.4rem; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--orange); }
     .dia-idx-title { font-family:'Barlow Condensed',sans-serif; font-size:1.05rem; line-height:1.2; }
@@ -1227,8 +1226,8 @@
     </div>
     <div class="dia-caption" id="dia-caption"></div>
     <div class="dia-index" id="dia-index">
-      <button class="dia-idx-toggle" id="dia-idx-toggle" aria-expanded="false" aria-controls="dia-idx-panel" onclick="toggleDiaIndex()"><span data-i18n="dia_index">Indice</span> <span id="dia-idx-arrow">↓</span></button>
-      <div class="dia-idx-panel" id="dia-idx-panel"></div>
+      <button class="dia-idx-toggle" id="dia-idx-toggle" aria-expanded="true" aria-controls="dia-idx-panel" onclick="toggleDiaIndex()"><span data-i18n="dia_index">Indice</span> <span id="dia-idx-arrow">↑</span></button>
+      <div class="dia-idx-panel" id="dia-idx-panel" style="display:block;"></div>
     </div>
     <div id="diario-full" style="max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:1.4rem;">
       <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">Caricamento...</div>
@@ -2255,7 +2254,7 @@
     if (_diarioOpen) {
       // Ogni volta che si apre Storie in Sella parte da Quante Storie
       window._diaTab = 'viaggio';
-      if (typeof toggleDiaIndex === 'function') toggleDiaIndex(false);
+      if (typeof toggleDiaIndex === 'function') toggleDiaIndex(true);   // l'indice parte sempre aperto
       if (keepBack !== true) window._backStoryId = null;   // il tasto "torna a Il Viaggio" c'è solo se arrivo da una tappa
       if (window._diaGroups) setDiaTab('viaggio');
     }
@@ -2470,30 +2469,31 @@
   function _diaEsc(x) { return String(x == null ? '' : x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
   function _diaIdxMeta(e, lang) {
-    const m = _diaAggMeta(e);
-    if (m) {
-      if (m.kind === 'fin') return lang === 'en' ? '32 bikes' : '32 bici';
-      const n = String(m.target).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'en' ? ',' : '.');
-      return lang === 'en' ? '€' + n : n + ' €';
-    }
     const d = new Date(e.date);
     const MESI = lang === 'en' ? ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'] : ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
     return d.getDate() + ' ' + MESI[d.getMonth()];
   }
 
+  // L'indice riguarda solo le storie di viaggio ("Quante Storie"), dalla più vecchia alla più recente. Le altre schede non lo hanno.
   function renderDiarioIndex() {
     const panel = document.getElementById('dia-idx-panel');
     const g = window._diaGroups;
     if (!panel || !g) return;
     const lang = localStorage.getItem('site-lang') || 'it';
-    const secs = [['ant', 'dia_tab_ant'], ['viaggio', 'dia_tab_viaggio'], ['agg', 'dia_tab_agg']];
-    panel.innerHTML = secs.filter(([k]) => (g[k] || []).length).map(([k, key]) => `
-      <div class="dia-idx-head">${I18N[lang][key]}</div>
-      ${g[k].map(e => {
-        const id = _diaStoryId(e);
-        const title = (lang === 'en' && e.title_en) ? e.title_en : e.title;
-        return `<a class="dia-idx-item" href="#${id}" onclick="return openDiaIndexItem('${id}')"><span class="dia-idx-meta">${_diaEsc(_diaIdxMeta(e, lang))}</span><span class="dia-idx-title">${_diaEsc(title)}</span></a>`;
-      }).join('')}`).join('');
+    const list = (g.viaggio || []).slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+    panel.innerHTML = list.map(e => {
+      const id = _diaStoryId(e);
+      const title = (lang === 'en' && e.title_en) ? e.title_en : e.title;
+      return `<a class="dia-idx-item" href="#${id}" onclick="return openDiaIndexItem('${id}')"><span class="dia-idx-meta">${_diaEsc(_diaIdxMeta(e, lang))}</span><span class="dia-idx-title">${_diaEsc(title)}</span></a>`;
+    }).join('');
+    updateDiaIndexVisibility();
+  }
+
+  function updateDiaIndexVisibility() {
+    const box = document.getElementById('dia-index');
+    if (!box) return;
+    const has = !!((window._diaGroups || {}).viaggio || []).length;
+    box.style.display = (window._diaTab === 'viaggio' && has) ? '' : 'none';
   }
 
   function toggleDiaIndex(force) {
@@ -2528,9 +2528,11 @@
     const list = (window._diaGroups || {})[tab] || [];
     if (!list.length) {
       wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">' + (I18N[lang].dia_empty || '') + '</div>';
+      updateDiaIndexVisibility();
       return;
     }
     wrap.innerHTML = list.map(e => _diaCardHtml(e, lang)).join('');
+    updateDiaIndexVisibility();
     _diaProcessIg();
   }
 
