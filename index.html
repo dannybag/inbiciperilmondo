@@ -1177,16 +1177,38 @@
     .dia-video { width:100%; max-width:420px; border-radius:3px; overflow:hidden; border:1px solid rgba(255,248,244,0.08); }
     .dia-video video { width:100%; display:block; background:#000; }
     .dia-yt { position:relative; width:100%; aspect-ratio:16/9; background:#000 center/cover no-repeat; cursor:pointer; }
-    .dia-yt .play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:2.4rem; height:2.4rem; border-radius:50%; background:rgba(240,90,40,0.9); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 6px rgba(0,0,0,0.25); }
-    .dia-yt .play::before { content:''; border-style:solid; border-width:6px 0 6px 11px; border-color:transparent transparent transparent #fff; margin-left:3px; }
+    .dia-yt .play, .dia-igph .play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:2.4rem; height:2.4rem; border-radius:50%; background:rgba(240,90,40,0.9); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 6px rgba(0,0,0,0.25); }
+    .dia-yt .play::before, .dia-igph .play::before { content:''; border-style:solid; border-width:6px 0 6px 11px; border-color:transparent transparent transparent #fff; margin-left:3px; }
     .dia-yt iframe { width:100%; aspect-ratio:16/9; border:0; display:block; }
     /* il player sostituisce l'anteprima come figlio diretto di .dia-video: serve una misura (non per Instagram, che si regola da solo) */
     .dia-video:not(.dia-ig) > iframe { width:100%; aspect-ratio:16/9; border:0; display:block; background:#000; }
     /* YouTube Shorts: verticali 9:16, più stretti */
     .dia-video.short { max-width:320px; }
     .dia-video.short .dia-yt, .dia-video.short > iframe { aspect-ratio:9/16; }
-    .dia-ig { max-width:540px; border:0; background:transparent; }
+    .dia-ig { border:0; background:transparent; overflow:visible; }
+    .dia-ig.loaded { max-width:540px; }
     .dia-ig .instagram-media { margin:0 auto !important; }
+    /* scheda Instagram: stessa logica dell'anteprima YouTube. Instagram non fornisce miniature senza accesso, quindi è una scheda nel nostro stile; al tocco carica il player ufficiale */
+    .dia-igph { position:relative; display:block; width:100%; aspect-ratio:4/5; padding:0; border:1px solid rgba(240,90,40,0.25); border-radius:3px; cursor:pointer; color:#FFF8F4; background:radial-gradient(120% 80% at 50% 0%, rgba(240,90,40,0.30) 0%, rgba(240,90,40,0) 60%), linear-gradient(180deg,#1b1b1b 0%,#0d0d0d 100%); overflow:hidden; }
+    .dia-ig.short .dia-igph { aspect-ratio:9/16; }
+    .dia-igph:hover { border-color:var(--orange); }
+    .dia-igph .ig-glyph { position:absolute; top:12%; left:50%; width:3rem; height:3rem; transform:translateX(-50%); fill:none; stroke:rgba(255,248,244,0.35); stroke-width:1.6; }
+    .dia-igph .ig-tag { position:absolute; top:0.7rem; left:0.8rem; font-family:'IBM Plex Mono',monospace; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:#FFFFFF; }
+    .dia-igph .ig-cta { position:absolute; left:0; right:0; bottom:1.1rem; text-align:center; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); }
+    .dia-ig-open { display:block; margin-top:0.45rem; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:#FFFFFF; text-decoration:none; opacity:0.8; }
+    .dia-ig-open:hover { opacity:1; text-decoration:underline; }
+    .dia-ig.loaded .dia-ig-open { margin-top:0.6rem; }
+    /* indice delle storie */
+    .dia-index { max-width:680px; margin:0 auto 1.3rem; text-align:center; }
+    .dia-idx-toggle { display:inline-flex; align-items:center; gap:0.4rem; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); border-radius:999px; padding:0.35rem 1rem; cursor:pointer; transition:filter .2s, box-shadow .2s; }
+    .dia-idx-toggle:hover { filter:brightness(1.15); }
+    .dia-idx-toggle[aria-expanded="true"] { box-shadow:0 0 0 2px #0A0A0A, 0 0 0 4px var(--orange); }
+    .dia-idx-panel { display:none; margin-top:0.8rem; text-align:left; background:#111; border:1px solid rgba(240,90,40,0.2); border-radius:4px; padding:0.2rem 1rem 0.9rem; max-height:55vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+    .dia-idx-head { font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:#FFFFFF; margin:1rem 0 0.3rem; padding-bottom:0.3rem; border-bottom:1px solid rgba(240,90,40,0.3); }
+    .dia-idx-item { display:flex; gap:0.8rem; align-items:baseline; padding:0.42rem 0; text-decoration:none; color:#FFF8F4; border-bottom:1px solid rgba(255,248,244,0.05); }
+    .dia-idx-meta { flex:0 0 5.4rem; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--orange); }
+    .dia-idx-title { font-family:'Barlow Condensed',sans-serif; font-size:1.05rem; line-height:1.2; }
+    .dia-idx-item:hover .dia-idx-title, .dia-idx-item:focus-visible .dia-idx-title { color:var(--orange); text-decoration:underline; text-underline-offset:3px; }
     .dia-lightbox { display:none; position:fixed; inset:0; background:rgba(10,10,10,0.92); z-index:9500; align-items:center; justify-content:center; padding:4vw; }
     .dia-lightbox.open { display:flex; }
     .dia-lightbox img { max-width:100%; max-height:90vh; border-radius:4px; user-select:none; -webkit-user-select:none; }
@@ -1204,6 +1226,10 @@
       <button class="dia-tab" data-tab="agg" role="tab" onclick="setDiaTab('agg')"><span data-i18n="dia_tab_agg">Aggiornamenti</span></button>
     </div>
     <div class="dia-caption" id="dia-caption"></div>
+    <div class="dia-index" id="dia-index">
+      <button class="dia-idx-toggle" id="dia-idx-toggle" aria-expanded="false" aria-controls="dia-idx-panel" onclick="toggleDiaIndex()"><span data-i18n="dia_index">Indice</span> <span id="dia-idx-arrow">↓</span></button>
+      <div class="dia-idx-panel" id="dia-idx-panel"></div>
+    </div>
     <div id="diario-full" style="max-width:680px; margin:0 auto; display:flex; flex-direction:column; gap:1.4rem;">
       <div style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.25); text-transform:uppercase; text-align:center; padding:1rem 0;">Caricamento...</div>
     </div>
@@ -2229,6 +2255,7 @@
     if (_diarioOpen) {
       // Ogni volta che si apre Storie in Sella parte da Quante Storie
       window._diaTab = 'viaggio';
+      if (typeof toggleDiaIndex === 'function') toggleDiaIndex(false);
       if (keepBack !== true) window._backStoryId = null;   // il tasto "torna a Il Viaggio" c'è solo se arrivo da una tappa
       if (window._diaGroups) setDiaTab('viaggio');
     }
@@ -2257,12 +2284,20 @@
   function _diaRenderVideo(url) {
     const igEmbed = _diarioIgEmbed(url);
     if (igEmbed) {
-      // Embed ufficiale Instagram (blockquote + embed.js): lo script lo trasforma nel riquadro con il suo player
-      const permalink = igEmbed.replace(/embed$/, '') + '?utm_source=ig_embed&utm_campaign=loading';
-      return `<div class="dia-video dia-ig">
-        <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="${permalink}" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px auto; max-width:540px; min-width:280px; padding:0; width:calc(100% - 2px);">
-          <a href="${permalink}" target="_blank" rel="noopener" style="display:block; padding:2.2rem 1rem; text-align:center; font-family:Arial,sans-serif; font-size:14px; color:#3897f0; text-decoration:none;">Visualizza questo post su Instagram</a>
-        </blockquote>
+      const lang = localStorage.getItem('site-lang') || 'it';
+      const kind = (url.match(/instagram\.com\/(p|reel|tv)\//) || [])[1];
+      const vertical = kind === 'reel' || kind === 'tv';
+      const base = igEmbed.replace(/embed$/, '');
+      const permalink = base + '?utm_source=ig_embed&utm_campaign=loading';
+      const tag = kind === 'reel' ? 'Reel · Instagram' : 'Instagram';
+      return `<div class="dia-video dia-ig${vertical ? ' short' : ''}" data-ig="${permalink}">
+        <button class="dia-igph" type="button" onclick="_diaLoadIg(this)" aria-label="${I18N[lang].ig_watch}">
+          <span class="ig-tag">${tag}</span>
+          <svg class="ig-glyph" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9"/></svg>
+          <span class="play"></span>
+          <span class="ig-cta">${I18N[lang].ig_watch}</span>
+        </button>
+        <a class="dia-ig-open" href="${base}" target="_blank" rel="noopener">${I18N[lang].ig_open} ↗</a>
       </div>`;
     }
     const ytId = _diarioYtId(url);
@@ -2286,6 +2321,18 @@
     sc.id = 'ig-embed-js'; sc.async = true; sc.src = 'https://www.instagram.com/embed.js';
     sc.onload = () => { try { window.instgrm && window.instgrm.Embeds.process(); } catch (e) {} };
     document.body.appendChild(sc);
+  }
+
+  // Tocco sulla scheda Instagram: al suo posto va il player ufficiale (blockquote + embed.js)
+  function _diaLoadIg(btn) {
+    const box = btn.closest('.dia-ig');
+    if (!box) return;
+    const permalink = box.dataset.ig;
+    box.classList.add('loaded');
+    btn.outerHTML = `<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="${permalink}" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px auto; max-width:540px; min-width:280px; padding:0; width:calc(100% - 2px);">
+      <a href="${permalink}" target="_blank" rel="noopener" style="display:block; padding:2.2rem 1rem; text-align:center; font-family:Arial,sans-serif; font-size:14px; color:#3897f0; text-decoration:none;">Instagram…</a>
+    </blockquote>`;
+    _diaProcessIg();
   }
 
   function _diaPlayYt(el, id) {
@@ -2396,7 +2443,7 @@
     return lbl + ' · ' + amount;
   }
 
-  function _diaGroups(entries) {
+  function _diaBuildGroups(entries) {
     const g = { ant: [], viaggio: [], agg: [] };
     const byDate = (a, b) => new Date(a.date) - new Date(b.date);
     entries.forEach(e => {
@@ -2414,8 +2461,56 @@
   }
 
   function renderDiarioEntries(entries) {
-    window._diaGroups = _diaGroups([..._AGGIORNAMENTI, ...entries]);
+    window._diaGroups = _diaBuildGroups([..._AGGIORNAMENTI, ...entries]);
+    renderDiarioIndex();
     setDiaTab(window._diaTab || 'viaggio');
+  }
+
+  // ---- INDICE: si costruisce da solo da ciò che c'è in diario.json, nelle tre sezioni, con link a ogni storia ----
+  function _diaEsc(x) { return String(x == null ? '' : x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function _diaIdxMeta(e, lang) {
+    const m = _diaAggMeta(e);
+    if (m) {
+      if (m.kind === 'fin') return lang === 'en' ? '32 bikes' : '32 bici';
+      const n = String(m.target).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'en' ? ',' : '.');
+      return lang === 'en' ? '€' + n : n + ' €';
+    }
+    const d = new Date(e.date);
+    const MESI = lang === 'en' ? ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'] : ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+    return d.getDate() + ' ' + MESI[d.getMonth()];
+  }
+
+  function renderDiarioIndex() {
+    const panel = document.getElementById('dia-idx-panel');
+    const g = window._diaGroups;
+    if (!panel || !g) return;
+    const lang = localStorage.getItem('site-lang') || 'it';
+    const secs = [['ant', 'dia_tab_ant'], ['viaggio', 'dia_tab_viaggio'], ['agg', 'dia_tab_agg']];
+    panel.innerHTML = secs.filter(([k]) => (g[k] || []).length).map(([k, key]) => `
+      <div class="dia-idx-head">${I18N[lang][key]}</div>
+      ${g[k].map(e => {
+        const id = _diaStoryId(e);
+        const title = (lang === 'en' && e.title_en) ? e.title_en : e.title;
+        return `<a class="dia-idx-item" href="#${id}" onclick="return openDiaIndexItem('${id}')"><span class="dia-idx-meta">${_diaEsc(_diaIdxMeta(e, lang))}</span><span class="dia-idx-title">${_diaEsc(title)}</span></a>`;
+      }).join('')}`).join('');
+  }
+
+  function toggleDiaIndex(force) {
+    const panel = document.getElementById('dia-idx-panel');
+    const btn = document.getElementById('dia-idx-toggle');
+    if (!panel || !btn) return;
+    const open = typeof force === 'boolean' ? force : panel.style.display !== 'block';
+    panel.style.display = open ? 'block' : 'none';
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    const ar = document.getElementById('dia-idx-arrow'); if (ar) ar.textContent = open ? '↑' : '↓';
+  }
+
+  function openDiaIndexItem(id) {
+    toggleDiaIndex(false);              // chiudo l'indice: la storia resta in vista
+    window._pendingStoryHash = id;      // scrollToPendingStory cambia scheda da sola se serve
+    scrollToPendingStory();
+    return false;
   }
 
   function setDiaTab(tab) {
@@ -3145,6 +3240,9 @@
       dia_cap_viaggio: 'Tappa dopo tappa, da Milano a Palermo',
       dia_cap_agg: 'Dal primo obiettivo al traguardo',
       dia_empty: 'Ancora nessuna nota',
+      dia_index: 'Indice',
+      ig_watch: 'Guarda su Instagram',
+      ig_open: 'Apri su Instagram',
       footer_logo: 'Una Bici per il <span>Mondo</span>',
       raccolta_corso: 'Raccolta fondi',
       di_word: 'di',
@@ -3250,6 +3348,9 @@
       dia_cap_viaggio: 'Stage by stage, from Milan to Palermo',
       dia_cap_agg: 'From the first goal to the finish line',
       dia_empty: 'No notes yet',
+      dia_index: 'Index',
+      ig_watch: 'Watch on Instagram',
+      ig_open: 'Open on Instagram',
       footer_logo: 'One Bike for the <span>World</span>',
       raccolta_corso: 'Fundraising in progress',
       di_word: 'of',
