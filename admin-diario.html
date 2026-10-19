@@ -70,6 +70,10 @@
   .photo-preview { display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem; }
   .photo-preview img { width:64px; height:64px; object-fit:cover; border-radius:3px; border:1px solid rgba(255,248,244,0.1); }
   .photo-thumb { position:relative; }
+  .photo-thumb img { cursor:pointer; }
+  .photo-thumb.is-cover img { outline:3px solid var(--orange); outline-offset:1px; }
+  .photo-thumb .cv { display:none; position:absolute; left:0; right:0; bottom:0; background:var(--orange); color:#111; font-family:var(--mono); font-size:0.45rem; letter-spacing:0.08em; text-align:center; padding:1px 0; border-radius:0 0 3px 3px; pointer-events:none; }
+  .photo-thumb.is-cover .cv { display:block; }
   .photo-thumb .rm {
     position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%;
     background:var(--red); color:#fff; font-size:0.65rem; line-height:18px; text-align:center;
@@ -162,10 +166,7 @@
   <div class="photo-preview" id="photo-preview"></div>
   <div id="photo-count" style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); margin-top:0.3rem;"></div>
 
-  <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer; text-transform:none; letter-spacing:0.02em; font-size:0.8rem; margin-top:0.9rem;">
-    <input type="checkbox" id="f-igcover" style="width:1.1rem; height:1.1rem; accent-color:#F05A28;">
-    <span>Usa la <b>prima foto</b> come copertina del reel Instagram (poi non compare tra le foto della storia)</span>
-  </label>
+  <div class="token-help" style="margin-top:0.5rem;">Hai un reel Instagram? <b>Tocca una foto</b> per sceglierla come copertina del reel: non comparirà più tra le foto della storia. Tocca di nuovo per toglierla.</div>
 
   <label>Video (link YouTube o Instagram, uno per riga — lascia vuoto se nessuno)</label>
   <textarea id="f-video" style="min-height:70px;" placeholder="https://youtube.com/watch?v=...
@@ -293,8 +294,9 @@ let selectedPhotoFiles = [];
 function renderNewPhotoPreview() {
   const wrap = document.getElementById('photo-preview');
   wrap.innerHTML = selectedPhotoFiles.map((file, i) => `
-    <div class="photo-thumb">
-      <img src="${URL.createObjectURL(file)}">
+    <div class="photo-thumb${file === coverSel ? ' is-cover' : ''}">
+      <img src="${URL.createObjectURL(file)}" onclick="pickCover(${i}, true)">
+      <span class="cv">COPERTINA REEL</span>
       <div class="rm" onclick="removeSelectedPhoto(${i})">✕</div>
     </div>
   `).join('');
@@ -302,7 +304,15 @@ function renderNewPhotoPreview() {
   const total = keptPhotos.length + selectedPhotoFiles.length;
   countEl.textContent = total > 0 ? `${total} foto in totale (${selectedPhotoFiles.length} nuove)` : '';
 }
+let coverSel = null;   // foto scelta come copertina del reel: path (già pubblicata) oppure File (nuova)
+function pickCover(i, isNew) {
+  const v = isNew ? selectedPhotoFiles[i] : keptPhotos[i];
+  coverSel = (coverSel === v) ? null : v;
+  renderExistingPhotos();
+  renderNewPhotoPreview();
+}
 function removeSelectedPhoto(i) {
+  if (selectedPhotoFiles[i] === coverSel) coverSel = null;
   selectedPhotoFiles.splice(i, 1);
   renderNewPhotoPreview();
 }
@@ -518,8 +528,9 @@ let keptPhotos = [];       // path delle foto esistenti mantenute durante la mod
 function renderExistingPhotos() {
   const wrap = document.getElementById('existing-photos');
   wrap.innerHTML = keptPhotos.map((p, i) => `
-    <div class="photo-thumb">
-      <img src="${p}">
+    <div class="photo-thumb${p === coverSel ? ' is-cover' : ''}">
+      <img src="${p}" onclick="pickCover(${i}, false)">
+      <span class="cv">COPERTINA REEL</span>
       <div class="rm" onclick="removeExistingPhoto(${i})">✕</div>
     </div>
   `).join('');
@@ -528,6 +539,7 @@ function renderExistingPhotos() {
   countEl.textContent = total > 0 ? `${total} foto in totale (${selectedPhotoFiles.length} nuove)` : '';
 }
 function removeExistingPhoto(i) {
+  if (keptPhotos[i] === coverSel) coverSel = null;
   keptPhotos.splice(i, 1);
   renderExistingPhotos();
 }
@@ -540,7 +552,8 @@ function editEntry(idx) {
   document.getElementById('f-title').value = e.title;
   document.getElementById('f-text').value = e.text;
   document.getElementById('f-video').value = (e.videos || (e.video ? [e.video] : [])).join('\n');
-  document.getElementById('f-igcover').checked = !!e.ig_cover;
+  coverSel = (e.ig_cover === true ? keptPhotos[0] : e.ig_cover) || null;
+  if (!keptPhotos.includes(coverSel)) coverSel = null;
   document.getElementById('f-photos').value = '';
   selectedPhotoFiles = [];
   document.getElementById('photo-preview').innerHTML = '';
@@ -559,7 +572,7 @@ function cancelEdit() {
   document.getElementById('f-title').value = '';
   document.getElementById('f-text').value = '';
   document.getElementById('f-video').value = '';
-  document.getElementById('f-igcover').checked = false;
+  coverSel = null;
   document.getElementById('f-photos').value = '';
   selectedPhotoFiles = [];
   document.getElementById('photo-preview').innerHTML = '';
@@ -582,10 +595,8 @@ async function saveEntry() {
   const videos = document.getElementById('f-video').value
     .split('\n').map(v => v.trim()).filter(Boolean);
   const files = selectedPhotoFiles;
-  const igCover = document.getElementById('f-igcover').checked;
 
   if (!date || !title || !text) { setStatus('Data, titolo e testo sono obbligatori.', 'err'); return; }
-  if (igCover && keptPhotos.length + files.length === 0) { setStatus('Hai spuntato la copertina del reel ma non c\'è nessuna foto.', 'err'); return; }
 
   btn.disabled = true;
 
@@ -596,6 +607,7 @@ async function saveEntry() {
       newPhotoBlobs.push(await preparePhoto(file, date));
     }
     const photoPaths = [...keptPhotos, ...newPhotoBlobs.map(p => p.path)];
+    const igCover = (typeof coverSel === 'string') ? coverSel : (coverSel ? newPhotoBlobs[files.indexOf(coverSel)].path : '');
 
     setStatus('Carico vocale...', 'wait');
     const audioPath = await uploadAudio(date).catch(() => null);
@@ -613,7 +625,7 @@ async function saveEntry() {
         date, title, text,
         photos: photoPaths,
         videos,
-        ...(igCover ? { ig_cover: true } : {}),
+        ...(igCover ? { ig_cover: igCover } : {}),
         ...(audioPath ? { audio: audioPath } : {})
       };
       message = `Diario: modifico nota "${title}"`;
@@ -623,7 +635,7 @@ async function saveEntry() {
         date, title, text,
         photos: photoPaths,
         videos,
-        ...(igCover ? { ig_cover: true } : {}),
+        ...(igCover ? { ig_cover: igCover } : {}),
         ...(audioPath ? { audio: audioPath } : {}),
         published: true
       });
