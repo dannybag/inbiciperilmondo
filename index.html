@@ -1169,10 +1169,12 @@
     .dia-tab[data-tab="agg"]     { color:var(--orange); background:rgba(255,248,244,0.08); border-radius:999px; padding-left:1rem; padding-right:1rem; }
     .dia-caption { text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:#FFFFFF; margin-bottom:1.3rem; min-height:0.9rem; }
     @media(max-width:480px) { .dia-tab { font-size:0.78rem; padding:0.4rem 0.6rem; letter-spacing:0.06em; } }
-    .dia-photos { display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; }
-    .dia-photo { width:88px; height:88px; border-radius:3px; overflow:hidden; cursor:pointer; border:1px solid rgba(255,248,244,0.08); flex-shrink:0; position:relative; background:#0A0A0A; }
-    .dia-photo img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s; }
-    .dia-photo:hover img { transform:scale(1.06); }
+    .dia-photos { display:flex; gap:0.9rem 0.8rem; flex-wrap:wrap; justify-content:center; padding:0.3rem 0 0.2rem; }
+    .dia-photo { width:100px; height:118px; box-sizing:border-box; padding:6px 6px 24px; background:#FFF8F4; border-radius:2px; overflow:hidden; cursor:pointer; flex-shrink:0; position:relative; box-shadow:0 3px 10px rgba(0,0,0,0.55); transform:rotate(-2.5deg); transition:transform .2s; }
+    .dia-photo:nth-child(even) { transform:rotate(2deg); }
+    .dia-photo:nth-child(3n) { transform:rotate(-1deg); }
+    .dia-photo:hover { transform:rotate(0) scale(1.07); z-index:1; }
+    .dia-photo img { width:100%; height:100%; object-fit:cover; display:block; background:#0A0A0A; }
     .dia-videos { display:flex; flex-direction:column; align-items:center; gap:0.6rem; margin-top:0.8rem; }
     .dia-video { width:100%; max-width:420px; border-radius:3px; overflow:hidden; border:1px solid rgba(255,248,244,0.08); }
     .dia-video video { width:100%; display:block; background:#000; }
