@@ -1199,7 +1199,11 @@
     .dia-ig-open:hover { opacity:1; text-decoration:underline; }
     .dia-ig.loaded .dia-ig-open { margin-top:0.6rem; }
     /* indice delle storie */
-    .dia-index { max-width:680px; margin:0 auto 1.3rem; text-align:center; }
+    .dia-index { max-width:680px; margin:0 auto 1.3rem; text-align:center; scroll-margin-top:5.5rem; }
+    .dia-toindex-row { display:flex; justify-content:flex-end; margin-top:0.8rem; }
+    .dia-toindex { display:inline-flex; align-items:center; justify-content:center; width:2.6rem; height:1.9rem; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); border-radius:999px; padding:0; cursor:pointer; transition:background .2s, color .2s; }
+    .dia-toindex svg { width:1.15rem; height:1.15rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .dia-toindex:hover { background:var(--orange); color:#FFF8F4; }
     .dia-idx-panel { text-align:left; background:#111; border:1px solid rgba(240,90,40,0.2); border-radius:4px; padding:0.2rem 1rem 0.9rem; max-height:55vh; overflow-y:auto; -webkit-overflow-scrolling:touch; }
     .dia-idx-item { display:flex; gap:0.8rem; align-items:baseline; padding:0.42rem 0; text-decoration:none; color:#FFF8F4; border-bottom:1px solid rgba(255,248,244,0.05); }
     .dia-idx-meta { flex:0 0 5.4rem; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.04em; text-transform:uppercase; color:var(--orange); }
@@ -2405,6 +2409,7 @@
       }
       renderDiarioEntries(entries);
       scrollToPendingStory();
+      if (window._pendingIndexScroll) { window._pendingIndexScroll = false; setTimeout(goToDiaIndex, 150); }
     } catch (e) {
       wrap.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace; font-size:0.65rem; color:rgba(224,85,85,0.6); text-align:center; padding:1rem 0;">Diario non ancora disponibile</div>';
     }
@@ -2491,6 +2496,20 @@
     box.style.display = (window._diaTab === 'viaggio' && has) ? '' : 'none';
   }
 
+  function goToDiaIndex() {
+    const box = document.getElementById('dia-index');
+    if (!box || box.style.display === 'none') return;
+    box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const panel = document.getElementById('dia-idx-panel');
+    if (panel) {
+      panel.style.transition = 'border-color 0.4s, box-shadow 0.4s';
+      panel.style.borderColor = 'var(--orange)';
+      panel.style.boxShadow = '0 0 0 2px rgba(240,90,40,0.3)';
+      setTimeout(() => { panel.style.borderColor = ''; panel.style.boxShadow = ''; }, 2000);
+      panel.scrollTop = 0;
+    }
+  }
+
   function openDiaIndexItem(id) {
     window._pendingStoryHash = id;      // scrollToPendingStory cambia scheda da sola se serve
     scrollToPendingStory();
@@ -2558,6 +2577,7 @@
             return `<div class="dia-photo" ${click} style="${cursor}" title="${link ? 'Apri link' : 'Ingrandisci'}"><img src="${p}" loading="lazy"></div>`;
           }).join('')}</div>` : ''}
           ${videos.length ? `<div class="dia-videos">${videos.map(v => _diaRenderVideo(v)).join('')}</div>` : ''}
+          ${(!aggMeta && String(e.date || '').slice(0, 10) >= _DIA_START) ? `<div class="dia-toindex-row"><button class="dia-toindex" type="button" onclick="goToDiaIndex()" title="${I18N[lang].dia_toindex}" aria-label="${I18N[lang].dia_toindex}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 6H21M8.5 12H21M8.5 18H21"/><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01" stroke-width="3"/></svg></button></div>` : ''}
           ${e.audio ? `<div style="margin-top:0.6rem;"><audio controls src="https://raw.githubusercontent.com/dannybag/inbiciperilmondo/main/${e.audio}" style="width:100%; height:36px; border-radius:4px;"></audio></div>` : ''}
         </div>
       `;
@@ -3227,6 +3247,7 @@
       dia_cap_agg: 'Dal primo obiettivo al traguardo',
       dia_empty: 'Ancora nessuna nota',
       ig_watch: 'Guarda su Instagram',
+      dia_toindex: "Torna all'indice",
       ig_open: 'Apri su Instagram',
       footer_logo: 'Una Bici per il <span>Mondo</span>',
       raccolta_corso: 'Raccolta fondi',
@@ -3334,6 +3355,7 @@
       dia_cap_agg: 'From the first goal to the finish line',
       dia_empty: 'No notes yet',
       ig_watch: 'Watch on Instagram',
+      dia_toindex: 'Back to the index',
       ig_open: 'Open on Instagram',
       footer_logo: 'One Bike for the <span>World</span>',
       raccolta_corso: 'Fundraising in progress',
@@ -3596,6 +3618,12 @@
 
   function checkStoryHash() {
     const hash = window.location.hash;
+    if (hash === '#indice') {            // link diretto all'indice delle storie di viaggio
+      window._pendingIndexScroll = true;
+      window._navHash = 'indice';
+      if (!_diarioOpen) toggleDiario();  // apre Storie in Sella (scheda Quante Storie); allo scroll pensa loadDiarioPreview
+      return;
+    }
     if (!hash.startsWith('#storia-')) return;
     window._pendingStoryHash = hash.slice(1);
     window._navHash = hash.slice(1);
