@@ -1221,6 +1221,8 @@
     .dia-lightbox img { max-width:100%; max-height:90vh; border-radius:4px; user-select:none; -webkit-user-select:none; }
     .dia-lightbox-close { position:absolute; top:1.2rem; right:5vw; font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:#FFF8F4; background:none; border:1px solid rgba(255,248,244,0.3); padding:0.3rem 0.7rem; cursor:pointer; letter-spacing:0.1em; }
     .dia-lightbox-nav { position:absolute; top:50%; transform:translateY(-50%); width:2.6rem; height:2.6rem; border-radius:50%; background:rgba(0,0,0,0.5); border:1px solid rgba(255,248,244,0.25); color:#FFF8F4; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    .dia-lightbox-play { position:absolute; bottom:0.9rem; left:5vw; display:none; align-items:center; justify-content:center; width:2.4rem; height:2.4rem; padding:0; border-radius:50%; background:rgba(0,0,0,0.5); border:1px solid rgba(255,248,244,0.35); color:#FFF8F4; font-size:0.85rem; line-height:1; cursor:pointer; }
+    .dia-lightbox-play:hover { border-color:var(--orange); color:var(--orange); }
     .dia-lightbox-nav.prev { left:2vw; }
     .dia-lightbox-nav.next { right:2vw; }
     .dia-lightbox-count { position:absolute; bottom:1.2rem; left:50%; transform:translateX(-50%); font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; color:rgba(255,248,244,0.6); background:rgba(0,0,0,0.5); padding:0.25rem 0.7rem; border-radius:10px; }
@@ -1245,6 +1247,7 @@
     <button class="dia-lightbox-nav prev" onclick="diaLightboxNav(-1)">‹</button>
     <img id="dia-lightbox-img" src="" alt="">
     <button class="dia-lightbox-nav next" onclick="diaLightboxNav(1)">›</button>
+    <button class="dia-lightbox-play" id="dia-lightbox-play" type="button" onclick="diaSlideToggle()" aria-label="Pausa / Riproduci">❚❚</button>
     <div class="dia-lightbox-count" id="dia-lightbox-count"></div>
   </div>
 </div>
@@ -2322,8 +2325,21 @@
   function openDiaLightbox(photos, index) {
     diaLightboxPhotos = photos;
     diaLightboxIndex = index;
+    _diaSlidePaused = false;
     _diaRenderLightbox();
     document.getElementById('dia-lightbox').classList.add('open');
+  }
+  // Slideshow automatico: ogni 4 secondi passa alla foto successiva (si ferma col tasto pausa o chiudendo)
+  let _diaSlideTimer = null, _diaSlidePaused = false;
+  const _DIA_SLIDE_MS = 4000;
+  function _diaSlideSchedule() {
+    clearTimeout(_diaSlideTimer);
+    if (_diaSlidePaused || diaLightboxPhotos.length < 2) return;
+    _diaSlideTimer = setTimeout(() => diaLightboxNav(1), _DIA_SLIDE_MS);
+  }
+  function diaSlideToggle() {
+    _diaSlidePaused = !_diaSlidePaused;
+    _diaRenderLightbox();
   }
   function _diaRenderLightbox() {
     document.getElementById('dia-lightbox-img').src = diaLightboxPhotos[diaLightboxIndex];
@@ -2333,6 +2349,11 @@
     const count = document.getElementById('dia-lightbox-count');
     count.style.display = multi ? 'block' : 'none';
     count.textContent = (diaLightboxIndex + 1) + ' / ' + diaLightboxPhotos.length;
+    const pb = document.getElementById('dia-lightbox-play');
+    pb.style.display = multi ? 'flex' : 'none';
+    pb.textContent = _diaSlidePaused ? '▶' : '❚❚';
+    if (multi) new Image().src = diaLightboxPhotos[(diaLightboxIndex + 1) % diaLightboxPhotos.length];
+    _diaSlideSchedule();
   }
   function diaLightboxNav(dir) {
     diaLightboxIndex = (diaLightboxIndex + dir + diaLightboxPhotos.length) % diaLightboxPhotos.length;
@@ -2340,6 +2361,7 @@
   }
   function closeDiaLightbox() {
     document.getElementById('dia-lightbox').classList.remove('open');
+    clearTimeout(_diaSlideTimer);
   }
 
   // Swipe touch + tasti freccia per scorrere tra le foto della stessa nota
