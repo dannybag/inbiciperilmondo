@@ -1207,6 +1207,10 @@
     .dia-ig-link .ig-go { flex:0 0 auto; font-size:1.2rem; line-height:1; color:var(--orange); }
     /* indice delle storie */
     .dia-index { max-width:680px; margin:0 auto 1.3rem; text-align:center; scroll-margin-top:5.5rem; }
+    .dia-listen-row { margin:0.6rem 0 0.8rem; }
+    .dia-listen { display:inline-flex; align-items:center; gap:0.45rem; padding:0.3rem 0.85rem 0.3rem 0.7rem; border-radius:999px; background:none; border:1px solid rgba(240,90,40,0.5); color:var(--orange); font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; }
+    .dia-listen svg { width:1rem; height:1rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .dia-listen:hover, .dia-listen.on { background:var(--orange); color:#FFF8F4; }
     .dia-toindex-row { display:flex; justify-content:flex-end; margin-top:0.8rem; }
     .dia-toindex { display:inline-flex; align-items:center; justify-content:center; width:2.6rem; height:1.9rem; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); border-radius:999px; padding:0; cursor:pointer; transition:background .2s, color .2s; }
     .dia-toindex svg { width:1.15rem; height:1.15rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
@@ -2438,7 +2442,58 @@
     return g;
   }
 
+  // ---- lettura ad alta voce (voce del dispositivo) ----
+  let _speakToken = 0;
+  function diaStopSpeak() {
+    _speakToken++;
+    if ('speechSynthesis' in window) speechSynthesis.cancel();
+    const lang = localStorage.getItem('site-lang') || 'it';
+    document.querySelectorAll('.dia-listen.on').forEach(b => {
+      b.classList.remove('on');
+      b.querySelector('.lbl').textContent = I18N[lang].listen;
+    });
+  }
+  function diaSpeak(id, btn) {
+    const wasOn = btn.classList.contains('on');
+    diaStopSpeak();
+    if (wasOn) return;
+    const lang = localStorage.getItem('site-lang') || 'it';
+    const box = document.getElementById(id);
+    if (!box) return;
+    const t = box.querySelector('.dia-story-title');
+    const x = box.querySelector('.dia-story-text');
+    const full = ((t ? t.innerText.trim().replace(/[.!?…]*$/, '.') + '\n' : '') + (x ? x.innerText : '')).trim();
+    // frasi → blocchi da max ~220 caratteri (i blocchi lunghi si interrompono su alcuni browser)
+    const chunks = [];
+    full.split(/(?<=[.!?…])\s+|\n+/).forEach(p => {
+      p = p.trim(); if (!p) return;
+      const last = chunks.length - 1;
+      if (last >= 0 && chunks[last].length + p.length < 220) chunks[last] += ' ' + p; else chunks.push(p);
+    });
+    if (!chunks.length) return;
+    const code = lang === 'en' ? 'en' : 'it';
+    const voices = speechSynthesis.getVoices().filter(v => v.lang.toLowerCase().startsWith(code));
+    const voice = voices.find(v => v.localService) || voices[0] || null;
+    const token = ++_speakToken;
+    btn.classList.add('on');
+    btn.querySelector('.lbl').textContent = I18N[lang].listen_stop;
+    let i = 0;
+    const next = () => {
+      if (token !== _speakToken) return;
+      if (i >= chunks.length) { diaStopSpeak(); return; }
+      const u = new SpeechSynthesisUtterance(chunks[i++]);
+      u.lang = code === 'en' ? 'en-US' : 'it-IT';
+      if (voice) u.voice = voice;
+      u.onend = next;
+      u.onerror = () => { if (token === _speakToken) diaStopSpeak(); };
+      speechSynthesis.speak(u);
+    };
+    next();
+  }
+  window.addEventListener('pagehide', () => { if ('speechSynthesis' in window) speechSynthesis.cancel(); });
+
   function renderDiarioEntries(entries) {
+    diaStopSpeak();
     window._diaGroups = _diaBuildGroups([..._AGGIORNAMENTI, ...entries]);
     renderDiarioIndex();
     setDiaTab(window._diaTab || 'viaggio');
@@ -2496,6 +2551,7 @@
   }
 
   function setDiaTab(tab) {
+    diaStopSpeak();
     if (!_DIA_TABS.includes(tab)) tab = 'viaggio';
     window._diaTab = tab;
     const lang = localStorage.getItem('site-lang') || 'it';
@@ -2550,8 +2606,9 @@
             <div style="font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.95rem; letter-spacing:0.08em; color:var(--orange); text-transform:uppercase;">${head}</div>
             <button onclick="copyStoryLink('${storyId}', this)" title="Copia link a questa storia" style="background:none; border:none; color:rgba(255,248,244,0.25); font-size:0.8rem; cursor:pointer; padding:0.2rem; line-height:1; transition:color 0.2s;">🔗</button>
           </div>
-          <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:400; color:#FFF8F4; margin-bottom:0.5rem;">${title}</div>
-          <div style="font-family:'Barlow',sans-serif; font-size:0.92rem; line-height:1.55; color:rgba(255,248,244,0.8); margin-bottom:${(photos.length||videos.length)?'0.8rem':'0'};">${text}</div>
+          <div class="dia-story-title" style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:400; color:#FFF8F4; margin-bottom:0.5rem;">${title}</div>
+          <div class="dia-story-text" style="font-family:'Barlow',sans-serif; font-size:0.92rem; line-height:1.55; color:rgba(255,248,244,0.8); margin-bottom:${(photos.length||videos.length)?'0.8rem':'0'};">${text}</div>
+          ${(!e.audio && text && 'speechSynthesis' in window) ? `<div class="dia-listen-row"><button class="dia-listen" type="button" onclick="diaSpeak('${storyId}', this)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg><span class="lbl">${I18N[lang].listen}</span></button></div>` : ''}
           ${photos.length ? `<div class="dia-photos">${photos.map((p, i) => {
             const link = (photoLinks && photoLinks[i]) ? photoLinks[i] : '';
             const click = link
@@ -3233,6 +3290,8 @@
       ig_watch_reel: 'Guarda il reel su Instagram',
       ig_watch_post: 'Guarda il post su Instagram',
       ig_sub: 'Si apre su Instagram',
+      listen: 'Ascolta',
+      listen_stop: 'Ferma',
       dia_toindex: "Torna all'indice",
       footer_logo: 'Una Bici per il <span>Mondo</span>',
       raccolta_corso: 'Raccolta fondi',
@@ -3342,6 +3401,8 @@
       ig_watch_reel: 'Watch the reel on Instagram',
       ig_watch_post: 'View the post on Instagram',
       ig_sub: 'Opens on Instagram',
+      listen: 'Listen',
+      listen_stop: 'Stop',
       dia_toindex: 'Back to the index',
       footer_logo: 'One Bike for the <span>World</span>',
       raccolta_corso: 'Fundraising in progress',
