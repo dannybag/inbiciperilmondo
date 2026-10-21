@@ -1208,6 +1208,7 @@
     /* indice delle storie */
     .dia-index { max-width:680px; margin:0 auto 1.3rem; text-align:center; scroll-margin-top:5.5rem; }
     .dia-toindex-row { display:flex; justify-content:flex-end; margin-top:0.8rem; }
+    .dia-toindex-row.mid { margin-top:0; margin-bottom:0.8rem; }
     .dia-toindex { display:inline-flex; align-items:center; justify-content:center; width:2.6rem; height:1.9rem; color:var(--orange); background:rgba(255,248,244,0.08); border:2px solid var(--orange); border-radius:999px; padding:0; cursor:pointer; transition:background .2s, color .2s; }
     .dia-toindex svg { width:1.15rem; height:1.15rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
     .dia-toindex:hover { background:var(--orange); color:#FFF8F4; }
@@ -2565,6 +2566,8 @@
       .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--orange); text-decoration:underline;">$1</a>')
       .replace(/\n/g, '<br>');
     const storyId = _diaStoryId(e);
+    const toIdx = !aggMeta && String(e.date || '').slice(0, 10) >= _DIA_START;
+    const toIdxBtn = `<button class="dia-toindex" type="button" onclick="goToDiaIndex()" title="${I18N[lang].dia_toindex}" aria-label="${I18N[lang].dia_toindex}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 6H21M8.5 12H21M8.5 18H21"/><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01" stroke-width="3"/></svg></button>`;
     return `
         <div id="${storyId}" style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:4px; padding:1.2rem 1.3rem; scroll-margin-top:5rem;">
           ${window._backStoryId === storyId ? `<button class="dia-back-btn" onclick="backToViaggioClick()">← ${I18N[lang].guarda_viaggio}</button>` : ''}
@@ -2574,6 +2577,7 @@
           </div>
           <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:400; color:#FFF8F4; margin-bottom:0.5rem;">${title}</div>
           <div style="font-family:'Barlow',sans-serif; font-size:0.92rem; line-height:1.55; color:rgba(255,248,244,0.8); margin-bottom:${(photos.length||videos.length)?'0.8rem':'0'};">${text}</div>
+          ${(toIdx && (photos.length || videos.length)) ? `<div class="dia-toindex-row mid">${toIdxBtn}</div>` : ''}
           ${photos.length ? `<div class="dia-photos">${photos.map((p, i) => {
             const link = (photoLinks && photoLinks[i]) ? photoLinks[i] : '';
             const click = link
@@ -2583,7 +2587,7 @@
             return `<div class="dia-photo" ${click} style="${cursor}" title="${link ? 'Apri link' : 'Ingrandisci'}"><img src="${p}" loading="lazy"></div>`;
           }).join('')}</div>` : ''}
           ${videos.length ? `<div class="dia-videos">${videos.map(v => _diaRenderVideo(v, igCover)).join('')}</div>` : ''}
-          ${(!aggMeta && String(e.date || '').slice(0, 10) >= _DIA_START) ? `<div class="dia-toindex-row"><button class="dia-toindex" type="button" onclick="goToDiaIndex()" title="${I18N[lang].dia_toindex}" aria-label="${I18N[lang].dia_toindex}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 6H21M8.5 12H21M8.5 18H21"/><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01" stroke-width="3"/></svg></button></div>` : ''}
+          ${toIdx ? `<div class="dia-toindex-row">${toIdxBtn}</div>` : ''}
           ${e.audio ? `<div style="margin-top:0.6rem;"><audio controls src="https://raw.githubusercontent.com/dannybag/inbiciperilmondo/main/${e.audio}" style="width:100%; height:36px; border-radius:4px;"></audio></div>` : ''}
         </div>
       `;
