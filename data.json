@@ -12,13 +12,13 @@
       {
         "name": "barbara c",
         "amount": 26,
-        "time": "27 days",
+        "time": "28 days",
         "message": "One step at a time, joining forces."
       },
       {
         "name": "Lucia G",
         "amount": 100,
-        "time": "29 days",
+        "time": "30 days",
         "message": ""
       },
       {
@@ -193,6 +193,12 @@
         "name": "Laura F",
         "amount": 10,
         "time": "about 1 month",
+        "message": ""
+      },
+      {
+        "name": "Anonymous",
+        "amount": 5,
+        "time": "about 2 months",
         "message": ""
       },
       {
