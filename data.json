@@ -144,19 +144,19 @@
       {
         "name": "Luigi M",
         "amount": 20,
-        "time": "about 1 month",
+        "time": "about 2 months",
         "message": ""
       },
       {
         "name": "Laura B",
         "amount": 10,
-        "time": "about 1 month",
+        "time": "about 2 months",
         "message": ""
       },
       {
         "name": "Annalisa G",
         "amount": 30,
-        "time": "about 1 month",
+        "time": "about 2 months",
         "message": "Complimenti per la bella iniziativa!!!!"
       },
       {
@@ -336,25 +336,25 @@
       {
         "name": "Anonymous",
         "amount": 10,
-        "time": "about 2 months",
+        "time": "2 months",
         "message": ""
       },
       {
         "name": "Nicolò Z",
         "amount": 25,
-        "time": "about 2 months",
+        "time": "2 months",
         "message": "Alé alè!"
       },
       {
         "name": "Anonymous",
         "amount": 25,
-        "time": "about 2 months",
+        "time": "2 months",
         "message": "Bellissima iniziativa di una bellissima persona"
       },
       {
         "name": "Luca G",
         "amount": 50,
-        "time": "about 2 months",
+        "time": "2 months",
         "message": "Enjoy your trip"
       },
       {
@@ -419,12 +419,6 @@
       },
       {
         "name": "Walter I",
-        "amount": 25,
-        "time": "2 months",
-        "message": ""
-      },
-      {
-        "name": "Anonymous",
         "amount": 25,
         "time": "2 months",
         "message": ""
