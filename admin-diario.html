@@ -69,8 +69,14 @@
 
   .photo-preview { display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem; }
   .photo-preview img { width:64px; height:64px; object-fit:cover; border-radius:3px; border:1px solid rgba(255,248,244,0.1); }
-  .photo-thumb { position:relative; }
-  .photo-thumb img { cursor:pointer; }
+  .photo-preview { gap:0.7rem; }
+  .photo-thumb { display:flex; flex-direction:column; align-items:center; gap:0.25rem; }
+  .photo-thumb .ph { position:relative; }
+  .photo-thumb img { cursor:pointer; width:72px; height:72px; }
+  .photo-thumb .ord { display:flex; align-items:center; gap:0.2rem; font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.5); }
+  .photo-thumb .ord span.mv { display:inline-block; width:26px; height:24px; line-height:22px; text-align:center; border:1px solid rgba(255,248,244,0.25); border-radius:3px; color:var(--cream); cursor:pointer; user-select:none; }
+  .photo-thumb .ord span.mv.off { opacity:0.2; pointer-events:none; }
+  .photo-thumb .ord .n { min-width:16px; text-align:center; }
   .photo-thumb.is-cover img { outline:3px solid var(--orange); outline-offset:1px; }
   .photo-thumb .cv { display:none; position:absolute; left:0; right:0; bottom:0; background:var(--orange); color:#111; font-family:var(--mono); font-size:0.45rem; letter-spacing:0.08em; text-align:center; padding:1px 0; border-radius:0 0 3px 3px; pointer-events:none; }
   .photo-thumb.is-cover .cv { display:block; }
@@ -157,7 +163,6 @@
   <div id="mic-status" class="token-help" style="display:none;"></div>
 
   <label>Foto (una o più)</label>
-  <div class="photo-preview" id="existing-photos"></div>
   <input type="file" id="f-photos" accept="image/*" multiple>
   <div style="margin-top:0.5rem;">
     <button type="button" class="btn-ghost" style="font-size:0.7rem; padding:0.4rem 0.8rem;" onclick="document.getElementById('f-photos-ext').click()">💾 Sfoglia archiviazione esterna (USB/SSD)</button>
@@ -166,7 +171,8 @@
   <div class="photo-preview" id="photo-preview"></div>
   <div id="photo-count" style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); margin-top:0.3rem;"></div>
 
-  <div class="token-help" style="margin-top:0.5rem;">Hai un reel Instagram? <b>Tocca una foto</b> per sceglierla come copertina del reel: non comparirà più tra le foto della storia. Tocca di nuovo per toglierla.</div>
+  <div class="token-help" style="margin-top:0.5rem;">Usa <b>◀ ▶</b> sotto ogni foto per cambiarne l'ordine: la sequenza è quella che vedrai nella storia.</div>
+  <div class="token-help" style="margin-top:0.3rem;">Hai un reel Instagram? <b>Tocca una foto</b> per sceglierla come copertina del reel: non comparirà più tra le foto della storia. Tocca di nuovo per toglierla.</div>
 
   <label>Video (link YouTube o Instagram, uno per riga — lascia vuoto se nessuno)</label>
   <textarea id="f-video" style="min-height:70px;" placeholder="https://youtube.com/watch?v=...
@@ -186,7 +192,7 @@ https://www.instagram.com/reel/..."></textarea>
 
   <div class="btn-save-row">
     <button class="btn-primary" id="btn-save" onclick="saveEntry()">Pubblica nota</button>
-    <button class="btn-ghost" id="btn-cancel" onclick="cancelEdit()" style="display:none;">Annulla modifica</button>
+    <button class="btn-ghost" id="btn-cancel" onclick="closeEditor()" style="display:none;">✕ Chiudi nota</button>
     <span class="status-msg" id="save-status"></span>
   </div>
 
@@ -288,37 +294,64 @@ function compressImage(file, maxDim = 1600, quality = 0.75) {
   });
 }
 
-// ---- PHOTO PREVIEW (unifica galleria + archiviazione esterna) ----
-let selectedPhotoFiles = [];
+// ---- FOTO: lista unica ordinabile (già pubblicate + nuove) ----
+// Ogni elemento: { path } per una foto già nel repo, { file, url } per una nuova
+// non ancora caricata. Dopo il salvataggio una nuova riceve anche il path ma
+// tiene l'url locale per l'anteprima (il sito ci mette un po' a pubblicarla).
+let photoItems = [];
+let coverSel = null;   // elemento di photoItems scelto come copertina del reel
 
-function renderNewPhotoPreview() {
+// Modifiche non salvate: serve a chiedere conferma solo quando chiudi con lavoro in sospeso
+let dirty = false;
+function markDirty() { dirty = true; }
+
+function renderPhotos() {
   const wrap = document.getElementById('photo-preview');
-  wrap.innerHTML = selectedPhotoFiles.map((file, i) => `
-    <div class="photo-thumb${file === coverSel ? ' is-cover' : ''}">
-      <img src="${URL.createObjectURL(file)}" onclick="pickCover(${i}, true)">
-      <span class="cv">COPERTINA REEL</span>
-      <div class="rm" onclick="removeSelectedPhoto(${i})">✕</div>
+  const last = photoItems.length - 1;
+  wrap.innerHTML = photoItems.map((it, i) => `
+    <div class="photo-thumb${it === coverSel ? ' is-cover' : ''}">
+      <div class="ph">
+        <img src="${it.url || it.path}" onclick="pickCover(${i})">
+        <span class="cv">COPERTINA REEL</span>
+        <div class="rm" onclick="removePhoto(${i})">✕</div>
+      </div>
+      <div class="ord">
+        <span class="mv${i === 0 ? ' off' : ''}" onclick="movePhoto(${i}, -1)">◀</span>
+        <span class="n">${i + 1}</span>
+        <span class="mv${i === last ? ' off' : ''}" onclick="movePhoto(${i}, 1)">▶</span>
+      </div>
     </div>
   `).join('');
-  const countEl = document.getElementById('photo-count');
-  const total = keptPhotos.length + selectedPhotoFiles.length;
-  countEl.textContent = total > 0 ? `${total} foto in totale (${selectedPhotoFiles.length} nuove)` : '';
+  const nuove = photoItems.filter(it => it.file).length;
+  document.getElementById('photo-count').textContent =
+    photoItems.length ? `${photoItems.length} foto in totale (${nuove} nuove)` : '';
 }
-let coverSel = null;   // foto scelta come copertina del reel: path (già pubblicata) oppure File (nuova)
-function pickCover(i, isNew) {
-  const v = isNew ? selectedPhotoFiles[i] : keptPhotos[i];
+function movePhoto(i, dir) {
+  const j = i + dir;
+  if (j < 0 || j >= photoItems.length) return;
+  [photoItems[i], photoItems[j]] = [photoItems[j], photoItems[i]];
+  markDirty();
+  renderPhotos();
+}
+function pickCover(i) {
+  const v = photoItems[i];
   coverSel = (coverSel === v) ? null : v;
-  renderExistingPhotos();
-  renderNewPhotoPreview();
+  markDirty();
+  renderPhotos();
 }
-function removeSelectedPhoto(i) {
-  if (selectedPhotoFiles[i] === coverSel) coverSel = null;
-  selectedPhotoFiles.splice(i, 1);
-  renderNewPhotoPreview();
+function removePhoto(i) {
+  const it = photoItems[i];
+  if (it === coverSel) coverSel = null;
+  if (it.url) URL.revokeObjectURL(it.url);
+  photoItems.splice(i, 1);
+  markDirty();
+  renderPhotos();
 }
 function addPhotoFiles(fileList) {
-  selectedPhotoFiles.push(...[...fileList].filter(f => f.type.startsWith('image/')));
-  renderNewPhotoPreview();
+  [...fileList].filter(f => f.type.startsWith('image/'))
+    .forEach(file => photoItems.push({ file, url: URL.createObjectURL(file) }));
+  markDirty();
+  renderPhotos();
 }
 
 document.getElementById('f-photos').addEventListener('change', (e) => {
@@ -469,6 +502,7 @@ function toggleDictation() {
     if (!recognition) return;
 
     recognition.onresult = (event) => {
+      markDirty();
       // Prendo solo l'ULTIMO risultato, non la somma di tutti quelli marcati
       // come "finali": su alcuni Android il riconoscitore emette più ipotesi
       // via via più lunghe per la stessa frase, marcandole tutte come definitive.
@@ -523,63 +557,54 @@ function toggleDictation() {
 
 // ---- STATO EDITING ----
 let editingIndex = null;   // indice nell'array entries (non ordinato) se stiamo modificando
-let keptPhotos = [];       // path delle foto esistenti mantenute durante la modifica
-
-function renderExistingPhotos() {
-  const wrap = document.getElementById('existing-photos');
-  wrap.innerHTML = keptPhotos.map((p, i) => `
-    <div class="photo-thumb${p === coverSel ? ' is-cover' : ''}">
-      <img src="${p}" onclick="pickCover(${i}, false)">
-      <span class="cv">COPERTINA REEL</span>
-      <div class="rm" onclick="removeExistingPhoto(${i})">✕</div>
-    </div>
-  `).join('');
-  const countEl = document.getElementById('photo-count');
-  const total = keptPhotos.length + selectedPhotoFiles.length;
-  countEl.textContent = total > 0 ? `${total} foto in totale (${selectedPhotoFiles.length} nuove)` : '';
-}
-function removeExistingPhoto(i) {
-  if (keptPhotos[i] === coverSel) coverSel = null;
-  keptPhotos.splice(i, 1);
-  renderExistingPhotos();
-}
 
 function editEntry(idx) {
+  if (dirty && !confirm('Hai modifiche non salvate nella nota aperta. Aprire comunque questa?')) return;
   const e = window.cachedEntries[idx];
+  photoItems.forEach(it => it.url && URL.revokeObjectURL(it.url));
   editingIndex = idx;
-  keptPhotos = [...(e.photos || [])];
+  photoItems = (e.photos || []).map(path => ({ path }));
   document.getElementById('f-date').value = e.date;
   document.getElementById('f-title').value = e.title;
   document.getElementById('f-text').value = e.text;
   document.getElementById('f-video').value = (e.videos || (e.video ? [e.video] : [])).join('\n');
-  coverSel = (e.ig_cover === true ? keptPhotos[0] : e.ig_cover) || null;
-  if (!keptPhotos.includes(coverSel)) coverSel = null;
+  const coverPath = e.ig_cover === true ? (e.photos || [])[0] : e.ig_cover;
+  coverSel = photoItems.find(it => it.path === coverPath) || null;
   document.getElementById('f-photos').value = '';
-  selectedPhotoFiles = [];
-  document.getElementById('photo-preview').innerHTML = '';
-  renderExistingPhotos();
-  document.getElementById('btn-save').textContent = 'Aggiorna nota';
-  document.getElementById('btn-cancel').style.display = 'inline-block';
+  clearAudio();
+  renderPhotos();
+  setEditingUI(true);
   setStatus('', '');
+  dirty = false;
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setEditingUI(on) {
+  document.getElementById('btn-save').textContent = on ? 'Aggiorna nota' : 'Pubblica nota';
+  document.getElementById('btn-cancel').style.display = on ? 'inline-block' : 'none';
+}
+
+// Chiusura decisa da te: chiede conferma solo se c'è qualcosa di non salvato
+function closeEditor() {
+  if (dirty && !confirm('Ci sono modifiche non salvate. Chiudere comunque la nota?')) return;
+  cancelEdit();
 }
 
 function cancelEdit() {
   editingIndex = null;
-  keptPhotos = [];
+  photoItems.forEach(it => it.url && URL.revokeObjectURL(it.url));
+  photoItems = [];
+  coverSel = null;
   clearAudio();
   document.getElementById('f-date').valueAsDate = new Date();
   document.getElementById('f-title').value = '';
   document.getElementById('f-text').value = '';
   document.getElementById('f-video').value = '';
-  coverSel = null;
   document.getElementById('f-photos').value = '';
-  selectedPhotoFiles = [];
-  document.getElementById('photo-preview').innerHTML = '';
-  document.getElementById('existing-photos').innerHTML = '';
-  document.getElementById('btn-save').textContent = 'Pubblica nota';
-  document.getElementById('btn-cancel').style.display = 'none';
+  renderPhotos();
+  setEditingUI(false);
   setStatus('', '');
+  dirty = false;
 }
 
 // ---- SAVE ENTRY ----
@@ -594,20 +619,27 @@ async function saveEntry() {
   const text = document.getElementById('f-text').value.trim();
   const videos = document.getElementById('f-video').value
     .split('\n').map(v => v.trim()).filter(Boolean);
-  const files = selectedPhotoFiles;
-
   if (!date || !title || !text) { setStatus('Data, titolo e testo sono obbligatori.', 'err'); return; }
 
   btn.disabled = true;
 
   try {
     setStatus('Comprimo le foto...', 'wait');
+    // Rispetta l'ordine scelto con ◀ ▶: le nuove vengono compresse e prendono il loro posto in sequenza
     const newPhotoBlobs = [];
-    for (const file of files) {
-      newPhotoBlobs.push(await preparePhoto(file, date));
+    const pathOf = new Map();
+    for (const it of photoItems) {
+      if (it.file) {
+        const blob = await preparePhoto(it.file, date);
+        newPhotoBlobs.push(blob);
+        pathOf.set(it, blob.path);
+      } else {
+        pathOf.set(it, it.path);
+      }
     }
-    const photoPaths = [...keptPhotos, ...newPhotoBlobs.map(p => p.path)];
-    const igCover = (typeof coverSel === 'string') ? coverSel : (coverSel ? newPhotoBlobs[files.indexOf(coverSel)].path : '');
+    const photoPaths = photoItems.map(it => pathOf.get(it));
+    const keptPhotos = photoItems.filter(it => !it.file).map(it => it.path);
+    const igCover = coverSel ? pathOf.get(coverSel) : '';
 
     setStatus('Carico vocale...', 'wait');
     const audioPath = await uploadAudio(date).catch(() => null);
@@ -617,7 +649,8 @@ async function saveEntry() {
 
     let message;
     let removedPhotos = [];
-    if (editingIndex !== null && entries[editingIndex]) {
+    const wasEditing = editingIndex !== null && !!entries[editingIndex];
+    if (wasEditing) {
       const { video: _old, ig_cover: _oldCover, ...rest } = entries[editingIndex];
       removedPhotos = (rest.photos || []).filter(p => !keptPhotos.includes(p));
       entries[editingIndex] = {
@@ -644,12 +677,23 @@ async function saveEntry() {
 
     setStatus('Salvo tutto in un unico commit...', 'wait');
     await commitBatch(newPhotoBlobs, entries, message, removedPhotos);
-    setStatus(editingIndex !== null ? '✓ Nota aggiornata.' : '✓ Nota pubblicata.', 'ok');
+
+    // La nota resta aperta: le foto nuove diventano "già pubblicate" (con anteprima locale),
+    // una nota appena creata passa in modalità modifica. Esci tu con "Chiudi nota".
+    photoItems.forEach(it => { if (it.file) { it.path = pathOf.get(it); delete it.file; } });
+    if (!wasEditing) editingIndex = entries.length - 1;
+    _audioBlob = null;   // il vocale è già caricato: non ricaricarlo al prossimo salvataggio
+    document.getElementById('rec-clear').style.display = 'none';
+    document.getElementById('rec-btn').textContent = '🎙 Registra';
+    if (audioPath) document.getElementById('rec-msg').textContent = '✓ Vocale salvato con la nota';
+    renderPhotos();
+    setEditingUI(true);
+    dirty = false;
+    setStatus((wasEditing ? '✓ Nota aggiornata.' : '✓ Nota pubblicata.') + ' Resta aperta: chiudila quando vuoi.', 'ok');
 
     // Avvia la traduzione automatica EN (GitHub Action con DeepL)
     await triggerTranslation();
 
-    cancelEdit();
     loadEntryList();
   } catch (e) {
     console.error(e);
@@ -741,6 +785,7 @@ async function deleteEntry(idx) {
     entries.splice(idx, 1);
     await commitBatch([], entries, `Diario: elimino nota "${target.title}"`, target.photos || []);
     if (editingIndex === idx) cancelEdit();
+    else if (editingIndex !== null && idx < editingIndex) editingIndex--;   // l'array si è accorciato
     loadEntryList();
   } catch (e) {
     alert('Errore eliminazione: ' + e.message);
@@ -868,6 +913,10 @@ async function loadVideoUrl() {
 }
 
 document.getElementById('f-date').valueAsDate = new Date();
+['f-date', 'f-title', 'f-text', 'f-video'].forEach(id =>
+  document.getElementById(id).addEventListener('input', markDirty));
+// Avviso se chiudi la pagina con modifiche non salvate
+window.addEventListener('beforeunload', (e) => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
 updateTokenStatus();
 loadEntryList();
 loadVideoUrl();
