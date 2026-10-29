@@ -72,10 +72,12 @@
   .photo-preview { gap:0.7rem; }
   .photo-thumb { display:flex; flex-direction:column; align-items:center; gap:0.25rem; }
   .photo-thumb .ph { position:relative; }
-  .photo-thumb img { cursor:pointer; width:72px; height:72px; }
+  .photo-thumb img { cursor:grab; width:72px; height:72px; touch-action:none; user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; -webkit-user-drag:none; }
+  .photo-thumb.dragging { opacity:0.25; }
+  .photo-thumb.dragging img { outline:2px dashed var(--orange); outline-offset:1px; }
+  .drag-ghost { position:fixed; z-index:1000; pointer-events:none; width:84px; height:84px; object-fit:cover; border-radius:4px; outline:3px solid var(--orange); box-shadow:0 8px 24px rgba(0,0,0,0.6); transform:translate(-50%,-50%) scale(1.08); }
+  body.is-dragging { cursor:grabbing; user-select:none; -webkit-user-select:none; }
   .photo-thumb .ord { display:flex; align-items:center; gap:0.2rem; font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.5); }
-  .photo-thumb .ord span.mv { display:inline-block; width:26px; height:24px; line-height:22px; text-align:center; border:1px solid rgba(255,248,244,0.25); border-radius:3px; color:var(--cream); cursor:pointer; user-select:none; }
-  .photo-thumb .ord span.mv.off { opacity:0.2; pointer-events:none; }
   .photo-thumb .ord .n { min-width:16px; text-align:center; }
   .photo-thumb.is-cover img { outline:3px solid var(--orange); outline-offset:1px; }
   .photo-thumb .cv { display:none; position:absolute; left:0; right:0; bottom:0; background:var(--orange); color:#111; font-family:var(--mono); font-size:0.45rem; letter-spacing:0.08em; text-align:center; padding:1px 0; border-radius:0 0 3px 3px; pointer-events:none; }
@@ -171,7 +173,7 @@
   <div class="photo-preview" id="photo-preview"></div>
   <div id="photo-count" style="font-family:var(--mono); font-size:0.6rem; color:rgba(255,248,244,0.35); margin-top:0.3rem;"></div>
 
-  <div class="token-help" style="margin-top:0.5rem;">Usa <b>◀ ▶</b> sotto ogni foto per cambiarne l'ordine: la sequenza è quella che vedrai nella storia.</div>
+  <div class="token-help" style="margin-top:0.5rem;"><b>Trascina una foto</b> (col dito o col mouse) per cambiarne la posizione: il numero sotto indica l'ordine e la sequenza è quella che vedrai nella storia.</div>
   <div class="token-help" style="margin-top:0.3rem;">Hai un reel Instagram? <b>Tocca una foto</b> per sceglierla come copertina del reel: non comparirà più tra le foto della storia. Tocca di nuovo per toglierla.</div>
 
   <label>Video (link YouTube o Instagram, uno per riga — lascia vuoto se nessuno)</label>
@@ -307,31 +309,21 @@ function markDirty() { dirty = true; }
 
 function renderPhotos() {
   const wrap = document.getElementById('photo-preview');
-  const last = photoItems.length - 1;
   wrap.innerHTML = photoItems.map((it, i) => `
-    <div class="photo-thumb${it === coverSel ? ' is-cover' : ''}">
+    <div class="photo-thumb${it === coverSel ? ' is-cover' : ''}${drag && drag.started && drag.cur === i ? ' dragging' : ''}" data-i="${i}">
       <div class="ph">
-        <img src="${it.url || it.path}" onclick="pickCover(${i})">
+        <img src="${it.url || it.path}" draggable="false">
         <span class="cv">COPERTINA REEL</span>
         <div class="rm" onclick="removePhoto(${i})">✕</div>
       </div>
       <div class="ord">
-        <span class="mv${i === 0 ? ' off' : ''}" onclick="movePhoto(${i}, -1)">◀</span>
         <span class="n">${i + 1}</span>
-        <span class="mv${i === last ? ' off' : ''}" onclick="movePhoto(${i}, 1)">▶</span>
       </div>
     </div>
   `).join('');
   const nuove = photoItems.filter(it => it.file).length;
   document.getElementById('photo-count').textContent =
     photoItems.length ? `${photoItems.length} foto in totale (${nuove} nuove)` : '';
-}
-function movePhoto(i, dir) {
-  const j = i + dir;
-  if (j < 0 || j >= photoItems.length) return;
-  [photoItems[i], photoItems[j]] = [photoItems[j], photoItems[i]];
-  markDirty();
-  renderPhotos();
 }
 function pickCover(i) {
   const v = photoItems[i];
@@ -353,6 +345,73 @@ function addPhotoFiles(fileList) {
   markDirty();
   renderPhotos();
 }
+
+// ---- TRASCINAMENTO FOTO (Pointer Events: funziona uguale con dito, mouse e penna) ----
+// Tocco/clic breve sulla foto = copertina reel. Se il dito o il mouse si spostano
+// di qualche pixel parte il trascinamento: la foto segue il puntatore e le altre
+// si riordinano dal vivo mentre ci passi sopra.
+let drag = null;   // { pointerId, startX, startY, cur, started, ghost }
+const DRAG_THRESHOLD = 6;
+
+const photoWrap = document.getElementById('photo-preview');
+
+photoWrap.addEventListener('pointerdown', (e) => {
+  const img = e.target.closest('.ph img');
+  if (!img || drag) return;
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  const thumb = img.closest('.photo-thumb');
+  drag = { pointerId: e.pointerId, startX: e.clientX, startY: e.clientY, cur: +thumb.dataset.i, started: false, ghost: null };
+  photoWrap.setPointerCapture(e.pointerId);
+  e.preventDefault();
+});
+
+photoWrap.addEventListener('pointermove', (e) => {
+  if (!drag || e.pointerId !== drag.pointerId) return;
+  if (!drag.started) {
+    if (Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY) < DRAG_THRESHOLD) return;
+    drag.started = true;
+    const it = photoItems[drag.cur];
+    const g = document.createElement('img');
+    g.src = it.url || it.path;
+    g.className = 'drag-ghost';
+    document.body.appendChild(g);
+    drag.ghost = g;
+    document.body.classList.add('is-dragging');
+    renderPhotos();
+  }
+  drag.ghost.style.left = e.clientX + 'px';
+  drag.ghost.style.top = e.clientY + 'px';
+
+  // Scorrimento automatico se arrivi al bordo dello schermo (utile su telefono)
+  const edge = 50;
+  if (e.clientY < edge) window.scrollBy(0, -12);
+  else if (e.clientY > window.innerHeight - edge) window.scrollBy(0, 12);
+
+  // La foto sotto il puntatore indica dove inserire quella trascinata
+  const over = document.elementFromPoint(e.clientX, e.clientY);
+  const target = over && over.closest('#photo-preview .photo-thumb');
+  if (!target) return;
+  const j = +target.dataset.i;
+  if (j === drag.cur) return;
+  const [moved] = photoItems.splice(drag.cur, 1);
+  photoItems.splice(j, 0, moved);
+  drag.cur = j;
+  markDirty();
+  renderPhotos();
+});
+
+function endDrag(e, cancelled) {
+  if (!drag || e.pointerId !== drag.pointerId) return;
+  const d = drag;
+  drag = null;
+  try { photoWrap.releasePointerCapture(e.pointerId); } catch (_) {}
+  document.body.classList.remove('is-dragging');
+  if (d.ghost) d.ghost.remove();
+  if (d.started) { renderPhotos(); return; }
+  if (!cancelled) pickCover(d.cur);   // era un semplice tocco
+}
+photoWrap.addEventListener('pointerup', (e) => endDrag(e, false));
+photoWrap.addEventListener('pointercancel', (e) => endDrag(e, true));
 
 document.getElementById('f-photos').addEventListener('change', (e) => {
   addPhotoFiles(e.target.files);
@@ -625,7 +684,7 @@ async function saveEntry() {
 
   try {
     setStatus('Comprimo le foto...', 'wait');
-    // Rispetta l'ordine scelto con ◀ ▶: le nuove vengono compresse e prendono il loro posto in sequenza
+    // Rispetta l'ordine scelto trascinando: le nuove vengono compresse e prendono il loro posto in sequenza
     const newPhotoBlobs = [];
     const pathOf = new Map();
     for (const it of photoItems) {
