@@ -1216,7 +1216,11 @@
     .dia-idx-panel::-webkit-scrollbar { width:6px; }
     .dia-idx-panel::-webkit-scrollbar-track { background:#1a1a1a; }
     .dia-idx-panel::-webkit-scrollbar-thumb { background:var(--orange); border-radius:3px; }
-    .dia-idx-more { position:sticky; bottom:-0.9rem; display:none; align-items:center; justify-content:center; gap:0.45rem; margin:0 -1rem -0.9rem; padding:1.6rem 1rem 0.55rem; background:linear-gradient(to bottom, rgba(17,17,17,0) 0%, #111 55%); font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--orange); pointer-events:none; }
+    .dia-idx-more { position:sticky; bottom:-0.9rem; display:none; align-items:center; justify-content:center; gap:0.45rem; margin:0 -1rem -0.9rem; padding:1.6rem 1rem 0.55rem; background:linear-gradient(to bottom, rgba(17,17,17,0) 0%, #111 55%); font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--orange); cursor:pointer; border:none; width:calc(100% + 2rem); }
+    .dia-idx-panel.open { max-height:none; overflow:visible; }
+    .dia-idx-panel.open .dia-idx-more { position:static; background:none; margin:0.3rem -1rem -0.9rem; padding:0.7rem 1rem 0.8rem; border-top:1px solid rgba(255,248,244,0.05); }
+    .dia-idx-panel.open .dia-idx-more .arr { animation:none; }
+    .dia-idx-more:hover .txt, .dia-idx-more:focus-visible .txt { text-decoration:underline; text-underline-offset:3px; }
     .dia-idx-more .arr { font-size:0.95rem; animation:diaIdxBounce 1.4s ease-in-out infinite; }
     @keyframes diaIdxBounce { 0%,100% { transform:translateY(-2px); } 50% { transform:translateY(3px); } }
     .dia-idx-item { display:flex; gap:0.8rem; align-items:baseline; padding:0.42rem 0; text-decoration:none; color:#FFF8F4; border-bottom:1px solid rgba(255,248,244,0.05); }
@@ -2493,7 +2497,7 @@
       const id = _diaStoryId(e);
       const title = (lang === 'en' && e.title_en) ? e.title_en : e.title;
       return `<a class="dia-idx-item" href="#${id}" onclick="return openDiaIndexItem('${id}')"><span class="dia-idx-meta">${_diaEsc(_diaIdxMeta(e, lang))}</span><span class="dia-idx-title">${_diaEsc(title)}</span></a>`;
-    }).join('') + '<div class="dia-idx-more" id="dia-idx-more"><span class="arr">↓</span><span class="txt"></span></div>';
+    }).join('') + '<button type="button" class="dia-idx-more" id="dia-idx-more" onclick="toggleDiaIdxOpen()"><span class="arr">↓</span><span class="txt"></span></button>';
     panel.onscroll = updateDiaIdxMore;
     updateDiaIndexVisibility();
     updateDiaIdxMore();
@@ -2506,11 +2510,27 @@
     if (!panel || !more || panel.offsetParent === null) return;
     const lang = localStorage.getItem('site-lang') || 'it';
     more.style.display = 'flex';
+    if (panel.classList.contains('open')) {
+      more.querySelector('.arr').textContent = '↑';
+      more.querySelector('.txt').textContent = I18N[lang].idx_less;
+      return;
+    }
+    more.querySelector('.arr').textContent = '↓';
     const edge = panel.scrollTop + panel.clientHeight - more.offsetHeight;
     const hidden = [...panel.querySelectorAll('.dia-idx-item')].filter(a => a.offsetTop + a.offsetHeight > edge + 2).length;
     const atEnd = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 2;
     if (atEnd || hidden === 0) { more.style.display = 'none'; return; }
     more.querySelector('.txt').textContent = hidden === 1 ? I18N[lang].idx_more1 : I18N[lang].idx_moren.replace('{n}', hidden);
+  }
+  // Allunga l'elenco (mostra tutte le voci) senza aprire nessuna storia; di nuovo per ridurlo
+  function toggleDiaIdxOpen() {
+    const panel = document.getElementById('dia-idx-panel');
+    if (!panel) return;
+    const opening = !panel.classList.contains('open');
+    panel.classList.toggle('open', opening);
+    panel.scrollTop = 0;
+    updateDiaIdxMore();
+    if (!opening) document.getElementById('dia-index').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   window.addEventListener('resize', updateDiaIdxMore);
 
@@ -3284,8 +3304,9 @@
       ig_watch_post: 'Guarda il post su Instagram',
       ig_sub: 'Si apre su Instagram',
       dia_toindex: "Torna all'indice",
-      idx_more1: 'Ancora 1 storia · scorri',
-      idx_moren: 'Ancora {n} storie · scorri',
+      idx_more1: 'Mostra ancora 1 storia',
+      idx_moren: 'Mostra ancora {n} storie',
+      idx_less: 'Riduci elenco',
       footer_logo: 'Una Bici per il <span>Mondo</span>',
       raccolta_corso: 'Raccolta fondi',
       di_word: 'di',
@@ -3395,8 +3416,9 @@
       ig_watch_post: 'View the post on Instagram',
       ig_sub: 'Opens on Instagram',
       dia_toindex: 'Back to the index',
-      idx_more1: '1 more story · scroll',
-      idx_moren: '{n} more stories · scroll',
+      idx_more1: 'Show 1 more story',
+      idx_moren: 'Show {n} more stories',
+      idx_less: 'Collapse list',
       footer_logo: 'One Bike for the <span>World</span>',
       raccolta_corso: 'Fundraising in progress',
       di_word: 'of',
