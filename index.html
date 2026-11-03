@@ -1209,6 +1209,7 @@
     .dia-listen-row { margin:0.1rem 0 0.75rem; }
     .dia-listen { display:inline-flex; align-items:center; gap:0.45rem; padding:0.3rem 0.85rem 0.3rem 0.7rem; border-radius:999px; background:none; border:1px solid rgba(240,90,40,0.5); color:var(--orange); font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.85rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; }
     .dia-listen svg { width:1rem; height:1rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .dia-listen.paused { background:rgba(240,90,40,0.16); }
     .dia-listen:hover, .dia-listen.on { background:var(--orange); color:#FFF8F4; }
     .dia-toindex-row { display:flex; justify-content:flex-end; margin-top:0.8rem; }
     .dia-toindex-row.mid { margin-top:0; margin-bottom:0.8rem; }
@@ -2345,7 +2346,7 @@
   }
   // Slideshow automatico: ogni 4 secondi passa alla foto successiva (si ferma col tasto pausa o chiudendo)
   let _diaSlideTimer = null, _diaSlidePaused = false;
-  const _DIA_SLIDE_MS = 4000;
+  const _DIA_SLIDE_MS = 2500;
   function _diaSlideSchedule() {
     clearTimeout(_diaSlideTimer);
     if (_diaSlidePaused || diaLightboxPhotos.length < 2) return;
@@ -2476,12 +2477,16 @@
 
   // ---- lettura ad alta voce (voce del dispositivo, gratuita) ----
   let _speakToken = 0;
+  let _speakRes = null;   // lettura messa in pausa: { id, chunks, i, code } (si riprende da lì)
+  let _speakCur = null;   // lettura in corso, stessa forma
+  // ferma del tutto e azzera la posizione (cambio scheda, lingua, fine lettura, altra storia)
   function diaStopSpeak() {
     _speakToken++;
+    _speakCur = null; _speakRes = null;
     if ('speechSynthesis' in window) speechSynthesis.cancel();
     const lang = localStorage.getItem('site-lang') || 'it';
-    document.querySelectorAll('.dia-listen.on').forEach(b => {
-      b.classList.remove('on');
+    document.querySelectorAll('.dia-listen.on, .dia-listen.paused').forEach(b => {
+      b.classList.remove('on', 'paused');
       b.querySelector('.lbl').textContent = I18N[lang].listen;
     });
   }
@@ -2509,37 +2514,52 @@
     speechSynthesis.addEventListener('voiceschanged', fin);
     setTimeout(fin, 800);
   }
+  // Ascolta → (Ferma) → Riprendi: dopo lo stop la lettura riparte dall'inizio della frase interrotta
   function diaSpeak(id, btn) {
-    const wasOn = btn.classList.contains('on');
-    diaStopSpeak();
-    if (wasOn) return;
     const lang = localStorage.getItem('site-lang') || 'it';
-    const box = document.getElementById(id);
-    if (!box) return;
-    const t = box.querySelector('.dia-story-title');
-    const x = box.querySelector('.dia-story-text');
-    const full = ((t ? t.innerText.trim().replace(/[.!?…]*$/, '.') + '\n' : '') + (x ? x.innerText : '')).trim();
-    // frasi → blocchi da max ~220 caratteri (i blocchi lunghi si interrompono su alcuni browser)
-    const chunks = [];
-    full.split(/(?<=[.!?…])\s+|\n+/).forEach(p => {
-      p = p.trim(); if (!p) return;
-      const last = chunks.length - 1;
-      if (last >= 0 && chunks[last].length + p.length < 220) chunks[last] += ' ' + p; else chunks.push(p);
-    });
-    if (!chunks.length) return;
-    const code = lang === 'en' ? 'en' : 'it';
+    const lbl = btn.querySelector('.lbl');
+    if (btn.classList.contains('on')) {                      // pausa
+      const cur = _speakCur;
+      _speakToken++;
+      if ('speechSynthesis' in window) speechSynthesis.cancel();
+      _speakCur = null;
+      if (cur) _speakRes = { id: cur.id, chunks: cur.chunks, i: Math.max(0, cur.i - 1), code: cur.code };
+      btn.classList.remove('on'); btn.classList.add('paused');
+      lbl.textContent = I18N[lang].listen_resume;
+      return;
+    }
+    let res = (_speakRes && _speakRes.id === id) ? _speakRes : null;
+    if (!res) {                                              // nuova lettura
+      diaStopSpeak();
+      const box = document.getElementById(id);
+      if (!box) return;
+      const t = box.querySelector('.dia-story-title');
+      const x = box.querySelector('.dia-story-text');
+      const full = ((t ? t.innerText.trim().replace(/[.!?…]*$/, '.') + '\n' : '') + (x ? x.innerText : '')).trim();
+      // frasi → blocchi da max ~220 caratteri (i blocchi lunghi si interrompono su alcuni browser)
+      const chunks = [];
+      full.split(/(?<=[.!?…])\s+|\n+/).forEach(p => {
+        p = p.trim(); if (!p) return;
+        const last = chunks.length - 1;
+        if (last >= 0 && chunks[last].length + p.length < 220) chunks[last] += ' ' + p; else chunks.push(p);
+      });
+      if (!chunks.length) return;
+      res = { id, chunks, i: 0, code: lang === 'en' ? 'en' : 'it' };
+    }
+    _speakRes = null;
     const token = ++_speakToken;
-    btn.classList.add('on');
-    btn.querySelector('.lbl').textContent = I18N[lang].listen_stop;
+    if ('speechSynthesis' in window) speechSynthesis.cancel();
+    btn.classList.remove('paused'); btn.classList.add('on');
+    lbl.textContent = I18N[lang].listen_stop;
     _diaGetVoices(voices => {
       if (token !== _speakToken) return;
-      const voice = _diaBestVoice(voices, code);
-      let i = 0;
+      const voice = _diaBestVoice(voices, res.code);
       const next = () => {
         if (token !== _speakToken) return;
-        if (i >= chunks.length) { diaStopSpeak(); return; }
-        const u = new SpeechSynthesisUtterance(chunks[i++]);
-        u.lang = code === 'en' ? 'en-US' : 'it-IT';
+        if (res.i >= res.chunks.length) { diaStopSpeak(); return; }
+        _speakCur = res;
+        const u = new SpeechSynthesisUtterance(res.chunks[res.i++]);
+        u.lang = res.code === 'en' ? 'en-US' : 'it-IT';
         if (voice) { u.voice = voice; u.lang = voice.lang; }
         u.rate = 0.95;
         u.onend = next;
@@ -3387,6 +3407,7 @@
       ig_watch_post: 'Guarda il post su Instagram',
       listen: 'Ascolta',
       listen_stop: 'Ferma',
+      listen_resume: 'Riprendi',
       dia_toindex: "Torna all'indice",
       idx_more1: 'Mostra ancora 1 storia',
       idx_moren: 'Mostra ancora {n} storie',
@@ -3500,6 +3521,7 @@
       ig_watch_post: 'View the post on Instagram',
       listen: 'Listen',
       listen_stop: 'Stop',
+      listen_resume: 'Resume',
       dia_toindex: 'Back to the index',
       idx_more1: 'Show 1 more story',
       idx_moren: 'Show {n} more stories',
