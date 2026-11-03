@@ -1203,7 +1203,6 @@
     .dia-ig-link .ig-badge svg { width:1.3rem; height:1.3rem; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
     .dia-ig-link .ig-txt { flex:1; min-width:0; display:flex; flex-direction:column; gap:0.15rem; }
     .dia-ig-link .ig-main { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1rem; letter-spacing:0.06em; text-transform:uppercase; color:#FFF8F4; }
-    .dia-ig-link .ig-sub { font-family:'IBM Plex Mono',monospace; font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:#FFFFFF; opacity:0.75; }
     .dia-ig-link .ig-go { flex:0 0 auto; font-size:1.2rem; line-height:1; color:var(--orange); }
     /* indice delle storie */
     .dia-index { max-width:680px; margin:0 auto 1.3rem; text-align:center; scroll-margin-top:5.5rem; }
@@ -2314,7 +2313,7 @@
       const coverHtml = cover ? `<span class="ig-cover"><img src="${String(cover).replace(/"/g, '%22')}" alt=""><span class="ig-play"></span></span>` : '';
       return `<a class="dia-ig-link${cover ? ' has-cover' : ''}" href="${href}" target="_blank" rel="noopener">
         ${coverHtml}<span class="ig-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9"/></svg></span>
-        <span class="ig-txt"><span class="ig-main">${label}</span><span class="ig-sub">${I18N[lang].ig_sub}</span></span>
+        <span class="ig-txt"><span class="ig-main">${label}</span></span>
         <span class="ig-go" aria-hidden="true">↗</span>
       </a>`;
     }
@@ -3386,7 +3385,6 @@
       dia_empty: 'Ancora nessuna nota',
       ig_watch_reel: 'Guarda il reel su Instagram',
       ig_watch_post: 'Guarda il post su Instagram',
-      ig_sub: 'Si apre su Instagram',
       listen: 'Ascolta',
       listen_stop: 'Ferma',
       dia_toindex: "Torna all'indice",
@@ -3500,7 +3498,6 @@
       dia_empty: 'No notes yet',
       ig_watch_reel: 'Watch the reel on Instagram',
       ig_watch_post: 'View the post on Instagram',
-      ig_sub: 'Opens on Instagram',
       listen: 'Listen',
       listen_stop: 'Stop',
       dia_toindex: 'Back to the index',
