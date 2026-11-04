@@ -470,8 +470,6 @@
     letter-spacing: 0.04em;
   }
   .frame-story .close-msg { font-size: 1.9rem; }
-  #s-close-msg:empty::before { content: attr(data-placeholder); font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.08em; color:rgba(255,248,244,0.3); }
-  .exporting #s-close-msg:empty::before { content: none; }
   .close-sub {
     font-family: var(--mono);
     font-size: 0.82rem;
@@ -827,7 +825,7 @@
 
         <!-- MESSAGGIO -->
         <div style="position:relative; z-index:2;">
-          <div class="close-msg" id="s-close-msg" contenteditable="true" data-placeholder="tocca 💬 frase o scrivi qui" style="outline:none; cursor:grab; min-height:1.2em;"></div>
+          <div class="close-msg" id="s-close-msg" contenteditable="true" style="outline:none; cursor:grab; min-height:1.2em;"></div>
         </div>
 
         <!-- MIDDLE: bottone frase -->
@@ -1257,8 +1255,6 @@ function update() {
   const kmStr = `${km} km`;
 
   // Frasi chiusura
-  const closeMsgs = ["Ancora\nin sella!", "Le gambe\ngirano!", "Una Buffalo\nin più!", "Non mi\nfermo!", "Palermo\nsi avvicina!"];
-  const closeMsg = closeMsgs[(day - 1) % closeMsgs.length];
 
   // Story
   var elDayNum = document.getElementById('s-day-num'); if (elDayNum) elDayNum.textContent = dayStr;
@@ -2361,7 +2357,7 @@ function saveSession(showMsg) {
   // altrimenti si rompe il drag (simpleDrag) già attivo su quegli elementi.
   // Per questi salviamo solo il TESTO, non lo style.
   // s-route-title-1 escluso: viene sempre aggiornato da Strava/GPX al caricamento
-  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-close-hashtag','s-close-msg'];
+  const FIXED_IDS = ['s-day-num','s-day-label','s-badge','s-media-tag','s-open-tag','s-handle','s-close-hashtag'];  // s-close-msg escluso: la frase di chiusura parte sempre vuota
 
   allSlideIds.forEach(slideId => {
     const wrap = document.getElementById(slideId);
@@ -2603,8 +2599,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Frase chiusura: togli le vecchie frasi automatiche rimaste in sessione
     var cm = document.getElementById('s-close-msg');
-    var AUTO = ['Ancora in sella!','Le gambe girano!','Una Buffalo in più!','Non mi fermo!','Palermo si avvicina!','Le gambe girano ancora.'];
-    if (cm && AUTO.indexOf(cm.innerText.replace(/\s+/g,' ').trim()) !== -1) cm.innerHTML = '';
+    if (cm) cm.innerHTML = '';  // frase di chiusura sempre vuota all'apertura
     // Titolo slide 1 sempre vuoto all'apertura
     var t1 = document.getElementById('s-route-title-1'); if (t1) t1.textContent = '';
     // Hashtag ultima slide (sessioni salvate col vecchio hashtag)
