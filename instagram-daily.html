@@ -470,6 +470,8 @@
     letter-spacing: 0.04em;
   }
   .frame-story .close-msg { font-size: 1.9rem; }
+  #s-close-msg:empty::before { content: attr(data-placeholder); font-family:'IBM Plex Mono',monospace; font-size:0.6rem; letter-spacing:0.08em; color:rgba(255,248,244,0.3); }
+  .exporting #s-close-msg:empty::before { content: none; }
   .close-sub {
     font-family: var(--mono);
     font-size: 0.82rem;
@@ -821,13 +823,11 @@
 
         <!-- TOP: barra arancione con icona + nome -->
         <div style="position:absolute; top:0; left:0; right:0; z-index:3; height:3px; background:var(--orange);"></div>
-        <div style="position:relative; z-index:2; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.6rem;">
-          <div id="s-close-hashtag" contenteditable="true" style="font-family:'IBM Plex Mono',monospace; font-size:0.65rem; font-weight:900; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); cursor:grab; outline:none;">#DANNYBAG</div>
-        </div>
+        <div class="open-tag" id="s-close-hashtag" contenteditable="true" style="position:absolute; top:0.8rem; left:1.2rem; z-index:4; cursor:grab; outline:none;">#DANNYBAG</div>
 
         <!-- MESSAGGIO -->
         <div style="position:relative; z-index:2;">
-          <div class="close-msg" id="s-close-msg" contenteditable="true" style="outline:none; cursor:grab;">Le gambe<br>girano ancora.</div>
+          <div class="close-msg" id="s-close-msg" contenteditable="true" data-placeholder="tocca 💬 frase o scrivi qui" style="outline:none; cursor:grab; min-height:1.2em;"></div>
         </div>
 
         <!-- MIDDLE: bottone frase -->
@@ -1026,7 +1026,7 @@ async function stravaLoadActivities() {
   });
 }
 
-function applyWbrTappa(tappa) {
+function applyWbrTappa(tappa, fromStartup) {
   const km   = tappa.km || 0;
   const dis  = tappa.dislivello || 0;
   const name = tappa.name || 'Attività';
@@ -1044,7 +1044,7 @@ function applyWbrTappa(tappa) {
 
   // Titolo: aggiorna sempre da Strava quando carico un'attività
   const title1 = document.getElementById('s-route-title-1');
-  if (title1 && name) {
+  if (title1 && name && !fromStartup) {
     title1.textContent = name;
   }
 
@@ -1089,7 +1089,7 @@ function resetWbrSession() {
 (function loadLastWbrTappa() {
   const saved = localStorage.getItem('wbr-tappa');
   if (saved) {
-    try { applyWbrTappa(JSON.parse(saved)); } catch(e) {}
+    /* all'apertura la banda arancione resta vuota: l'attività Strava si applica solo quando la scegli */
   }
 })();
 
@@ -1218,27 +1218,7 @@ function populateFromTappa(tappa, tappeList, fundraising) {
   document.getElementById('kmTot').value     = tappa.totKm || 0;
   document.getElementById('dislivelloTot').value = tappa.totDis || 0;
 
-  // Nome tappa → titolo slide 1
-  // Usa lo stesso formato di Index.html: from → to
-  if (tappa.from && tappa.to) {
-    const title1 = document.getElementById('s-route-title-1');
-    if (title1) {
-      const routeTitle = tappa.from + ' → ' + tappa.to;
-      console.log('✅ Impostando titolo da GitHub:', routeTitle);
-      title1.textContent = routeTitle;
-      titleFromGitHub = true;
-      console.log('titleFromGitHub = true');
-    }
-  } else if (tappa.name) {
-    const title1 = document.getElementById('s-route-title-1');
-    if (title1) {
-      console.log('✅ Impostando titolo da GitHub (fallback name):', tappa.name);
-      title1.textContent = tappa.name;
-      titleFromGitHub = true;
-    }
-  } else {
-    console.log('⚠️ Nessun titolo disponibile in GitHub');
-  }
+  // Titolo slide 1: non viene più preso da GitHub, all'apertura resta vuoto
 
   // DATA: non più presa da GitHub (dati viaggio MIPA) — resta la data di oggi
   } // end if (tappa)
@@ -1294,7 +1274,7 @@ function update() {
   if (elKmDay) elKmDay.innerHTML = km > 0 ? `${km}&thinsp;km · ↑${dislivello}&thinsp;m` : '';
   var elTotale = document.getElementById('s-close-totale');
   if (elTotale) elTotale.innerHTML = (tot > 0) ? `<strong>In sella da:</strong> ${tot}&thinsp;km · ↑${disTot}&thinsp;m` : '';
-  document.querySelectorAll('.slide-close .close-msg')[0].innerHTML = closeMsg.replace('\n', '<br>');
+  // Frase di chiusura: nessun testo automatico, la inserisci tu
 
   // Aggiorna anche le slide extra con la stessa frase
   document.querySelectorAll('[id^="s-badge-extra"]').forEach(el => el.textContent = `TAPPA ${dayStr}`);
@@ -1310,7 +1290,6 @@ function update() {
     document.getElementById('p-prog').style.width = `${pct}%`;
     document.getElementById('p-close-day').textContent = dayStr;
     document.getElementById('p-close-sub').innerHTML = `${tot} km · ↑${disTot}m`;
-    document.querySelectorAll('.slide-close .close-msg')[1].innerHTML = closeMsg.replace('\n', '<br>');
   }
 }
 
@@ -1387,6 +1366,7 @@ async function downloadSlides() {
     const wasHidden = wrap.style.display === 'none';
     if (wasHidden) wrap.style.display = 'flex';
     // Nascondi tutti i bottoni di controllo
+    wrap.classList.add('exporting');
     wrap.querySelectorAll('button, [id*="Controls"], .cap-handle').forEach(el => { el._wasVisible = el.style.display; el.style.display = 'none'; });
     const el = wrap.querySelector('.frame-story');
     if (el) {
@@ -1399,6 +1379,7 @@ async function downloadSlides() {
         await new Promise(r => setTimeout(r, 400));
       } catch(e) { console.error(e); }
     }
+    wrap.classList.remove('exporting');
     wrap.querySelectorAll('button, [id*="Controls"]').forEach(el => { if (el._wasVisible !== undefined) el.style.display = el._wasVisible; });
     if (wasHidden) wrap.style.display = 'none';
   }
@@ -2620,6 +2601,12 @@ document.addEventListener('DOMContentLoaded', () => {
       var t = el.textContent.trim();
       if (t === 'Una Bici per il Mondo' || t === '#UnaBiciPerIlMondo') el.textContent = '#DANNYBAG';
     });
+    // Frase chiusura: togli le vecchie frasi automatiche rimaste in sessione
+    var cm = document.getElementById('s-close-msg');
+    var AUTO = ['Ancora in sella!','Le gambe girano!','Una Buffalo in più!','Non mi fermo!','Palermo si avvicina!','Le gambe girano ancora.'];
+    if (cm && AUTO.indexOf(cm.innerText.replace(/\s+/g,' ').trim()) !== -1) cm.innerHTML = '';
+    // Titolo slide 1 sempre vuoto all'apertura
+    var t1 = document.getElementById('s-route-title-1'); if (t1) t1.textContent = '';
     // Hashtag ultima slide (sessioni salvate col vecchio hashtag)
     var ch = document.getElementById('s-close-hashtag');
     if (ch && ch.textContent.trim() === '#UnaBiciPerIlMondo') ch.textContent = '#DANNYBAG';
