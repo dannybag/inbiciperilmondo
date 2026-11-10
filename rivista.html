@@ -13,68 +13,51 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;800;900&family=Barlow:wght@300;400;700&family=IBM+Plex+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
 <link rel="stylesheet" href="rivista1/rivista.css">
 <style>
-  :root { --orange: #F05A28; --ink: #FFF8F4; --muted: rgba(255,248,244,.55); }
   [hidden] { display: none !important; }
   html, body { height: 100%; margin: 0; }
-  body { background: #111; color: var(--ink); font-family: 'IBM Plex Mono', monospace; display: flex; flex-direction: column; overflow: hidden;
+  body { background: #111; color: #FFF8F4; font-family: 'IBM Plex Mono', monospace; overflow: hidden; border-top: 3px solid #F05A28; box-sizing: border-box;
     background-image: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(240,90,40,.12), transparent 70%); }
-  .gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-  header { display: flex; align-items: baseline; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; padding-top: max(12px, env(safe-area-inset-top, 0px)); padding-bottom: 8px; border-top: 4px solid var(--orange); }
-  .brand { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.35rem; text-transform: uppercase; line-height: 1; color: var(--ink); text-decoration: none; }
-  .brand span { color: var(--orange); }
-  .issue { font-size: .66rem; letter-spacing: .25em; text-transform: uppercase; color: var(--orange); }
-  .stage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; }
-  .bar { display: flex; align-items: center; justify-content: center; gap: 10px 14px; flex-wrap: wrap; padding-top: 10px; padding-bottom: 6px; }
-  button { font: 500 .7rem/1 'IBM Plex Mono', monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); background: transparent; border: 1.5px solid var(--orange); padding: .65rem .95rem; border-radius: 2px; cursor: pointer; }
-  button:hover { background: rgba(240,90,40,.16); }
-  button:focus-visible { outline: 2px solid #FF8C5A; outline-offset: 2px; }
-  button:disabled { opacity: .3; cursor: default; background: transparent; }
-  button.quiet { border-color: rgba(255,248,244,.2); color: var(--muted); }
-  .count { font-size: .76rem; letter-spacing: .1em; color: var(--muted); min-width: 6.5em; text-align: center; font-variant-numeric: tabular-nums; }
-  .count b { color: var(--ink); font-weight: 500; }
-  .hint { font-size: .62rem; letter-spacing: .1em; color: var(--muted); text-align: center; padding-bottom: max(12px, env(safe-area-inset-bottom, 0px)); min-height: 1em; }
-  .loading { color: var(--muted); font-size: .8rem; letter-spacing: .1em; }
-  @media (max-width: 520px) { .issue { display: none; } button { padding: .6rem .75rem; } }
+  /* la rivista occupa tutto lo schermo; su schermi larghi lascio ai lati lo spazio per le frecce */
+  .stage { position: absolute; inset: 3px 0 0 0; display: flex; align-items: center; justify-content: center;
+    padding: max(8px, env(safe-area-inset-top, 0px)) max(64px, env(safe-area-inset-right, 0px)) max(8px, env(safe-area-inset-bottom, 0px)) max(64px, env(safe-area-inset-left, 0px)); box-sizing: border-box; }
+  .stage > .rv-book { flex: none; }
+  .loading { color: rgba(255,248,244,.55); font-size: .8rem; letter-spacing: .1em; }
+  .arrow { position: fixed; top: 50%; transform: translateY(-50%); z-index: 10; width: 48px; height: 48px; border-radius: 50%;
+    border: 1.5px solid #F05A28; background: rgba(17,17,17,.6); color: #FFF8F4; font: 400 1.5rem/1 'Barlow', sans-serif;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0 0 3px; -webkit-tap-highlight-color: transparent;
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); transition: opacity .2s, background .2s; }
+  .arrow:hover { background: #F05A28; }
+  .arrow:focus-visible { outline: 2px solid #FF8C5A; outline-offset: 3px; }
+  .arrow:disabled { opacity: 0; pointer-events: none; }
+  #prev { left: max(8px, env(safe-area-inset-left, 0px)); }
+  #next { right: max(8px, env(safe-area-inset-right, 0px)); }
+  /* telefono: pagina il più grande possibile, frecce piccole sopra il bordo */
+  @media (max-width: 700px) {
+    .stage { padding: max(4px, env(safe-area-inset-top, 0px)) max(4px, env(safe-area-inset-right, 0px)) max(4px, env(safe-area-inset-bottom, 0px)) max(4px, env(safe-area-inset-left, 0px)); }
+    .arrow { width: 38px; height: 38px; font-size: 1.25rem; background: rgba(17,17,17,.45); top: auto; bottom: max(14px, env(safe-area-inset-bottom, 0px)); transform: none; }
+    #prev { left: max(10px, env(safe-area-inset-left, 0px)); }
+    #next { right: max(10px, env(safe-area-inset-right, 0px)); }
+  }
 </style>
 </head>
 <body>
-<header class="gut">
-  <a class="brand" href="./">Una Bici per il <span>Mondo</span></a>
-  <div class="issue">Quante Storie · Milano → Palermo</div>
-</header>
-<main class="stage gut" id="stage"><div class="loading" id="loading">Impagino la rivista…</div><div class="rv-book" id="book" role="region" aria-label="Rivista Quante Storie" hidden></div></main>
-<div class="bar gut">
-  <button id="prev" type="button" aria-label="Pagina precedente">← Indietro</button>
-  <div class="count" id="count" aria-live="polite"></div>
-  <button id="next" type="button" aria-label="Pagina successiva">Avanti →</button>
-  <button id="pdf" type="button" class="quiet">Scarica PDF</button>
-</div>
-<div class="hint gut" id="hint"></div>
+<main class="stage" id="stage"><div class="loading" id="loading">Impagino la rivista…</div><div class="rv-book" id="book" role="region" aria-label="Rivista Quante Storie" hidden></div></main>
+<button class="arrow" id="prev" type="button" aria-label="Pagina precedente">‹</button>
+<button class="arrow" id="next" type="button" aria-label="Pagina successiva">›</button>
 
 <script src="rivista1/rivista.js"></script>
 <script>
 (async function () {
   const $ = id => document.getElementById(id);
-  let pages = [];
-  const flip = Rivista.Flip($('stage'), $('book'), { prev: $('prev'), next: $('next'), count: $('count'), hint: $('hint') });
+  const flip = Rivista.Flip($('stage'), $('book'), { prev: $('prev'), next: $('next') });
   try {
     const res = await fetch('rivista1/rivista.json?t=' + Date.now(), { cache: 'no-store' });
     const data = await res.json();
     await Rivista.ready();
-    pages = Rivista.paginate(data).pages;
+    const pages = Rivista.paginate(data).pages;
     $('loading').hidden = true; $('book').hidden = false;
     flip.setPages(pages, 0);
   } catch (e) { $('loading').textContent = 'Non riesco a caricare la rivista. Riprova tra poco.'; }
-
-  $('pdf').addEventListener('click', async () => {
-    const b = $('pdf'); b.disabled = true;
-    try {
-      const blob = await Rivista.pdf(pages, (i, n) => { b.textContent = `Pagina ${i} di ${n}`; });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Quante-Storie.pdf';
-      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 60000);
-    } catch (e) { alert('Il PDF non è venuto, riprova tra un momento.'); }
-    finally { b.disabled = false; b.textContent = 'Scarica PDF'; }
-  });
 })();
 </script>
 </body>
