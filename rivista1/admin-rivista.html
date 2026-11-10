@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>@dannybag · Admin Rivista</title>
 <meta name="robots" content="noindex">
-<link rel="icon" type="image/png" href="img/BikeIconBW.png">
+<link rel="icon" type="image/png" href="../img/BikeIconBW.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;800;900&family=Barlow:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
@@ -157,7 +157,7 @@
 (function () {
   'use strict';
   const REPO = 'dannybag/inbiciperilmondo';
-  const FILE = 'rivista.json';
+  const FILE = 'rivista1/rivista.json';   // percorso nel repo
   const DRAFT = 'rivista-bozza';
   const $ = id => document.getElementById(id);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -191,7 +191,7 @@
       const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?t=${Date.now()}`, { headers: gh(), cache: 'no-store' });
       if (r.ok) return JSON.parse(b64ToUtf8((await r.json()).content));
     }
-    const r = await fetch(FILE + '?t=' + Date.now(), { cache: 'no-store' });
+    const r = await fetch('rivista.json?t=' + Date.now(), { cache: 'no-store' });
     if (!r.ok) throw new Error('rivista.json non trovato');
     return r.json();
   }
@@ -212,7 +212,8 @@
 
   /* ---------- stato ---------- */
   let data = null, diario = [], pending = {}, local = {}, dirty = false, saving = false;
-  const urlOf = p => !p ? '' : (local[p] || p);
+  const SITO = p => !p || /^(https?:|blob:|data:|\/)/.test(p) ? p : '../' + p;   // percorsi del sito visti da rivista1/
+  const urlOf = p => !p ? '' : (local[p] || SITO(p));
   const open = new Set(['copertina']);
   function toast(m, ms) { const t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), ms || 3500); }
   function setStatus(s, txt) { $('status').dataset.s = s; $('status').textContent = txt; }
@@ -341,7 +342,7 @@
       try {
         toast('Preparo la foto…', 1500);
         const blob = await shrink(el.files[0]);
-        const name = `rivista/img/${new Date().toISOString().slice(0, 10)}-${Date.now().toString(36)}.jpg`;
+        const name = `rivista1/img/${new Date().toISOString().slice(0, 10)}-${Date.now().toString(36)}.jpg`;
         pending[name] = blob; local[name] = URL.createObjectURL(blob);
         setP(el.dataset.photo, name); changed(); render(true);
       } catch (_) { toast('Non riesco ad aprire questa foto. Prova con un JPG o un PNG.'); }
@@ -433,7 +434,7 @@
   }
   function fillPicker() {
     const x = diario.find(d => d.date === $('picker-entry').value);
-    $('picker-grid').innerHTML = (x ? x.photos : []).map(p => `<button type="button" data-src="${esc(p)}" style="background-image:url('${esc(p)}')" aria-label="Scegli questa foto"></button>`).join('');
+    $('picker-grid').innerHTML = (x ? x.photos : []).map(p => `<button type="button" data-src="${esc(p)}" style="background-image:url('${esc(SITO(p))}')" aria-label="Scegli questa foto"></button>`).join('');
   }
   $('picker-entry').addEventListener('change', fillPicker);
   $('picker-grid').addEventListener('click', e => { const b = e.target.closest('button[data-src]'); if (!b) return; setP(pickTarget, b.dataset.src); $('picker').hidden = true; changed(); render(true); });
@@ -481,7 +482,7 @@
     try {
       const [riv, dia] = await Promise.all([
         readRemote(),
-        fetch('diario.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.json()).catch(() => ({ entries: [] }))
+        fetch('../diario.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.json()).catch(() => ({ entries: [] }))
       ]);
       data = riv; diario = (dia.entries || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
       if (!data.epilogo) data.epilogo = { visibile: false, occhiello: '', titolo: '', blocchi: [] };
