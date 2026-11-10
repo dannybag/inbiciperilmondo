@@ -1,10 +1,10 @@
 {
  "versione": 2,
  "copertina": {
-  "etichetta": "Milano → Palermo · 31 agosto – 17 settembre 2026",
+  "etichetta": "*Milano → Palermo*",
   "titolo": "Una Bici\nper il *Mondo*",
   "numero": "",
-  "statsTitolo": "Com'è andata",
+  "statsTitolo": "",
   "stats": [
    {
     "n": "1.766",
@@ -1288,5 +1288,5 @@
   "testo": "Grazie per aver pedalato con me.",
   "link": "mipa.dannybag.org\nInstagram @dannybag"
  },
- "salvato": "2026-11-10T22:39:52.353Z"
+ "salvato": "2026-11-10T22:45:04.445Z"
 }
