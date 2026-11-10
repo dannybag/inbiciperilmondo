@@ -28,7 +28,7 @@
 .pg.cover { background: #111; color: #FFF; }
 .cv-photo { position: absolute; inset: 0; background-position: center 60%; }
 /* velo scuro: lascia vedere la foto ma tiene leggibili titolo e numeri */
-.cv-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(17,17,17,.40) 0%, rgba(17,17,17,.16) 34%, rgba(17,17,17,.30) 46%, rgba(17,17,17,.36) 70%, rgba(17,17,17,.24) 84%, rgba(17,17,17,.58) 100%); }
+.cv-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(17,17,17,.48) 0%, rgba(17,17,17,.24) 34%, rgba(17,17,17,.38) 46%, rgba(17,17,17,.44) 70%, rgba(17,17,17,.32) 84%, rgba(17,17,17,.64) 100%); }
 .pg.cover.has-photo .cv-glow { opacity: .55; }
 .pg.cover.has-photo .cv-l { color: rgba(255,255,255,.9); font-weight: 700; }
 .pg.cover.has-photo .cv-title, .pg.cover.has-photo .cv-big, .pg.cover.has-photo .cv-stats, .pg.cover.has-photo .cv-tag, .pg.cover.has-photo .cv-foot { text-shadow: 0 1px 10px rgba(0,0,0,.7), 0 0 2px rgba(0,0,0,.5); }
@@ -36,7 +36,7 @@
 .cv-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 85% 42% at 50% 62%, rgba(240,90,40,0.20) 0%, rgba(240,90,40,0) 70%); }
 .cv-inner { position: absolute; left: 12mm; right: 12mm; top: 13mm; }
 .cv-tag { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14pt; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; color: #F05A28; margin-bottom: 7mm; }
-.cv-tag .arr { color: #F05A28; }
+.cv-tag .arr { color: #FFF8F4; }
 .cv-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 48pt; line-height: .9; text-transform: uppercase; margin: 0; color: #FFF8F4; }
 .cv-title .hl { color: #F05A28; font-style: normal; }
 .cv-issue { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20pt; text-transform: uppercase; letter-spacing: .06em; color: #FF8C5A; margin-top: 10mm; padding-top: 3mm; border-top: .6pt solid rgba(240,90,40,.45); }
