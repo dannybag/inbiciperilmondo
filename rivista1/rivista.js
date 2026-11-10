@@ -175,7 +175,9 @@
     const posFor = i => mode === 'spread' ? Math.ceil(i / 2) : i;
     function layout(force) {
       if (!pages.length || !stage.clientWidth) return;
-      const w = stage.clientWidth - 2, h = stage.clientHeight - 6;
+      const cs = getComputedStyle(stage);   // spazio utile, senza i margini interni
+      const w = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 2;
+      const h = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - 2;
       const m = (w >= 700 && w / h > 1.05) ? 'spread' : 'single';
       const keep = mode ? pageIndex() : 0;
       const newW = Math.min(h, (m === 'spread' ? w / 2 : w) * R) / R;
