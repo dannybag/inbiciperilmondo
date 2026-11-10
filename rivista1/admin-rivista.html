@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>@dannybag · Admin Rivista</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="img/BikeIconBW.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;800;900&family=Barlow:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="rivista.css">
+<style>
+  :root { --orange:#F05A28; --orange-l:#FF8C5A; --dark:#1A1A1A; --panel:#111; --line:rgba(255,248,244,.14); --cream:#FFF8F4; --muted:rgba(255,248,244,.5); --mono:'IBM Plex Mono',monospace; --green:#5FBF7A; --warn:#f2b84b; }
+  [hidden] { display:none !important; }
+  * { box-sizing:border-box; }
+  html, body { height:100%; margin:0; }
+  body { background:var(--dark); color:var(--cream); font-family:'Barlow',sans-serif; display:flex; flex-direction:column; overflow:hidden; }
+  .header { background:#111; border-bottom:2px solid var(--orange); padding:.8rem max(16px, 5vw); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.6rem; }
+  .header-title { font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:.08em; color:var(--orange); line-height:1; }
+  .header-title span { color:var(--cream); }
+  .tabs { display:flex; border:1.5px solid var(--orange); border-radius:2px; overflow:hidden; }
+  .tabs button { border:0; border-radius:0; padding:.55rem .9rem; }
+  .tabs button[aria-pressed="true"] { background:var(--orange); }
+  button, .btn { font:500 .68rem/1 var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--cream); background:transparent; border:1.5px solid var(--orange); padding:.62rem .9rem; border-radius:2px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; position:relative; }
+  button:hover, .btn:hover { background:rgba(240,90,40,.16); }
+  button:focus-visible, .btn:focus-within, input:focus-visible, textarea:focus-visible, select:focus-visible { outline:2px solid var(--orange-l); outline-offset:2px; }
+  button:disabled { opacity:.3; cursor:default; background:transparent; }
+  button.quiet { border-color:var(--line); color:var(--muted); }
+  button.quiet:hover { color:var(--cream); background:transparent; border-color:var(--muted); }
+  button.danger { border-color:var(--line); color:var(--muted); }
+  button.danger.armed { background:var(--orange); border-color:var(--orange); color:var(--cream); }
+  button.solid { background:var(--orange); }
+  .btn input[type=file] { position:absolute; width:1px; height:1px; opacity:0; }
+
+  main { flex:1; min-height:0; }
+  #vista-modifica { overflow-y:auto; -webkit-overflow-scrolling:touch; padding:0 max(16px, 5vw); }
+  #vista-anteprima { display:flex; flex-direction:column; background:#111; background-image:radial-gradient(ellipse 70% 55% at 50% 45%, rgba(240,90,40,.1), transparent 70%); }
+  .ed { max-width:720px; margin:0 auto; padding:16px 0 120px; display:grid; gap:14px; }
+  .note { font-size:.85rem; line-height:1.55; color:var(--muted); }
+  .note b { color:var(--cream); font-weight:600; }
+  .token-box { background:#111; border:1px solid rgba(240,90,40,.3); border-radius:4px; padding:1rem; display:grid; gap:.6rem; }
+  .card { background:#111; border:1px solid var(--line); border-radius:4px; }
+  .card > summary { list-style:none; cursor:pointer; padding:14px 16px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .card > summary::-webkit-details-marker { display:none; }
+  .card > summary::after { content:"+"; margin-left:auto; color:var(--orange); font-size:1.2rem; line-height:1; }
+  .card[open] > summary::after { content:"–"; }
+  .card > summary h3 { margin:0; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.25rem; text-transform:uppercase; letter-spacing:.02em; }
+  .card > summary .sub { font-family:var(--mono); font-size:.62rem; color:var(--muted); letter-spacing:.06em; }
+  .card > summary .off { font-family:var(--mono); font-size:.58rem; letter-spacing:.12em; text-transform:uppercase; color:var(--warn); border:1px solid var(--warn); padding:2px 6px; border-radius:2px; }
+  .card .in { padding:0 16px 16px; display:grid; gap:14px; }
+  .grp { display:grid; gap:10px; }
+  .grp-title { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:.95rem; text-transform:uppercase; letter-spacing:.12em; color:var(--orange); margin-top:6px; }
+  .row { display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; }
+  .row2 { display:grid; grid-template-columns:1fr 1.6fr; gap:8px; }
+  label.f { display:grid; gap:5px; min-width:0; }
+  label.f > span { font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+  label.chk { display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:.7rem; letter-spacing:.06em; }
+  label.chk input { width:20px; height:20px; accent-color:var(--orange); }
+  input[type=text], input[type=password], textarea, select { width:100%; background:#1d1d1d; color:var(--cream); border:1px solid var(--line); border-radius:4px; padding:.65rem .75rem; font:16px/1.5 'Barlow',sans-serif; outline:none; }
+  textarea { resize:vertical; min-height:4.5em; font-family:'Lora',Georgia,serif; }
+  textarea.short { min-height:2.6em; }
+  .help { font-family:var(--mono); font-size:.6rem; color:var(--muted); letter-spacing:.03em; line-height:1.5; }
+  .photo { display:grid; grid-template-columns:96px 1fr; gap:12px; align-items:start; }
+  .thumb { width:96px; height:96px; border-radius:3px; background:#222 center/cover no-repeat; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:.55rem; color:var(--muted); text-align:center; }
+  .photo .side { display:grid; gap:8px; min-width:0; }
+  .btns { display:flex; flex-wrap:wrap; gap:8px; }
+  .blk { border:1px solid var(--line); border-left:3px solid var(--line); border-radius:3px; padding:10px 12px; display:grid; gap:8px; background:rgba(255,255,255,.02); }
+  .blk[data-t="foto"] { border-left-color:var(--orange-l); }
+  .blk[data-t="citazione"] { border-left-color:var(--orange); }
+  .blk[data-t="versi"] { border-left-color:#b9a28c; }
+  .blk-head { display:flex; align-items:center; gap:8px; }
+  .blk-head .lab { font-family:var(--mono); font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-right:auto; }
+  .blk-head button { padding:.42rem .6rem; }
+  .add { display:flex; justify-content:center; }
+  .add > button { border-style:dashed; border-color:var(--line); color:var(--muted); padding:.4rem .8rem; }
+  .add-menu { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+  .foot { display:flex; flex-wrap:wrap; gap:8px; }
+  .banner { background:#2a2420; border:1px solid var(--warn); padding:12px 14px; border-radius:4px; font-size:.85rem; line-height:1.5; display:grid; gap:10px; }
+
+  .savebar { position:fixed; left:0; right:0; bottom:0; background:#111; border-top:1px solid var(--line); padding:10px max(16px, 5vw) max(10px, env(safe-area-inset-bottom, 0px)); display:flex; align-items:center; justify-content:space-between; gap:10px; z-index:20; }
+  .status { font-family:var(--mono); font-size:.66rem; letter-spacing:.05em; color:var(--muted); display:flex; align-items:center; gap:8px; min-width:0; }
+  .status::before { content:""; flex:none; width:8px; height:8px; border-radius:50%; background:var(--muted); }
+  .status[data-s="ok"]::before { background:var(--green); }
+  .status[data-s="dirty"]::before, .status[data-s="saving"]::before { background:var(--warn); }
+  .status[data-s="err"]::before { background:var(--orange); }
+
+  .stage { flex:1; min-height:0; display:flex; align-items:center; justify-content:center; padding:10px 16px 0; }
+  .bar { display:flex; align-items:center; justify-content:center; gap:12px; padding:10px 16px 80px; flex-wrap:wrap; }
+  .count { font-family:var(--mono); font-size:.76rem; letter-spacing:.1em; color:var(--muted); min-width:6.5em; text-align:center; }
+  .count b { color:var(--cream); font-weight:500; }
+
+  .overlay { position:fixed; inset:0; background:rgba(0,0,0,.75); z-index:50; display:flex; align-items:center; justify-content:center; padding:16px; }
+  .box { background:#1A1A1A; border:1px solid rgba(240,90,40,.4); border-radius:10px; padding:1.6rem; width:100%; max-width:320px; text-align:center; display:grid; gap:.8rem; }
+  .box .t { font-family:var(--mono); font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,248,244,.4); }
+  .box input { text-align:center; font-size:1.1rem; }
+  .box .err { font-family:var(--mono); font-size:.6rem; color:var(--orange); min-height:1rem; }
+  .picker { background:#1A1A1A; border:1px solid rgba(240,90,40,.4); border-radius:8px; width:100%; max-width:760px; max-height:88vh; display:flex; flex-direction:column; }
+  .picker-head { padding:12px 14px; display:grid; gap:10px; border-bottom:1px solid var(--line); }
+  .picker-grid { padding:12px 14px; overflow-y:auto; display:grid; grid-template-columns:repeat(auto-fill, minmax(96px, 1fr)); gap:8px; }
+  .picker-grid button { padding:0; border:2px solid transparent; aspect-ratio:1; background:#222 center/cover no-repeat; border-radius:3px; }
+  .picker-grid button:hover { border-color:var(--orange); }
+  .toast { position:fixed; left:50%; bottom:calc(70px + env(safe-area-inset-bottom, 0px)); transform:translateX(-50%); background:#2a2420; border:1px solid var(--orange); color:var(--cream); padding:10px 14px; font-family:var(--mono); font-size:.7rem; border-radius:3px; max-width:calc(100% - 32px); z-index:60; }
+  @media (max-width:560px) { .header-title { font-size:1.3rem; } button, .btn { padding:.58rem .72rem; } }
+</style>
+</head>
+<body>
+
+<!-- ACCESSO: stessa password del menu della home -->
+<div class="overlay" id="gate" hidden>
+  <div class="box">
+    <div class="t">Accesso pannello</div>
+    <input id="pwd" type="password" placeholder="Password" autocomplete="current-password">
+    <div class="err" id="pwd-err"></div>
+    <button class="solid" id="pwd-ok" type="button">Entra</button>
+  </div>
+</div>
+
+<div class="header">
+  <div class="header-title">@DANNYBAG · <span>Rivista</span></div>
+  <div class="tabs">
+    <button type="button" id="tab-mod" aria-pressed="true">Modifica</button>
+    <button type="button" id="tab-ant" aria-pressed="false">Anteprima</button>
+  </div>
+</div>
+
+<main id="vista-modifica"><div class="ed" id="ed"><div class="note">Carico la rivista…</div></div></main>
+<main id="vista-anteprima" hidden>
+  <div class="stage" id="stage"><div class="rv-book" id="book"></div></div>
+  <div class="bar">
+    <button id="prev" type="button" aria-label="Pagina precedente">← Indietro</button>
+    <div class="count" id="count"></div>
+    <button id="next" type="button" aria-label="Pagina successiva">Avanti →</button>
+  </div>
+</main>
+
+<div class="savebar">
+  <div class="status" id="status" data-s="ok">Caricamento…</div>
+  <div class="btns">
+    <a class="btn quiet" href="rivista.html" target="_blank" style="border-color:var(--line);color:var(--muted);text-decoration:none">Apri sul sito</a>
+    <button class="solid" id="save" type="button" disabled>Pubblica</button>
+  </div>
+</div>
+
+<div class="overlay" id="picker" hidden>
+  <div class="picker" role="dialog" aria-label="Scegli una foto dal diario">
+    <div class="picker-head">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><b style="font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.06em">Foto dal diario</b><button type="button" class="quiet" id="picker-close">Chiudi</button></div>
+      <select id="picker-entry" aria-label="Voce del diario"></select>
+    </div>
+    <div class="picker-grid" id="picker-grid"></div>
+  </div>
+</div>
+
+<script src="rivista.js"></script>
+<script>
+(function () {
+  'use strict';
+  const REPO = 'dannybag/inbiciperilmondo';
+  const FILE = 'rivista.json';
+  const DRAFT = 'rivista-bozza';
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  /* ---------- accesso: stessa password e stessa durata del menu della home ---------- */
+  const _k = [73,112,114,108,57,55,57,61];
+  const _chk = s => s.length === _k.length && [...s].every((c, i) => c.charCodeAt(0) + 7 === _k[i]);
+  const AUTH = 20 * 60 * 1000;
+  const authed = () => { try { const t = localStorage.getItem('auth-ts'); return t && Date.now() - parseInt(t) < AUTH; } catch (_) { return false; } };
+  function gate() {
+    return new Promise(ok => {
+      if (authed()) return ok();
+      $('gate').hidden = false; setTimeout(() => $('pwd').focus(), 50);
+      const go = () => {
+        if (_chk($('pwd').value)) { try { localStorage.setItem('auth-ts', Date.now()); } catch (_) {} $('gate').hidden = true; ok(); }
+        else { $('pwd-err').textContent = '✗ Password errata'; $('pwd').value = ''; $('pwd').focus(); }
+      };
+      $('pwd-ok').onclick = go; $('pwd').onkeydown = e => { if (e.key === 'Enter') go(); };
+    });
+  }
+
+  /* ---------- GitHub: stesso token del diario ---------- */
+  const getToken = () => { try { return localStorage.getItem('gh_token_diario') || ''; } catch (_) { return ''; } };
+  const gh = () => ({ 'Authorization': 'token ' + getToken(), 'Accept': 'application/vnd.github+json' });
+  const utf8ToB64 = s => btoa(unescape(encodeURIComponent(s)));
+  const b64ToUtf8 = b => decodeURIComponent(escape(atob(b.replace(/\n/g, ''))));
+  const blobToB64 = blob => new Promise((ok, ko) => { const r = new FileReader(); r.onload = () => ok(r.result.split(',')[1]); r.onerror = ko; r.readAsDataURL(blob); });
+
+  async function readRemote() {
+    if (getToken()) {
+      const r = await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}?t=${Date.now()}`, { headers: gh(), cache: 'no-store' });
+      if (r.ok) return JSON.parse(b64ToUtf8((await r.json()).content));
+    }
+    const r = await fetch(FILE + '?t=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) throw new Error('rivista.json non trovato');
+    return r.json();
+  }
+  // un solo commit con rivista.json e le foto nuove: un solo deploy di Pages
+  async function commit(files, message) {
+    const api = p => `https://api.github.com/repos/${REPO}/git/${p}`;
+    const j = async (r, what) => { if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(what + ': ' + (e.message || r.status)); } return r.json(); };
+    const parent = (await j(await fetch(api('ref/heads/main'), { headers: gh() }), 'lettura branch')).object.sha;
+    const baseTree = (await j(await fetch(api('commits/' + parent), { headers: gh() }), 'lettura commit')).tree.sha;
+    const tree = await Promise.all(files.map(async f => {
+      const b = await j(await fetch(api('blobs'), { method: 'POST', headers: gh(), body: JSON.stringify({ content: f.b64, encoding: 'base64' }) }), 'caricamento ' + f.path);
+      return { path: f.path, mode: '100644', type: 'blob', sha: b.sha };
+    }));
+    const t = await j(await fetch(api('trees'), { method: 'POST', headers: gh(), body: JSON.stringify({ base_tree: baseTree, tree }) }), 'creazione tree');
+    const c = await j(await fetch(api('commits'), { method: 'POST', headers: gh(), body: JSON.stringify({ message, tree: t.sha, parents: [parent] }) }), 'creazione commit');
+    await j(await fetch(api('refs/heads/main'), { method: 'PATCH', headers: gh(), body: JSON.stringify({ sha: c.sha }) }), 'aggiornamento branch');
+  }
+
+  /* ---------- stato ---------- */
+  let data = null, diario = [], pending = {}, local = {}, dirty = false, saving = false;
+  const urlOf = p => !p ? '' : (local[p] || p);
+  const open = new Set(['copertina']);
+  function toast(m, ms) { const t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = m; document.body.appendChild(t); setTimeout(() => t.remove(), ms || 3500); }
+  function setStatus(s, txt) { $('status').dataset.s = s; $('status').textContent = txt; }
+  function changed() {
+    dirty = true; $('save').disabled = !getToken(); setStatus('dirty', 'Modifiche non ancora pubblicate');
+    clearTimeout(changed.t); changed.t = setTimeout(() => { try { localStorage.setItem(DRAFT, JSON.stringify({ at: Date.now(), data })); } catch (_) {} }, 500);
+  }
+  window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+  function getP(path) { return path.split('.').reduce((o, k) => o == null ? o : o[k], data); }
+  function setP(path, v) { const ks = path.split('.'); const last = ks.pop(); ks.reduce((o, k) => o[k], data)[last] = v; }
+
+  /* ---------- editor ---------- */
+  const fld = (path, label, o = {}) => {
+    const v = esc(getP(path) ?? ''); const help = o.help ? `<span class="help">${o.help}</span>` : '';
+    if (o.area) return `<label class="f"><span>${label}</span><textarea data-path="${path}" class="${o.short ? 'short' : ''}" rows="${o.rows || 3}">${v}</textarea>${help}</label>`;
+    return `<label class="f"><span>${label}</span><input type="text" data-path="${path}" value="${v}" autocomplete="off">${help}</label>`;
+  };
+  const chk = (path, label) => `<label class="chk"><input type="checkbox" data-path="${path}"${getP(path) !== false ? ' checked' : ''}> ${label}</label>`;
+  const photo = (path, capPath, entry) => {
+    const src = getP(path);
+    return `<div class="photo"><div class="thumb"${src ? ` style="background-image:url('${urlOf(src)}')"` : ''}>${src ? '' : 'Nessuna foto'}</div>
+      <div class="side"><div class="btns">
+        <button type="button" class="quiet" data-act="pick" data-target="${path}" data-entry="${esc(entry || '')}">Dal diario</button>
+        <label class="btn">Dal telefono<input type="file" accept="image/*" data-photo="${path}"></label>
+        ${src ? `<button type="button" class="danger" data-act="clearphoto" data-target="${path}">Togli</button>` : ''}
+      </div>${capPath ? fld(capPath, 'Didascalia') : ''}</div></div>`;
+  };
+  const del = (act, label) => `<button type="button" class="danger" data-act="${act}">${label || 'Elimina'}</button>`;
+  const LAB = { testo: 'Testo', foto: 'Foto', citazione: 'Frase in evidenza', versi: 'Versi / citazione lunga' };
+
+  function blocksEditor(list, entry) {
+    const arr = getP(list) || [];
+    const add = at => `<div class="add"><button type="button" data-act="addmenu" data-list="${list}" data-at="${at}">+ Aggiungi qui</button></div>`;
+    return arr.map((b, i) => {
+      const p = `${list}.${i}`;
+      let body = '';
+      if (b.t === 'testo') body = `<textarea data-path="${p}.testo" data-split="${list}|${i}" rows="5" aria-label="Testo">${esc(b.testo)}</textarea>`;
+      if (b.t === 'citazione') body = `<input type="text" data-path="${p}.testo" value="${esc(b.testo)}" aria-label="Frase in evidenza">`;
+      if (b.t === 'versi') body = `<textarea data-path="${p}.testo" rows="4" aria-label="Versi">${esc(b.testo)}</textarea>`;
+      if (b.t === 'foto') body = photo(`${p}.src`, `${p}.didascalia`, entry) +
+        `<label class="f"><span>Formato</span><select data-path="${p}.formato"><option value="grande"${b.formato === 'grande' ? ' selected' : ''}>Grande, tutta larghezza</option><option value="affiancata"${b.formato !== 'grande' ? ' selected' : ''}>Piccola, affiancata al testo</option></select></label>`;
+      return add(i) + `<div class="blk" data-t="${b.t}"><div class="blk-head"><span class="lab">${LAB[b.t]}</span>
+        <button type="button" class="quiet" data-act="up" data-list="${list}" data-at="${i}" aria-label="Sposta su"${i === 0 ? ' disabled' : ''}>↑</button>
+        <button type="button" class="quiet" data-act="down" data-list="${list}" data-at="${i}" aria-label="Sposta giù"${i === arr.length - 1 ? ' disabled' : ''}>↓</button>
+        <button type="button" class="danger" data-act="delblk" data-list="${list}" data-at="${i}" aria-label="Elimina">✕</button></div>${body}</div>`;
+    }).join('') + add(arr.length);
+  }
+
+  function tappaEditor(t, ti) {
+    const base = `tappe.${ti}`;
+    const entries = diario.filter(x => x.photos && x.photos.length || (x.text || '').length > 200);
+    const opts = `<option value="">— nessuna —</option>` + entries.map(x => `<option value="${esc(x.date)}"${x.date === t.diario ? ' selected' : ''}>${esc(x.date)} · ${esc(x.title)}</option>`).join('');
+    const rull = (t.rullino || []).map((r, ri) => `<div class="blk" data-t="foto"><div class="blk-head"><span class="lab">Foto ${ri + 1}</span><button type="button" class="danger" data-act="delrull" data-ti="${ti}" data-at="${ri}">✕</button></div>${photo(`${base}.rullino.${ri}.src`, `${base}.rullino.${ri}.didascalia`, t.diario)}</div>`).join('');
+    return `<details class="card" data-key="t${esc(t.id)}"${open.has('t' + t.id) ? ' open' : ''}><summary><h3>Tappa ${esc(t.numero)}</h3><span class="sub">${esc(t.da)} → ${esc(t.a)}</span>${t.visibile === false ? '<span class="off">Nascosta</span>' : ''}</summary><div class="in">
+      ${chk(`${base}.visibile`, 'Mostra questa tappa nella rivista')}
+      <div class="row">${fld(`${base}.numero`, 'Numero')}${fld(`${base}.da`, 'Da')}${fld(`${base}.a`, 'A')}</div>
+      <div class="row">${fld(`${base}.data`, 'Data')}${fld(`${base}.km`, 'Km e dislivello')}</div>
+      <label class="f"><span>Voce del diario collegata</span><select data-path="${base}.diario">${opts}</select><span class="help">Serve per scegliere le foto e per ricaricare il testo.</span></label>
+      <div class="grp"><div class="grp-title">Foto d'apertura</div>${photo(`${base}.apertura.src`, `${base}.apertura.didascalia`, t.diario)}</div>
+      <div class="grp"><div class="grp-title">Racconto</div>
+        <span class="help">Ogni riquadro è un paragrafo. Se incolli un testo con più paragrafi, quando esci dal riquadro lo divido io.</span>
+        <div><button type="button" class="quiet" data-act="reload" data-ti="${ti}"${t.diario ? '' : ' disabled'}>Ricarica il testo dal diario</button></div>
+        ${blocksEditor(`${base}.blocchi`, t.diario)}</div>
+      <div class="grp"><div class="grp-title">Dal rullino</div><span class="help">Fino a 4 foto, in una pagina a fine tappa.</span>${rull}
+        ${(t.rullino || []).length < 4 ? `<div><button type="button" class="quiet" data-act="addrull" data-ti="${ti}">+ Aggiungi foto al rullino</button></div>` : ''}</div>
+      <div class="foot">
+        <button type="button" class="quiet" data-act="vedi" data-id="${esc(t.id)}">Vedi in anteprima</button>
+        <button type="button" class="quiet" data-act="tup" data-ti="${ti}"${ti === 0 ? ' disabled' : ''}>Sposta prima</button>
+        <button type="button" class="quiet" data-act="tdown" data-ti="${ti}"${ti === data.tappe.length - 1 ? ' disabled' : ''}>Sposta dopo</button>
+        ${del(`deltappa" data-ti="${ti}`, 'Elimina tappa')}
+      </div></div></details>`;
+  }
+
+  function render(keep) {
+    const sc = $('vista-modifica').scrollTop;
+    const c = 'copertina', s = data.copertina.stats || (data.copertina.stats = []);
+    while (s.length < 6) s.push({ n: '', l: '' });
+    const tokenBox = getToken() ? '' : `<div class="token-box"><div class="note"><b>Manca il token GitHub su questo dispositivo.</b> È lo stesso che usi per il diario: incollalo qui e lo ritrovi anche là.</div>
+      <input type="password" id="token-in" placeholder="ghp_..." autocomplete="off"><div><button class="solid" type="button" data-act="token">Salva token</button></div></div>`;
+    const draft = render.draft ? `<div class="banner"><div>Su questo dispositivo ci sono modifiche non pubblicate, fatte dopo l'ultima pubblicazione.</div>
+      <div class="btns"><button type="button" class="solid" data-act="usadraft">Riprendile</button><button type="button" class="quiet" data-act="scartadraft">Lascia perdere</button></div></div>` : '';
+    $('ed').innerHTML = `${tokenBox}${draft}
+      <div class="note">Tocca una sezione per aprirla. In <b>Anteprima</b> vedi la rivista impaginata con le modifiche. Quando sei contento premi <b>Pubblica</b>: il sito si aggiorna in un paio di minuti. Per una parola in evidenza scrivila tra asterischi, così: <b>*Mondo*</b>.</div>
+      <details class="card" data-key="copertina"${open.has('copertina') ? ' open' : ''}><summary><h3>Copertina</h3></summary><div class="in">
+        ${fld(`${c}.etichetta`, 'Riga in alto')}
+        ${fld(`${c}.titolo`, 'Titolo', { area: true, short: true, rows: 2, help: 'Va a capo dove vai a capo tu.' })}
+        ${fld(`${c}.numero`, 'Titolo del numero')}
+        <div class="grp"><div class="grp-title">Numeri</div>${fld(`${c}.statsTitolo`, 'Titoletto')}
+          ${s.map((x, i) => `<div class="row2">${fld(`${c}.stats.${i}.n`, 'Numero ' + (i + 1))}${fld(`${c}.stats.${i}.l`, 'Etichetta')}</div>`).join('')}</div>
+        <div class="row2">${fld(`${c}.grande`, 'Numero grande')}${fld(`${c}.grandeTesto`, 'Sotto il numero grande')}</div>
+        ${fld(`${c}.fascia`, 'Riga in fondo')}
+      </div></details>
+      <details class="card" data-key="intro"${open.has('intro') ? ' open' : ''}><summary><h3>Introduzione</h3></summary><div class="in">
+        ${fld('intro.occhiello', 'Occhiello')}${fld('intro.grande', 'Frase grande', { area: true })}
+        ${fld('intro.testo', 'Testo', { area: true, rows: 4, help: 'Ogni riga è un paragrafo.' })}${fld('intro.firma', 'Firma')}
+      </div></details>
+      ${data.tappe.map(tappaEditor).join('')}
+      <div><button type="button" data-act="addtappa">+ Aggiungi una tappa</button></div>
+      <details class="card" data-key="epilogo"${open.has('epilogo') ? ' open' : ''}><summary><h3>Chiusura</h3><span class="sub">${esc(data.epilogo.titolo)}</span>${data.epilogo.visibile === false ? '<span class="off">Nascosta</span>' : ''}</summary><div class="in">
+        ${chk('epilogo.visibile', 'Mostra nella rivista')}
+        <div class="row">${fld('epilogo.occhiello', 'Occhiello')}${fld('epilogo.titolo', 'Titolo')}</div>
+        ${blocksEditor('epilogo.blocchi', '2026-09-26')}
+      </div></details>
+      <details class="card" data-key="retro"${open.has('retro') ? ' open' : ''}><summary><h3>Retro</h3></summary><div class="in">
+        ${fld('retro.occhiello', 'Occhiello')}${fld('retro.titolo', 'Titolo')}${fld('retro.testo', 'Testo', { area: true, short: true })}
+        ${fld('retro.link', 'Contatti', { area: true, short: true, rows: 2 })}
+      </div></details>`;
+    if (keep) $('vista-modifica').scrollTop = sc;
+    $('ed').querySelectorAll('textarea').forEach(grow);
+  }
+  function grow(t) { t.style.height = 'auto'; t.style.height = Math.min(t.scrollHeight + 2, 640) + 'px'; }
+
+  $('ed').addEventListener('toggle', e => { const d = e.target; if (d.matches && d.matches('details')) d.open ? open.add(d.dataset.key) : open.delete(d.dataset.key); }, true);
+  $('ed').addEventListener('input', e => {
+    const el = e.target, p = el.dataset && el.dataset.path; if (!p) return;
+    setP(p, el.type === 'checkbox' ? el.checked : el.value);
+    if (el.tagName === 'TEXTAREA') grow(el);
+    changed();
+    if (el.type === 'checkbox' || /\.diario$/.test(p)) render(true);
+  });
+  $('ed').addEventListener('change', async e => {
+    const el = e.target;
+    if (el.type === 'checkbox' && el.dataset.path) return;
+    if (el.dataset && el.dataset.photo && el.files && el.files[0]) {
+      try {
+        toast('Preparo la foto…', 1500);
+        const blob = await shrink(el.files[0]);
+        const name = `rivista/img/${new Date().toISOString().slice(0, 10)}-${Date.now().toString(36)}.jpg`;
+        pending[name] = blob; local[name] = URL.createObjectURL(blob);
+        setP(el.dataset.photo, name); changed(); render(true);
+      } catch (_) { toast('Non riesco ad aprire questa foto. Prova con un JPG o un PNG.'); }
+    }
+  });
+  $('ed').addEventListener('focusout', e => {
+    const el = e.target; if (!el.dataset || !el.dataset.split) return;
+    const [list, i] = el.dataset.split.split('|');
+    const parts = el.value.split(/\n+/).map(s => s.trim()).filter(Boolean);
+    if (parts.length < 2) return;
+    getP(list).splice(+i, 1, ...parts.map(s => ({ t: 'testo', testo: s })));
+    changed(); render(true); toast(`Diviso in ${parts.length} paragrafi`);
+  });
+  function shrink(file) {
+    return new Promise((ok, ko) => {
+      const img = new Image(), u = URL.createObjectURL(file);
+      img.onload = () => {
+        const s = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+        const c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u);
+        c.toBlob(b => b ? ok(b) : ko(new Error('foto')), 'image/jpeg', 0.8);
+      };
+      img.onerror = () => { URL.revokeObjectURL(u); ko(new Error('foto')); };
+      img.src = u;
+    });
+  }
+
+  // testo del diario in paragrafi, con le foto già messe che restano più o meno dov'erano
+  function fromDiario(t) {
+    const x = diario.find(d => d.date === t.diario); if (!x) return;
+    const paras = String(x.text || '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').split('\n').map(s => s.replace(/\s{2,}/g, ' ').trim()).filter(Boolean);
+    const old = t.blocchi || [], n = old.length || 1;
+    const keep = old.map((b, i) => ({ b, at: i / n })).filter(o => o.b.t === 'foto' || o.b.t === 'citazione');
+    const out = [];
+    paras.forEach((p, i) => {
+      out.push({ t: 'testo', testo: p });
+      keep.filter(o => !o.done && o.at <= (i + 1) / paras.length).forEach(o => { out.push(o.b); o.done = true; });
+    });
+    keep.filter(o => !o.done).forEach(o => out.push(o.b));
+    t.blocchi = out.length ? out : [{ t: 'testo', testo: '' }];
+  }
+
+  $('ed').addEventListener('click', e => {
+    const b = e.target.closest('button[data-act]'); if (!b) return;
+    const d = b.dataset, act = d.act;
+    if (b.classList.contains('danger') && !b.classList.contains('armed') && act !== 'clearphoto') {
+      b.classList.add('armed'); const old = b.textContent; b.textContent = 'Conferma';
+      setTimeout(() => { b.classList.remove('armed'); b.textContent = old; }, 3000); return;
+    }
+    const list = d.list ? getP(d.list) : null, at = +d.at, ti = +d.ti, T = data.tappe[ti];
+    const swap = (a, i, j) => { [a[i], a[j]] = [a[j], a[i]]; };
+    switch (act) {
+      case 'token': { const v = $('token-in').value.trim(); if (!v) return; try { localStorage.setItem('gh_token_diario', v); } catch (_) {} toast('Token salvato'); $('save').disabled = !dirty; render(true); return; }
+      case 'up': swap(list, at, at - 1); break;
+      case 'down': swap(list, at, at + 1); break;
+      case 'delblk': list.splice(at, 1); break;
+      case 'addmenu': b.parentElement.outerHTML = `<div class="add-menu">${Object.keys(LAB).map(k => `<button type="button" class="quiet" data-act="add" data-kind="${k}" data-list="${d.list}" data-at="${at}">+ ${LAB[k]}</button>`).join('')}</div>`; return;
+      case 'add': list.splice(at, 0, d.kind === 'foto' ? { t: 'foto', src: '', didascalia: '', formato: 'affiancata' } : { t: d.kind, testo: '' }); break;
+      case 'clearphoto': setP(d.target, ''); break;
+      case 'pick': openPicker(d.target, d.entry); return;
+      case 'delrull': T.rullino.splice(at, 1); break;
+      case 'addrull': (T.rullino = T.rullino || []).push({ src: '', didascalia: '' }); break;
+      case 'reload': fromDiario(T); toast('Testo ricaricato dal diario'); break;
+      case 'tup': swap(data.tappe, ti, ti - 1); break;
+      case 'tdown': swap(data.tappe, ti, ti + 1); break;
+      case 'deltappa': data.tappe.splice(ti, 1); break;
+      case 'addtappa': {
+        const last = data.tappe[data.tappe.length - 1];
+        const n = String((parseInt(last && last.numero, 10) || data.tappe.length) + 1).padStart(2, '0');
+        const t = { id: 'tappa-' + Date.now().toString(36), numero: n, da: last ? last.a : '', a: '', data: '', km: '', diario: '', visibile: true, apertura: { src: '', didascalia: '' }, blocchi: [{ t: 'testo', testo: '' }], rullino: [] };
+        data.tappe.push(t); open.add('t' + t.id); break;
+      }
+      case 'vedi': showPreview(d.id); return;
+      case 'usadraft': data = render.draft; render.draft = null; changed(); render(true); toast('Modifiche riprese'); return;
+      case 'scartadraft': render.draft = null; try { localStorage.removeItem(DRAFT); } catch (_) {} render(true); return;
+      default: return;
+    }
+    changed(); render(true);
+  });
+
+  /* ---------- scelta foto dal diario ---------- */
+  let pickTarget = null;
+  function openPicker(target, entry) {
+    pickTarget = target;
+    const withPh = diario.filter(x => x.photos && x.photos.length);
+    $('picker-entry').innerHTML = withPh.map(x => `<option value="${esc(x.date)}">${esc(x.date)} · ${esc(x.title)} (${x.photos.length})</option>`).join('');
+    $('picker-entry').value = withPh.some(x => x.date === entry) ? entry : (withPh[0] && withPh[0].date);
+    fillPicker(); $('picker').hidden = false;
+  }
+  function fillPicker() {
+    const x = diario.find(d => d.date === $('picker-entry').value);
+    $('picker-grid').innerHTML = (x ? x.photos : []).map(p => `<button type="button" data-src="${esc(p)}" style="background-image:url('${esc(p)}')" aria-label="Scegli questa foto"></button>`).join('');
+  }
+  $('picker-entry').addEventListener('change', fillPicker);
+  $('picker-grid').addEventListener('click', e => { const b = e.target.closest('button[data-src]'); if (!b) return; setP(pickTarget, b.dataset.src); $('picker').hidden = true; changed(); render(true); });
+  $('picker-close').addEventListener('click', () => { $('picker').hidden = true; });
+
+  /* ---------- anteprima ---------- */
+  const flip = Rivista.Flip($('stage'), $('book'), { prev: $('prev'), next: $('next'), count: $('count') });
+  async function showPreview(id) {
+    $('vista-modifica').hidden = true; $('vista-anteprima').hidden = false;
+    $('tab-mod').setAttribute('aria-pressed', 'false'); $('tab-ant').setAttribute('aria-pressed', 'true');
+    await Rivista.ready();
+    const r = Rivista.paginate(data, { url: urlOf });
+    flip.setPages(r.pages, id && r.anchors[id] != null ? r.anchors[id] : 0);
+  }
+  $('tab-ant').addEventListener('click', () => showPreview());
+  $('tab-mod').addEventListener('click', () => {
+    $('vista-modifica').hidden = false; $('vista-anteprima').hidden = true;
+    $('tab-mod').setAttribute('aria-pressed', 'true'); $('tab-ant').setAttribute('aria-pressed', 'false');
+  });
+
+  /* ---------- pubblica ---------- */
+  $('save').addEventListener('click', async () => {
+    if (saving || !getToken()) return;
+    saving = true; $('save').disabled = true; setStatus('saving', 'Pubblico…');
+    try {
+      const files = [];
+      const names = Object.keys(pending);
+      for (const n of names) files.push({ path: n, b64: await blobToB64(pending[n]) });
+      data.salvato = new Date().toISOString();
+      files.push({ path: FILE, b64: utf8ToB64(JSON.stringify(data, null, 1)) });
+      await commit(files, 'Rivista: aggiornamento' + (names.length ? ` (+${names.length} foto)` : ''));
+      names.forEach(n => delete pending[n]);
+      dirty = false; try { localStorage.removeItem(DRAFT); } catch (_) {}
+      setStatus('ok', 'Pubblicato. Il sito si aggiorna in un paio di minuti');
+    } catch (err) {
+      setStatus('err', 'Non pubblicato: ' + err.message);
+      $('save').disabled = false;
+      if (/Bad credentials|401/.test(err.message)) toast('Il token GitHub non funziona più: rifallo e incollalo di nuovo.', 6000);
+    } finally { saving = false; }
+  });
+
+  /* ---------- avvio ---------- */
+  (async function start() {
+    await gate();
+    try {
+      const [riv, dia] = await Promise.all([
+        readRemote(),
+        fetch('diario.json?t=' + Date.now(), { cache: 'no-store' }).then(r => r.json()).catch(() => ({ entries: [] }))
+      ]);
+      data = riv; diario = (dia.entries || []).slice().sort((a, b) => a.date < b.date ? -1 : 1);
+      if (!data.epilogo) data.epilogo = { visibile: false, occhiello: '', titolo: '', blocchi: [] };
+    } catch (e) { $('ed').innerHTML = `<div class="note">Non riesco a caricare la rivista (${esc(e.message)}).</div>`; setStatus('err', 'Errore di caricamento'); return; }
+    try {
+      const d = JSON.parse(localStorage.getItem(DRAFT) || 'null');
+      if (d && d.data && JSON.stringify(d.data) !== JSON.stringify(data) && (!data.salvato || d.at > Date.parse(data.salvato))) render.draft = d.data;
+      else if (d) localStorage.removeItem(DRAFT);
+    } catch (_) {}
+    render();
+    setStatus(render.draft ? 'dirty' : 'ok', render.draft ? 'Ci sono modifiche non pubblicate' : (getToken() ? 'Tutto pubblicato' : 'Serve il token per pubblicare'));
+  })();
+})();
+</script>
+</body>
+</html>

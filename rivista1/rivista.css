@@ -1,0 +1,98 @@
+/* Rivista "Quante Storie" — pagine A5 e sfoglio. Usato da rivista.html e admin-rivista.html */
+.rv-misura { position: absolute; left: -20000px; top: 0; visibility: hidden; pointer-events: none; }
+.rv-export { position: fixed; left: -20000px; top: 0; }
+
+/* ---------- sfoglio ---------- */
+.rv-book { position: relative; perspective: 2600px; transition: transform var(--rv-turn, .75s) ease; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; }
+.rv-leaf { position: absolute; top: 0; height: 100%; transform-style: preserve-3d; transform-origin: left center; transition: transform var(--rv-turn, .75s) cubic-bezier(.45,.05,.3,1); }
+.rv-fc { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: #FBF6F1; overflow: hidden; }
+.rv-fc-b { transform: rotateY(180deg); }
+.rv-fc > .pg { transform-origin: 0 0; }
+.rv-fc::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
+.rv-spread .rv-fc-f::after { background: linear-gradient(90deg, rgba(0,0,0,.2), rgba(0,0,0,0) 7%); }
+.rv-spread .rv-fc-b::after { background: linear-gradient(270deg, rgba(0,0,0,.2), rgba(0,0,0,0) 7%); }
+.rv-single .rv-fc-b { background: none; }
+.rv-turned { transform: rotateY(-180deg); }
+.rv-shadow { position: absolute; top: 2%; bottom: -2%; left: 4%; right: 4%; box-shadow: 0 18px 50px rgba(0,0,0,.55); pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .rv-book, .rv-leaf { --rv-turn: .01s; } }
+
+/* ---------- pagine (misure reali A5) ---------- */
+.pg { width: 148mm; height: 210mm; position: relative; overflow: hidden; background: #FBF6F1; color: #1A1A1A;
+  font-family: 'Lora', Georgia, serif; font-size: 10pt; line-height: 1.52; -webkit-font-smoothing: antialiased; text-align: left; letter-spacing: 0; }
+.pg * { box-sizing: border-box; }
+.pg .ph { background: #2a2420 center / cover no-repeat; }
+.pg .hl { font-style: italic; }
+.pg .noimg { display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.35); font-family: 'IBM Plex Mono', monospace; font-size: 7pt; letter-spacing: .15em; text-transform: uppercase; }
+
+/* copertina: lo stesso mondo del blocco "Com'è andata" della home */
+.pg.cover { background: #111; color: #FFF; }
+.cv-bar { position: absolute; left: 0; right: 0; top: 0; height: 3mm; background: #F05A28; }
+.cv-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 85% 42% at 50% 62%, rgba(240,90,40,0.20) 0%, rgba(240,90,40,0) 70%); }
+.cv-inner { position: absolute; left: 12mm; right: 12mm; top: 13mm; }
+.cv-tag { font-family: 'IBM Plex Mono', monospace; font-size: 6.4pt; letter-spacing: .22em; text-transform: uppercase; color: #F05A28; margin-bottom: 7mm; }
+.cv-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 48pt; line-height: .9; text-transform: uppercase; margin: 0; color: #FFF8F4; }
+.cv-title .hl { color: #F05A28; font-style: normal; }
+.cv-issue { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20pt; text-transform: uppercase; letter-spacing: .06em; color: #FF8C5A; margin-top: 4mm; padding-top: 3mm; border-top: .6pt solid rgba(240,90,40,.45); }
+.cv-stats { position: absolute; left: 7mm; right: 7mm; top: 96mm; }
+.cv-lab { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 8pt; letter-spacing: .28em; text-transform: uppercase; text-align: center; color: #FFF; margin-bottom: 5mm; }
+.cv-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+.cv-item { text-align: center; padding: 3.2mm 1mm; border-right: .5pt solid rgba(240,90,40,0.25); }
+.cv-item:nth-child(3n) { border-right: 0; }
+.cv-n { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 21pt; line-height: 1; color: #F05A28; white-space: nowrap; }
+.cv-l { font-family: 'IBM Plex Mono', monospace; font-size: 5.4pt; letter-spacing: .15em; text-transform: uppercase; color: rgba(255,255,255,.45); margin-top: 1.6mm; }
+.cv-big { position: absolute; left: 0; right: 0; top: 150mm; text-align: center; }
+.cv-big .n { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 64pt; line-height: 1; color: #F05A28; }
+.cv-big .l { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 7.5pt; letter-spacing: .3em; text-transform: uppercase; color: #FFF; margin-top: 2mm; }
+.cv-foot { position: absolute; left: 12mm; right: 12mm; bottom: 9mm; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 10pt; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,248,244,.55); }
+
+/* introduzione */
+.pg.intro .in { position: absolute; inset: 47mm 15mm 18mm; }
+.pg .kick { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; color: #F05A28; letter-spacing: .2em; text-transform: uppercase; font-size: 10pt; }
+.pg .big { font-size: 15pt; line-height: 1.4; font-style: italic; margin: 6mm 0 8mm; }
+.pg.intro p { margin: 0 0 2.6mm; }
+.pg .sign { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-top: 8mm; }
+
+/* apertura di tappa */
+.pg.opener { background-color: #2a2420; color: #fff; }
+.pg.opener > .ph { position: absolute; inset: 0; }
+.pg .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,.78) 100%); }
+.pg .op-tag { position: absolute; top: 12mm; left: 13mm; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: .18em; font-size: 8.5pt; text-transform: uppercase; }
+.pg .otitle { position: absolute; left: 13mm; right: 13mm; bottom: 24mm; }
+.pg .tappa { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: .2em; font-size: 11pt; }
+.pg .tappa b { font-weight: 800; color: #F05A28; font-size: 30pt; letter-spacing: 0; vertical-align: -4pt; margin-left: 2mm; }
+.pg .otitle h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 38pt; line-height: .95; text-transform: uppercase; margin: 2mm 0; }
+.pg .otitle h2 span { color: #F05A28; }
+.pg .when { font-family: 'Barlow Condensed', sans-serif; font-size: 11pt; letter-spacing: .12em; text-transform: uppercase; }
+.pg .when .km { font-family: 'IBM Plex Mono', monospace; font-size: 8pt; letter-spacing: .06em; text-transform: none; margin-left: 4mm; opacity: .85; }
+.pg .ocap { position: absolute; left: 13mm; right: 13mm; bottom: 11mm; font-style: italic; font-size: 8.5pt; opacity: .85; }
+
+/* pagine di testo */
+.pg.text .body { position: absolute; left: 15mm; right: 15mm; top: 14mm; height: 177mm; overflow: hidden; }
+.pg .runhead { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: .18em; font-size: 8pt; color: #F05A28; border-bottom: .4pt solid #d9cfc6; padding-bottom: 2mm; margin-bottom: 5mm; }
+.pg .lead { margin-bottom: 6mm; }
+.pg .lead h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 34pt; line-height: .95; text-transform: uppercase; margin: 2mm 0 0; }
+.pg .folio { position: absolute; left: 0; right: 0; bottom: 8mm; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 8.5pt; color: #9a8f86; letter-spacing: .1em; }
+.pg p.t { margin: 0 0 2.6mm; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+.pg .dc { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; color: #F05A28; font-size: 40pt; float: left; line-height: 1; height: 13mm; margin: .3mm 2mm 0 0; }
+.pg .fig { margin: 0; }
+.pg .fig .cap { font-family: 'Barlow Condensed', sans-serif; font-size: 8.5pt; color: #6b625b; margin-top: 1.4mm; letter-spacing: .02em; line-height: 1.3; }
+.pg .fig.grande { margin: 3mm 0 4mm; }
+.pg .fig.grande .ph { height: 72mm; }
+.pg .fig.affiancata { float: right; width: 52mm; margin: 1mm 0 3mm 5mm; }
+.pg .fig.affiancata .ph { height: 66mm; }
+.pg .pull { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 21pt; line-height: 1.05; color: #F05A28; text-transform: uppercase; margin: 4mm 0; padding-left: 4mm; border-left: 2.2mm solid #F05A28; }
+.pg .verse { font-style: italic; margin: 4mm 0 4mm 8mm; padding: 3mm 0 3mm 4mm; border-left: 1pt solid #F05A28; color: #3a332e; white-space: pre-line; }
+.pg .end { text-align: center; color: #F05A28; letter-spacing: .4em; margin-top: 4mm; }
+.pg .gtitle { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: .14em; color: #F05A28; font-size: 11pt; margin-bottom: 5mm; }
+.pg .cells { display: grid; grid-template-columns: 1fr 1fr; gap: 5mm 4mm; }
+.pg .cells .ph { height: 70mm; }
+.pg.blank .mark { position: absolute; left: 0; right: 0; bottom: 20mm; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 9pt; letter-spacing: .2em; text-transform: uppercase; color: #cfc3b8; }
+
+/* retro */
+.pg.retro { background: #111; color: #fff; }
+.pg.retro .inner { position: absolute; left: 14mm; right: 14mm; top: 60mm; }
+.pg.retro .k { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: #F05A28; font-size: 10pt; }
+.pg.retro h3 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 46pt; line-height: .95; text-transform: uppercase; margin: 3mm 0 8mm; }
+.pg.retro h3 .hl { color: #F05A28; font-style: normal; }
+.pg.retro p { font-size: 11pt; color: #ddd; margin: 0; font-style: italic; }
+.pg.retro .links { position: absolute; left: 14mm; bottom: 16mm; font-family: 'Barlow Condensed', sans-serif; font-size: 11pt; letter-spacing: .06em; line-height: 1.6; white-space: pre-line; }
