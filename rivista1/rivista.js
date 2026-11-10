@@ -18,8 +18,8 @@
     const foto = c.foto ? `<div class="cv-photo ph"${bg(c.foto)}></div><div class="cv-veil"></div>` : '';
     return `<div class="pg cover${c.foto ? ' has-photo' : ''}">${foto}<div class="cv-glow"></div><div class="cv-bar"></div>
       <div class="cv-inner"><div class="cv-tag">${esc(c.etichetta)}</div><h1 class="cv-title">${lines(c.titolo)}</h1>${c.numero ? `<div class="cv-issue">${esc(c.numero)}</div>` : ''}</div>
-      <div class="cv-stats"><div class="cv-lab">${esc(c.statsTitolo)}</div><div class="cv-grid">${stats}</div></div>
-      ${c.grande ? `<div class="cv-big"><div class="n">${esc(c.grande)}</div><div class="l">${esc(c.grandeTesto)}</div></div>` : ''}
+      <div class="cv-mid"><div class="cv-stats"><div class="cv-lab">${esc(c.statsTitolo)}</div><div class="cv-grid">${stats}</div></div>
+      ${c.grande ? `<div class="cv-big"><div class="n">${esc(c.grande)}</div><div class="l">${esc(c.grandeTesto)}</div></div>` : ''}</div>
       <div class="cv-foot">${esc(c.fascia)}</div></div>`;
   }
   function pIntro(i) {
