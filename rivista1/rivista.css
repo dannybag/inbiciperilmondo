@@ -26,13 +26,19 @@
 
 /* copertina: lo stesso mondo del blocco "Com'è andata" della home */
 .pg.cover { background: #111; color: #FFF; }
+.cv-photo { position: absolute; inset: 0; background-position: center 60%; }
+/* velo scuro: lascia vedere la foto ma tiene leggibili titolo e numeri */
+.cv-veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(17,17,17,.72) 0%, rgba(17,17,17,.45) 34%, rgba(17,17,17,.62) 46%, rgba(17,17,17,.70) 70%, rgba(17,17,17,.55) 84%, rgba(17,17,17,.82) 100%); }
+.pg.cover.has-photo .cv-glow { opacity: .55; }
+.pg.cover.has-photo .cv-l { color: rgba(255,255,255,.7); }
+.pg.cover.has-photo .cv-title, .pg.cover.has-photo .cv-big, .pg.cover.has-photo .cv-stats { text-shadow: 0 1px 12px rgba(0,0,0,.45); }
 .cv-bar { position: absolute; left: 0; right: 0; top: 0; height: 3mm; background: #F05A28; }
 .cv-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 85% 42% at 50% 62%, rgba(240,90,40,0.20) 0%, rgba(240,90,40,0) 70%); }
 .cv-inner { position: absolute; left: 12mm; right: 12mm; top: 13mm; }
 .cv-tag { font-family: 'IBM Plex Mono', monospace; font-size: 6.4pt; letter-spacing: .22em; text-transform: uppercase; color: #F05A28; margin-bottom: 7mm; }
 .cv-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 48pt; line-height: .9; text-transform: uppercase; margin: 0; color: #FFF8F4; }
 .cv-title .hl { color: #F05A28; font-style: normal; }
-.cv-issue { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20pt; text-transform: uppercase; letter-spacing: .06em; color: #FF8C5A; margin-top: 4mm; padding-top: 3mm; border-top: .6pt solid rgba(240,90,40,.45); }
+.cv-issue { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20pt; text-transform: uppercase; letter-spacing: .06em; color: #FF8C5A; margin-top: 10mm; padding-top: 3mm; border-top: .6pt solid rgba(240,90,40,.45); }
 .cv-stats { position: absolute; left: 7mm; right: 7mm; top: 96mm; }
 .cv-lab { font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 8pt; letter-spacing: .28em; text-transform: uppercase; text-align: center; color: #FFF; margin-bottom: 5mm; }
 .cv-grid { display: grid; grid-template-columns: repeat(3, 1fr); }

@@ -306,6 +306,7 @@
           ${s.map((x, i) => `<div class="row2">${fld(`${c}.stats.${i}.n`, 'Numero ' + (i + 1))}${fld(`${c}.stats.${i}.l`, 'Etichetta')}</div>`).join('')}</div>
         <div class="row2">${fld(`${c}.grande`, 'Numero grande')}${fld(`${c}.grandeTesto`, 'Sotto il numero grande')}</div>
         ${fld(`${c}.fascia`, 'Riga in fondo')}
+        <div class="grp"><div class="grp-title">Foto di sfondo</div><span class="help">Se la togli, la copertina torna nera.</span>${photo(`${c}.foto`, null, '2026-09-08')}</div>
       </div></details>
       <details class="card" data-key="intro"${open.has('intro') ? ' open' : ''}><summary><h3>Introduzione</h3></summary><div class="in">
         ${fld('intro.occhiello', 'Occhiello')}${fld('intro.grande', 'Frase grande', { area: true })}
