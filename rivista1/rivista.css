@@ -35,8 +35,8 @@
 .cv-bar { position: absolute; left: 0; right: 0; top: 0; height: 3mm; background: #F05A28; }
 .cv-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 85% 42% at 50% 62%, rgba(240,90,40,0.20) 0%, rgba(240,90,40,0) 70%); }
 .cv-inner { position: absolute; left: 12mm; right: 12mm; top: 13mm; }
-.cv-tag { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 17pt; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; color: #FFF8F4; margin-bottom: 7mm; }
-.cv-tag .arr { color: #F05A28; font-family: 'Barlow', sans-serif; font-weight: 700; margin: 0 .15em; }
+.cv-tag { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14pt; line-height: 1.2; letter-spacing: .12em; text-transform: uppercase; color: #F05A28; margin-bottom: 7mm; }
+.cv-tag .arr { color: #F05A28; }
 .cv-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 48pt; line-height: .9; text-transform: uppercase; margin: 0; color: #FFF8F4; }
 .cv-title .hl { color: #F05A28; font-style: normal; }
 .cv-issue { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20pt; text-transform: uppercase; letter-spacing: .06em; color: #FF8C5A; margin-top: 10mm; padding-top: 3mm; border-top: .6pt solid rgba(240,90,40,.45); }
