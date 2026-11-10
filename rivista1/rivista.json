@@ -1,10 +1,10 @@
 {
  "versione": 2,
  "copertina": {
-  "etichetta": "*Milano → Palermo*",
+  "etichetta": "Milano → Palermo",
   "titolo": "Una Bici\nper il *Mondo*",
   "numero": "",
-  "statsTitolo": "",
+  "statsTitolo": "Com'è andata",
   "stats": [
    {
     "n": "1.766",
@@ -1288,5 +1288,5 @@
   "testo": "Grazie per aver pedalato con me.",
   "link": "mipa.dannybag.org\nInstagram @dannybag"
  },
- "salvato": "2026-11-10T22:45:04.445Z"
+ "salvato": "2026-11-10T22:48:24.329Z"
 }
