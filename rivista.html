@@ -7,11 +7,11 @@
 <meta name="description" content="La rivista da sfogliare con le storie in sella di Una Bici per il Mondo: da Milano a Palermo, tappa dopo tappa.">
 <meta property="og:title" content="Quante Storie · Una Bici per il Mondo">
 <meta property="og:description" content="Da Milano a Palermo in bicicletta, tappa dopo tappa. Sfogliala.">
-<link rel="icon" type="image/png" href="../img/BikeIconBW.png">
+<link rel="icon" type="image/png" href="img/BikeIconBW.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;800;900&family=Barlow:wght@300;400;700&family=IBM+Plex+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
-<link rel="stylesheet" href="rivista.css">
+<link rel="stylesheet" href="rivista1/rivista.css">
 <style>
   :root { --orange: #F05A28; --ink: #FFF8F4; --muted: rgba(255,248,244,.55); }
   [hidden] { display: none !important; }
@@ -39,7 +39,7 @@
 </head>
 <body>
 <header class="gut">
-  <a class="brand" href="../">Una Bici per il <span>Mondo</span></a>
+  <a class="brand" href="./">Una Bici per il <span>Mondo</span></a>
   <div class="issue">Quante Storie · Milano → Palermo</div>
 </header>
 <main class="stage gut" id="stage"><div class="loading" id="loading">Impagino la rivista…</div><div class="rv-book" id="book" role="region" aria-label="Rivista Quante Storie" hidden></div></main>
@@ -51,19 +51,17 @@
 </div>
 <div class="hint gut" id="hint"></div>
 
-<script src="rivista.js"></script>
+<script src="rivista1/rivista.js"></script>
 <script>
 (async function () {
-  // le foto in rivista.json sono percorsi del sito (diario/img/...): da questa cartella si sale di un livello
-  const SITO = p => !p || /^(https?:|blob:|data:|\/)/.test(p) ? p : '../' + p;
   const $ = id => document.getElementById(id);
   let pages = [];
   const flip = Rivista.Flip($('stage'), $('book'), { prev: $('prev'), next: $('next'), count: $('count'), hint: $('hint') });
   try {
-    const res = await fetch('rivista.json?t=' + Date.now(), { cache: 'no-store' });
+    const res = await fetch('rivista1/rivista.json?t=' + Date.now(), { cache: 'no-store' });
     const data = await res.json();
     await Rivista.ready();
-    pages = Rivista.paginate(data, { url: SITO }).pages;
+    pages = Rivista.paginate(data).pages;
     $('loading').hidden = true; $('book').hidden = false;
     flip.setPages(pages, 0);
   } catch (e) { $('loading').textContent = 'Non riesco a caricare la rivista. Riprova tra poco.'; }
