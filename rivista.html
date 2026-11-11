@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Quante Storie · Una Bici per il Mondo</title>
+<meta name="description" content="La rivista da sfogliare con le storie in sella di Una Bici per il Mondo: da Milano a Palermo, tappa dopo tappa.">
+<meta property="og:title" content="Quante Storie · Una Bici per il Mondo">
+<meta property="og:description" content="Da Milano a Palermo in bicicletta, tappa dopo tappa. Sfogliala.">
+<link rel="icon" type="image/png" href="img/BikeIconBW.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;800;900&family=Barlow:wght@300;400;700&family=IBM+Plex+Mono:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="rivista1/rivista.css?v=3">
+<style>
+  [hidden] { display: none !important; }
+  html, body { height: 100%; margin: 0; }
+  body { background: #111; color: #FFF8F4; font-family: 'IBM Plex Mono', monospace; overflow: hidden; border-top: 3px solid #F05A28; box-sizing: border-box;
+    background-image: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(240,90,40,.12), transparent 70%); }
+  /* la rivista occupa tutto lo schermo; su schermi larghi lascio ai lati lo spazio per le frecce */
+  .stage { position: absolute; top: 3px; right: 0; bottom: 0; left: 0; display: flex; align-items: center; justify-content: center;
+    padding: max(8px, env(safe-area-inset-top, 0px)) max(64px, env(safe-area-inset-right, 0px)) max(8px, env(safe-area-inset-bottom, 0px)) max(64px, env(safe-area-inset-left, 0px)); box-sizing: border-box; }
+  .stage > .rv-book { flex: none; }
+  .loading { color: rgba(255,248,244,.55); font-size: .8rem; letter-spacing: .1em; }
+  .arrow { position: fixed; top: 50%; transform: translateY(-50%); z-index: 10; width: 48px; height: 48px; border-radius: 50%;
+    border: 1.5px solid #F05A28; background: rgba(17,17,17,.6); color: #FFF8F4; font: 400 1.5rem/1 'Barlow', sans-serif;
+    display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0 0 3px; -webkit-tap-highlight-color: transparent;
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); transition: opacity .2s, background .2s; }
+  .arrow:hover { background: #F05A28; }
+  .arrow:focus-visible { outline: 2px solid #FF8C5A; outline-offset: 3px; }
+  .arrow:disabled { opacity: 0; pointer-events: none; }
+  #prev { left: max(8px, env(safe-area-inset-left, 0px)); }
+  #next { right: max(8px, env(safe-area-inset-right, 0px)); }
+  /* telefono: pagina il più grande possibile, frecce piccole sopra il bordo */
+  @media (max-width: 700px) {
+    .stage { padding: max(4px, env(safe-area-inset-top, 0px)) max(4px, env(safe-area-inset-right, 0px)) max(4px, env(safe-area-inset-bottom, 0px)) max(4px, env(safe-area-inset-left, 0px)); }
+    .arrow { width: 38px; height: 38px; font-size: 1.25rem; background: rgba(17,17,17,.45); top: auto; bottom: max(14px, env(safe-area-inset-bottom, 0px)); transform: none; }
+    #prev { left: max(10px, env(safe-area-inset-left, 0px)); }
+    #next { right: max(10px, env(safe-area-inset-right, 0px)); }
+  }
+</style>
+</head>
+<body>
+<main class="stage" id="stage"><div class="loading" id="loading">Impagino la rivista…</div><div class="rv-book" id="book" role="region" aria-label="Rivista Quante Storie" hidden></div></main>
+<button class="arrow" id="prev" type="button" aria-label="Pagina precedente">‹</button>
+<button class="arrow" id="next" type="button" aria-label="Pagina successiva">›</button>
+
+<script>
+  // registratore: se qualcosa si rompe lo scrive sullo schermo (serve a capire i problemi sul telefono)
+  var __passo = 'avvio';
+  function __diag(msg) {
+    var l = document.getElementById('loading'); if (!l) return;
+    l.hidden = false;
+    l.style.cssText = 'position:fixed;left:12px;right:12px;bottom:70px;z-index:50;background:#2a2420;border:1px solid #F05A28;color:#FFF8F4;padding:10px 12px;font:12px/1.5 monospace;white-space:pre-wrap;word-break:break-word';
+    l.textContent = 'Errore rivista\npasso: ' + __passo + '\n' + msg + '\n\n' + navigator.userAgent + '\nschermo ' + innerWidth + 'x' + innerHeight + ' dpr ' + (window.devicePixelRatio || 1);
+  }
+  window.onerror = function (m, src, riga, col) { __diag(m + ' (' + String(src || '').split('/').pop() + ':' + riga + ':' + col + ')'); };
+  window.addEventListener('unhandledrejection', function (e) { __diag('promise: ' + (e.reason && (e.reason.stack || e.reason.message) || e.reason)); });
+</script>
+<script src="rivista1/rivista.js?v=3"></script>
+<script>
+(async function () {
+  const $ = id => document.getElementById(id);
+  if (!window.Rivista) { __diag('rivista.js non caricato o non eseguito'); return; }
+  try {
+    __passo = 'preparo lo sfoglio';
+    const flip = Rivista.Flip($('stage'), $('book'), { prev: $('prev'), next: $('next') });
+    __passo = 'scarico rivista.json';
+    const res = await fetch('rivista1/rivista.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('rivista.json risponde ' + res.status);
+    const data = await res.json();
+    __passo = 'carico i caratteri';
+    await Rivista.ready();
+    __passo = 'impagino';
+    const pages = Rivista.paginate(data).pages;
+    __passo = 'mostro le pagine (' + pages.length + ')';
+    $('loading').hidden = true; $('book').hidden = false;
+    flip.setPages(pages, 0);
+    __passo = 'controllo';
+    setTimeout(function () {
+      const b = $('book').getBoundingClientRect(), st = $('stage').getBoundingClientRect();
+      const pronte = document.querySelectorAll('.rv-fc .pg').length;
+      if (b.width < 20 || b.height < 20 || !pronte) __diag('la rivista non si vede: libro ' + Math.round(b.width) + 'x' + Math.round(b.height) + ', area ' + Math.round(st.width) + 'x' + Math.round(st.height) + ', pagine pronte ' + pronte);
+    }, 1500);
+  } catch (e) { __diag(e && (e.stack || e.message) || String(e)); }
+})();
+</script>
+</body>
+</html>
