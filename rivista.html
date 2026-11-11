@@ -18,7 +18,7 @@
   body { background: #111; color: #FFF8F4; font-family: 'IBM Plex Mono', monospace; overflow: hidden; border-top: 3px solid #F05A28; box-sizing: border-box;
     background-image: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(240,90,40,.12), transparent 70%); }
   /* la rivista occupa tutto lo schermo; su schermi larghi lascio ai lati lo spazio per le frecce */
-  .stage { position: absolute; inset: 3px 0 0 0; display: flex; align-items: center; justify-content: center;
+  .stage { position: absolute; top: 3px; right: 0; bottom: 0; left: 0; display: flex; align-items: center; justify-content: center;
     padding: max(8px, env(safe-area-inset-top, 0px)) max(64px, env(safe-area-inset-right, 0px)) max(8px, env(safe-area-inset-bottom, 0px)) max(64px, env(safe-area-inset-left, 0px)); box-sizing: border-box; }
   .stage > .rv-book { flex: none; }
   .loading { color: rgba(255,248,244,.55); font-size: .8rem; letter-spacing: .1em; }
