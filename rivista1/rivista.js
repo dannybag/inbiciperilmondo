@@ -28,7 +28,7 @@
   }
   function pOpener(t) {
     const ph = t.apertura && t.apertura.src ? `<div class="ph"${bg(t.apertura.src)}></div>` : `<div class="ph noimg">Foto d'apertura</div>`;
-    return `<div class="pg opener">${ph}<div class="shade"></div><div class="op-tag">#unabiciperilmondo</div>
+    return `<div class="pg opener">${ph}<div class="shade"></div><div class="op-tag">#unabiciperilmondo</div><div class="op-ix" data-page="%%INDICE%%" role="link" tabindex="0">Indice</div>
       <div class="otitle"><div class="tappa">Tappa <b>${esc(t.numero)}</b></div><h2>${esc(t.da)} <span>→</span> ${esc(t.a)}</h2>
       <div class="when">${esc(t.data)} <span class="km">${esc(t.km)}</span></div></div>
       <div class="ocap">${esc(t.apertura && t.apertura.didascalia)}</div></div>`;
@@ -36,6 +36,12 @@
   function pGrid(t) {
     const cells = (t.rullino || []).filter(r => r.src).map(r => `<div class="fig"><div class="ph"${bg(r.src)}></div><div class="cap">${esc(r.didascalia)}</div></div>`).join('');
     return `<div class="pg text"><div class="body"><div class="gtitle">Dal rullino · Tappa ${esc(t.numero)}</div><div class="cells">${cells}</div></div><div class="folio"></div></div>`;
+  }
+  // indice: una riga per tappa, toccandola si va all'apertura
+  function pIndex(rows) {
+    const li = rows.map(r => `<div class="ix-row" data-page="${r.page}" role="link" tabindex="0" aria-label="${esc(r.label)}, pagina ${r.page + 1}">
+      <span class="ix-n">${esc(r.n)}</span><span class="ix-t">${r.html}</span><span class="ix-dots"></span><span class="ix-p">${r.page + 1}</span></div>`).join('');
+    return `<div class="pg text index"><div class="body"><div class="lead"><div class="kick">Indice</div><h2>Le tappe</h2></div><div class="ix">${li}</div></div><div class="folio"></div></div>`;
   }
   const pBlank = () => `<div class="pg blank"><div class="mark">Una bici per il mondo</div></div>`;
   function pRetro(r) {
@@ -124,6 +130,7 @@
     const list = [], anchors = {};
     list.push(pCover(data.copertina || {}));
     list.push(pIntro(data.intro || {}));
+    const ixAt = list.length; list.push('%%INDICE_PAGINA%%');      // l'indice: lo riempio quando so i numeri di pagina
     for (const t of (data.tappe || [])) {
       if (t.visibile === false) continue;
       if (list.length % 2 === 1) list.push(pBlank());          // l'apertura cade sempre a destra
@@ -141,7 +148,13 @@
     }
     if (list.length % 2 === 0) list.push(pBlank());              // il retro chiude a sinistra
     list.push(pRetro(data.retro || {}));
-    const pages = list.map((h, i) => h.replace('<div class="folio"></div>', `<div class="folio">${i + 1}</div>`));
+    const rows = (data.tappe || []).filter(t => t.visibile !== false && anchors[t.id] != null).map(t => ({
+      n: t.numero, page: anchors[t.id], label: `Tappa ${t.numero}, ${t.da} - ${t.a}`,
+      html: `${esc(t.da)} <b>→</b> ${esc(t.a)}<small>${esc(t.km)}</small>` }));
+    if (anchors.epilogo != null) rows.push({ n: '·', page: anchors.epilogo, label: ep.titolo, html: esc(ep.titolo) });
+    list[ixAt] = pIndex(rows);
+    anchors.indice = ixAt;
+    const pages = list.map((h, i) => h.replace('<div class="folio"></div>', `<div class="folio">${i + 1}</div>`).replace(/%%INDICE%%/g, ixAt));
     return { pages, anchors };
   }
 
@@ -231,14 +244,23 @@
       if (sx === null) return;
       const dx = e.clientX - sx, dy = e.clientY - sy; sx = null;
       if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy)) { go(dx < 0 ? 1 : -1); return; }
+      const link = e.target.closest && e.target.closest('[data-page]');
+      if (link && Math.abs(dx) < 12 && Math.abs(dy) < 12) { goToPage(+link.dataset.page); return; }
       if (Math.abs(dx) < 8 && Math.abs(dy) < 8) { const r = book.getBoundingClientRect(); go(e.clientX > r.left + r.width / 2 ? 1 : -1); }
     });
     book.addEventListener('pointercancel', () => { sx = null; });
+    book.addEventListener('keydown', e => { const l = e.target.closest && e.target.closest('[data-page]'); if (l && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); goToPage(+l.dataset.page); } });
+    // salto diretto a una pagina: un attimo di dissolvenza invece di girare decine di fogli
+    function goToPage(i) {
+      const np = Math.min(posFor(i), maxPos()); if (np === pos) return;
+      book.style.transition = 'opacity .18s'; book.style.opacity = '0';
+      setTimeout(() => { pos = np; render(true); book.style.transition = 'opacity .25s'; book.style.opacity = '1'; setTimeout(() => { book.style.transition = ''; }, 260); }, 180);
+    }
     let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => layout(), 120); });
     return {
       setPages(p, goTo) { pages = p; mode = null; layout(true); if (goTo != null) { pos = Math.min(posFor(goTo), maxPos()); render(true); } },
       relayout() { layout(true); },
-      go
+      go, goToPage
     };
   }
 

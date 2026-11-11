@@ -105,3 +105,18 @@
 .pg.retro h3 .hl { color: #F05A28; font-style: normal; }
 .pg.retro p { font-size: 11pt; color: #ddd; margin: 0; font-style: italic; }
 .pg.retro .links { position: absolute; left: 14mm; bottom: 16mm; font-family: 'Barlow Condensed', sans-serif; font-size: 11pt; letter-spacing: .06em; line-height: 1.6; white-space: pre-line; }
+
+/* indice */
+.pg.index .lead { margin-bottom: 5mm; }
+.pg .ix { display: grid; gap: 0; }
+.pg .ix-row { display: grid; grid-template-columns: 10mm auto 1fr auto; align-items: baseline; column-gap: 2mm; padding: 1.25mm 0; border-bottom: .4pt solid #e4dad1; cursor: pointer; }
+.pg .ix-row:hover .ix-t, .pg .ix-row:focus-visible .ix-t { color: #F05A28; }
+.pg .ix-row:focus-visible { outline: 1.5pt solid #F05A28; outline-offset: 1mm; }
+.pg .ix-n { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 13pt; line-height: 1; color: #F05A28; }
+.pg .ix-t { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 11pt; line-height: 1.1; text-transform: uppercase; white-space: nowrap; letter-spacing: .02em; color: #1A1A1A; }
+.pg .ix-t b { color: #F05A28; font-weight: 800; }
+.pg .ix-t small { font-family: 'IBM Plex Mono', monospace; font-weight: 400; font-size: 6pt; letter-spacing: .02em; text-transform: none; color: #9a8f86; margin-left: 2mm; }
+.pg .ix-dots { border-bottom: .8pt dotted #cfc3b8; transform: translateY(-1.2mm); }
+.pg .ix-p { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 11pt; color: #6b625b; font-variant-numeric: tabular-nums; }
+.pg .op-ix { position: absolute; top: 11mm; right: 13mm; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; letter-spacing: .16em; font-size: 8.5pt; text-transform: uppercase; color: #fff; border: .8pt solid rgba(255,255,255,.7); border-radius: 10mm; padding: 1mm 3mm; cursor: pointer; }
+.pg .op-ix:hover { background: #F05A28; border-color: #F05A28; }
