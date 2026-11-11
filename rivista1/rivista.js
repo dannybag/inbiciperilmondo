@@ -181,12 +181,15 @@
           book.appendChild(l); els.push(l);
         }
       } else {
-        pages.forEach(p => { const l = document.createElement('div'); l.className = 'rv-leaf'; l.appendChild(face('rv-fc-f', p)); l.appendChild(face('rv-fc-b', '')); book.appendChild(l); els.push(l); });
+        // a pagina singola (telefono) le pagine bianche di riempimento non servono: le salto
+        solo = pages.map((p, i) => i).filter(i => !/^<div class="pg blank"/.test(pages[i]));
+        solo.forEach(i => { const p = pages[i]; const l = document.createElement('div'); l.className = 'rv-leaf'; l.appendChild(face('rv-fc-f', p)); l.appendChild(face('rv-fc-b', '')); book.appendChild(l); els.push(l); });
       }
     }
-    const maxPos = () => mode === 'spread' ? pages.length / 2 : pages.length - 1;
-    const pageIndex = () => mode === 'spread' ? Math.max(0, pos * 2 - 1) : pos;
-    const posFor = i => mode === 'spread' ? Math.ceil(i / 2) : i;
+    let solo = [];   // telefono: indici delle pagine mostrate (senza quelle bianche)
+    const maxPos = () => mode === 'spread' ? pages.length / 2 : solo.length - 1;
+    const pageIndex = () => mode === 'spread' ? Math.max(0, pos * 2 - 1) : (solo[pos] || 0);
+    const posFor = i => { if (mode === 'spread') return Math.ceil(i / 2); const k = solo.findIndex(j => j >= i); return k < 0 ? solo.length - 1 : k; };
     function layout(force) {
       if (!pages.length || !stage.clientWidth) return;
       const cs = getComputedStyle(stage);   // spazio utile, senza i margini interni
@@ -216,7 +219,7 @@
       if (instant) { void book.offsetWidth; book.style.transition = ''; }
       if (ui.count) ui.count.innerHTML = mode === 'spread'
         ? (pos === 0 ? `<b>1</b> / ${N}` : pos === max ? `<b>${N}</b> / ${N}` : `<b>${2 * pos}–${2 * pos + 1}</b> / ${N}`)
-        : `<b>${pos + 1}</b> / ${N}`;
+        : `<b>${pageIndex() + 1}</b> / ${N}`;
       if (ui.prev) ui.prev.disabled = pos === 0;
       if (ui.next) ui.next.disabled = pos === max;
     }
