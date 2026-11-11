@@ -285,13 +285,17 @@
     },
     {
      "t": "testo",
-     "testo": "Ho ascoltato il Sommo e mi son fermato un giorno ospite di Silvia ed Ale che mi hanno fatto sentire davvero a mio agio GRAZIE. Inoltre ho passato una bellissima serata con dei cari amici. Tra l'altro con alcuni di loro ho condiviso altri tipi di fatiche, dei cammini e trekking, ma sempre cose che generano empatia."
+     "testo": ""
     },
     {
      "t": "foto",
      "src": "diario/img/2026-09-02-1792509166331-rn0g5-20260902_212648_jpg.jpg",
      "didascalia": "Da Silvia e Ale, che mi hanno fatto sentire a casa.",
      "formato": "grande"
+    },
+    {
+     "t": "testo",
+     "testo": "Ho ascoltato il Sommo e mi son fermato un giorno ospite di Silvia ed Ale che mi hanno fatto sentire davvero a mio agio GRAZIE. Inoltre ho passato una bellissima serata con dei cari amici. Tra l'altro con alcuni di loro ho condiviso altri tipi di fatiche, dei cammini e trekking, ma sempre cose che generano empatia."
     }
    ],
    "rullino": [
@@ -1365,5 +1369,5 @@
   "testo": "Grazie per aver pedalato con me.",
   "link": "mipa.dannybag.org\nInstagram @dannybag"
  },
- "salvato": "2026-11-10T22:48:24.329Z"
+ "salvato": "2026-11-11T21:24:19.585Z"
 }
