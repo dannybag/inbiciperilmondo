@@ -5,7 +5,7 @@
 /* ---------- sfoglio ---------- */
 .rv-book { position: relative; perspective: 2600px; transition: transform var(--rv-turn, .75s) ease; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; }
 .rv-leaf { position: absolute; top: 0; height: 100%; transform-style: preserve-3d; transform-origin: left center; transition: transform var(--rv-turn, .75s) cubic-bezier(.45,.05,.3,1); }
-.rv-fc { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: #FBF6F1; overflow: hidden; }
+.rv-fc { position: absolute; top: 0; right: 0; bottom: 0; left: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: #FBF6F1; overflow: hidden; }
 .rv-fc-b { transform: rotateY(180deg); }
 .rv-fc > .pg { transform-origin: 0 0; }
 .rv-fc::after { content: ""; position: absolute; inset: 0; pointer-events: none; }

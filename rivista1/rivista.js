@@ -3,7 +3,7 @@
    Il contenuto sta in rivista.json; le foto sono percorsi del sito (diario/img/..., rivista/img/...). */
 (function () {
   'use strict';
-  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const hl = s => esc(s).replace(/\*([^*]+)\*/g, '<em class="hl">$1</em>');
   const lines = s => hl(s).replace(/\n/g, '<br>');
   function frag(html) { const d = document.createElement('div'); d.innerHTML = html; return d.firstElementChild; }
@@ -166,10 +166,23 @@
       if (!mmPx) { const p = document.createElement('div'); p.style.width = '148mm'; p.style.position = 'absolute'; p.style.visibility = 'hidden'; document.body.appendChild(p); mmPx = p.getBoundingClientRect().width; p.remove(); }
       return mmPx;
     }
+    // le pagine si preparano solo quando sono vicine a quella aperta: sul telefono 88 pagine
+    // con foto ed effetti 3D tutte insieme finiscono la memoria grafica e non si vede più niente
     function face(cls, html) {
       const f = document.createElement('div'); f.className = 'rv-fc ' + cls;
-      if (html) { f.innerHTML = html; f.firstElementChild.style.transform = `scale(${pageW / pagePx()})`; }
+      f._html = html || ''; f._done = false;
       return f;
+    }
+    function fill(l) {
+      for (const f of l.children) if (!f._done && f._html) { f.innerHTML = f._html; f.firstElementChild.style.transform = `scale(${pageW / pagePx()})`; f._done = true; }
+    }
+    function empty(l) { for (const f of l.children) if (f._done) { f.innerHTML = ''; f._done = false; } }
+    function prepare(center) {
+      els.forEach((e, k) => {
+        const near = k >= center - 2 && k <= center + 2;
+        if (near) { fill(e); e.style.display = ''; }
+        else { e.style.display = 'none'; if (Math.abs(k - center) > 6) empty(e); }
+      });
     }
     function build(m) {
       mode = m; book.innerHTML = ''; els = []; book.className = 'rv-book rv-' + m;
@@ -208,6 +221,7 @@
     function shift() { const max = maxPos(); return mode === 'spread' ? (pos === 0 ? -pageW / 2 : (pos === max ? pageW / 2 : 0)) : 0; }
     function render(instant) {
       const max = maxPos(), N = pages.length;
+      prepare(pos);
       els.forEach((e, k) => {
         if (instant) e.style.transition = 'none';
         e.classList.toggle('rv-turned', k < pos);
@@ -227,6 +241,7 @@
     function go(d) {
       const max = maxPos(), np = Math.max(0, Math.min(max, pos + d));
       if (np === pos) return;
+      prepare(np);
       els[d > 0 ? pos : np].style.zIndex = 1000;
       pos = np;
       els.forEach((e, k) => e.classList.toggle('rv-turned', k < pos));
