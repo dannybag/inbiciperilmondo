@@ -91,8 +91,7 @@
     if (b.t === 'foto') {
       if (!b.src) return '';
       const f = b.formato === 'grande' ? 'grande' : 'affiancata';
-      const mh = +b.maxh || 0;   // altezza massima in mm, facoltativa (la usa l'impaginazione automatica per riempire i vuoti)
-      const box = f === 'grande' ? fit(b.src, 118, mh || 115) : fit(b.src, 52, mh || 90);
+      const box = f === 'grande' ? fit(b.src, 118, 115) : fit(b.src, 52, 90);
       return `<div class="fig ${f}"><div class="ph${box ? ' fit' : ''}"${bg(b.src, box)}></div>${b.didascalia ? `<div class="cap">${hl(b.didascalia)}</div>` : ''}</div>`;
     }
     if (b.t === 'citazione') return b.testo ? `<div class="pull">«${hl(b.testo)}»</div>` : '';

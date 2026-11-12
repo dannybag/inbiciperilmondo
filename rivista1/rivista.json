@@ -62,13 +62,6 @@
      "testo": "Alla fine, il momento di partire è arrivato davvero e lì è salita l’agitazione, quella bella, quella che ti fa chiedere: Ma chi me l’ha fatto fare?🤣"
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-08-31-1792493525812-6mfot-Partenza_Duomo_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande",
-     "maxh": 70
-    },
-    {
      "t": "testo",
      "testo": "Come se non bastasse, ho scoperto di non saper usare la action cam, insomma, 1.700 km da percorrere e uno degli strumenti con cui avrei dovuto raccontarli ancora tutto da capire. Si cominciava benissimo!"
     },
@@ -89,14 +82,14 @@
      "testo": "Alla foce dell’Adda mi sono fermato in un bar. Quando il barista ha saputo della mia avventura, mi ha offerto da bere e mi ha salutato con un «Mi raccomando, non esageri». Ecco, certe cose ti riconciliano con il mondo. Che gente meravigliosa abita in questo Paese!"
     },
     {
-     "t": "testo",
-     "testo": "Poi è arrivata Busseto, un paese che mi piace molto e dove conservo tanti bei ricordi."
-    },
-    {
      "t": "foto",
      "src": "diario/img/2026-08-31-1792493848303-mh23e-20260831_141858_jpg.jpg",
      "didascalia": "Busseto, dove conservo tanti bei ricordi.",
      "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "Poi è arrivata Busseto, un paese che mi piace molto e dove conservo tanti bei ricordi."
     },
     {
      "t": "testo",
@@ -126,26 +119,19 @@
     },
     {
      "t": "foto",
-     "src": "rivista1/img/2026-11-12-mwdqzxcr.jpg",
-     "didascalia": "",
-     "formato": "grande"
-    },
-    {
-     "t": "foto",
      "src": "diario/img/2026-08-31-1792494286101-2echp-20260831_232154_jpg.jpg",
      "didascalia": "Grazie Nicolò, Susanna e Gitana.",
      "formato": "grande"
     },
     {
-     "t": "testo",
-     "testo": "Domani si riparte."
+     "t": "foto",
+     "src": "rivista1/img/2026-11-12-mwdqzxcr.jpg",
+     "didascalia": "",
+     "formato": "grande"
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-08-31-1792494285733-52r07-20260831_171428_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande",
-     "maxh": 45
+     "t": "testo",
+     "testo": "Domani si riparte."
     }
    ],
    "rullino": [
@@ -186,14 +172,14 @@
      "testo": "A dire la verità in questa tappa non è successo un granché. Però una cosa importante è successa già prima di partire: Nicolò, l’host che mi ha ospitato a Parma insieme a Susanna e alla loro cagnolona Gitana, mi ha consigliato una traccia diversa da quella che avevo preparato io. La mia, in effetti, passava tutta sulla via Emilia, più breve, trafficata. Sicura? Non proprio. Piacevole? Ancora meno.😀"
     },
     {
-     "t": "testo",
-     "testo": "Così ho seguito il consiglio di Nicolò e mi sono infilato un po’ sulle colline tra Parma e Bologna. Il primo tratto non è stato esattamente una passeggiata, perché di traffico ce n’era parecchio, ma poi la situazione è migliorata e ho cominciato ad attraversare paesi che evocano ricordi e immagini molto diverse tra loro."
-    },
-    {
      "t": "foto",
      "src": "diario/img/2026-09-01-1792508542358-hyv6t-20260901_084326_jpg.jpg",
      "didascalia": "Si parte. Gitana saluta, io pure.",
      "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "Così ho seguito il consiglio di Nicolò e mi sono infilato un po’ sulle colline tra Parma e Bologna. Il primo tratto non è stato esattamente una passeggiata, perché di traffico ce n’era parecchio, ma poi la situazione è migliorata e ho cominciato ad attraversare paesi che evocano ricordi e immagini molto diverse tra loro."
     },
     {
      "t": "testo",
@@ -206,12 +192,6 @@
     {
      "t": "citazione",
      "testo": "Ecco, i viaggi regalano anche questo."
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-09-01-1792508542950-1scm6-20260901_181128_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande"
     },
     {
      "t": "testo",
@@ -270,13 +250,6 @@
      "testo": "Questa tappa mi ha lasciato ricordi molto diversi tra loro: luoghi carichi di storia, qualche battuta per alleggerire il viaggio e soprattutto, la soddisfazione di arrivare finalmente nella magnifica città di Firenze."
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-09-02-1792509166162-vzi2c-20260902_162834_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande",
-     "maxh": 45
-    },
-    {
      "t": "testo",
      "testo": "Sono passato da Sasso Marconi, paese legato alla figura di Guglielmo Marconi, uno dei grandi protagonisti della storia della comunicazione moderna. Pensare a quanto sia cambiato il modo di comunicare da allora fa un certo effetto: oggi siamo sempre connessi, eppure spesso ci capiamo meno. Comunque è grazie a lui se io non mi perdo tra i monti, almeno non sempre e riesco a farvi sapere cosa sto combinando."
     },
@@ -321,12 +294,6 @@
     {
      "t": "testo",
      "testo": "Ho ascoltato il Sommo e mi son fermato un giorno ospite di Silvia ed Ale che mi hanno fatto sentire davvero a mio agio GRAZIE. Inoltre ho passato una bellissima serata con dei cari amici. Tra l'altro con alcuni di loro ho condiviso altri tipi di fatiche, dei cammini e trekking, ma sempre cose che generano empatia."
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-09-02-1792575809162-bu18o-20260903_162849_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande"
     }
    ],
    "rullino": [
@@ -441,14 +408,14 @@
      "formato": "affiancata"
     },
     {
+     "t": "testo",
+     "testo": "A Chiusi ho lasciato il Sentiero della Bonifica divorato un panino sul lago omonimo e ho proseguito verso il lago di Bolsena. Da lì in poi è stato un continuo saliscendi, niente di drammatico, almeno all'inizio. Alla fine il dislivello della giornata è arrivato a circa 950 metri, ma tutti concentrati negli ultimi quaranta chilometri e gli strappi sono arrivati tutti insieme. Belle pendenze, quelle che quando le guardi sul Garmin sembrano quasi un errore di lettura, invece scopri che il Garmin non ha nessun senso dell'umorismo."
+    },
+    {
      "t": "foto",
      "src": "diario/img/2026-09-05-1792576467290-cise2-20260905_164204_jpg.jpg",
      "didascalia": "",
      "formato": "affiancata"
-    },
-    {
-     "t": "testo",
-     "testo": "A Chiusi ho lasciato il Sentiero della Bonifica divorato un panino sul lago omonimo e ho proseguito verso il lago di Bolsena. Da lì in poi è stato un continuo saliscendi, niente di drammatico, almeno all'inizio. Alla fine il dislivello della giornata è arrivato a circa 950 metri, ma tutti concentrati negli ultimi quaranta chilometri e gli strappi sono arrivati tutti insieme. Belle pendenze, quelle che quando le guardi sul Garmin sembrano quasi un errore di lettura, invece scopri che il Garmin non ha nessun senso dell'umorismo."
     },
     {
      "t": "foto",
@@ -459,13 +426,6 @@
     {
      "t": "testo",
      "testo": "Finalmente arrivo al lago di Bolsena che costeggio per una decina, forse quindici chilometri. Acqua, aria fresca e un bel panorama e penso \"E' fatta, ci siamo Capodimonte è li, faccio l'ultima curva e ci sono\" ed ecco UN MURO compare alla mia vista. Almeno 700 metri con una pendenza massima: 17% e la cosa peggiore non è nemmeno il 17% è che la strada è dritta e la vedo tutta. Si sa una salita, se gira, se curva, se non vedi dove finisce, puoi sempre raccontarti qualche bugia: “magari dopo la curva spiana” questa invece è lì tutta, settecento metri di verità. Non so se posso dire di averla fatta con eleganza, ma sicuramente l'ho fatta con determinazione. Quando finalmente arrivo e la giornata si fa interessante, il paese è bello e il lago mi regala un tramonto meraviglioso. Così, dopo una giornata cominciata sullo sterrato tranquillo del Sentiero della Bonifica e finita con una rampa al 17%, mi ritrovo seduto ad ammirare il lago. Penso che forse il viaggio funziona proprio così ti illude con dieci chilometri bellissimi sul lago e poi, quando abbassi la guardia, ti presenta un conto di settecento metri di strappo da paura, però alla fine, se il conto viene pagato con un tramonto così, si può anche accettare."
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-09-05-1792576472254-ubivw-20260905_200346_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande",
-     "maxh": 70
     }
    ],
    "rullino": [
@@ -663,12 +623,6 @@
      "testo": "Poi la strada torna a prendersi la scena. Il promontorio del Circeo si vede sullo sfondo, con il suo profilo inconfondibile. Il verde, le rocce e il blu del mare accompagnano il percorso."
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-09-08-1793569094917-3j7wi-20260908_123304_jpg.jpg",
-     "didascalia": "",
-     "formato": "affiancata"
-    },
-    {
      "t": "testo",
      "testo": "Passo da Terracina, città antica attraversata dalla storia della via Appia e proseguo verso Fondi. Poi la strada comincia a salire verso Sperlonga."
     },
@@ -683,14 +637,14 @@
      "testo": "La salita, anche se breve, si fa sentire, ma basta voltarsi per capire che ne vale la pena. La costa si apre in una successione di curve, promontori e spiagge che non conoscevo. Sperlonga, con le sue case bianche aggrappate alla collina, sembra quasi scivolare verso l'acqua. È una sorpresa bellissima, una di quelle che rendono il viaggio speciale: scoprire luoghi che sulla carta non avevi messo abbastanza a fuoco e ritrovarteli davanti molto più belli di quanto immaginassi."
     },
     {
-     "t": "testo",
-     "testo": "L'arrivo a Mondragone è stato emozionante. All'improvviso sbocco sulla spiaggia e mi ritrovo davanti al mare. Su una panchina in riva all'acqua riposa un anziano signore. Quando gli dico che arrivo da Milano in bicicletta, mi guarda con un misto di incredulità, simpatia e ammirazione. In quel momento sento tutta la distanza percorsa e insieme la semplicità con cui un viaggio può trasformarsi in un incontro."
-    },
-    {
      "t": "foto",
      "src": "diario/img/2026-09-08-1793569097275-8j3fp-20260908_192500_jpg.jpg",
      "didascalia": "",
      "formato": "grande"
+    },
+    {
+     "t": "testo",
+     "testo": "L'arrivo a Mondragone è stato emozionante. All'improvviso sbocco sulla spiaggia e mi ritrovo davanti al mare. Su una panchina in riva all'acqua riposa un anziano signore. Quando gli dico che arrivo da Milano in bicicletta, mi guarda con un misto di incredulità, simpatia e ammirazione. In quel momento sento tutta la distanza percorsa e insieme la semplicità con cui un viaggio può trasformarsi in un incontro."
     },
     {
      "t": "testo",
@@ -763,24 +717,18 @@
      "testo": "Davanti a me si è aperto il Golfo di Salerno. C’è anche il porto, naturalmente, ma la bellezza del luogo finisce per mettere tutto il resto in secondo piano."
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-09-09-1793180683463-2o46l-20260909_165922_jpg.jpg",
-     "didascalia": "",
-     "formato": "affiancata"
-    },
-    {
      "t": "testo",
      "testo": "Salerno mi ha accolto nel migliore dei modi. Bella la città, ma soprattutto belle le persone, comprese quelle che non ho avuto occasione di incontrare di persona. Avevo trovato una camera in un B&B abbastanza centrale e, dopo una prima telefonata con la proprietaria, ci siamo scambiati alcuni messaggi. Fin dall’inizio il tono è stato informale e simpatico, come se ci conoscessimo già da un po’. Il giorno dopo le ho chiesto se potevo lasciare qualche bigliettino del progetto Una Bici per il Mondo con il link al sito. Dopo appena cinque minuti, aveva già fatto una donazione."
-    },
-    {
-     "t": "testo",
-     "testo": "Ecco, dopo tanti chilometri passati a interrogarmi su come si possa vivere bene in certi luoghi, mi sono ritrovato davanti a un piccolo gesto capace di rimettere le cose nella giusta prospettiva. Perché i territori possono essere complicati, le città possono deludere e le contraddizioni possono lasciare l’amaro in bocca, ma poi incontri persone che ti restituiscono fiducia."
     },
     {
      "t": "foto",
      "src": "diario/img/2026-09-09-1793180685187-lvuew-20260909_210450_jpg.jpg",
      "didascalia": "",
      "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "Ecco, dopo tanti chilometri passati a interrogarmi su come si possa vivere bene in certi luoghi, mi sono ritrovato davanti a un piccolo gesto capace di rimettere le cose nella giusta prospettiva. Perché i territori possono essere complicati, le città possono deludere e le contraddizioni possono lasciare l’amaro in bocca, ma poi incontri persone che ti restituiscono fiducia."
     },
     {
      "t": "testo",
@@ -823,12 +771,6 @@
     {
      "t": "testo",
      "testo": "Lasciando Salerno alle spalle, mi aspettano una quarantina di chilometri lungo la costa, con il mare a farmi compagnia e la speranza che, almeno per una volta, la giornata mi riservi un po’ di bellezza senza esagerare con le salite."
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-09-10-1793180543096-sk1yf-20260905_143850_jpg.jpg",
-     "didascalia": "",
-     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -923,14 +865,14 @@
      "testo": "Sono passato da Marina di Camerota, splendida località del Cilento affacciata su un mare che invita a fermarsi, guardarsi intorno e magari dimenticarsi per qualche minuto di avere una destinazione. Ma stavolta ho resistito alla tentazione e ho proseguito."
     },
     {
+     "t": "testo",
+     "testo": "A metà della salita più impegnativa sono arrivato a Lentiscosa, un piccolo borgo dell'entroterra di Camerota. Qui mi sono concesso una sosta e ho condiviso un tavolino con un signore simpatico. La curiosità intorno a quel ciclista carico di bagagli era piuttosto evidente, ma lui è stato l'unico a passare dai semplici sguardi alle domande, quelle che ormai conoscevo bene, ma che continuavano a divertirmi: «Da dove arrivi? Dove stai andando?»."
+    },
+    {
      "t": "foto",
      "src": "diario/img/2026-09-11-1793367851265-ol399-20260912_083748_jpg.jpg",
      "didascalia": "",
      "formato": "affiancata"
-    },
-    {
-     "t": "testo",
-     "testo": "A metà della salita più impegnativa sono arrivato a Lentiscosa, un piccolo borgo dell'entroterra di Camerota. Qui mi sono concesso una sosta e ho condiviso un tavolino con un signore simpatico. La curiosità intorno a quel ciclista carico di bagagli era piuttosto evidente, ma lui è stato l'unico a passare dai semplici sguardi alle domande, quelle che ormai conoscevo bene, ma che continuavano a divertirmi: «Da dove arrivi? Dove stai andando?»."
     },
     {
      "t": "testo",
@@ -983,13 +925,6 @@
      "testo": "Da lassù riuscivo a vedere molto bene anche il tratto di costa che mi aspettava per raggiungere la Calabria. Una bella prospettiva, non c'è che dire! Da una parte un po' di preoccupazione per quello che ancora mi aspettava, dall'altra l'eccitazione di vedere la meta avvicinarsi. Palermo era ancora lontana, ma ormai non sembrava più soltanto un'idea."
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-09-11-1793367863467-syok5-20260913_185449_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande",
-     "maxh": 70
-    },
-    {
      "t": "testo",
      "testo": "Due giorni bellissimi, fatti di incontri, panorami, amicizia, ottima cucina e qualche bicchiere al tramonto. A volte il bello di un viaggio non sta soltanto nei chilometri che percorri, ma nelle persone e nei luoghi che, senza averlo programmato, finiscono per entrarti dentro."
     },
@@ -1034,13 +969,6 @@
     {
      "t": "testo",
      "testo": "Tappa impegnativa (strano, comincio a pensare che ci sia qualcosa da rivedere nell'organizzazione del viaggio), ma tutto quello che la vista della costa, già intravista a Sapri, lasciava immaginare viene ampiamente confermato, forse persino superato. Una giornata che mi porta ad attraversare tre regioni, Campania, Basilicata e infine Calabria. Gli occhi hanno parecchio da fare e fortunatamente, quando c'è qualcosa di bello da guardare, anche le gambe sembrano lamentarsi un po' meno."
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-10-14-1793570280638-gsfgw-Spigolatrice_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande",
-     "maxh": 45
     },
     {
      "t": "testo",
@@ -1095,13 +1023,6 @@
      "testo": "Lui mi guarda, annuisce e mostra persino un'espressione dispiaciuta per il mio inconveniente. Evidentemente gli sembra davvero un peccato che abbia dovuto rinunciare a un viaggio più comodo. A quel punto non so se ridere o preoccuparmi: forse dovrei spiegargli che in autostrada con la bicicletta non si può andare, ma non me la sento, pago ringrazio e vado via sorridendo."
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-10-14-1793552273798-m5kre-20260914_192320_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande",
-     "maxh": 95
-    },
-    {
      "t": "testo",
      "testo": "Così si chiude anche questa tappa, con tre regioni attraversate, una Calabria finalmente raggiunta, panorami difficili da dimenticare e una cena che, almeno per una volta, ha messo a dura prova non le gambe, ma la capacità di contenere le porzioni."
     }
@@ -1148,14 +1069,14 @@
      "testo": "La traccia mi porta proprio a ridosso della spiaggia e, a un certo punto, mi trovo davanti a un canale senza ponti per attraversarlo. A questo punto decido di prendere di petto la situazione: invece di tornare indietro alla ricerca di una strada alternativa, scendo direttamente sulla spiaggia e, individuato un punto adatto, guado il corso d'acqua. Una piccola, forse stupida, deviazione che però soddisfa pienamente la mia voglia di avventura. D'altra parte, non è che uno debba sempre comportarsi da persona ragionevole!"
     },
     {
+     "t": "testo",
+     "testo": "Lungo il percorso incontro Amantea, con il suo caratteristico centro storico arroccato sulla collina che domina il mare, e proseguo attraversando la costa del Golfo di Sant'Eufemia, passando nella zona di Falerna e Gizzeria."
+    },
+    {
      "t": "foto",
      "src": "diario/img/2026-10-15-1793720673341-bjqme-20260915_081928_jpg.jpg",
      "didascalia": "",
      "formato": "affiancata"
-    },
-    {
-     "t": "testo",
-     "testo": "Lungo il percorso incontro Amantea, con il suo caratteristico centro storico arroccato sulla collina che domina il mare, e proseguo attraversando la costa del Golfo di Sant'Eufemia, passando nella zona di Falerna e Gizzeria."
     },
     {
      "t": "testo",
@@ -1196,13 +1117,6 @@
     {
      "t": "testo",
      "testo": "Ad aspettarmi c'è Roberto, il mio ex datore di lavoro, con cui ho lavorato per circa vent'anni. È stato la persona che mi ha introdotto al mondo del lavoro, ma anche, in parte, un maestro di vita. Un rapporto che va ben oltre quello tra un ex capo e un collaboratore e per il quale conservo un affetto profondo."
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-10-15-1793720678687-uv4nk-20260915_191054_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande",
-     "maxh": 95
     },
     {
      "t": "testo",
@@ -1247,14 +1161,14 @@
      "testo": "Oggi la voglia di arrivare si fa sentire più del solito. Mi fermo poco e giusto il tempo necessario, perché ho un obiettivo ben preciso: raggiungere Villa San Giovanni e riuscire finalmente a salire su quel traghetto che mi porterà in Sicilia. È una meta che accompagna i miei pensieri da parecchi giorni e l'idea di poter arrivare a Messina proprio oggi rende tutto ancora più emozionante. Per una volta, quindi, niente soste prolungate: oggi si pedala per arrivare!"
     },
     {
+     "t": "testo",
+     "testo": "Lungo la strada incontro Nicotera, Palmi, Bagnara Calabra e Scilla. Nomi che si susseguono lungo la costa tirrenica calabrese, alcuni dei quali meriterebbero certamente più attenzione. A Nicotera Superiore hanno dedicato una caratteristica scalinata a Rino Gaetano, il Vico degli Ombrelli. È uno dei cantautori italiani che amo di più, ma raggiungere la scalinata richiederebbe una deviazione e soprattutto tempo che oggi non voglio perdere. Mi consolo mettendo in cuffia tutta la sua raccolta discografica: sarà lui ad accompagnarmi per il resto della tappa. E si riparte!"
+    },
+    {
      "t": "foto",
      "src": "diario/img/2026-09-16-1794235907050-pbcjm-20260916_130905_jpg.jpg",
      "didascalia": "",
      "formato": "affiancata"
-    },
-    {
-     "t": "testo",
-     "testo": "Lungo la strada incontro Nicotera, Palmi, Bagnara Calabra e Scilla. Nomi che si susseguono lungo la costa tirrenica calabrese, alcuni dei quali meriterebbero certamente più attenzione. A Nicotera Superiore hanno dedicato una caratteristica scalinata a Rino Gaetano, il Vico degli Ombrelli. È uno dei cantautori italiani che amo di più, ma raggiungere la scalinata richiederebbe una deviazione e soprattutto tempo che oggi non voglio perdere. Mi consolo mettendo in cuffia tutta la sua raccolta discografica: sarà lui ad accompagnarmi per il resto della tappa. E si riparte!"
     },
     {
      "t": "testo",
@@ -1279,13 +1193,6 @@
     {
      "t": "testo",
      "testo": "Finalmente salgo sul battello della compagnia Caronte. Un nome che, dopo aver attraversato la terra di Scilla e Cariddi, i due mostri marini che secondo la mitologia greca terrorizzavano i naviganti dello Stretto, non è esattamente il più tranquillizzante che potessero scegliere!"
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-09-16-1794235908962-levwb-20260916_202043_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande",
-     "maxh": 45
     },
     {
      "t": "testo",
@@ -1334,13 +1241,6 @@
      "testo": "Mettere finalmente piede, anzi ruota, in Sicilia è stata una bella iniezione di entusiasmo. A questo si aggiunge la soddisfazione di vedere che la raccolta fondi continuava a crescere, anche ora che sono ormai vicino al traguardo. Le donazioni e la partecipazione di tante persone sono una spinta in più, forse proprio quella che serve quando le gambe cominciano a sentire i chilometri accumulati."
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-09-17-1794410326741-nyaov-20260917_123945_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande",
-     "maxh": 45
-    },
-    {
      "t": "testo",
      "testo": "A Messina mi sono limitato ad abbuffarmi in una delle tante rosticcerie presenti in città e a dormire. Ah, per intenderci: pasta alla Norma e arancini deliziosi, la birra Messina ovviamente ottima!"
     },
@@ -1381,12 +1281,6 @@
     {
      "t": "testo",
      "testo": "Per il resto della tappa, le isole Eolie continuano a farmi compagnia sullo sfondo. Le vedo praticamente senza interruzione da quando sono arrivato a Pizzo Calabro: ormai mi sembra quasi di averle portate con me fin qui!"
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-09-17-1794410337583-57su6-20260917_151218_jpg.jpg",
-     "didascalia": "",
-     "formato": "affiancata"
     },
     {
      "t": "testo",
