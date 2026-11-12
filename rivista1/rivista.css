@@ -126,3 +126,13 @@
 .pg .hl.or { color: #F05A28; }
 .pg .hl.bi, .pg.retro h3 .hl.bi, .pg .cv-title .hl.bi { color: #FFF8F4; }
 .pg.text .hl.bi, .pg.intro .hl.bi, .pg.blank .hl.bi { color: #1A1A1A; }
+
+/* ---------- foto sempre per intero (mai ritagliate) ---------- */
+/* nel racconto e nel rullino il riquadro ha già la proporzione della foto (la calcola rivista.js);
+   se le misure mancano, la foto sta comunque intera dentro il riquadro fisso */
+.pg .fig .ph { background-size: contain; }
+.pg .fig.grande .ph.fit { margin-left: auto; margin-right: auto; }
+.pg .fig.affiancata .ph.fit { margin-left: auto; }
+.pg .cells .fig .ph.fit { margin-left: auto; margin-right: auto; }
+/* aperture di tappa e copertina: foto intera, allineata in alto; quello che avanza prende il colore di fondo */
+.pg.opener > .ph, .pg.cover .cv-photo { background-size: contain; background-position: center top; }

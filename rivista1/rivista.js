@@ -12,8 +12,30 @@
   const lines = s => hl(s).replace(/\n/g, '<br>');
   function frag(html) { const d = document.createElement('div'); d.innerHTML = html; return d.firstElementChild; }
 
+  // misure reali delle foto (larghezza/altezza): servono per mostrarle sempre per intero
+  const DIM = {};
+  // dichiarazioni CSS del riquadro che contiene tutta la foto, dentro un massimo di larghezza e altezza (mm)
+  function fit(src, maxW, maxH) {
+    const d = DIM[src]; if (!d || !d.w || !d.h) return '';
+    const r = d.w / d.h, w = Math.min(maxW, maxH * r), h = w / r;
+    return `width:${w.toFixed(2)}mm;height:${h.toFixed(2)}mm;`;
+  }
+  // scarica le dimensioni di tutte le foto della rivista prima di impaginare
+  function measure(data, urlFn) {
+    const toUrl = urlFn || (p => p), srcs = new Set(), add = p => { if (p) srcs.add(p); };
+    add(data.copertina && data.copertina.foto);
+    const stage = t => { add(t.apertura && t.apertura.src); (t.blocchi || []).forEach(b => b.t === 'foto' && add(b.src)); (t.rullino || []).forEach(r => add(r.src)); };
+    (data.tappe || []).forEach(stage); if (data.epilogo) stage(data.epilogo);
+    return Promise.all(Array.from(srcs).filter(p => !DIM[p]).map(p => new Promise(ok => {
+      const im = new Image();
+      im.onload = () => { DIM[p] = { w: im.naturalWidth, h: im.naturalHeight }; ok(); };
+      im.onerror = () => ok(); setTimeout(ok, 8000);
+      im.src = String(toUrl(p));
+    })));
+  }
+
   let URL_OF = p => p;        // come trasformare un percorso in un indirizzo (l'admin ci mette le foto appena caricate)
-  const bg = p => p ? ` style="background-image:url('${String(URL_OF(p)).replace(/'/g, '%27')}')"` : '';
+  const bg = (p, extra) => p ? ` style="${extra || ''}background-image:url('${String(URL_OF(p)).replace(/'/g, '%27')}')"` : '';
 
   /* ---------------- pagine fisse ---------------- */
   function pCover(c) {
@@ -38,7 +60,7 @@
       <div class="ocap">${hl(t.apertura && t.apertura.didascalia)}</div></div>`;
   }
   function pGrid(t) {
-    const cells = (t.rullino || []).filter(r => r.src).map(r => `<div class="fig"><div class="ph"${bg(r.src)}></div><div class="cap">${hl(r.didascalia)}</div></div>`).join('');
+    const cells = (t.rullino || []).filter(r => r.src).map(r => `<div class="fig"><div class="ph${fit(r.src, 57, 70) ? ' fit' : ''}"${bg(r.src, fit(r.src, 57, 70))}></div><div class="cap">${hl(r.didascalia)}</div></div>`).join('');
     return `<div class="pg text"><div class="body"><div class="gtitle">Dal rullino · Tappa ${esc(t.numero)}</div><div class="cells">${cells}</div></div><div class="folio"></div></div>`;
   }
   // indice: una riga per tappa, toccandola si va all'apertura
@@ -62,7 +84,8 @@
     if (b.t === 'foto') {
       if (!b.src) return '';
       const f = b.formato === 'grande' ? 'grande' : 'affiancata';
-      return `<div class="fig ${f}"><div class="ph"${bg(b.src)}></div>${b.didascalia ? `<div class="cap">${hl(b.didascalia)}</div>` : ''}</div>`;
+      const box = f === 'grande' ? fit(b.src, 118, 115) : fit(b.src, 52, 90);
+      return `<div class="fig ${f}"><div class="ph${box ? ' fit' : ''}"${bg(b.src, box)}></div>${b.didascalia ? `<div class="cap">${hl(b.didascalia)}</div>` : ''}</div>`;
     }
     if (b.t === 'citazione') return b.testo ? `<div class="pull">«${hl(b.testo)}»</div>` : '';
     if (b.t === 'versi') return b.testo ? `<div class="verse">${hl(b.testo)}</div>` : '';
@@ -319,5 +342,5 @@
     return Promise.race([all, new Promise(r => setTimeout(r, 6000))]);
   }
 
-  window.Rivista = { paginate, Flip, pdf, ready };
+  window.Rivista = { paginate, Flip, pdf, ready, measure };
 })();
