@@ -105,7 +105,7 @@
     },
     {
      "t": "foto",
-     "src": "diario/img/2026-08-31-1792494285817-heovl-20260831_173909_jpg.jpg",
+     "src": "diario/img/2026-08-31-1792494285913-vaeny-20260831_173928_jpg.jpg",
      "didascalia": "Parma, il Duomo. Giusto il tempo di un’occhiata.",
      "formato": "grande"
     },
@@ -121,6 +121,12 @@
      "t": "foto",
      "src": "diario/img/2026-08-31-1792494286101-2echp-20260831_232154_jpg.jpg",
      "didascalia": "A casa di Nicolò e Susanna.",
+     "formato": "grande"
+    },
+    {
+     "t": "foto",
+     "src": "rivista1/img/2026-11-12-mwdqzxcr.jpg",
+     "didascalia": "",
      "formato": "grande"
     },
     {
@@ -142,7 +148,7 @@
      "didascalia": "Il Culatello di Zibello, per cultura"
     },
     {
-     "src": "diario/img/2026-08-31-1792494285913-vaeny-20260831_173928_jpg.jpg",
+     "src": "diario/img/2026-08-31-1792494285817-heovl-20260831_173909_jpg.jpg",
      "didascalia": "Il Battistero"
     },
     {
@@ -1365,5 +1371,5 @@
   "testo": "Grazie per aver pedalato con me.",
   "link": "mipa.dannybag.org\nInstagram @dannybag"
  },
- "salvato": "2026-11-12T16:09:02.540Z"
+ "salvato": "2026-11-12T16:14:17.408Z"
 }
