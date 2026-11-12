@@ -87,7 +87,11 @@
       body.appendChild(el);
       if (fits()) continue;
       body.removeChild(el);
-      if (b.t !== 'testo') { deferred.push(el); continue; }   // foto e citazioni passano alla pagina dopo, il testo continua qui
+      if (b.t !== 'testo') {
+        // foto, citazioni e versi che non entrano vanno in cima alla pagina dopo, e il testo li segue:
+        // l'ordine resta quello scelto nell'editor, anche a costo di lasciare spazio bianco in fondo
+        newPage(); body.appendChild(el); continue;
+      }
       let rest = String(b.testo).trim();
       let isFirst = !!el.querySelector('.dc');
       while (rest) {
