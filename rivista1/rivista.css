@@ -39,7 +39,7 @@
 .cv-tag .arr { color: #FFF8F4; }
 .cv-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 48pt; line-height: .9; text-transform: uppercase; margin: 0; color: #FFF8F4; }
 .cv-title .hl { color: #F05A28; font-style: normal; }
-.cv-issue { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 17pt; line-height: 1.15; letter-spacing: .01em; white-space: nowrap; color: #F05A28; margin-top: 10mm; padding-top: 3mm; border-top: .6pt solid rgba(240,90,40,.45); }
+.cv-issue { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 17pt; line-height: 1.15; letter-spacing: .01em; white-space: nowrap; color: #F05A28; margin-top: 4mm; padding-top: 2.5mm; border-top: .6pt solid rgba(240,90,40,.45); }
 /* numeri e 32 insieme, centrati nello spazio tra il titolo e la riga in fondo */
 .cv-mid { position: absolute; left: 7mm; right: 7mm; top: 60mm; bottom: 18mm; display: flex; flex-direction: column; justify-content: center; }
 .cv-stats { }
