@@ -120,7 +120,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-08-31-1792494286101-2echp-20260831_232154_jpg.jpg",
-     "didascalia": "A casa di Nicolò e Susanna.",
+     "didascalia": "Grazie Nicolò, Susanna e Gitana.",
      "formato": "grande"
     },
     {
@@ -128,10 +128,6 @@
      "src": "rivista1/img/2026-11-12-mwdqzxcr.jpg",
      "didascalia": "",
      "formato": "grande"
-    },
-    {
-     "t": "testo",
-     "testo": "Grazie Nicolò, Susanna e Gitana."
     },
     {
      "t": "testo",
@@ -1371,5 +1367,5 @@
   "testo": "Grazie per aver pedalato con me.",
   "link": "mipa.dannybag.org\nInstagram @dannybag"
  },
- "salvato": "2026-11-12T16:14:17.408Z"
+ "salvato": "2026-11-12T16:20:48.365Z"
 }
