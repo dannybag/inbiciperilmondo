@@ -20,6 +20,13 @@
     const r = d.w / d.h, w = Math.min(maxW, maxH * r), h = w / r;
     return `width:${w.toFixed(2)}mm;height:${h.toFixed(2)}mm;`;
   }
+  // pagine a foto piena (copertina, aperture): se la proporzione è vicina a quella della pagina (A5) la foto
+  // riempie tutta la pagina con un ritaglio minimo; se è molto diversa resta intera, con fasce del colore di fondo
+  function fullPage(src, pos) {
+    const d = DIM[src]; if (!d || !d.w || !d.h) return '';
+    const k = (d.w / d.h) / (148 / 210);
+    return (k >= 0.88 && k <= 1.12) ? `background-size:cover;background-position:${pos};` : '';
+  }
   // scarica le dimensioni di tutte le foto della rivista prima di impaginare
   function measure(data, urlFn) {
     const toUrl = urlFn || (p => p), srcs = new Set(), add = p => { if (p) srcs.add(p); };
@@ -41,7 +48,7 @@
   function pCover(c) {
     const stats = (c.stats || []).filter(s => s && (s.n || s.l)).map(s =>
       `<div class="cv-item"><div class="cv-n">${hl(s.n).replace('×', '<span style="font-size:.5em;vertical-align:middle">×</span>')}</div><div class="cv-l">${hl(s.l)}</div></div>`).join('');
-    const foto = c.foto ? `<div class="cv-photo ph"${bg(c.foto)}></div><div class="cv-veil"></div>` : '';
+    const foto = c.foto ? `<div class="cv-photo ph"${bg(c.foto, fullPage(c.foto, 'center 60%'))}></div><div class="cv-veil"></div>` : '';
     return `<div class="pg cover${c.foto ? ' has-photo' : ''}">${foto}<div class="cv-glow"></div><div class="cv-bar"></div>
       <div class="cv-inner"><div class="cv-tag">${hl(c.etichetta).replace(/→/g, '<span class="arr">→</span>')}</div><h1 class="cv-title">${lines(c.titolo)}</h1>${c.numero ? `<div class="cv-issue" style="font-size:${Math.min(24, Math.floor(124 / (String(c.numero).length * 0.45) * 2.835 * 10) / 10)}pt">${hl(c.numero)}</div>` : ''}</div>
       <div class="cv-mid"><div class="cv-stats"><div class="cv-lab">${hl(c.statsTitolo)}</div><div class="cv-grid">${stats}</div></div>
@@ -53,7 +60,7 @@
     return `<div class="pg intro"><div class="in"><div class="kick">${hl(i.occhiello)}</div><div class="big">${hl(i.grande)}</div>${ps}<div class="sign">${hl(i.firma)}</div></div></div>`;
   }
   function pOpener(t) {
-    const ph = t.apertura && t.apertura.src ? `<div class="ph"${bg(t.apertura.src)}></div>` : `<div class="ph noimg">Foto d'apertura</div>`;
+    const ph = t.apertura && t.apertura.src ? `<div class="ph"${bg(t.apertura.src, fullPage(t.apertura.src, 'center'))}></div>` : `<div class="ph noimg">Foto d'apertura</div>`;
     return `<div class="pg opener">${ph}<div class="shade"></div><div class="op-tag">#unabiciperilmondo</div><div class="op-ix" data-page="%%INDICE%%" role="link" tabindex="0">Indice</div>
       <div class="otitle"><div class="tappa">Tappa <b>${esc(t.numero)}</b></div><h2>${hl(t.da)} <span>→</span> ${hl(t.a)}</h2>
       <div class="when">${hl(t.data)} <span class="km">${hl(t.km)}</span></div></div>
