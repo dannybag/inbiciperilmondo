@@ -297,7 +297,8 @@
     const draft = render.draft ? `<div class="banner"><div>Su questo dispositivo ci sono modifiche non pubblicate, fatte dopo l'ultima pubblicazione.</div>
       <div class="btns"><button type="button" class="solid" data-act="usadraft">Riprendile</button><button type="button" class="quiet" data-act="scartadraft">Lascia perdere</button></div></div>` : '';
     $('ed').innerHTML = `${tokenBox}${draft}
-      <div class="note">Tocca una sezione per aprirla. In <b>Anteprima</b> vedi la rivista impaginata con le modifiche. Quando sei contento premi <b>Pubblica</b>: il sito si aggiorna in un paio di minuti. Per una parola in evidenza scrivila tra asterischi, così: <b>*Mondo*</b>.</div>
+      <div class="note">Tocca una sezione per aprirla. In <b>Anteprima</b> vedi la rivista impaginata con le modifiche. Quando sei contento premi <b>Pubblica</b>: il sito si aggiorna in un paio di minuti. </div>
+      <div class="note" style="border-left:3px solid var(--orange);padding-left:10px">Colori, in qualsiasi campo: <b>*parola*</b> esce <b style="color:var(--orange)">arancione</b>, <b>_parola_</b> esce <b>bianca</b>. Valgono anche per più parole: <b>*per il Mondo*</b>. Sulle pagine chiare il bianco diventa nero, se no non si leggerebbe.</div>
       <details class="card" data-key="copertina"${open.has('copertina') ? ' open' : ''}><summary><h3>Copertina</h3></summary><div class="in">
         ${fld(`${c}.etichetta`, 'Riga in alto')}
         ${fld(`${c}.titolo`, 'Titolo', { area: true, short: true, rows: 2, help: 'Va a capo dove vai a capo tu.' })}

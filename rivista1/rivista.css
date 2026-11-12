@@ -39,7 +39,7 @@
 .cv-tag .arr { color: #FFF8F4; }
 .cv-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 48pt; line-height: .9; text-transform: uppercase; margin: 0; color: #FFF8F4; }
 .cv-title .hl { color: #F05A28; font-style: normal; }
-.cv-issue { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20pt; text-transform: uppercase; letter-spacing: .06em; color: #FF8C5A; margin-top: 10mm; padding-top: 3mm; border-top: .6pt solid rgba(240,90,40,.45); }
+.cv-issue { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 17pt; line-height: 1.15; letter-spacing: .01em; white-space: nowrap; color: #F05A28; margin-top: 10mm; padding-top: 3mm; border-top: .6pt solid rgba(240,90,40,.45); }
 /* numeri e 32 insieme, centrati nello spazio tra il titolo e la riga in fondo */
 .cv-mid { position: absolute; left: 7mm; right: 7mm; top: 60mm; bottom: 18mm; display: flex; flex-direction: column; justify-content: center; }
 .cv-stats { }
@@ -120,3 +120,9 @@
 .pg .ix-p { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 11pt; color: #6b625b; font-variant-numeric: tabular-nums; }
 .pg .op-ix { position: absolute; top: 11mm; right: 13mm; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; letter-spacing: .16em; font-size: 8.5pt; text-transform: uppercase; color: #fff; border: .8pt solid rgba(255,255,255,.7); border-radius: 10mm; padding: 1mm 3mm; cursor: pointer; }
 .pg .op-ix:hover { background: #F05A28; border-color: #F05A28; }
+
+/* colori scelti nell'editor: *parola* arancione, _parola_ bianco; sulle pagine chiare il bianco diventa nero */
+.pg em.hl { font-style: inherit; }
+.pg .hl.or { color: #F05A28; }
+.pg .hl.bi, .pg.retro h3 .hl.bi, .pg .cv-title .hl.bi { color: #FFF8F4; }
+.pg.text .hl.bi, .pg.intro .hl.bi, .pg.blank .hl.bi { color: #1A1A1A; }

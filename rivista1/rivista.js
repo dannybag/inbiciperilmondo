@@ -4,7 +4,11 @@
 (function () {
   'use strict';
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const hl = s => esc(s).replace(/\*([^*]+)\*/g, '<em class="hl">$1</em>');
+  // colori a scelta in tutta la rivista: *parola* = arancione, _parola_ = bianco (nero sulle pagine chiare)
+  const hl = s => esc(s)
+    .replace(/\*([^*\n]+)\*/g, '<em class="hl or">$1</em>')
+    .replace(/(^|[^\w])_([^_\n]+)_(?=$|[^\w])/g, '$1<em class="hl bi">$2</em>');
+  const plain = s => String(s == null ? '' : s).replace(/\*([^*\n]+)\*/g, '$1').replace(/(^|[^\w])_([^_\n]+)_(?=$|[^\w])/g, '$1$2');
   const lines = s => hl(s).replace(/\n/g, '<br>');
   function frag(html) { const d = document.createElement('div'); d.innerHTML = html; return d.firstElementChild; }
 
@@ -14,27 +18,27 @@
   /* ---------------- pagine fisse ---------------- */
   function pCover(c) {
     const stats = (c.stats || []).filter(s => s && (s.n || s.l)).map(s =>
-      `<div class="cv-item"><div class="cv-n">${esc(s.n).replace('×', '<span style="font-size:.5em;vertical-align:middle">×</span>')}</div><div class="cv-l">${esc(s.l)}</div></div>`).join('');
+      `<div class="cv-item"><div class="cv-n">${hl(s.n).replace('×', '<span style="font-size:.5em;vertical-align:middle">×</span>')}</div><div class="cv-l">${hl(s.l)}</div></div>`).join('');
     const foto = c.foto ? `<div class="cv-photo ph"${bg(c.foto)}></div><div class="cv-veil"></div>` : '';
     return `<div class="pg cover${c.foto ? ' has-photo' : ''}">${foto}<div class="cv-glow"></div><div class="cv-bar"></div>
-      <div class="cv-inner"><div class="cv-tag">${esc(c.etichetta).replace(/→/g, '<span class="arr">→</span>')}</div><h1 class="cv-title">${lines(c.titolo)}</h1>${c.numero ? `<div class="cv-issue">${esc(c.numero)}</div>` : ''}</div>
-      <div class="cv-mid"><div class="cv-stats"><div class="cv-lab">${esc(c.statsTitolo)}</div><div class="cv-grid">${stats}</div></div>
-      ${c.grande ? `<div class="cv-big"><div class="n">${esc(c.grande)}</div><div class="l">${esc(c.grandeTesto)}</div></div>` : ''}</div>
-      <div class="cv-foot">${esc(c.fascia)}</div></div>`;
+      <div class="cv-inner"><div class="cv-tag">${hl(c.etichetta).replace(/→/g, '<span class="arr">→</span>')}</div><h1 class="cv-title">${lines(c.titolo)}</h1>${c.numero ? `<div class="cv-issue" style="font-size:${Math.min(24, Math.floor(124 / (String(c.numero).length * 0.45) * 2.835 * 10) / 10)}pt">${hl(c.numero)}</div>` : ''}</div>
+      <div class="cv-mid"><div class="cv-stats"><div class="cv-lab">${hl(c.statsTitolo)}</div><div class="cv-grid">${stats}</div></div>
+      ${c.grande ? `<div class="cv-big"><div class="n">${hl(c.grande)}</div><div class="l">${hl(c.grandeTesto)}</div></div>` : ''}</div>
+      <div class="cv-foot">${hl(c.fascia)}</div></div>`;
   }
   function pIntro(i) {
     const ps = String(i.testo || '').split('\n').filter(s => s.trim()).map(s => `<p>${hl(s)}</p>`).join('');
-    return `<div class="pg intro"><div class="in"><div class="kick">${esc(i.occhiello)}</div><div class="big">${hl(i.grande)}</div>${ps}<div class="sign">${esc(i.firma)}</div></div></div>`;
+    return `<div class="pg intro"><div class="in"><div class="kick">${hl(i.occhiello)}</div><div class="big">${hl(i.grande)}</div>${ps}<div class="sign">${hl(i.firma)}</div></div></div>`;
   }
   function pOpener(t) {
     const ph = t.apertura && t.apertura.src ? `<div class="ph"${bg(t.apertura.src)}></div>` : `<div class="ph noimg">Foto d'apertura</div>`;
     return `<div class="pg opener">${ph}<div class="shade"></div><div class="op-tag">#unabiciperilmondo</div><div class="op-ix" data-page="%%INDICE%%" role="link" tabindex="0">Indice</div>
-      <div class="otitle"><div class="tappa">Tappa <b>${esc(t.numero)}</b></div><h2>${esc(t.da)} <span>→</span> ${esc(t.a)}</h2>
-      <div class="when">${esc(t.data)} <span class="km">${esc(t.km)}</span></div></div>
-      <div class="ocap">${esc(t.apertura && t.apertura.didascalia)}</div></div>`;
+      <div class="otitle"><div class="tappa">Tappa <b>${esc(t.numero)}</b></div><h2>${hl(t.da)} <span>→</span> ${hl(t.a)}</h2>
+      <div class="when">${hl(t.data)} <span class="km">${hl(t.km)}</span></div></div>
+      <div class="ocap">${hl(t.apertura && t.apertura.didascalia)}</div></div>`;
   }
   function pGrid(t) {
-    const cells = (t.rullino || []).filter(r => r.src).map(r => `<div class="fig"><div class="ph"${bg(r.src)}></div><div class="cap">${esc(r.didascalia)}</div></div>`).join('');
+    const cells = (t.rullino || []).filter(r => r.src).map(r => `<div class="fig"><div class="ph"${bg(r.src)}></div><div class="cap">${hl(r.didascalia)}</div></div>`).join('');
     return `<div class="pg text"><div class="body"><div class="gtitle">Dal rullino · Tappa ${esc(t.numero)}</div><div class="cells">${cells}</div></div><div class="folio"></div></div>`;
   }
   // indice: una riga per tappa, toccandola si va all'apertura
@@ -45,7 +49,7 @@
   }
   const pBlank = () => `<div class="pg blank"><div class="mark">Una bici per il mondo</div></div>`;
   function pRetro(r) {
-    return `<div class="pg retro"><div class="inner"><div class="k">${esc(r.occhiello)}</div><h3>${hl(r.titolo)}</h3><p>${hl(r.testo)}</p></div><div class="links">${esc(r.link)}</div></div>`;
+    return `<div class="pg retro"><div class="inner"><div class="k">${hl(r.occhiello)}</div><h3>${hl(r.titolo)}</h3><p>${hl(r.testo)}</p></div><div class="links">${hl(r.link)}</div></div>`;
   }
 
   /* ---------------- racconto: riempie le pagine e va a capo da sola ---------------- */
@@ -58,10 +62,10 @@
     if (b.t === 'foto') {
       if (!b.src) return '';
       const f = b.formato === 'grande' ? 'grande' : 'affiancata';
-      return `<div class="fig ${f}"><div class="ph"${bg(b.src)}></div>${b.didascalia ? `<div class="cap">${esc(b.didascalia)}</div>` : ''}</div>`;
+      return `<div class="fig ${f}"><div class="ph"${bg(b.src)}></div>${b.didascalia ? `<div class="cap">${hl(b.didascalia)}</div>` : ''}</div>`;
     }
-    if (b.t === 'citazione') return b.testo ? `<div class="pull">«${esc(b.testo)}»</div>` : '';
-    if (b.t === 'versi') return b.testo ? `<div class="verse">${esc(b.testo)}</div>` : '';
+    if (b.t === 'citazione') return b.testo ? `<div class="pull">«${hl(b.testo)}»</div>` : '';
+    if (b.t === 'versi') return b.testo ? `<div class="verse">${hl(b.testo)}</div>` : '';
     return '';
   }
 
@@ -72,7 +76,7 @@
     const fits = () => body.scrollHeight <= body.clientHeight + 1;
     function newPage() {
       if (pg) { out.push(pg.outerHTML); pg.remove(); }
-      pg = frag(`<div class="pg text"><div class="body"><div class="runhead">${esc(runhead)}</div>${firstPage && lead ? lead : ''}</div><div class="folio"></div></div>`);
+      pg = frag(`<div class="pg text"><div class="body"><div class="runhead">${esc(plain(runhead))}</div>${firstPage && lead ? lead : ''}</div><div class="folio"></div></div>`);
       firstPage = false;
       meas.appendChild(pg); body = pg.querySelector('.body');
       while (deferred.length) { const el = deferred.shift(); body.appendChild(el); if (!fits()) { body.removeChild(el); deferred.unshift(el); break; } }
@@ -147,15 +151,15 @@
     if (ep && ep.visibile !== false && (ep.blocchi || []).some(b => (b.testo || b.src))) {
       if (list.length % 2 === 1) list.push(pBlank());
       anchors.epilogo = list.length;
-      const lead = `<div class="lead"><div class="kick">${esc(ep.occhiello)}</div><h2>${esc(ep.titolo)}</h2></div>`;
+      const lead = `<div class="lead"><div class="kick">${hl(ep.occhiello)}</div><h2>${hl(ep.titolo)}</h2></div>`;
       list.push(...flowPages(meas, ep.blocchi, ep.titolo || '', lead));
     }
     if (list.length % 2 === 0) list.push(pBlank());              // il retro chiude a sinistra
     list.push(pRetro(data.retro || {}));
     const rows = (data.tappe || []).filter(t => t.visibile !== false && anchors[t.id] != null).map(t => ({
-      n: t.numero, page: anchors[t.id], label: `Tappa ${t.numero}, ${t.da} - ${t.a}`,
-      html: `${esc(t.da)} <b>→</b> ${esc(t.a)}<small>${esc(t.km)}</small>` }));
-    if (anchors.epilogo != null) rows.push({ n: '·', page: anchors.epilogo, label: ep.titolo, html: esc(ep.titolo) });
+      n: t.numero, page: anchors[t.id], label: plain(`Tappa ${t.numero}, ${t.da} - ${t.a}`),
+      html: `${hl(t.da)} <b>→</b> ${hl(t.a)}<small>${esc(plain(t.km))}</small>` }));
+    if (anchors.epilogo != null) rows.push({ n: '·', page: anchors.epilogo, label: plain(ep.titolo), html: hl(ep.titolo) });
     list[ixAt] = pIndex(rows);
     anchors.indice = ixAt;
     const pages = list.map((h, i) => h.replace('<div class="folio"></div>', `<div class="folio">${i + 1}</div>`).replace(/%%INDICE%%/g, ixAt));
