@@ -312,13 +312,13 @@
       {
         "name": "Antonio T",
         "amount": 50,
-        "time": "2 months",
+        "time": "3 months",
         "message": "Bellissima iniziativa, buona strada Daniele!"
       },
       {
         "name": "Elena G",
         "amount": 25,
-        "time": "2 months",
+        "time": "3 months",
         "message": ""
       },
       {
@@ -522,7 +522,7 @@
       {
         "name": "Anonymous",
         "amount": 1,
-        "time": "5 months",
+        "time": "6 months",
         "message": ""
       }
     ]
