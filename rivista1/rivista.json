@@ -1317,21 +1317,114 @@
    "numero": "16",
    "da": "Torrenova",
    "a": "Palermo",
-   "data": "17 settembre 2026",
+   "data": "18 settembre 2026",
    "km": "140 km · ↑1.085 m",
-   "visibile": false,
-   "diario": "",
+   "visibile": true,
+   "diario": "2026-09-18",
    "apertura": {
-    "src": "",
-    "didascalia": ""
+    "src": "diario/img/2026-09-18-1794427981800-a41am-20260918_094436_jpg.jpg",
+    "didascalia": "Messina cancellata, Palermo davanti. Ormai ci siamo."
    },
    "blocchi": [
     {
      "t": "testo",
-     "testo": ""
+     "testo": "La partenza è a manetta. Credo proprio che questa sia stata la tappa con la velocità media più alta di tutto il viaggio. La frenesia di arrivare a Palermo era ormai fortissima e mi sono fermato pochissime volte. Eppure, una delle tappe emotivamente più intense della giornata non è stata legata a un luogo particolarmente suggestivo, ma a un ricordo che mi aspettava da ben 43 anni."
+    },
+    {
+     "t": "testo",
+     "testo": "Ad Acquedolci, infatti, riaffiora un pezzo della mia vita. Avevo 17 anni quando arrivai qui per la prima volta, direttamente da Dublino, dopo un viaggio rocambolesco fatto con un amico, zaino in spalla e sacco a pelo al seguito, alla ricerca di un concerto degli U2. Una volta rientrato a Milano, non passai nemmeno da casa: proseguii direttamente per Acquedolci, dove era in vacanza la mia fidanzatina dell'epoca, la Betty."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-18-1794427981109-ucqwd-20260918_075607_jpg.jpg",
+     "didascalia": "Acquedolci, 43 anni dopo. Il paese è uguale, io un po’ meno.",
+     "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "A distanza di tanti anni, il paese, almeno nei luoghi che ricordavo, mi è sembrato ancora uguale. All'improvviso sono riaffiorati quei ricordi, con una dolcezza particolare. Un'emozione tenera e un po' malinconica, ma soprattutto bella, che mi ha accompagnato per un bel tratto di strada."
+    },
+    {
+     "t": "testo",
+     "testo": "Non me ne vogliano i siciliani di questa zona, e nemmeno la Betty, ma il tratto di costa che da Acquedolci porta almeno fino a Cefalù non è proprio il più bello che abbia visto durante il viaggio. A compensare il paesaggio, però, c'era il mare, sempre lì accanto, una presenza continua e decisamente energizzante. Forse anche per questo, complice la voglia di arrivare, ho praticamente pedalato senza fermarmi, tanto che ho finito per mangiare tutte quelle barrette energetiche che non ero riuscito a consumare nel resto del viaggio. Direi che almeno loro, dopo avermi seguito per 1.700 chilometri, hanno finalmente trovato il loro momento di gloria!"
+    },
+    {
+     "t": "testo",
+     "testo": "Cefalù è stato l'altro luogo che ha lasciato il segno in questa tappa. È davvero un borgo carino e ho attraversato il suo centro storico, anche se senza fermarmi. Devo dire, però, che era piuttosto affollato e, dopo tutto il tempo trascorso da solo con Topo Gigio, ritrovarmi improvvisamente in mezzo a tutta quella gente mi ha quasi un po' inquietato. Evidentemente mi ero ormai abituato alla mia piccola bolla fatta di bicicletta, strada e pochi incontri."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-18-1794427990138-fbdtq-20260918_103537_jpg.jpg",
+     "didascalia": "Cefalù, attraversata senza fermarmi.",
+     "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "A quel punto ero più o meno a metà percorso e anche la costa aveva ripreso a mostrarsi in tutta la sua bellezza. Palermo era sempre più vicina e, insieme ai chilometri percorsi, aumentava anche la frequenza dei miei battiti. Stavolta, però, non soltanto per le salite, che anche in questa tappa, naturalmente, non sono mancate."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-18-1794427990486-lzale-20260918_131029_jpg.jpg",
+     "didascalia": "La costa torna bella. Palermo è sempre più vicina.",
+     "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "L'ultima fermata per fare rifornimento di liquidi è stata a Bagheria. Ho scelto un bar anche perché avevo notato alcuni ciclisti in mountain bike fermi lì. Mi aspettavo magari un saluto, due parole, un minimo di complicità tra persone che condividono la stessa passione. E invece niente: non mi hanno rivolto nemmeno uno sguardo. Ci sono rimasto un po' male, lo ammetto. Ma pazienza, evidentemente erano integralisti della mountain bike e quelli che arrivano in gravel non li possono proprio vedere!"
+    },
+    {
+     "t": "testo",
+     "testo": "Dopo la sosta di Bagheria restavano ormai gli ultimi 20 chilometri. Palermo era lì, finalmente vicina, ma l'ingresso in città ha richiesto di cambiare completamente registro. La costa e i paesaggi lasciavano spazio alla periferia urbana, con strade non sempre in buone condizioni, traffico, confusione e tutto quello che comporta entrare in una grande città in bicicletta. L'emozione, devo essere sincero, mi aveva accompagnato per tutta la tappa, tanto che qualche lacrima era già scesa quando, dalla costa, avevo cominciato a vedere Palermo. Poi, una volta entrato in città, forse preso dalla necessità di prestare attenzione al traffico e alla strada, tutto sembrava essersi un po' fermato, emozioni comprese. Fino a quando non ho cominciato ad avvicinarmi alla meta finale: la Cattedrale di Palermo."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-18-1794427992195-8vw21-20260918_164016_jpg.jpg",
+     "didascalia": "Cattedrale di Palermo. Io e Topo Gigio, intrepidi, al centro della piazza.",
+     "formato": "grande"
+    },
+    {
+     "t": "testo",
+     "testo": "Ad aspettarmi non c'era nessuno, ma io e Topo Gigio, intrepidi, abbiamo conquistato il centro della piazza. Ce l'avevamo fatta! La prima cosa che ho fatto è stata prendere il telefono e fare una cosa che mi capita raramente: una videochiamata ai miei cari. Volevo condividere con loro quel momento, perché in fondo, anche se avevo pedalato da solo per tutti quei chilometri, questo viaggio non era stato soltanto mio. E non posso negarlo, anche la videochiamata è stata particolarmente emozionante e commovente... ormai ho la lacrima facile!"
+    },
+    {
+     "t": "testo",
+     "testo": "Una volta conclusa la videochiamata, mi sono finalmente fermato a godermi il momento davanti alla Cattedrale. Ho anche girato un breve video, riprendendo un gruppo di ragazzi che stavano cantando. Naturalmente ho finto che lo stessero facendo per me, per celebrare il mio arrivo. Del resto, dopo 1.766 chilometri, concedersi un piccolo concerto di benvenuto non mi sembrava poi così esagerato! Un turista torinese lì accanto ha capito cosa stavo facendo e siamo scoppiati a ridere."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-18-1794427992525-6iwda-20260918_170635_jpg.jpg",
+     "didascalia": "Il turista torinese che ha capito tutto.",
+     "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "Poi, senza troppi indugi, mi sono diretto verso l'ostello. Ero davvero stanco e avevo bisogno di prendermi un po' di tempo per realizzare quello che avevo appena fatto. Palermo era finalmente raggiunta, ma forse la testa e il cuore avevano bisogno di qualche ora in più per rendersene conto."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-18-1794427992814-lpct8-20260918_173021_jpg.jpg",
+     "didascalia": "L’ostello. Bici parcheggiata, testa ancora in viaggio.",
+     "formato": "grande"
     }
    ],
-   "rullino": []
+   "rullino": [
+    {
+     "src": "diario/img/2026-09-18-1794427987648-196vi-20260918_103440_jpg.jpg",
+     "didascalia": "Il mare, sempre lì accanto"
+    },
+    {
+     "src": "diario/img/2026-09-18-1794427991956-9b17l-20260918_161634_jpg.jpg",
+     "didascalia": "Benvenuto a Palermo, in mezzo al mercato"
+    },
+    {
+     "src": "diario/img/2026-09-18-1794427993136-3x96e-20260918_174659_jpg.jpg",
+     "didascalia": "La birra dell’arrivo"
+    },
+    {
+     "src": "diario/img/2026-09-18-1794427993806-b6url-20260919_113813_jpg.jpg",
+     "didascalia": "Il giorno dopo: cannolo, con Topo Gigio a sorvegliare"
+    }
+   ]
   }
  ],
  "epilogo": {
