@@ -102,7 +102,7 @@
       {
         "name": "Mario C",
         "amount": 100,
-        "time": "about 2 months",
+        "time": "2 months",
         "message": "Sì va bene, ma lo stretto in traghetto non vale! :-)"
       },
       {
@@ -264,7 +264,7 @@
       {
         "name": "Mariagrazia L",
         "amount": 25,
-        "time": "2 months",
+        "time": "3 months",
         "message": "Ottima idea!"
       },
       {
@@ -490,9 +490,15 @@
         "message": "Adesso devi partire!"
       },
       {
+        "name": "Anonymous",
+        "amount": 10,
+        "time": "4 months",
+        "message": ""
+      },
+      {
         "name": "Lorenzo V",
         "amount": 30,
-        "time": "3 months",
+        "time": "4 months",
         "message": ""
       },
       {
