@@ -62,6 +62,12 @@
      "testo": "Alla fine, il momento di partire è arrivato davvero e lì è salita l’agitazione, quella bella, quella che ti fa chiedere: Ma chi me l’ha fatto fare?🤣"
     },
     {
+     "t": "foto",
+     "src": "diario/img/2026-08-31-1792493525812-6mfot-Partenza_Duomo_jpg.jpg",
+     "didascalia": "Milano, piazza Duomo. Ormai non si torna indietro.",
+     "formato": "affiancata"
+    },
+    {
      "t": "testo",
      "testo": "Come se non bastasse, ho scoperto di non saper usare la action cam, insomma, 1.700 km da percorrere e uno degli strumenti con cui avrei dovuto raccontarli ancora tutto da capire. Si cominciava benissimo!"
     },
@@ -121,12 +127,12 @@
      "t": "foto",
      "src": "diario/img/2026-08-31-1792494286101-2echp-20260831_232154_jpg.jpg",
      "didascalia": "Grazie Nicolò, Susanna e Gitana.",
-     "formato": "grande"
+     "formato": "affiancata"
     },
     {
      "t": "foto",
      "src": "rivista1/img/2026-11-12-mwdqzxcr.jpg",
-     "didascalia": "",
+     "didascalia": "Io, la bici e Gitana. Domani si riparte.",
      "formato": "grande"
     },
     {
@@ -194,6 +200,12 @@
      "testo": "Ecco, i viaggi regalano anche questo."
     },
     {
+     "t": "foto",
+     "src": "diario/img/2026-09-01-1792508542489-0gy6y-20260901_104732_jpg.jpg",
+     "didascalia": "Altri piccoli incontri: una rotonda con scultura in marmo.",
+     "formato": "grande"
+    },
+    {
      "t": "testo",
      "testo": "Il ricordo però che mi è rimasto più impresso è forse il più semplice."
     },
@@ -246,6 +258,12 @@
      "testo": "Questa tappa mi ha lasciato ricordi molto diversi tra loro: luoghi carichi di storia, qualche battuta per alleggerire il viaggio e soprattutto, la soddisfazione di arrivare finalmente nella magnifica città di Firenze."
     },
     {
+     "t": "foto",
+     "src": "diario/img/2026-09-02-1792509165688-vff2x-20260902_091500_jpg.jpg",
+     "didascalia": "Bologna, le Due Torri",
+     "formato": "affiancata"
+    },
+    {
      "t": "testo",
      "testo": "Sono passato da Sasso Marconi, paese legato alla figura di Guglielmo Marconi, uno dei grandi protagonisti della storia della comunicazione moderna. Pensare a quanto sia cambiato il modo di comunicare da allora fa un certo effetto: oggi siamo sempre connessi, eppure spesso ci capiamo meno. Comunque è grazie a lui se io non mi perdo tra i monti, almeno non sempre e riesco a farvi sapere cosa sto combinando."
     },
@@ -290,13 +308,15 @@
     {
      "t": "testo",
      "testo": "Ho ascoltato il Sommo e mi son fermato un giorno ospite di Silvia ed Ale che mi hanno fatto sentire davvero a mio agio GRAZIE. Inoltre ho passato una bellissima serata con dei cari amici. Tra l'altro con alcuni di loro ho condiviso altri tipi di fatiche, dei cammini e trekking, ma sempre cose che generano empatia."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-02-1792575808709-pfvsu-20260903_173846_jpg.jpg",
+     "didascalia": "Villa La Petraia, il cortile coperto.",
+     "formato": "affiancata"
     }
    ],
    "rullino": [
-    {
-     "src": "diario/img/2026-09-02-1792509165688-vff2x-20260902_091500_jpg.jpg",
-     "didascalia": "Bologna, le Due Torri"
-    },
     {
      "src": "diario/img/2026-09-02-1792509166248-sveof-20260902_172628_jpg.jpg",
      "didascalia": "Io e il compagno di viaggio"
@@ -322,7 +342,7 @@
    "diario": "2026-09-04",
    "apertura": {
     "src": "diario/img/2026-09-04-1792512095666-329ps-20260904_105006_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "Colline toscane e una bici che si riposa."
    },
    "blocchi": [
     {
@@ -332,18 +352,18 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-04-1792512095401-kuq5v-20260904_094613_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Firenze, il campanile di Giotto. Si parte.",
      "formato": "affiancata"
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-04-1792575890274-rndr9-20260904_191827_jpg.jpg",
+     "didascalia": "Piazza Grande, già pronta per la Giostra.",
+     "formato": "grande"
     },
     {
      "t": "testo",
      "testo": "Poi arrivo ad Arezzo e mi accorgo che lì, invece, sta succedendo qualcosa, la città è in fermento per la Giostra del Saracino. È uno di quei giorni in cui si prepara la gara della domenica e al venerdì c'è la cosiddetta \"provaccia\". Avrei voluto vederla, ma i biglietti, anche per le prove, erano già finiti per i non residenti, evidentemente gli aretini, quando c’è da difendere il proprio quartiere, si organizzano molto prima di me. Così mi sono dovuto accontentare di guardare da fuori, ma alla fine non è stato affatto male, mi sono trovato davanti alla sfilata di uno dei quattro quartieri, presumo Porta Santo Spirito, mentre si preparavano a salire verso Piazza Grande."
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-09-04-1792512095937-og1ed-20260904_110754_jpg.jpg",
-     "didascalia": "",
-     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -351,31 +371,37 @@
     },
     {
      "t": "foto",
-     "src": "diario/img/2026-09-04-1792575890445-o236o-20260904_201012_jpg.jpg",
-     "didascalia": "",
+     "src": "diario/img/2026-09-04-1792512095937-og1ed-20260904_110754_jpg.jpg",
+     "didascalia": "Qui comandava ancora la Repubblica Fiorentina.",
      "formato": "affiancata"
     },
     {
      "t": "testo",
      "testo": "Io ero lì con la mia bicicletta, arrivato pedalando da Firenze, e guardavo tutta quella gente prepararsi a una gara che per loro evidentemente non è soltanto una gara.Senza saperlo, sono arrivato ad Arezzo proprio nel momento giusto. A volte anche una tappa in cui non succede niente ti porta esattamente dove deve portarti."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-04-1792575890445-o236o-20260904_201012_jpg.jpg",
+     "didascalia": "Cena ad Arezzo. Il risotto non si commenta.",
+     "formato": "affiancata"
     }
    ],
    "rullino": [
     {
      "src": "diario/img/2026-09-04-1792512095487-9pa05-20260904_094639_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Firenze, il Duomo"
     },
     {
      "src": "diario/img/2026-09-04-1792512095581-4a3n2-20260904_095514_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Sull’Arno, ancora in città"
     },
     {
      "src": "diario/img/2026-09-04-1792575890121-fwllo-20260904_191410_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Arezzo si prepara alla Giostra"
     },
     {
      "src": "diario/img/2026-09-04-1792575890574-eesww-20260904_205045_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Il corteo di sera"
     }
    ]
   },
@@ -390,7 +416,7 @@
    "diario": "2026-09-05",
    "apertura": {
     "src": "diario/img/2026-09-05-1792576463823-rg599-20260905_114328_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "Lago di Chiusi, tra le ninfee. Topo Gigio in prima fila."
    },
    "blocchi": [
     {
@@ -399,8 +425,14 @@
     },
     {
      "t": "foto",
+     "src": "diario/img/2026-09-05-1792576466264-q47x5-20260905_122027_jpg.jpg",
+     "didascalia": "La mappa dell’itinerario ciclabile Trasimeno–Chiusi–Orvieto.",
+     "formato": "grande"
+    },
+    {
+     "t": "foto",
      "src": "diario/img/2026-09-05-1792576466784-x9n2p-20260905_152647_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Una chiesa, una piazza vuota e una bici in sosta.",
      "formato": "affiancata"
     },
     {
@@ -410,36 +442,42 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-05-1792576467290-cise2-20260905_164204_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Il lago di Bolsena compare tra le mura.",
      "formato": "affiancata"
     },
     {
      "t": "foto",
      "src": "diario/img/2026-09-05-1792576470046-6a3i7-20260905_195718_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Tramonto sul lago di Bolsena. Il conto è pagato.",
      "formato": "grande"
     },
     {
      "t": "testo",
      "testo": "Finalmente arrivo al lago di Bolsena che costeggio per una decina, forse quindici chilometri. Acqua, aria fresca e un bel panorama e penso \"E' fatta, ci siamo Capodimonte è li, faccio l'ultima curva e ci sono\" ed ecco UN MURO compare alla mia vista. Almeno 700 metri con una pendenza massima: 17% e la cosa peggiore non è nemmeno il 17% è che la strada è dritta e la vedo tutta. Si sa una salita, se gira, se curva, se non vedi dove finisce, puoi sempre raccontarti qualche bugia: “magari dopo la curva spiana” questa invece è lì tutta, settecento metri di verità. Non so se posso dire di averla fatta con eleganza, ma sicuramente l'ho fatta con determinazione. Quando finalmente arrivo e la giornata si fa interessante, il paese è bello e il lago mi regala un tramonto meraviglioso. Così, dopo una giornata cominciata sullo sterrato tranquillo del Sentiero della Bonifica e finita con una rampa al 17%, mi ritrovo seduto ad ammirare il lago. Penso che forse il viaggio funziona proprio così ti illude con dieci chilometri bellissimi sul lago e poi, quando abbassi la guardia, ti presenta un conto di settecento metri di strappo da paura, però alla fine, se il conto viene pagato con un tramonto così, si può anche accettare."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-05-1793568715415-vsmft-20260905_172301_jpg.jpg",
+     "didascalia": "Il Sentiero dei Briganti, lungo la strada.",
+     "formato": "affiancata"
     }
    ],
    "rullino": [
     {
      "src": "diario/img/2026-09-05-1792576465051-3o3sw-20260905_114827_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Pausa sul lago di Chiusi"
     },
     {
      "src": "diario/img/2026-09-05-1793568714323-uapm3-20260905_145848_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Roma 137. Un giorno ci arrivo."
     },
     {
      "src": "diario/img/2026-09-05-1793568715212-0nla8-20260905_165615_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Il lago, finalmente a portata di mano"
     },
     {
      "src": "diario/img/2026-09-05-1792576470332-1alq9-20260905_200004_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Il conto, pagato con birra e tramonto"
     }
    ]
   },
@@ -454,7 +492,7 @@
    "diario": "2026-09-06",
    "apertura": {
     "src": "diario/img/2026-09-06-1792576863666-6ecqy-20260905_165615_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "Il lago di Bolsena, la sera prima."
    },
    "blocchi": [
     {
@@ -468,7 +506,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-06-1792576864132-klz4y-20260906_132806_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Oleandri e cartelli: il mare è vicino.",
      "formato": "affiancata"
     },
     {
@@ -476,14 +514,14 @@
      "testo": "Questo mi ha fatto riflettere sul fatto che esistono tanti modi di viaggiare."
     },
     {
-     "t": "testo",
-     "testo": "C’è chi, come me, decide di partire per un mese, prende una bicicletta e si mette sulla strada perché ha voglia di farlo e c’è chi la strada la percorre da vent’anni perché la vita, attraverso il lavoro, lo ha portato continuamente da un posto all’altro."
-    },
-    {
      "t": "foto",
      "src": "diario/img/2026-09-06-1792576864343-qoc16-20260906_170520_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Ladispoli, finalmente il mare.",
      "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "C’è chi, come me, decide di partire per un mese, prende una bicicletta e si mette sulla strada perché ha voglia di farlo e c’è chi la strada la percorre da vent’anni perché la vita, attraverso il lavoro, lo ha portato continuamente da un posto all’altro."
     },
     {
      "t": "testo",
@@ -507,7 +545,7 @@
    "diario": "2026-09-07",
    "apertura": {
     "src": "diario/img/2026-09-07-1792589895272-lmnhn-20260906_184631_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "Ladispoli, campeggio. La mia piazzola isolata."
    },
    "blocchi": [
     {
@@ -523,13 +561,19 @@
      "testo": "Da Ladispoli ho cominciato ad avvicinarmi a Roma. Non posso dire di averla attraversata davvero: diciamo che l’ho accarezzata."
     },
     {
+     "t": "foto",
+     "src": "diario/img/2026-09-07-1792589895496-4q7gb-20260907_112606_jpg.jpg",
+     "didascalia": "Roma, sfiorata da lontano",
+     "formato": "affiancata"
+    },
+    {
      "t": "testo",
      "testo": "Sono entrato dalla Magliana, ho attraversato il Tevere, ho visto da lontano l’EUR e poi sono uscito dalla Cecchignola. Roma era lì, enorme, ma io avevo ancora la strada davanti e così l’ho sfiorata e sono andato oltre."
     },
     {
      "t": "foto",
      "src": "diario/img/2026-09-07-1792589895401-da8zt-20260907_102540_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Pausa panino, appena fuori Roma.",
      "formato": "affiancata"
     },
     {
@@ -549,14 +593,14 @@
      "testo": "Ma la cosa che più mi ha colpito è stata un’altra, in mezzo a questa terra agricola ho incontrato tanti ragazzi, chiaramente arrivati da altri Paesi, che si spostavano in bicicletta per andare a lavorare nei campi e mi è venuto da pensare a quanto sia bello il rapporto che può avere una bicicletta con il lavoro."
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-09-07-1792589895607-ysgyo-20260907_112845_jpg.jpg",
-     "didascalia": "",
-     "formato": "affiancata"
-    },
-    {
      "t": "testo",
      "testo": "Io sono qui che pedalo per scelta, per un viaggio che ho deciso di fare, per vedere l’Italia e arrivare fino a Palermo."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-07-1792589895607-ysgyo-20260907_112845_jpg.jpg",
+     "didascalia": "Un fiume, un po’ di verde e nessuna fretta.",
+     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -573,16 +617,12 @@
    ],
    "rullino": [
     {
-     "src": "diario/img/2026-09-07-1792589895496-4q7gb-20260907_112606_jpg.jpg",
-     "didascalia": ""
-    },
-    {
      "src": "diario/img/2026-09-07-1792589895696-b785y-20260907_165350_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Pausa frutta, in mezzo ai campi"
     },
     {
      "src": "diario/img/2026-09-07-1792589895791-56nyd-20260907_190631_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Latina, la cena: carburante"
     }
    ]
   },
@@ -597,7 +637,7 @@
    "diario": "2026-09-08",
    "apertura": {
     "src": "diario/img/2026-09-08-1792590188165-1hf4x-20260908_132910_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "Una baia da cartolina, e la bici si ferma a guardare."
    },
    "blocchi": [
     {
@@ -605,18 +645,24 @@
      "testo": "Lasciata Latina, la strada mi porta lungo una striscia di terra stretta tra il lago e il mare. Da una parte l'acqua, dall'altra il Tirreno e in mezzo la strada che attraversa un paesaggio sospeso, dove terra e mare sembrano guardarsi senza mai toccarsi. È uno di quei tratti in cui pedalare significa soprattutto guardarsi intorno e godersi tutto quello che vedi."
     },
     {
-     "t": "testo",
-     "testo": "Arrivo a Sabaudia e qui scatta una contraddizione tutta mia. L'architettura razionalista della città mi piace, le geometrie, le linee pulite, gli edifici essenziali, le piazze che sembrano disegnate con il righello. Peccato che Sabaudia sia nata durante il ventennio fascista, nell'ambito della bonifica dell'Agro Pontino. Faccio fatica a separare la bellezza di questa architettura dal periodo storico in cui è nata. È strano come la conoscenza della storia possa cambiare il nostro modo di guardare le cose, fino a rendere meno piacevole anche ciò che esteticamente ci conquista."
-    },
-    {
      "t": "foto",
-     "src": "diario/img/2026-09-08-1792590187708-hy955-20260908_094324_jpg.jpg",
-     "didascalia": "",
+     "src": "diario/img/2026-09-08-1792590187474-19iwc-20260908_090551_jpg.jpg",
+     "didascalia": "Dune, sabbia e mare: la striscia di terra tra lago e Tirreno.",
      "formato": "affiancata"
     },
     {
      "t": "testo",
+     "testo": "Arrivo a Sabaudia e qui scatta una contraddizione tutta mia. L'architettura razionalista della città mi piace, le geometrie, le linee pulite, gli edifici essenziali, le piazze che sembrano disegnate con il righello. Peccato che Sabaudia sia nata durante il ventennio fascista, nell'ambito della bonifica dell'Agro Pontino. Faccio fatica a separare la bellezza di questa architettura dal periodo storico in cui è nata. È strano come la conoscenza della storia possa cambiare il nostro modo di guardare le cose, fino a rendere meno piacevole anche ciò che esteticamente ci conquista."
+    },
+    {
+     "t": "testo",
      "testo": "Poi la strada torna a prendersi la scena. Il promontorio del Circeo si vede sullo sfondo, con il suo profilo inconfondibile. Il verde, le rocce e il blu del mare accompagnano il percorso."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-08-1792590187708-hy955-20260908_094324_jpg.jpg",
+     "didascalia": "Sabaudia: bella, ma con una storia che pesa.",
+     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -625,8 +671,14 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-08-1792590188264-8g8vg-20260908_150616_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "L’acquedotto di Vespasiano, lungo la strada verso Sperlonga.",
      "formato": "affiancata"
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-08-1792590187993-hamik-20260908_123256_jpg.jpg",
+     "didascalia": "Terracina dall’alto, con la bici che guarda il mare.",
+     "formato": "grande"
     },
     {
      "t": "testo",
@@ -635,12 +687,18 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-08-1793569097275-8j3fp-20260908_192500_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Mondragone. Il mare, finalmente, al tramonto.",
      "formato": "grande"
     },
     {
      "t": "testo",
      "testo": "L'arrivo a Mondragone è stato emozionante. All'improvviso sbocco sulla spiaggia e mi ritrovo davanti al mare. Su una panchina in riva all'acqua riposa un anziano signore. Quando gli dico che arrivo da Milano in bicicletta, mi guarda con un misto di incredulità, simpatia e ammirazione. In quel momento sento tutta la distanza percorsa e insieme la semplicità con cui un viaggio può trasformarsi in un incontro."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-08-1792590188653-5dv15-20260908_181026_jpg.jpg",
+     "didascalia": "Una sosta in spiaggia: il Tirreno da vicino.",
+     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -650,19 +708,19 @@
    "rullino": [
     {
      "src": "diario/img/2026-09-08-1792590187605-jbder-20260908_092710_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Dune e mare, verso Sabaudia"
     },
     {
      "src": "diario/img/2026-09-08-1792590187891-9560y-20260908_113804_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Una grande roccia a picco sul mare, e la bici in posa"
     },
     {
      "src": "diario/img/2026-09-08-1792590188817-es2ya-20260908_200836_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Mondragone, la sera: tavolo in riva al mare"
     },
     {
      "src": "diario/img/2026-09-08-1792590188992-yr2cg-20260908_205010_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Spaghetti alle vongole: premio della tappa"
     }
    ]
   },
@@ -677,7 +735,7 @@
    "diario": "2026-09-09",
    "apertura": {
     "src": "diario/img/2026-09-09-1793180682765-xsya7-20260909_165916_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "La Costiera comincia a farsi vedere."
    },
    "blocchi": [
     {
@@ -691,7 +749,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-09-1793180681724-fgist-20260909_161336_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Nocera Superiore. Le sensazioni negative cominciano a svanire.",
      "formato": "affiancata"
     },
     {
@@ -705,7 +763,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-09-1793180684282-8undi-20260909_201125_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "La birra del meritato riposo, a Salerno.",
      "formato": "affiancata"
     },
     {
@@ -719,7 +777,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-09-1793180685187-lvuew-20260909_210450_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Salerno di sera.",
      "formato": "affiancata"
     },
     {
@@ -734,19 +792,19 @@
    "rullino": [
     {
      "src": "diario/img/2026-09-09-1793180682451-8slc3-20260909_165906_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "La bici, ancora con vista"
     },
     {
      "src": "diario/img/2026-09-09-1793180683083-8qlr9-20260909_165928_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Il Golfo di Salerno, con il porto"
     },
     {
      "src": "diario/img/2026-09-09-1793180685569-gsacv-20260909_210531_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Una chiesa, di notte"
     },
     {
      "src": "diario/img/2026-09-09-1793180686293-53e0p-20260909_210732_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "I vicoli di Salerno"
     }
    ]
   },
@@ -761,7 +819,7 @@
    "diario": "2026-09-10",
    "apertura": {
     "src": "diario/img/2026-09-10-1793180549568-chgu6-20260910_174916_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "Palinuro: il promontorio e il mare davanti."
    },
    "blocchi": [
     {
@@ -773,14 +831,14 @@
      "testo": "Prima di addentrarmi nel Cilento, però, una breve deviazione mi porta a Paestum, uno di quei luoghi che ti ricordano quanto sia straordinaria la storia del nostro Paese. Tre templi dorici, imponenti e incredibilmente conservati, si stagliano nella pianura, il Tempio di Nettuno, la Basilica e il Tempio di Atena. Colonne poderose, pietra color miele e i resti dell'antica Poseidonia, città della Magna Grecia poi diventata romana."
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-09-10-1793180543768-n1t4p-20260910_112900_jpg.jpg",
-     "didascalia": "",
-     "formato": "affiancata"
-    },
-    {
      "t": "testo",
      "testo": "Per le informazioni storiche, preciso che non è tutta farina del mio sacco, il merito è di Wikipedia, alla quale ho delegato volentieri la parte culturale del viaggio. Io mi limito a pedalare e a fingere di sapere di cosa sto parlando. 😀"
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-10-1793180543768-n1t4p-20260910_112900_jpg.jpg",
+     "didascalia": "Paestum: la storia da dietro la cancellata, con la bici di guardia.",
+     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -789,12 +847,18 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-10-1793180545877-mdum6-20260910_153754_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Pausa fredda, con vista mare.",
      "formato": "affiancata"
     },
     {
      "t": "testo",
      "testo": "Arrivo ad Agropoli con il suo borgo antico arroccato sul promontorio e il mare che si apre tutt'intorno. Attraverso Castellabate, San Marco e Agnone Cilento, piccoli centri che conservano il fascino di una costa ancora legata al mare, tra porticcioli, case raccolte e panorami che invitano a fermarsi. Invito che, naturalmente, cerco di ignorare, quando sei in viaggio da giorni, ogni sosta rischia di trasformarsi in un'ottima scusa per non ripartire."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-10-1793180544890-edafh-20260910_152550_jpg.jpg",
+     "didascalia": "Lungomare, mare e una pausa.",
+     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -807,7 +871,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-10-1793180552316-kevxs-20260910_185151_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Palinuro, il tramonto in fondo al vicolo.",
      "formato": "affiancata"
     },
     {
@@ -822,19 +886,19 @@
    "rullino": [
     {
      "src": "diario/img/2026-09-10-1793180548049-f5qpk-20260910_113331_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Selfie a Paestum, con tempio"
     },
     {
      "src": "diario/img/2026-09-10-1793180549134-8qhad-20260910_174354_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "La costa che si apre davanti"
     },
     {
      "src": "diario/img/2026-09-10-1793180550332-o4pvb-20260910_180900_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Un borgo arroccato e la salita per arrivarci"
     },
     {
      "src": "diario/img/2026-09-10-1793180548719-0ddhb-20260910_173550_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Fermo a guardare, come promesso"
     }
    ]
   },
@@ -849,12 +913,18 @@
    "diario": "2026-09-11",
    "apertura": {
     "src": "diario/img/2026-09-11-1793367842404-teqfe-20260911_110006_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "Cilento: colline, mare lontano e la bici che aspetta."
    },
    "blocchi": [
     {
      "t": "testo",
      "testo": "Quarantatré chilometri per arrivare a Ispani, poco prima di Sapri, dove mi aspettava Flavio. Una tappa relativamente breve sulla carta, ma con circa 900 metri di dislivello che qualche salita me l'hanno fatta fare. Questa volta, però, avevo un appuntamento e soprattutto la curiosità di trascorrere un po' di tempo con lui. Mi aspettava anche la meravigliosa casa di Flavio, immersa in un parco fantastico. Insomma, una buona ragione per non perdere troppo tempo in giro."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-11-1793367851265-ol399-20260912_083748_jpg.jpg",
+     "didascalia": "La maglia di ordinanza, prima di partire.",
+     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -865,24 +935,12 @@
      "testo": "A metà della salita più impegnativa sono arrivato a Lentiscosa, un piccolo borgo dell'entroterra di Camerota. Qui mi sono concesso una sosta e ho condiviso un tavolino con un signore simpatico. La curiosità intorno a quel ciclista carico di bagagli era piuttosto evidente, ma lui è stato l'unico a passare dai semplici sguardi alle domande, quelle che ormai conoscevo bene, ma che continuavano a divertirmi: «Da dove arrivi? Dove stai andando?»."
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-09-11-1793367851265-ol399-20260912_083748_jpg.jpg",
-     "didascalia": "",
-     "formato": "affiancata"
-    },
-    {
      "t": "testo",
      "testo": "Gli ho raccontato del mio viaggio e, mentre facevo il pieno di liquidi per affrontare il resto della strada, intorno a noi si è formato un piccolo capannello di persone. Finito il rifornimento, ho salutato tutti e sono ripartito. Ma proprio mentre mi allontanavo, ho sentito il gruppo rivolgersi a quel signore, con una domanda che arrivava fino a me: «Milano? Palermo?». E subito dopo, con un inconfondibile accento campano, la sentenza: «Ma chisto è pazz'?» 😄"
     },
     {
      "t": "testo",
      "testo": "Non so se fosse una diagnosi, un complimento o semplicemente la conclusione più ragionevole a cui si potesse arrivare dopo aver sentito la mia storia. A quel punto ho pensato che forse era meglio non chiedere ulteriori chiarimenti e continuare per la mia strada. 😄"
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-09-11-1793369234929-gshu9-Io_e_Nala_3_jpeg.jpg",
-     "didascalia": "",
-     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -893,18 +951,30 @@
      "testo": "A completare la compagnia c'era Nala, un'altra cagnolona che si è guadagnata un posto nel mio viaggio e nel mio cuore. Nonostante l'età è ancora curiosissima, attenta e tenerissima. Osservare la complicità e l'intesa che la lega a Flavio è stato davvero bello. Ci sono rapporti che non hanno bisogno di tante parole e forse proprio per questo riescono a raccontare così tanto."
     },
     {
+     "t": "foto",
+     "src": "diario/img/2026-09-11-1793369234929-gshu9-Io_e_Nala_3_jpeg.jpg",
+     "didascalia": "Io e Nala, la cagnolona di Flavio.",
+     "formato": "affiancata"
+    },
+    {
      "t": "testo",
      "testo": "Poi c'è questa terra, il basso Cilento. Credo che visitarla praticamente fuori stagione ne amplifichi ancora di più il fascino. Niente traffico turistico, spiagge semivuote, strade più tranquille e quella sensazione di poter godere dei luoghi senza doverli condividere con mezzo mondo. Una bellezza più discreta, forse, ma proprio per questo ancora più apprezzabile."
     },
     {
      "t": "foto",
      "src": "diario/img/2026-09-11-1793367862632-r2dn0-20260913_175418_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Aperitivo a Sapri con Flavio, al tramonto.",
      "formato": "affiancata"
     },
     {
      "t": "testo",
      "testo": "E poi, lasciatemelo dire, gli aperitivi a Sapri al tramonto hanno decisamente contribuito a rendere memorabili questi due giorni. Seduti sul mare, con davanti agli occhi tutta la costa del golfo di Policastro, si gode di una vista straordinaria, che abbraccia addirittura tre regioni: Campania, Basilicata e Calabria. Il sole che scende, il mare che cambia colore e quella linea di costa che sembra non finire mai. Uno di quei panorami che, anche dopo tanti chilometri e tanti bei paesaggi incontrati lungo la strada, riescono ancora a sorprendermi e a ricordarmi quanto siamo fortunati ad avere tanta bellezza intorno. E io, davanti a certe cose, non riesco proprio a smettere di meravigliarmi."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-11-1793367863127-rff2r-20260913_182315_jpg.jpg",
+     "didascalia": "Spritz con vista sul golfo di Policastro.",
+     "formato": "grande"
     },
     {
      "t": "testo",
@@ -913,7 +983,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-11-1793367868467-3a77t-20260913_191915_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Da lassù si vede la Calabria.",
      "formato": "grande"
     },
     {
@@ -932,19 +1002,19 @@
    "rullino": [
     {
      "src": "diario/img/2026-09-11-1793367844628-6pd4b-20260911_115835_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Il lungomare, e un mare che invita a fermarsi"
     },
     {
      "src": "diario/img/2026-09-11-1793367847939-chvw1-20260911_213437_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "La cena di Flavio, a cominciare dalla mozzarella"
     },
     {
      "src": "diario/img/2026-09-11-1793367859443-1mjhh-20260912_134606_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Cersuta di Maratea"
     },
     {
      "src": "diario/img/2026-09-11-1793367861615-9iwym-20260913_165201_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Il golfo di Policastro"
     }
    ]
   },
@@ -959,7 +1029,7 @@
    "diario": "2026-09-14",
    "apertura": {
     "src": "diario/img/2026-10-14-1793552249851-8wxb7-20260914_083930_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "La costa che mi aspettava, vista dall’alto."
    },
    "blocchi": [
     {
@@ -967,18 +1037,24 @@
      "testo": "Tappa impegnativa (strano, comincio a pensare che ci sia qualcosa da rivedere nell'organizzazione del viaggio), ma tutto quello che la vista della costa, già intravista a Sapri, lasciava immaginare viene ampiamente confermato, forse persino superato. Una giornata che mi porta ad attraversare tre regioni, Campania, Basilicata e infine Calabria. Gli occhi hanno parecchio da fare e fortunatamente, quando c'è qualcosa di bello da guardare, anche le gambe sembrano lamentarsi un po' meno."
     },
     {
-     "t": "testo",
-     "testo": "Dopo aver salutato la statua della Spigolatrice di Sapri, sullo scoglio dello Scialandro, proseguo lungo la strada costiera, accompagnato da panorami davvero mozzafiato. La prima tappa importante è Maratea, con le sue calette, il mare e il borgo arroccato sulla montagna. Una località conosciuta come la Città delle 44 Chiese, ma a dominare il paesaggio è soprattutto il Cristo Redentore, sul Monte San Biagio, una statua alta oltre 21 metri che, con le braccia aperte, sembra voler abbracciare tutta la costa. La somiglianza con il più famoso collega di Rio de Janeiro è evidente. Per un attimo viene il dubbio di aver sbagliato continente, ma per fortuna il Garmin sa ancora dove siamo."
-    },
-    {
      "t": "foto",
-     "src": "diario/img/2026-10-14-1793552258758-c02b1-20260914_121237_jpg.jpg",
-     "didascalia": "",
+     "src": "diario/img/2026-10-14-1793552247639-aww8c-20260914_082857_jpg.jpg",
+     "didascalia": "La costa, appena partito: promessa mantenuta.",
      "formato": "affiancata"
     },
     {
      "t": "testo",
+     "testo": "Dopo aver salutato la statua della Spigolatrice di Sapri, sullo scoglio dello Scialandro, proseguo lungo la strada costiera, accompagnato da panorami davvero mozzafiato. La prima tappa importante è Maratea, con le sue calette, il mare e il borgo arroccato sulla montagna. Una località conosciuta come la Città delle 44 Chiese, ma a dominare il paesaggio è soprattutto il Cristo Redentore, sul Monte San Biagio, una statua alta oltre 21 metri che, con le braccia aperte, sembra voler abbracciare tutta la costa. La somiglianza con il più famoso collega di Rio de Janeiro è evidente. Per un attimo viene il dubbio di aver sbagliato continente, ma per fortuna il Garmin sa ancora dove siamo."
+    },
+    {
+     "t": "testo",
      "testo": "Da Maratea si scende verso Praia a Mare, dove ad attirare l'attenzione è l'Isola di Dino. L'origine del nome potrebbe essere greca, dalla parola dine, che significa vortice o tempesta. Una spiegazione decisamente suggestiva, soprattutto considerando quello che sta per succedere dentro di me. È proprio qui, infatti, che realizzo una cosa: sono arrivato in Calabria! Ci pensate? In Calabria! Dopo tanti chilometri, salite, discese e giornate passate a pedalare, io, le mie gambe e Topo Gigio siamo arrivati fin qui. Un'emozione difficile da spiegare, quasi incredibile. Ma non è ancora il momento di crogiolarsi nella soddisfazione: non sono nemmeno a metà della tappa e la strada non sembra intenzionata a concedermi una pausa celebrativa. Quindi via, con una bella salitella e la relativa discesa fino a Scalea, per poi proseguire verso Diamante."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-10-14-1793552258758-c02b1-20260914_121237_jpg.jpg",
+     "didascalia": "Il peperoncino: benvenuti in Calabria.",
+     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -987,7 +1063,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-10-14-1793552260986-1fi05-20260914_121805_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Diamante: un murale a ogni muro.",
      "formato": "affiancata"
     },
     {
@@ -997,7 +1073,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-10-14-1793552272502-2obot-20260914_152249_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "La casa natale di San Francesco, a 90 metri.",
      "formato": "affiancata"
     },
     {
@@ -1010,13 +1086,19 @@
     },
     {
      "t": "foto",
-     "src": "diario/img/2026-10-14-1793552272705-rjzqv-20260914_191348_jpg.jpg",
-     "didascalia": "",
-     "formato": "grande"
+     "src": "diario/img/2026-10-14-1793553486625-jvq21-20260914_191545_jpg.jpg",
+     "didascalia": "Prima di cena, in giro per Paola.",
+     "formato": "affiancata"
     },
     {
      "t": "testo",
      "testo": "Lui mi guarda, annuisce e mostra persino un'espressione dispiaciuta per il mio inconveniente. Evidentemente gli sembra davvero un peccato che abbia dovuto rinunciare a un viaggio più comodo. A quel punto non so se ridere o preoccuparmi: forse dovrei spiegargli che in autostrada con la bicicletta non si può andare, ma non me la sento, pago ringrazio e vado via sorridendo."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-10-14-1793552272705-rjzqv-20260914_191348_jpg.jpg",
+     "didascalia": "Paola, la porta sulla sera.",
+     "formato": "grande"
     },
     {
      "t": "testo",
@@ -1026,19 +1108,19 @@
    "rullino": [
     {
      "src": "diario/img/2026-10-14-1793552254259-muyue-20260914_102109_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Praia a Mare, con l’Isola di Dino sullo sfondo"
     },
     {
      "src": "diario/img/2026-10-14-1793552257636-x9qdf-20260914_120948_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Ancora Calabria, e il mare sempre lì"
     },
     {
      "src": "diario/img/2026-10-14-1793552262098-5j5m4-20260914_121913_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Un volto sui muri di Diamante"
     },
     {
      "src": "diario/img/2026-10-14-1793552273427-p52qv-20260914_191404_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Paola, la sera: i ristoranti si accendono"
     }
    ]
   },
@@ -1053,7 +1135,7 @@
    "diario": "2026-09-15",
    "apertura": {
     "src": "diario/img/2026-10-15-1793720675387-q5h3i-20260915_133533_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "Pizzo: la bici davanti al Tirreno."
    },
    "blocchi": [
     {
@@ -1065,14 +1147,14 @@
      "testo": "La traccia mi porta proprio a ridosso della spiaggia e, a un certo punto, mi trovo davanti a un canale senza ponti per attraversarlo. A questo punto decido di prendere di petto la situazione: invece di tornare indietro alla ricerca di una strada alternativa, scendo direttamente sulla spiaggia e, individuato un punto adatto, guado il corso d'acqua. Una piccola, forse stupida, deviazione che però soddisfa pienamente la mia voglia di avventura. D'altra parte, non è che uno debba sempre comportarsi da persona ragionevole!"
     },
     {
-     "t": "testo",
-     "testo": "Lungo il percorso incontro Amantea, con il suo caratteristico centro storico arroccato sulla collina che domina il mare, e proseguo attraversando la costa del Golfo di Sant'Eufemia, passando nella zona di Falerna e Gizzeria."
-    },
-    {
      "t": "foto",
      "src": "diario/img/2026-10-15-1793720673341-bjqme-20260915_081928_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Paola, l’arco con gli stendardi: si riparte.",
      "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "Lungo il percorso incontro Amantea, con il suo caratteristico centro storico arroccato sulla collina che domina il mare, e proseguo attraversando la costa del Golfo di Sant'Eufemia, passando nella zona di Falerna e Gizzeria."
     },
     {
      "t": "testo",
@@ -1089,7 +1171,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-10-15-1793720675939-bbk4g-20260915_134058_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Pizzo, sosta con panorama.",
      "formato": "affiancata"
     },
     {
@@ -1103,12 +1185,18 @@
     {
      "t": "foto",
      "src": "diario/img/2026-10-15-1793720678614-dup2q-20260915_191006_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Tramonto dalla Pizzuta, con le Eolie davanti.",
      "formato": "grande"
     },
     {
      "t": "testo",
      "testo": "Parghelia è un posto a cui sono particolarmente affezionato. Ci sono stato tante volte nel corso degli ultimi quarant'anni e conservo ricordi meravigliosi legati a questo luogo. Tornarci in bicicletta ha quindi un significato speciale: non è semplicemente arrivare in un posto nuovo, ma ritrovare un luogo che fa già parte della mia storia."
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-10-15-1793720678888-gpnx1-20260915_195033_jpg.jpg",
+     "didascalia": "Stromboli, nell’ultima luce del tramonto.",
+     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -1122,19 +1210,19 @@
    "rullino": [
     {
      "src": "diario/img/2026-10-15-1793720673752-1ijzo-20260915_091500_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "La spiaggia, compagna di tutta la tappa"
     },
     {
      "src": "diario/img/2026-10-15-1793720675038-4rb50-20260915_133048_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Pizzo: una fontanella e un panorama"
     },
     {
      "src": "diario/img/2026-10-15-1793720677349-ot5ae-20260915_154854_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Un bar con la Cinquecento sul tetto: la Calabria non delude"
     },
     {
      "src": "diario/img/2026-10-15-1793720679969-rz3es-20260915_220843_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "La serata, a tavola"
     }
    ]
   },
@@ -1149,7 +1237,7 @@
    "diario": "2026-09-16",
    "apertura": {
     "src": "diario/img/2026-09-16-1794235907227-kdoem-20260916_141436_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "Lo Stretto, finalmente a portata di sguardo."
    },
    "blocchi": [
     {
@@ -1157,14 +1245,14 @@
      "testo": "Oggi la voglia di arrivare si fa sentire più del solito. Mi fermo poco e giusto il tempo necessario, perché ho un obiettivo ben preciso: raggiungere Villa San Giovanni e riuscire finalmente a salire su quel traghetto che mi porterà in Sicilia. È una meta che accompagna i miei pensieri da parecchi giorni e l'idea di poter arrivare a Messina proprio oggi rende tutto ancora più emozionante. Per una volta, quindi, niente soste prolungate: oggi si pedala per arrivare!"
     },
     {
-     "t": "testo",
-     "testo": "Lungo la strada incontro Nicotera, Palmi, Bagnara Calabra e Scilla. Nomi che si susseguono lungo la costa tirrenica calabrese, alcuni dei quali meriterebbero certamente più attenzione. A Nicotera Superiore hanno dedicato una caratteristica scalinata a Rino Gaetano, il Vico degli Ombrelli. È uno dei cantautori italiani che amo di più, ma raggiungere la scalinata richiederebbe una deviazione e soprattutto tempo che oggi non voglio perdere. Mi consolo mettendo in cuffia tutta la sua raccolta discografica: sarà lui ad accompagnarmi per il resto della tappa. E si riparte!"
-    },
-    {
      "t": "foto",
      "src": "diario/img/2026-09-16-1794235907050-pbcjm-20260916_130905_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Dentro l’uliveto: un tuffo nel mare verde.",
      "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "Lungo la strada incontro Nicotera, Palmi, Bagnara Calabra e Scilla. Nomi che si susseguono lungo la costa tirrenica calabrese, alcuni dei quali meriterebbero certamente più attenzione. A Nicotera Superiore hanno dedicato una caratteristica scalinata a Rino Gaetano, il Vico degli Ombrelli. È uno dei cantautori italiani che amo di più, ma raggiungere la scalinata richiederebbe una deviazione e soprattutto tempo che oggi non voglio perdere. Mi consolo mettendo in cuffia tutta la sua raccolta discografica: sarà lui ad accompagnarmi per il resto della tappa. E si riparte!"
     },
     {
      "t": "testo",
@@ -1173,18 +1261,12 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-16-1794235908358-uyny2-20260916_144331_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Un cancello di pietra e il mare in fondo.",
      "formato": "affiancata"
     },
     {
      "t": "testo",
      "testo": "Ormai Villa San Giovanni è vicina e il pensiero è tutto rivolto al traghetto. Arrivo direttamente all'imbarco seguendo la traccia, ma scopro che per salire serve anche un biglietto. Ops! Mi fermo in un bar per chiedere informazioni, ma dopo qualche domanda capisco che anche loro ne sanno più o meno quanto me. Ottimo! Per fortuna mi ricordo di avere uno smartphone e in pochi minuti compro il biglietto online. Torno all'imbarco e scopro un altro piccolo privilegio della bicicletta: mentre auto e camion sono ancora in fila, io posso passare davanti a tutti, sotto gli sguardi dei vari autisti che mi osservano con chiara invidia. Ogni tanto pedalare presenta qualche vantaggio!"
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-09-16-1794235908770-uavi2-20260916_201351_jpg.jpg",
-     "didascalia": "",
-     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -1193,24 +1275,30 @@
     {
      "t": "testo",
      "testo": "Salgo sul ponte e mi godo il breve attraversamento. Davanti a me lo Stretto, con la Calabria alle spalle e la Sicilia sempre più vicina. È strano pensare che fino a pochi minuti prima quella costa fosse soltanto una meta immaginata e che adesso stia diventando realtà. Il traghetto avanza lentamente, manco fossi io a pedalare, la distanza si accorcia e intanto l'emozione cresce. Sono pochi chilometri d'acqua, ma per me rappresentano molto di più: il passaggio verso una nuova parte del viaggio, quella che aspettavo da giorni. E a quel punto lasciatemelo urlare: RAGAZZI, HO RAGGIUNTO LA SICILIA!"
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-16-1794235908770-uavi2-20260916_201351_jpg.jpg",
+     "didascalia": "Messina, Birra dello Stretto e arancino: la Sicilia comincia così.",
+     "formato": "affiancata"
     }
    ],
    "rullino": [
     {
      "src": "diario/img/2026-09-16-1794235905982-bs0zz-20260916_101858_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Colline e Tirreno, di buon mattino"
     },
     {
      "src": "diario/img/2026-09-16-1794235907783-wdqy3-20260916_142930_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Un paese, uno specchio e la bici"
     },
     {
      "src": "diario/img/2026-09-16-1794235908163-i0xom-20260916_144325_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "La costa verso Scilla"
     },
     {
      "src": "diario/img/2026-09-16-1794235908563-tcnxg-20260916_151313_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Scilla, il castello sullo scoglio, e Topo Gigio di vedetta"
     }
    ]
   },
@@ -1225,7 +1313,7 @@
    "diario": "2026-09-17",
    "apertura": {
     "src": "diario/img/2026-09-17-1794410338811-fajbu-20260917_152754_jpg.jpg",
-    "didascalia": ""
+    "didascalia": "La costa siciliana, prima tappa."
    },
    "blocchi": [
     {
@@ -1245,24 +1333,24 @@
      "testo": "La giornata comincia con una salita, naturalmente, che per i primi nove chilometri mi porta a guadagnare quota, ma la fatica è ampiamente ripagata: il tratto in quota e la successiva discesa verso Milazzo si rivelano inaspettatamente belli, sia per i panorami sia per la vegetazione, che accompagna il percorso in modo davvero piacevole, per non parlare del clima, perfetto!"
     },
     {
+     "t": "foto",
+     "src": "diario/img/2026-09-17-1794410317814-26y3r-20260917_114521_jpg.jpg",
+     "didascalia": "Milazzo, il lungomare e il Castello sul promontorio.",
+     "formato": "affiancata"
+    },
+    {
      "t": "testo",
      "testo": "Dopo una ventina di chilometri tra saliscendi e paesaggi collinari, eccomi di nuovo al mare. La prima sosta è a Milazzo, naturalmente non soltanto per riprendere fiato, ma anche per realizzare uno dei miei immancabili stupidi video, ormai diventati una piccola abitudine di viaggio. Qualche immagine al volo in questa bella cittadina, conosciuta soprattutto per il suo promontorio e il Castello che domina il borgo antico, poi si riparte."
     },
     {
      "t": "foto",
-     "src": "diario/img/2026-09-17-1794410317814-26y3r-20260917_114521_jpg.jpg",
-     "didascalia": "",
+     "src": "diario/img/2026-09-17-1794410333950-tdbjy-20260917_143120_jpg.jpg",
+     "didascalia": "La Basilica di Tindari.",
      "formato": "affiancata"
     },
     {
      "t": "testo",
      "testo": "Avere il mare come panorama praticamente per tutta la giornata fa certamente la differenza, anche se, a giudicare dalla media, non proprio a favore della velocità: sono stato decisamente lentissimo in questa tappa! D'altra parte, con un panorama del genere, chi aveva tutta questa fretta di arrivare? E quando, in lontananza, è comparsa la Basilica di Tindari, non ho saputo resistere alla tentazione di concedermi un'altra bella salitina per raggiungerla. Una deviazione che ha meritato ampiamente la fatica, fosse anche soltanto per lo splendido panorama che si gode da lassù."
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-09-17-1794410333950-tdbjy-20260917_143120_jpg.jpg",
-     "didascalia": "",
-     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -1271,7 +1359,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-17-1794410335173-xyfpm-20260917_143315_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "La Madonna Nera di Tindari: «Nigra sum sed formosa».",
      "formato": "affiancata"
     },
     {
@@ -1285,7 +1373,7 @@
     {
      "t": "foto",
      "src": "diario/img/2026-09-17-1794410339170-4t18h-20260917_165240_jpg.jpg",
-     "didascalia": "",
+     "didascalia": "Capo d’Orlando: la pista ciclabile e un cuore rosso.",
      "formato": "affiancata"
     },
     {
@@ -1296,19 +1384,19 @@
    "rullino": [
     {
      "src": "diario/img/2026-09-17-1794410316465-oxxjj-20260917_091427_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "I primi chilometri in salita, con panorama sullo Stretto"
     },
     {
      "src": "diario/img/2026-09-17-1794410319048-e9we3-20260917_114638_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Milazzo"
     },
     {
      "src": "diario/img/2026-09-17-1794410330348-ehba5-20260917_131419_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Una sosta in spiaggia, con il promontorio alle spalle"
     },
     {
      "src": "diario/img/2026-09-17-1794410340711-xiaba-20260917_204326_jpg.jpg",
-     "didascalia": ""
+     "didascalia": "Torrenova, la cena: pasta con le cozze"
     }
    ]
   },
