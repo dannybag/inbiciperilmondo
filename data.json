@@ -84,8 +84,14 @@
       {
         "name": "RENATO P",
         "amount": 30,
-        "time": "about 2 months",
+        "time": "2 months",
         "message": "Complimenti Daniele!!! Nr. ONE"
+      },
+      {
+        "name": "Anonymous",
+        "amount": 50,
+        "time": "2 months",
+        "message": ""
       },
       {
         "name": "Mariolina&Lorenzo S",
@@ -238,9 +244,15 @@
         "message": ""
       },
       {
+        "name": "Anonymous",
+        "amount": 147,
+        "time": "3 months",
+        "message": "Proud to participate to this enabling project!"
+      },
+      {
         "name": "franco v",
         "amount": 25,
-        "time": "2 months",
+        "time": "3 months",
         "message": ""
       },
       {
@@ -476,12 +488,6 @@
         "amount": 10,
         "time": "3 months",
         "message": ""
-      },
-      {
-        "name": "Anonymous",
-        "amount": 147,
-        "time": "3 months",
-        "message": "Grazie Daniele"
       },
       {
         "name": "Roberto t",
