@@ -42,13 +42,13 @@
       {
         "name": "Francesco M",
         "amount": 50,
-        "time": "about 2 months",
+        "time": "2 months",
         "message": ""
       },
       {
         "name": "Laura B",
         "amount": 8,
-        "time": "about 2 months",
+        "time": "2 months",
         "message": "E adesso sei a -100€!!!! Forza!! Grandissimo!!!"
       },
       {
@@ -222,7 +222,7 @@
       {
         "name": "Stefano B",
         "amount": 5,
-        "time": "2 months",
+        "time": "3 months",
         "message": ""
       },
       {
@@ -490,16 +490,22 @@
         "message": ""
       },
       {
-        "name": "Roberto t",
-        "amount": 25,
+        "name": "Anonymous",
+        "amount": 147,
         "time": "4 months",
-        "message": "Adesso devi partire!"
+        "message": "Grazie Daniele"
       },
       {
         "name": "Anonymous",
         "amount": 10,
         "time": "4 months",
         "message": ""
+      },
+      {
+        "name": "Roberto t",
+        "amount": 25,
+        "time": "4 months",
+        "message": "Adesso devi partire!"
       },
       {
         "name": "Lorenzo V",
@@ -518,12 +524,6 @@
         "amount": 147,
         "time": "4 months",
         "message": "Grazie a Daniele … la fatica fisica sarà tutta sua 👍🍀👍"
-      },
-      {
-        "name": "Anonymous",
-        "amount": 147,
-        "time": "4 months",
-        "message": "Danny bag bean lo es you"
       },
       {
         "name": "Anonymous",
