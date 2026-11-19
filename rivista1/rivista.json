@@ -127,12 +127,6 @@
      "t": "foto",
      "src": "diario/img/2026-08-31-1792494286101-2echp-20260831_232154_jpg.jpg",
      "didascalia": "Grazie Nicolò, Susanna e Gitana.",
-     "formato": "affiancata"
-    },
-    {
-     "t": "foto",
-     "src": "rivista1/img/2026-11-12-mwdqzxcr.jpg",
-     "didascalia": "Io, la bici e Gitana. Domani si riparte.",
      "formato": "grande"
     },
     {
@@ -313,7 +307,7 @@
      "t": "foto",
      "src": "diario/img/2026-09-02-1792575808709-pfvsu-20260903_173846_jpg.jpg",
      "didascalia": "Villa La Petraia, il cortile coperto.",
-     "formato": "affiancata"
+     "formato": "grande"
     }
    ],
    "rullino": [
@@ -356,18 +350,8 @@
      "formato": "affiancata"
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-09-04-1792575890274-rndr9-20260904_191827_jpg.jpg",
-     "didascalia": "Piazza Grande, già pronta per la Giostra.",
-     "formato": "grande"
-    },
-    {
      "t": "testo",
      "testo": "Poi arrivo ad Arezzo e mi accorgo che lì, invece, sta succedendo qualcosa, la città è in fermento per la Giostra del Saracino. È uno di quei giorni in cui si prepara la gara della domenica e al venerdì c'è la cosiddetta \"provaccia\". Avrei voluto vederla, ma i biglietti, anche per le prove, erano già finiti per i non residenti, evidentemente gli aretini, quando c’è da difendere il proprio quartiere, si organizzano molto prima di me. Così mi sono dovuto accontentare di guardare da fuori, ma alla fine non è stato affatto male, mi sono trovato davanti alla sfilata di uno dei quattro quartieri, presumo Porta Santo Spirito, mentre si preparavano a salire verso Piazza Grande."
-    },
-    {
-     "t": "testo",
-     "testo": "Stendardi, lance, bandiere, tamburi e quella cosa strana che hanno le città quando per qualche giorno smettono di essere semplicemente città e diventano qualcos’altro, un quartiere contro un altro, ma con rispetto. Una storia antica che torna a vivere."
     },
     {
      "t": "foto",
@@ -377,13 +361,17 @@
     },
     {
      "t": "testo",
-     "testo": "Io ero lì con la mia bicicletta, arrivato pedalando da Firenze, e guardavo tutta quella gente prepararsi a una gara che per loro evidentemente non è soltanto una gara.Senza saperlo, sono arrivato ad Arezzo proprio nel momento giusto. A volte anche una tappa in cui non succede niente ti porta esattamente dove deve portarti."
+     "testo": "Stendardi, lance, bandiere, tamburi e quella cosa strana che hanno le città quando per qualche giorno smettono di essere semplicemente città e diventano qualcos’altro, un quartiere contro un altro, ma con rispetto. Una storia antica che torna a vivere."
     },
     {
      "t": "foto",
      "src": "diario/img/2026-09-04-1792575890445-o236o-20260904_201012_jpg.jpg",
      "didascalia": "Cena ad Arezzo. Il risotto non si commenta.",
      "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "Io ero lì con la mia bicicletta, arrivato pedalando da Firenze, e guardavo tutta quella gente prepararsi a una gara che per loro evidentemente non è soltanto una gara.Senza saperlo, sono arrivato ad Arezzo proprio nel momento giusto. A volte anche una tappa in cui non succede niente ti porta esattamente dove deve portarti."
     }
    ],
    "rullino": [
@@ -472,8 +460,8 @@
      "didascalia": "Roma 137. Un giorno ci arrivo."
     },
     {
-     "src": "diario/img/2026-09-05-1793568715212-0nla8-20260905_165615_jpg.jpg",
-     "didascalia": "Il lago, finalmente a portata di mano"
+     "src": "diario/img/2026-09-05-1792576472254-ubivw-20260905_200346_jpg.jpg",
+     "didascalia": "Il tagliere dei vincitori, a fine tappa"
     },
     {
      "src": "diario/img/2026-09-05-1792576470332-1alq9-20260905_200004_jpg.jpg",
@@ -504,6 +492,10 @@
      "testo": "Mi ha raccontato del suo lavoro, un lavoro che gli piace, che ha scelto lui e che, per sua stessa ammissione, è una parte importante della sua vita. Non mi ha detto esattamente cosa facesse, e forse non era nemmeno importante saperlo, la cosa che mi ha colpito è stata un’altra. Per quel lavoro è in giro continuamente da vent’anni."
     },
     {
+     "t": "testo",
+     "testo": "Questo mi ha fatto riflettere sul fatto che esistono tanti modi di viaggiare."
+    },
+    {
      "t": "foto",
      "src": "diario/img/2026-09-06-1792576864132-klz4y-20260906_132806_jpg.jpg",
      "didascalia": "Oleandri e cartelli: il mare è vicino.",
@@ -511,17 +503,13 @@
     },
     {
      "t": "testo",
-     "testo": "Questo mi ha fatto riflettere sul fatto che esistono tanti modi di viaggiare."
+     "testo": "C’è chi, come me, decide di partire per un mese, prende una bicicletta e si mette sulla strada perché ha voglia di farlo e c’è chi la strada la percorre da vent’anni perché la vita, attraverso il lavoro, lo ha portato continuamente da un posto all’altro."
     },
     {
      "t": "foto",
      "src": "diario/img/2026-09-06-1792576864343-qoc16-20260906_170520_jpg.jpg",
      "didascalia": "Ladispoli, finalmente il mare.",
      "formato": "affiancata"
-    },
-    {
-     "t": "testo",
-     "testo": "C’è chi, come me, decide di partire per un mese, prende una bicicletta e si mette sulla strada perché ha voglia di farlo e c’è chi la strada la percorre da vent’anni perché la vita, attraverso il lavoro, lo ha portato continuamente da un posto all’altro."
     },
     {
      "t": "testo",
@@ -561,24 +549,18 @@
      "testo": "Da Ladispoli ho cominciato ad avvicinarmi a Roma. Non posso dire di averla attraversata davvero: diciamo che l’ho accarezzata."
     },
     {
-     "t": "foto",
-     "src": "diario/img/2026-09-07-1792589895496-4q7gb-20260907_112606_jpg.jpg",
-     "didascalia": "Roma, sfiorata da lontano",
-     "formato": "affiancata"
+     "t": "testo",
+     "testo": "Sono entrato dalla Magliana, ho attraversato il Tevere, ho visto da lontano l’EUR e poi sono uscito dalla Cecchignola. Roma era lì, enorme, ma io avevo ancora la strada davanti e così l’ho sfiorata e sono andato oltre."
     },
     {
      "t": "testo",
-     "testo": "Sono entrato dalla Magliana, ho attraversato il Tevere, ho visto da lontano l’EUR e poi sono uscito dalla Cecchignola. Roma era lì, enorme, ma io avevo ancora la strada davanti e così l’ho sfiorata e sono andato oltre."
+     "testo": "Poi, qualche chilometro prima di arrivare a Latina, ho cominciato a vedere qualcosa che mi ha incuriosito: ville bellissime, grandi, alcune davvero enormi, immerse nel verde e affacciate lungo una ciclabile che mi pare si chiami Strada Nascosa, tra l'altro una esponeva una bandiera dell'Inter che in piena campagna laziale comporta i suoi rischi. 🤣"
     },
     {
      "t": "foto",
      "src": "diario/img/2026-09-07-1792589895401-da8zt-20260907_102540_jpg.jpg",
      "didascalia": "Pausa panino, appena fuori Roma.",
      "formato": "affiancata"
-    },
-    {
-     "t": "testo",
-     "testo": "Poi, qualche chilometro prima di arrivare a Latina, ho cominciato a vedere qualcosa che mi ha incuriosito: ville bellissime, grandi, alcune davvero enormi, immerse nel verde e affacciate lungo una ciclabile che mi pare si chiami Strada Nascosa, tra l'altro una esponeva una bandiera dell'Inter che in piena campagna laziale comporta i suoi rischi. 🤣"
     },
     {
      "t": "testo",
@@ -616,6 +598,10 @@
     }
    ],
    "rullino": [
+    {
+     "src": "diario/img/2026-09-07-1792589895496-4q7gb-20260907_112606_jpg.jpg",
+     "didascalia": "Roma, sfiorata da lontano"
+    },
     {
      "src": "diario/img/2026-09-07-1792589895696-b785y-20260907_165350_jpg.jpg",
      "didascalia": "Pausa frutta, in mezzo ai campi"
@@ -688,17 +674,11 @@
      "t": "foto",
      "src": "diario/img/2026-09-08-1793569097275-8j3fp-20260908_192500_jpg.jpg",
      "didascalia": "Mondragone. Il mare, finalmente, al tramonto.",
-     "formato": "grande"
+     "formato": "affiancata"
     },
     {
      "t": "testo",
      "testo": "L'arrivo a Mondragone è stato emozionante. All'improvviso sbocco sulla spiaggia e mi ritrovo davanti al mare. Su una panchina in riva all'acqua riposa un anziano signore. Quando gli dico che arrivo da Milano in bicicletta, mi guarda con un misto di incredulità, simpatia e ammirazione. In quel momento sento tutta la distanza percorsa e insieme la semplicità con cui un viaggio può trasformarsi in un incontro."
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-09-08-1792590188653-5dv15-20260908_181026_jpg.jpg",
-     "didascalia": "Una sosta in spiaggia: il Tirreno da vicino.",
-     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -779,6 +759,12 @@
      "src": "diario/img/2026-09-09-1793180685187-lvuew-20260909_210450_jpg.jpg",
      "didascalia": "Salerno di sera.",
      "formato": "affiancata"
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-09-1793180683892-tggyh-20260909_185258_jpg.jpg",
+     "didascalia": "La camera del B&B. La bici dorme dentro.",
+     "formato": "grande"
     },
     {
      "t": "testo",
@@ -972,8 +958,8 @@
     },
     {
      "t": "foto",
-     "src": "diario/img/2026-09-11-1793367863127-rff2r-20260913_182315_jpg.jpg",
-     "didascalia": "Spritz con vista sul golfo di Policastro.",
+     "src": "diario/img/2026-09-11-1793367868467-3a77t-20260913_191915_jpg.jpg",
+     "didascalia": "Da lassù si vede la Calabria.",
      "formato": "grande"
     },
     {
@@ -982,9 +968,9 @@
     },
     {
      "t": "foto",
-     "src": "diario/img/2026-09-11-1793367868467-3a77t-20260913_191915_jpg.jpg",
-     "didascalia": "Da lassù si vede la Calabria.",
-     "formato": "grande"
+     "src": "diario/img/2026-09-11-1793367859801-7gr7m-20260912_214301_jpg.jpg",
+     "didascalia": "La cena di Flavio: tutto buonissimo.",
+     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -1067,6 +1053,12 @@
      "formato": "affiancata"
     },
     {
+     "t": "foto",
+     "src": "diario/img/2026-10-14-1793552272187-lw71v-20260914_143438_jpg.jpg",
+     "didascalia": "Mare, spiaggia e la bici in pausa.",
+     "formato": "grande"
+    },
+    {
      "t": "testo",
      "testo": "L'ultimo tratto continua lungo il mare fino a Paola, dove, per arrivare all'alloggio, non poteva mancare la solita rampa finale. Paola è la città natale di San Francesco da Paola, una figura che qui gode di una popolarità enorme e che può tranquillamente competere con quella del più famoso San Francesco d'Assisi. Il centro storico è piuttosto raccolto e conserva la casa natale del Santo. La sua presenza è molto forte nella vita della città, anche grazie al santuario, meta di pellegrini e visitatori."
     },
@@ -1083,12 +1075,6 @@
     {
      "t": "testo",
      "testo": "Ma il meglio deve ancora arrivare. Quando il cameriere scopre che sto facendo il viaggio in bicicletta, mi chiede: «Arrivi da Milano in bicicletta? Ma da dove sei passato? Hai fatto l'autostrada?». Resto un attimo interdetto, perché capisco che la domanda è assolutamente seria. Poi rispondo: «Eh no, caspita! Ho dimenticato di portare il Telepass, quindi niente autostrada!»."
-    },
-    {
-     "t": "foto",
-     "src": "diario/img/2026-10-14-1793553486625-jvq21-20260914_191545_jpg.jpg",
-     "didascalia": "Prima di cena, in giro per Paola.",
-     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -1175,6 +1161,12 @@
      "formato": "affiancata"
     },
     {
+     "t": "foto",
+     "src": "diario/img/2026-10-15-1793720676570-r3t5a-20260915_151110_jpg.jpg",
+     "didascalia": "Bancarelle sulla strada, nel pomeriggio.",
+     "formato": "grande"
+    },
+    {
      "t": "testo",
      "testo": "Proseguendo verso sud, la costa continua a regalare scorci interessanti, tra Vibo Marina, Briatico e Zambrone, fino ad avvicinarmi a Parghelia, nel cuore della Costa degli Dei."
     },
@@ -1193,14 +1185,14 @@
      "testo": "Parghelia è un posto a cui sono particolarmente affezionato. Ci sono stato tante volte nel corso degli ultimi quarant'anni e conservo ricordi meravigliosi legati a questo luogo. Tornarci in bicicletta ha quindi un significato speciale: non è semplicemente arrivare in un posto nuovo, ma ritrovare un luogo che fa già parte della mia storia."
     },
     {
+     "t": "testo",
+     "testo": "Ad aspettarmi c'è Roberto, il mio ex datore di lavoro, con cui ho lavorato per circa vent'anni. È stato la persona che mi ha introdotto al mondo del lavoro, ma anche, in parte, un maestro di vita. Un rapporto che va ben oltre quello tra un ex capo e un collaboratore e per il quale conservo un affetto profondo."
+    },
+    {
      "t": "foto",
      "src": "diario/img/2026-10-15-1793720678888-gpnx1-20260915_195033_jpg.jpg",
      "didascalia": "Stromboli, nell’ultima luce del tramonto.",
      "formato": "affiancata"
-    },
-    {
-     "t": "testo",
-     "testo": "Ad aspettarmi c'è Roberto, il mio ex datore di lavoro, con cui ho lavorato per circa vent'anni. È stato la persona che mi ha introdotto al mondo del lavoro, ma anche, in parte, un maestro di vita. Un rapporto che va ben oltre quello tra un ex capo e un collaboratore e per il quale conservo un affetto profondo."
     },
     {
      "t": "testo",
@@ -1246,13 +1238,19 @@
     },
     {
      "t": "foto",
-     "src": "diario/img/2026-09-16-1794235907050-pbcjm-20260916_130905_jpg.jpg",
-     "didascalia": "Dentro l’uliveto: un tuffo nel mare verde.",
-     "formato": "affiancata"
+     "src": "diario/img/2026-09-16-1794235906297-ql9ox-20260916_102926_jpg.jpg",
+     "didascalia": "Il mare in lontananza: la Calabria mi accompagna.",
+     "formato": "grande"
     },
     {
      "t": "testo",
      "testo": "Lungo la strada incontro Nicotera, Palmi, Bagnara Calabra e Scilla. Nomi che si susseguono lungo la costa tirrenica calabrese, alcuni dei quali meriterebbero certamente più attenzione. A Nicotera Superiore hanno dedicato una caratteristica scalinata a Rino Gaetano, il Vico degli Ombrelli. È uno dei cantautori italiani che amo di più, ma raggiungere la scalinata richiederebbe una deviazione e soprattutto tempo che oggi non voglio perdere. Mi consolo mettendo in cuffia tutta la sua raccolta discografica: sarà lui ad accompagnarmi per il resto della tappa. E si riparte!"
+    },
+    {
+     "t": "foto",
+     "src": "diario/img/2026-09-16-1794235907050-pbcjm-20260916_130905_jpg.jpg",
+     "didascalia": "Dentro l’uliveto: un tuffo nel mare verde.",
+     "formato": "affiancata"
     },
     {
      "t": "testo",
@@ -1280,7 +1278,7 @@
      "t": "foto",
      "src": "diario/img/2026-09-16-1794235908770-uavi2-20260916_201351_jpg.jpg",
      "didascalia": "Messina, Birra dello Stretto e arancino: la Sicilia comincia così.",
-     "formato": "affiancata"
+     "formato": "grande"
     }
    ],
    "rullino": [
@@ -1367,14 +1365,14 @@
      "testo": "Per il resto della tappa, le isole Eolie continuano a farmi compagnia sullo sfondo. Le vedo praticamente senza interruzione da quando sono arrivato a Pizzo Calabro: ormai mi sembra quasi di averle portate con me fin qui!"
     },
     {
-     "t": "testo",
-     "testo": "Attraverso Capo d'Orlando, una cittadina decisamente carina, ma che scopro avere prezzi un po' troppo salati per fermarsi a dormire, anche fuori stagione. Decido quindi di proseguire e, poco dopo, mi ritrovo su una bellissima pista ciclabile, nuova di zecca e proprio in riva al mare, che mi accompagna piacevolmente fino alla nuova destinazione di giornata: Torrenova."
-    },
-    {
      "t": "foto",
      "src": "diario/img/2026-09-17-1794410339170-4t18h-20260917_165240_jpg.jpg",
      "didascalia": "Capo d’Orlando: la pista ciclabile e un cuore rosso.",
      "formato": "affiancata"
+    },
+    {
+     "t": "testo",
+     "testo": "Attraverso Capo d'Orlando, una cittadina decisamente carina, ma che scopro avere prezzi un po' troppo salati per fermarsi a dormire, anche fuori stagione. Decido quindi di proseguire e, poco dopo, mi ritrovo su una bellissima pista ciclabile, nuova di zecca e proprio in riva al mare, che mi accompagna piacevolmente fino alla nuova destinazione di giornata: Torrenova."
     },
     {
      "t": "testo",
