@@ -2437,6 +2437,7 @@ f<!DOCTYPE html>
 
   const _DIA_START = '2026-08-31';   // dal 31 agosto: Storie di viaggio
   const _DIA_FINAL_DAY = 14;         // "Il Pippone": ultimo aggiornamento
+  const _DIA_IND_DAY = 6;            // "L'INDECISIONE" (25 ago): sta in Aggiornamenti come il più vecchio
   const _DIA_TABS = ['ant', 'viaggio', 'agg'];
 
   function _diaStoryId(e) {
@@ -2446,11 +2447,13 @@ f<!DOCTYPE html>
   function _diaAggMeta(e) {
     if (e._aggiornamento) return { target: e.target, kind: e.kind };
     if (Number(e.day) === _DIA_FINAL_DAY) return { target: Infinity, kind: 'fin' };
+    if (Number(e.day) === _DIA_IND_DAY) return { target: 0, kind: 'pre' };
     return null;
   }
 
   function _diaAggLabel(m, lang) {
     const en = lang === 'en';
+    if (m.kind === 'pre') return en ? 'Before the start' : 'Pre-partenza';
     if (m.kind === 'fin') return en ? 'Final result · 32 bikes' : 'Traguardo finale · 32 bici';
     const n = String(m.target).replace(/\B(?=(\d{3})+(?!\d))/g, en ? ',' : '.');
     const amount = en ? '€' + n : n + ' €';
@@ -3399,7 +3402,7 @@ f<!DOCTYPE html>
       dia_tab_ant: 'Parlano di noi',
       dia_tab_viaggio: 'Quante Storie',
       dia_tab_agg: 'Aggiornamenti',
-      dia_cap_ant: 'Prima della partenza',
+      dia_cap_ant: 'Rassegna stampa e non solo',
       dia_cap_viaggio: 'Tappa dopo tappa, da Milano a Palermo',
       dia_cap_agg: 'Dal primo obiettivo al traguardo',
       dia_empty: 'Ancora nessuna nota',
@@ -3514,7 +3517,7 @@ f<!DOCTYPE html>
       dia_tab_ant: 'Talking about us',
       dia_tab_viaggio: 'So Many Stories',
       dia_tab_agg: 'Updates',
-      dia_cap_ant: 'Before the start',
+      dia_cap_ant: 'Press coverage and more',
       dia_cap_viaggio: 'Stage by stage, from Milan to Palermo',
       dia_cap_agg: 'From the first goal to the finish line',
       dia_empty: 'No notes yet',
