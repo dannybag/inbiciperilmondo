@@ -2720,7 +2720,7 @@ f<!DOCTYPE html>
       .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--orange); text-decoration:underline;">$1</a>')
       .replace(/\n/g, '<br>');
     const storyId = _diaStoryId(e);
-    const toIdx = !aggMeta && String(e.date || '').slice(0, 10) >= _DIA_START;
+    const toIdx = _diaSectionOf(e) === 'viaggio';   // il rimando all'indice c'è solo nelle storie di Quante Storie
     const toIdxBtn = `<button class="dia-toindex" type="button" onclick="goToDiaIndex()" title="${I18N[lang].dia_toindex}" aria-label="${I18N[lang].dia_toindex}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 6H21M8.5 12H21M8.5 18H21"/><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01" stroke-width="3"/></svg></button>`;
     return `
         <div id="${storyId}" style="background:#111; border:1px solid rgba(240,90,40,0.15); border-radius:4px; padding:1.2rem 1.3rem; scroll-margin-top:5rem;">
