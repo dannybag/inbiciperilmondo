@@ -1245,7 +1245,7 @@ f<!DOCTYPE html>
   <div style="background:#0A0A0A; border-top:2px solid var(--orange); padding:2rem 5vw 2.2rem;">
     <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--orange); margin-bottom:1.2rem; text-align:center;" data-i18n="diario_sub">Ricordi, incontri e imprevisti, giorno per giorno</div>
     <div class="dia-tabs" id="dia-tabs" role="tablist">
-      <button class="dia-tab" data-tab="ant" role="tab" onclick="setDiaTab('ant')"><span data-i18n="dia_tab_ant">Anticipazioni</span></button>
+      <button class="dia-tab" data-tab="ant" role="tab" onclick="setDiaTab('ant')"><span data-i18n="dia_tab_ant">Parlano di noi</span></button>
       <button class="dia-tab" data-tab="viaggio" role="tab" onclick="setDiaTab('viaggio')"><span data-i18n="dia_tab_viaggio">Quante Storie</span></button>
       <button class="dia-tab" data-tab="agg" role="tab" onclick="setDiaTab('agg')"><span data-i18n="dia_tab_agg">Aggiornamenti</span></button>
     </div>
@@ -2466,7 +2466,7 @@ f<!DOCTYPE html>
       else if (String(e.date || '').slice(0, 10) < _DIA_START) g.ant.push(e);
       else g.viaggio.push(e);
     });
-    g.ant.sort(byDate);
+    g.ant.sort((a, b) => byDate(b, a));   // Parlano di noi: dal più nuovo al più vecchio
     g.viaggio.sort(byDate);
     // Aggiornamenti: dal più nuovo al più vecchio (obiettivo decrescente), a parità di obiettivo prima il più recente nell'ordine di scrittura
     g.agg = g.agg.map((e, i) => [e, i])
@@ -3396,7 +3396,7 @@ f<!DOCTYPE html>
       del_percorso: 'Del percorso',
       prossime_tappe: '→ Prossime tappe',
       diario_sub: 'Ricordi, incontri e imprevisti, giorno per giorno',
-      dia_tab_ant: 'Anticipazioni',
+      dia_tab_ant: 'Parlano di noi',
       dia_tab_viaggio: 'Quante Storie',
       dia_tab_agg: 'Aggiornamenti',
       dia_cap_ant: 'Prima della partenza',
@@ -3511,7 +3511,7 @@ f<!DOCTYPE html>
       del_percorso: 'Of the route',
       prossime_tappe: '→ Upcoming stages',
       diario_sub: 'Memories, encounters and surprises, day by day',
-      dia_tab_ant: 'Previews',
+      dia_tab_ant: 'Talking about us',
       dia_tab_viaggio: 'So Many Stories',
       dia_tab_agg: 'Updates',
       dia_cap_ant: 'Before the start',
