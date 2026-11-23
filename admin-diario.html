@@ -52,12 +52,12 @@
     text-transform:uppercase; color:rgba(255,248,244,0.45); margin-bottom:0.35rem; margin-top:1.1rem;
   }
   label:first-of-type { margin-top:0; }
-  input[type=text], input[type=date], input[type=password], textarea {
+  input[type=text], input[type=date], input[type=password], select, textarea {
     width:100%; background:#111; border:1px solid rgba(255,248,244,0.15); border-radius:4px;
     color:var(--cream); font-family:'Barlow',sans-serif; font-size:1rem;
     padding:0.7rem 0.8rem; outline:none;
   }
-  input[type=text]:focus, input[type=date]:focus, input[type=password]:focus, textarea:focus {
+  input[type=text]:focus, input[type=date]:focus, input[type=password]:focus, select:focus, textarea:focus {
     border-color:var(--orange);
   }
   textarea { min-height:110px; resize:vertical; line-height:1.5; }
@@ -150,6 +150,13 @@
 
   <label>Data</label>
   <input type="date" id="f-date">
+
+  <label>Dove pubblicarla (Storie in Sella)</label>
+  <select id="f-section">
+    <option value="viaggio">Quante Storie — il viaggio</option>
+    <option value="ant">Parlano di noi — rassegna stampa e non solo</option>
+    <option value="agg">Aggiornamenti — obiettivi e traguardi</option>
+  </select>
 
   <label>Titolo</label>
   <input type="text" id="f-title" placeholder="Es. Un caffè offerto a Pozzuolo">
@@ -614,6 +621,20 @@ function toggleDictation() {
   }
 }
 
+// ---- SCHEDA DI "STORIE IN SELLA" ----
+// Stesse regole del sito: la scelta salvata nella nota (campo "section") vince; per le note vecchie senza campo valgono le regole storiche.
+const SECTION_LABEL = { viaggio: 'Quante Storie', ant: 'Parlano di noi', agg: 'Aggiornamenti' };
+function sectionOf(e) {
+  if (e.section === 'viaggio' || e.section === 'ant' || e.section === 'agg') return e.section;
+  if (Number(e.day) === 6 || Number(e.day) === 14) return 'agg';
+  return String(e.date || '').slice(0, 10) < '2026-08-31' ? 'ant' : 'viaggio';
+}
+function setSectionSelect(v) { document.getElementById('f-section').value = v; }
+function lastSection() {
+  const v = localStorage.getItem('diario_last_section');
+  return (v === 'viaggio' || v === 'ant' || v === 'agg') ? v : 'viaggio';
+}
+
 // ---- STATO EDITING ----
 let editingIndex = null;   // indice nell'array entries (non ordinato) se stiamo modificando
 
@@ -624,6 +645,7 @@ function editEntry(idx) {
   editingIndex = idx;
   photoItems = (e.photos || []).map(path => ({ path }));
   document.getElementById('f-date').value = e.date;
+  setSectionSelect(sectionOf(e));
   document.getElementById('f-title').value = e.title;
   document.getElementById('f-text').value = e.text;
   document.getElementById('f-video').value = (e.videos || (e.video ? [e.video] : [])).join('\n');
@@ -656,6 +678,7 @@ function cancelEdit() {
   coverSel = null;
   clearAudio();
   document.getElementById('f-date').valueAsDate = new Date();
+  setSectionSelect(lastSection());
   document.getElementById('f-title').value = '';
   document.getElementById('f-text').value = '';
   document.getElementById('f-video').value = '';
@@ -674,6 +697,7 @@ async function saveEntry() {
   if (!getToken()) { setStatus('Configura prima il token qui sopra.', 'err'); return; }
 
   const date = document.getElementById('f-date').value;
+  const section = document.getElementById('f-section').value;
   const title = document.getElementById('f-title').value.trim();
   const text = document.getElementById('f-text').value.trim();
   const videos = document.getElementById('f-video').value
@@ -714,7 +738,7 @@ async function saveEntry() {
       removedPhotos = (rest.photos || []).filter(p => !keptPhotos.includes(p));
       entries[editingIndex] = {
         ...rest,
-        date, title, text,
+        date, title, text, section,
         photos: photoPaths,
         videos,
         ...(igCover ? { ig_cover: igCover } : {}),
@@ -723,8 +747,8 @@ async function saveEntry() {
       message = `Diario: modifico nota "${title}"`;
     } else {
       entries.push({
-        day: entries.length + 1,
-        date, title, text,
+        day: Math.max(0, ...entries.map(x => Number(x.day) || 0)) + 1,   // max+1: con length+1 si duplicavano i numeri (c'è un buco al 22)
+        date, title, text, section,
         photos: photoPaths,
         videos,
         ...(igCover ? { ig_cover: igCover } : {}),
@@ -736,6 +760,7 @@ async function saveEntry() {
 
     setStatus('Salvo tutto in un unico commit...', 'wait');
     await commitBatch(newPhotoBlobs, entries, message, removedPhotos);
+    localStorage.setItem('diario_last_section', section);
 
     // La nota resta aperta: le foto nuove diventano "già pubblicate" (con anteprima locale),
     // una nota appena creata passa in modalità modifica. Esci tu con "Chiudi nota".
@@ -808,7 +833,7 @@ async function loadEntryList() {
           <div class="entry-row-date">${e.date}</div>
           <div class="entry-row-title">${e.title}${isPublished ? '' : ' <span style="color:rgba(255,248,244,0.4); font-family:var(--mono); font-size:0.55rem; text-transform:uppercase; letter-spacing:0.05em;">· nascosta</span>'}</div>
         </div>
-        <div class="entry-row-meta">${(e.photos||[]).length} foto${(e.videos||(e.video?[e.video]:[])).length ? ' · ' + (e.videos||[e.video]).length + ' video' : ''}</div>
+        <div class="entry-row-meta">${SECTION_LABEL[sectionOf(e)]} · ${(e.photos||[]).length} foto${(e.videos||(e.video?[e.video]:[])).length ? ' · ' + (e.videos||[e.video]).length + ' video' : ''}</div>
         <div class="entry-row-actions">
           <button class="btn-ghost" style="font-size:0.7rem; padding:0.35rem 0.7rem;" onclick="editEntry(${idx})">MODIFICA</button>
           <button class="btn-ghost" style="font-size:0.7rem; padding:0.35rem 0.7rem;" onclick="togglePublish(${idx})">${isPublished ? 'SPUBBLICA' : 'PUBBLICA'}</button>
@@ -972,7 +997,8 @@ async function loadVideoUrl() {
 }
 
 document.getElementById('f-date').valueAsDate = new Date();
-['f-date', 'f-title', 'f-text', 'f-video'].forEach(id =>
+setSectionSelect(lastSection());
+['f-date', 'f-section', 'f-title', 'f-text', 'f-video'].forEach(id =>
   document.getElementById(id).addEventListener('input', markDirty));
 // Avviso se chiudi la pagina con modifiche non salvate
 window.addEventListener('beforeunload', (e) => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });

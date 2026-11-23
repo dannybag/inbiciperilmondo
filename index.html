@@ -2009,8 +2009,7 @@ f<!DOCTYPE html>
     try { return new Date(d).toLocaleDateString('sv-SE', { timeZone: 'Europe/Rome' }); } catch (e) { return ''; }
   }
   function _matchStories(tappe) {
-    const stories = (window._diarioEntries || []).filter(e =>
-      !e._aggiornamento && Number(e.day) !== _DIA_FINAL_DAY && String(e.date || '').slice(0, 10) >= _DIA_START);
+    const stories = (window._diarioEntries || []).filter(e => _diaSectionOf(e) === 'viaggio');
     const used = new Set();
     const out = tappe.map(() => null);
     tappe.forEach((t, i) => {
@@ -2448,6 +2447,7 @@ f<!DOCTYPE html>
     if (e._aggiornamento) return { target: e.target, kind: e.kind };
     if (Number(e.day) === _DIA_FINAL_DAY) return { target: Infinity, kind: 'fin' };
     if (Number(e.day) === _DIA_IND_DAY) return { target: 0, kind: 'pre' };
+    if (e.section === 'agg') return { target: Infinity, kind: 'note' };   // scelta fatta dall'admin: in cima, per data (più nuova prima)
     return null;
   }
 
@@ -2461,19 +2461,24 @@ f<!DOCTYPE html>
     return lbl + ' · ' + amount;
   }
 
+  // In quale scheda sta una nota: prima la scelta dell'admin (campo "section"), poi le regole storiche
+  function _diaSectionOf(e) {
+    if (_diaAggMeta(e)) return 'agg';
+    if (e.section === 'ant' || e.section === 'viaggio') return e.section;
+    return String(e.date || '').slice(0, 10) < _DIA_START ? 'ant' : 'viaggio';
+  }
+
   function _diaBuildGroups(entries) {
     const g = { ant: [], viaggio: [], agg: [] };
     const byDate = (a, b) => new Date(a.date) - new Date(b.date);
-    entries.forEach(e => {
-      if (_diaAggMeta(e)) g.agg.push(e);
-      else if (String(e.date || '').slice(0, 10) < _DIA_START) g.ant.push(e);
-      else g.viaggio.push(e);
-    });
+    entries.forEach(e => g[_diaSectionOf(e)].push(e));
     g.ant.sort((a, b) => byDate(b, a));   // Parlano di noi: dal più nuovo al più vecchio
     g.viaggio.sort(byDate);
     // Aggiornamenti: dal più nuovo al più vecchio (obiettivo decrescente), a parità di obiettivo prima il più recente nell'ordine di scrittura
     g.agg = g.agg.map((e, i) => [e, i])
-      .sort((a, b) => (_diaAggMeta(b[0]).target - _diaAggMeta(a[0]).target) || (b[1] - a[1]))
+      .sort((a, b) => (_diaAggMeta(b[0]).target - _diaAggMeta(a[0]).target)
+        || ((new Date(b[0].date).getTime() || 0) - (new Date(a[0].date).getTime() || 0))
+        || (b[1] - a[1]))
       .map(x => x[0]);
     return g;
   }
@@ -2695,7 +2700,7 @@ f<!DOCTYPE html>
     const MESI = lang === 'en' ? MESI_EN : MESI_IT;
     const aggMeta = _diaAggMeta(e);
     let head;
-    if (aggMeta) {
+    if (aggMeta && aggMeta.kind !== 'note') {
       head = _diaAggLabel(aggMeta, lang);   // gli aggiornamenti non mostrano la data
     } else {
       const d = new Date(e.date);
