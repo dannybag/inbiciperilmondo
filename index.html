@@ -1,4 +1,4 @@
-f<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
@@ -2440,7 +2440,17 @@ f<!DOCTYPE html>
   const _DIA_TABS = ['ant', 'viaggio', 'agg'];
 
   function _diaStoryId(e) {
-    return 'storia-' + (e.day || String(e.date || '').replace(/[^0-9]/g, '-') || 'x');
+    const base = 'storia-' + (e.day || String(e.date || '').replace(/[^0-9]/g, '-') || 'x');
+    // Un numero "day" può comparire due volte (es. tappa 16 "Torrenova - Palermo" e una storia pubblicata dopo).
+    // La storia più vecchia tiene l'id storico (#storia-N, i link già condivisi restano validi);
+    // quelle pubblicate dopo con lo stesso day prendono l'id con la data e non possono più sostituirla.
+    if (e.day) {
+      const first = (window._diarioEntries || []).find(x => x.day === e.day);   // lista ordinata per data crescente
+      if (first && first !== e && (first.date !== e.date || first.title !== e.title)) {
+        return base + '-' + String(e.date || '').slice(0, 10);
+      }
+    }
+    return base;
   }
 
   function _diaAggMeta(e) {
